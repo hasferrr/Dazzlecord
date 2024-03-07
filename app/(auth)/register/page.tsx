@@ -1,6 +1,12 @@
+'use client'
+
+import AuthForm from '@/components/AuthForm/AuthForm'
+
 const Register = () => {
   return (
-    <div>Register page</div>
+    <div>
+      <AuthForm title='register' submitHandler={() => { }} />
+    </div>
   )
 }
 

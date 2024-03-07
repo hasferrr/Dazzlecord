@@ -1,3 +1,4 @@
 node_modules
 .next
 tailwind.config.ts
+components/ui
