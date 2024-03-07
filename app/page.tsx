@@ -1,5 +1,7 @@
-export default function Home() {
+const Home = () => {
   return (
     <p>hello world</p>
   )
 }
+
+export default Home
