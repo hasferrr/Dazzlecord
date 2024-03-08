@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-// import { ModeToggle } from '@/components/mode-toggle'
+import { ModeToggle } from '@/components/mode-toggle'
 
 /**
  * Abstract function component for Register and Login
@@ -170,7 +170,7 @@ const AuthForm = ({
             >
               <ChevronLeft className="h-4 w-4" />
             </Button>
-            {/* <ModeToggle /> */}
+            <ModeToggle />
           </div>
         </form>
       </Form>

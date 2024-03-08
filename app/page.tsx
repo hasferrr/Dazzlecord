@@ -1,6 +1,11 @@
+import { ModeToggle } from '@/components/mode-toggle'
+
 const Home = () => {
   return (
-    <p>hello world</p>
+    <div>
+      <p>hello world</p>
+      <ModeToggle />
+    </div>
   )
 }
 
