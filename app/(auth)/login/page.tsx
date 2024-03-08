@@ -1,12 +1,10 @@
 'use client'
 
-import AuthForm from '@/components/AuthForm/AuthForm'
+import LoginForm from '@/components/auth/LoginForm'
 
 const Login = () => {
   return (
-    <div>
-      <AuthForm title='login' submitHandler={() => { }} />
-    </div>
+    <LoginForm />
   )
 }
 
