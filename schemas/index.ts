@@ -18,9 +18,13 @@ export const registerSchema = z.object({
       message: 'Please provide your email.',
     })
     .email('This is not a valid email.'),
-  username: z.string().min(3, {
-    message: 'Username must be at least 3 characters.',
-  }),
+  username: z.string()
+    .min(3, {
+      message: 'Username must be at least 3 characters.',
+    })
+    .regex(/^[a-zA-Z0-9_]+$/, {
+      message: 'Invalid characters.',
+    }),
   password: z.string().min(6, {
     message: 'Password must be at least 6 characters.',
   }),

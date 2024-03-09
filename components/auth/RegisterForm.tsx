@@ -16,6 +16,7 @@ import { Input } from '@/components/ui/input'
 import { ModeToggle } from '@/components/mode-toggle'
 import { registerSchema } from '@/schemas'
 import FormWrapper from './FormWrapper'
+import { register } from '@/actions/register'
 
 const LoginForm = () => {
   const router = useRouter()
@@ -32,7 +33,8 @@ const LoginForm = () => {
   })
 
   const onSubmit = async (values: z.infer<typeof registerSchema>) => {
-    console.log(values)
+    const data = await register(values)
+    console.log(data)
   }
 
   return (
