@@ -1,4 +1,6 @@
 import { auth, signOut } from '@/auth'
+import ServerModal from '@/components/modals/server-modal'
+import { ModeToggle } from '@/components/mode-toggle'
 
 const App = async () => {
   const session = await auth()
@@ -12,6 +14,8 @@ const App = async () => {
       }}>
         <button type="submit">Sign out</button>
       </form>
+      <ServerModal />
+      <ModeToggle />
     </div>
   )
 }
