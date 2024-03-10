@@ -1,6 +1,9 @@
 'use server'
 
+import { signIn } from '@/auth'
+import { DEFAULT_LOGIN_REDIRECT } from '@/routes'
 import { loginSchema } from '@/schemas'
+import { AuthError } from 'next-auth'
 import { z } from 'zod'
 
 export const login = async (values: z.infer<typeof loginSchema>) => {
@@ -10,5 +13,18 @@ export const login = async (values: z.infer<typeof loginSchema>) => {
     return { error: 'invalid fields' }
   }
 
-  return { success: 'logged in' }
+  const { username, password } = validatedFields.data
+
+  try {
+    await signIn('credentials', {
+      username,
+      password,
+      redirectTo: DEFAULT_LOGIN_REDIRECT,
+    })
+  } catch (error) {
+    if (error instanceof AuthError && error.type === 'CredentialsSignin') {
+      return { error: 'Wrong username or password.' }
+    }
+    throw error
+  }
 }

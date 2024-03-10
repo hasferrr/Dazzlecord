@@ -16,8 +16,13 @@ import { Input } from '@/components/ui/input'
 import { ModeToggle } from '@/components/mode-toggle'
 import { loginSchema } from '@/schemas'
 import FormWrapper from './FormWrapper'
+import { login } from '@/actions/login'
+import { useState } from 'react'
+import { cn } from '@/lib/utils'
 
 const LoginForm = () => {
+  const [error, setError] = useState<string | undefined>()
+
   const router = useRouter()
   const navigate = (path: string) => router.push(path)
 
@@ -30,7 +35,13 @@ const LoginForm = () => {
   })
 
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
-    console.log(values)
+    const data = await login(values)
+    if (data?.error) {
+      setError(data.error)
+      setTimeout(() => {
+        setError(undefined)
+      }, 3000)
+    }
   }
 
   return (
@@ -42,14 +53,14 @@ const LoginForm = () => {
             name="username"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Username</FormLabel>
+                <FormLabel className={cn(error ? 'text-destructive' : null)}>Username</FormLabel>
                 <FormControl>
                   <Input
                     placeholder="john_doe"
                     {...field}
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage>{error}</FormMessage>
               </FormItem>
             )}
           />
@@ -58,7 +69,7 @@ const LoginForm = () => {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel className={cn(error ? 'text-destructive' : null)}>Password</FormLabel>
                 <FormControl>
                   <Input
                     type="password"
@@ -66,7 +77,7 @@ const LoginForm = () => {
                     {...field}
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage>{error}</FormMessage>
               </FormItem>
             )}
           />

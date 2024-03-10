@@ -17,8 +17,13 @@ import { ModeToggle } from '@/components/mode-toggle'
 import { registerSchema } from '@/schemas'
 import FormWrapper from './FormWrapper'
 import { register } from '@/actions/register'
+import { useState } from 'react'
+import { cn } from '@/lib/utils'
 
 const LoginForm = () => {
+  const [usernameError, setUsernameError] = useState<string | undefined>()
+  const [emailError, setEmailError] = useState<string | undefined>()
+
   const router = useRouter()
   const navigate = (path: string) => router.push(path)
 
@@ -34,7 +39,14 @@ const LoginForm = () => {
 
   const onSubmit = async (values: z.infer<typeof registerSchema>) => {
     const data = await register(values)
-    console.log(data)
+    if (data?.error) {
+      setUsernameError(data.error.includes('username') ? 'Username is already exist' : undefined)
+      setEmailError(data.error.includes('email') ? 'Email is already exist' : undefined)
+      setTimeout(() => {
+        setUsernameError(undefined)
+        setEmailError(undefined)
+      }, 3000)
+    }
   }
 
   return (
@@ -62,7 +74,7 @@ const LoginForm = () => {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel className={cn(emailError ? 'text-destructive' : null)}>Email</FormLabel>
                 <FormControl>
                   <Input
                     type="email"
@@ -70,7 +82,7 @@ const LoginForm = () => {
                     {...field}
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage>{emailError}</FormMessage>
               </FormItem>
             )}
           />
@@ -79,14 +91,14 @@ const LoginForm = () => {
             name="username"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Username</FormLabel>
+                <FormLabel className={cn(usernameError ? 'text-destructive' : null)}>Username</FormLabel>
                 <FormControl>
                   <Input
                     placeholder="john_doe"
                     {...field}
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage>{usernameError}</FormMessage>
               </FormItem>
             )}
           />
