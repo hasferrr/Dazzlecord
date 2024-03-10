@@ -1,8 +1,14 @@
+import { useState } from 'react'
+
+import { zodResolver } from '@hookform/resolvers/zod'
+import { ChevronLeft } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
-import { ChevronLeft } from 'lucide-react'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+
+import { register } from '@/actions/register'
+import { ModeToggle } from '@/components/mode-toggle'
+import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -11,16 +17,13 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { ModeToggle } from '@/components/mode-toggle'
-import { registerSchema } from '@/schemas'
-import FormWrapper from './FormWrapper'
-import { register } from '@/actions/register'
-import { useState } from 'react'
 import { cn } from '@/lib/utils'
+import { registerSchema } from '@/schemas'
 
-const LoginForm = () => {
+import FormWrapper from './FormWrapper'
+
+const RegisterForm = () => {
   const [usernameError, setUsernameError] = useState<string | undefined>()
   const [emailError, setEmailError] = useState<string | undefined>()
 
@@ -138,4 +141,4 @@ const LoginForm = () => {
   )
 }
 
-export default LoginForm
+export default RegisterForm

@@ -1,10 +1,11 @@
 'use server'
 
+import { AuthError } from 'next-auth'
+import { z } from 'zod'
+
 import { signIn } from '@/auth'
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes'
 import { loginSchema } from '@/schemas'
-import { AuthError } from 'next-auth'
-import { z } from 'zod'
 
 export const login = async (values: z.infer<typeof loginSchema>) => {
   const validatedFields = loginSchema.safeParse(values)

@@ -1,13 +1,14 @@
 'use server'
 
-import { db } from '@/app/lib/db'
-import { registerSchema } from '@/schemas'
-import { z } from 'zod'
 import bcryptjs from 'bcryptjs'
-import { getUserByEmail, getUserByUsername } from '@/data/user'
-import { signIn } from '@/auth'
-import { DEFAULT_LOGIN_REDIRECT } from '@/routes'
 import { AuthError } from 'next-auth'
+import { z } from 'zod'
+
+import { db } from '@/app/lib/db'
+import { signIn } from '@/auth'
+import { getUserByEmail, getUserByUsername } from '@/data/user'
+import { DEFAULT_LOGIN_REDIRECT } from '@/routes'
+import { registerSchema } from '@/schemas'
 
 export const register = async (values: z.infer<typeof registerSchema>) => {
   const validatedFields = registerSchema.safeParse(values)
