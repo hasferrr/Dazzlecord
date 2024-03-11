@@ -1,12 +1,20 @@
 {
   "extends": [
     "next/core-web-vitals",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
+    "plugin:react-hooks/recommended",
     "plugin:import/typescript"
   ],
   "plugins": [
     "import"
   ],
   "rules": {
+    "jsx-quotes": [
+      "error",
+      "prefer-double"
+    ],
+    "react/react-in-jsx-scope": "off",
     "import/no-unresolved": "error",
     "sort-imports": [
       "error",

@@ -48,7 +48,7 @@ const LoginForm = () => {
   }
 
   return (
-    <FormWrapper title='login'>
+    <FormWrapper title="login">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
           <FormField

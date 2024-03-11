@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 import { ModeToggle } from '@/components/mode-toggle'
 
 const Home = () => {
