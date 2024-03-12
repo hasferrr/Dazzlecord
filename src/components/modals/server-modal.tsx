@@ -1,13 +1,16 @@
 'use client'
 
+import { useState } from 'react'
+
 import { zodResolver } from '@hookform/resolvers/zod'
+import { X } from 'lucide-react'
+import Image from 'next/image'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -25,27 +28,47 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-
-const formSchema = z.object({
-  name: z.string().min(1, {
-    message: 'Server name is required.',
-  }),
-})
+import { serverModalSchema } from '@/schemas'
+import SVGUploadIcon from '@/svg/SVGUploadIcon'
 
 const ServerModal = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const [file, setFile] = useState<File | null>(null)
+
+  const form = useForm<z.infer<typeof serverModalSchema>>({
+    resolver: zodResolver(serverModalSchema),
     defaultValues: {
       name: '',
     },
   })
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  const filesRef = form.register('files')
+
+  const onSubmit = (values: z.infer<typeof serverModalSchema>) => {
     alert(JSON.stringify(values))
   }
 
+  const handleOpenDialog = () => {
+    setTimeout(() => {
+      form.resetField('name')
+      form.resetField('files')
+      setFile(null)
+    }, 100)
+  }
+
+  const handleImageChange = (event: React.FormEvent<HTMLInputElement>) => {
+    const inputElement = event.target as HTMLInputElement
+    if (inputElement.files) {
+      setFile(inputElement.files[0])
+    }
+  }
+
+  const handleResetImage = () => {
+    form.resetField('files')
+    setFile(null)
+  }
+
   return (
-    <Dialog>
+    <Dialog onOpenChange={handleOpenDialog}>
       <DialogTrigger>Open</DialogTrigger>
       <DialogContent className="p-0 m-0 dark:bg-[#313338] text-black dark:text-white w-[29rem]">
 
@@ -62,8 +85,48 @@ const ServerModal = () => {
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-8 flex flex-col justify-center"
           >
-            <div className="flex justify-center items-center">
-              TODO: Upload Image
+            <div className="flex justify-center items-center mt-4">
+              <FormField
+                control={form.control}
+                name="files"
+                render={() => {
+                  return (
+                    <FormItem className="flex flex-col justify-center items-center">
+                      <FormControl>
+                        <div className="relative h-20 w-20">
+                          <label htmlFor="fileInput" className="cursor-pointer">
+                            <Input
+                              id="fileInput"
+                              type="file"
+                              {...filesRef}
+                              className="cursor-pointer opacity-0 absolute w-0 h-0"
+                              onChange={handleImageChange}
+                            />
+                            {file
+                              ? <Image
+                                className="h-20 w-20 rounded-full object-cover"
+                                src={URL.createObjectURL(file)}
+                                alt=""
+                                width={80}
+                                height={80}
+                              />
+                              : <SVGUploadIcon />
+                            }
+                          </label>
+                          {file
+                            ? <button onClick={handleResetImage} type="button">
+                              <X className="absolute z-50 top-0 right-0 rounded-full
+                              bg-rose-500 text-white p-1" />
+                            </button>
+                            : <></>
+                          }
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )
+                }}
+              />
             </div>
 
             <div className="mx-4">
