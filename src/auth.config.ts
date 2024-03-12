@@ -28,7 +28,7 @@ export default {
         }
 
         return user
-      }
-    })
+      },
+    }),
   ],
 } satisfies NextAuthConfig

@@ -42,7 +42,7 @@ export const register = async (values: z.infer<typeof registerSchema>) => {
       username,
       email,
       passwordHash,
-      name: name.replace(/\s+/g, ' ').trim()
+      name: name.replace(/\s+/g, ' ').trim(),
     },
   })
 

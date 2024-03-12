@@ -3,7 +3,7 @@
  * These routes do not require authentication
  */
 export const publicRoutes: string[] = [
-  '/'
+  '/',
 ]
 
 /**
