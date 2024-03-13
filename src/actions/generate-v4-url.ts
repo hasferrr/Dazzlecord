@@ -1,16 +1,13 @@
 'use server'
 
 import { storage } from '@/app/lib/cloud-storage'
+import { GCS_BUCKET_NAME, ORIGIN_URL } from '@/utils/config'
 
 /**
  * Upload an object with HTML forms
  * https://cloud.google.com/storage/docs/xml-api/post-object-forms
  */
 export const generateV4SignedPolicy = async (fileName: string) => {
-  // TODO: separate process.env to centralized config file
-  const GCS_BUCKET_NAME = process.env.GCS_BUCKET_NAME as string
-  const ORIGIN_URL = process.env.ORIGIN_URL as string
-
   /**
    * Set up and view CORS configurations
    * https://cloud.google.com/storage/docs/using-cors#storage_cors_configuration-nodejs
