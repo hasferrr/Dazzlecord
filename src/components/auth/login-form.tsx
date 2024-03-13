@@ -21,7 +21,7 @@ import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
 import { loginSchema } from '@/schemas'
 
-import FormWrapper from './FormWrapper'
+import FormWrapper from './form-wrapper'
 
 const LoginForm = () => {
   const [error, setError] = useState<string | undefined>()

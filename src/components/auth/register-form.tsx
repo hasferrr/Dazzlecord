@@ -21,7 +21,7 @@ import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
 import { registerSchema } from '@/schemas'
 
-import FormWrapper from './FormWrapper'
+import FormWrapper from './form-wrapper'
 
 const RegisterForm = () => {
   const [usernameError, setUsernameError] = useState<string | undefined>()
