@@ -1,9 +1,9 @@
 import { PrismaAdapter } from '@auth/prisma-adapter'
 import NextAuth from 'next-auth'
 
-import { db } from '@/app/lib/db'
 import authConfig from '@/auth.config'
-import { getUserById } from '@/data/user'
+import { db } from '@/lib/db'
+import { getUserById } from '@/services/user'
 
 export const {
   handlers: { GET, POST },

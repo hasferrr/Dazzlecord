@@ -28,8 +28,8 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { uploadPhoto } from '@/data/upload-photo'
 import { serverModalSchema } from '@/schemas'
+import { uploadPhoto } from '@/services/upload-photo'
 import SVGUploadIcon from '@/svg/SVGUploadIcon'
 
 const ServerModal = () => {

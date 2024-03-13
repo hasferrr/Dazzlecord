@@ -1,6 +1,6 @@
 'use server'
 
-import { storage } from '@/app/lib/cloud-storage'
+import { storage } from '@/lib/cloud-storage'
 import { GCS_BUCKET_NAME, ORIGIN_URL } from '@/utils/config'
 
 /**

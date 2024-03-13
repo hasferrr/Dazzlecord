@@ -4,11 +4,11 @@ import bcryptjs from 'bcryptjs'
 import { AuthError } from 'next-auth'
 import { z } from 'zod'
 
-import { db } from '@/app/lib/db'
 import { signIn } from '@/auth'
-import { getUserByEmail, getUserByUsername } from '@/data/user'
+import { db } from '@/lib/db'
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes'
 import { registerSchema } from '@/schemas'
+import { getUserByEmail, getUserByUsername } from '@/services/user'
 
 export const register = async (values: z.infer<typeof registerSchema>) => {
   const validatedFields = registerSchema.safeParse(values)
