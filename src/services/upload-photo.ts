@@ -11,14 +11,9 @@ export const uploadPhoto = async (file: File, serverName: string) => {
     formData.append(key, value)
   })
 
-  try {
-    const res = await axios.post(url, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
-    return res
-  } catch (error) {
-    console.log(error)
-  }
+  return axios.post(url, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
 }

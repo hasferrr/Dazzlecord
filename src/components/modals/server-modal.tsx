@@ -45,8 +45,13 @@ const ServerModal = () => {
   const filesRef = form.register('files')
 
   const onSubmit = async (values: z.infer<typeof serverModalSchema>) => {
-    const res = await uploadPhoto(values.files[0], values.name)
-    console.log('success!!!', res)
+    console.log('uploading...')
+    try {
+      const res = await uploadPhoto(values.files[0], values.name)
+      console.log('success!!!', res)
+    } catch (error) {
+      console.log('error:', error)
+    }
   }
 
   const handleOpenDialog = () => {
