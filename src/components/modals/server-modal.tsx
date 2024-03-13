@@ -8,6 +8,7 @@ import Image from 'next/image'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { createNewServer } from '@/actions/create/server'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -47,8 +48,12 @@ const ServerModal = () => {
   const onSubmit = async (values: z.infer<typeof serverModalSchema>) => {
     console.log('uploading...')
     try {
-      const res = await uploadPhoto(values.files[0], values.name)
-      console.log('success!!!', res)
+      const fileName = `${values.name}-${values.files[0].name}`
+      const newServer = await createNewServer(values.name, fileName)
+      await uploadPhoto(values.files[0], newServer.inviteCode)
+      console.log('success!!!')
+      form.reset()
+      setFile(null)
     } catch (error) {
       console.log('error:', error)
     }
@@ -56,8 +61,7 @@ const ServerModal = () => {
 
   const handleOpenDialog = () => {
     setTimeout(() => {
-      form.resetField('name')
-      form.resetField('files')
+      form.reset()
       setFile(null)
     }, 100)
   }

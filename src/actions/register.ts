@@ -6,6 +6,7 @@ import { z } from 'zod'
 
 import { signIn } from '@/auth'
 import { db } from '@/lib/db'
+import { trimString } from '@/lib/helpers'
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes'
 import { registerSchema } from '@/schemas'
 import { getUserByEmail, getUserByUsername } from '@/services/user'
@@ -42,7 +43,7 @@ export const register = async (values: z.infer<typeof registerSchema>) => {
       username,
       email,
       passwordHash,
-      name: name.replace(/\s+/g, ' ').trim(),
+      name: trimString(name),
     },
   })
 
