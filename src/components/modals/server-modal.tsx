@@ -28,6 +28,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { uploadPhoto } from '@/data/upload-photo'
 import { serverModalSchema } from '@/schemas'
 import SVGUploadIcon from '@/svg/SVGUploadIcon'
 
@@ -43,8 +44,9 @@ const ServerModal = () => {
 
   const filesRef = form.register('files')
 
-  const onSubmit = (values: z.infer<typeof serverModalSchema>) => {
-    alert(JSON.stringify(values))
+  const onSubmit = async (values: z.infer<typeof serverModalSchema>) => {
+    const res = await uploadPhoto(values.files[0], values.name)
+    console.log('success!!!', res)
   }
 
   const handleOpenDialog = () => {
