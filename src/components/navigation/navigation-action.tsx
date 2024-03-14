@@ -11,8 +11,8 @@ const NavigationAction = () => {
         label="Add a Server"
         side="right"
         align="center"
-        delay={25}
       >
+        {/* FIXME: after click the button, server modal should popped out */}
         <button className="group flex items-center justify-center">
           <div className="flex items-center justify-center h-12 w-12 transition-all
           rounded-[24px]
