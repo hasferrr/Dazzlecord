@@ -23,8 +23,12 @@ export const generateV4SignedPolicy = async (fileName: string) => {
   const bucket = storage.bucket(GCS_BUCKET_NAME)
   const file = bucket.file(fileName)
 
-
-  // NOTE: Not yet implemented only image uploads
+  /**
+   * NOTE: Not yet implemented: image uploads restriction
+   * That requires sending the image to the server first in order to check the file.
+   * Which possibly leads to server overload(?), that why i dont.
+   * This v4 url only can retrieve the form-data, not the content-type image.
+   */
   const options = {
     expires: Date.now() + 1 * 60 * 1000, // 1 minute,
     fields: { 'x-goog-meta-test': 'data' },
