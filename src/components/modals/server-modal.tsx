@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { X } from 'lucide-react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -17,7 +18,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog'
 import {
   Form,
@@ -29,12 +29,22 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import {
+  useOnClose,
+  useOnOpen,
+  useServerModal,
+} from '@/context/serverModalContext'
 import { serverModalSchema } from '@/schemas'
 import { uploadPhoto } from '@/services/upload-photo'
 import SVGUploadIcon from '@/svg/SVGUploadIcon'
 
 const ServerModal = () => {
   const [file, setFile] = useState<File | null>(null)
+
+  const router = useRouter()
+
+  const onClose = useOnClose()
+  const isModalOpen = useServerModal()
 
   const form = useForm<z.infer<typeof serverModalSchema>>({
     resolver: zodResolver(serverModalSchema),
@@ -54,6 +64,8 @@ const ServerModal = () => {
       console.log('success!!!')
       form.reset()
       setFile(null)
+      onClose()
+      router.refresh()
     } catch (error) {
       console.log('error:', error)
     }
@@ -64,6 +76,7 @@ const ServerModal = () => {
       form.reset()
       setFile(null)
     }, 100)
+    onClose()
   }
 
   const handleImageChange = (event: React.FormEvent<HTMLInputElement>) => {
@@ -79,8 +92,7 @@ const ServerModal = () => {
   }
 
   return (
-    <Dialog onOpenChange={handleOpenDialog}>
-      <DialogTrigger>Open</DialogTrigger>
+    <Dialog open={isModalOpen} onOpenChange={handleOpenDialog}>
       <DialogContent className="p-0 m-0 dark:bg-[#313338] text-black dark:text-white w-[29rem]">
 
         <DialogHeader className="px-6 pt-6">

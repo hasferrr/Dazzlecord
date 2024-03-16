@@ -3,8 +3,11 @@
 import { Plus } from 'lucide-react'
 
 import { ActionTooltip } from '@/components/action-tooltip'
+import { useOnOpen } from '@/context/serverModalContext'
 
 const NavigationAction = () => {
+  const onOpen = useOnOpen()
+
   return (
     <div>
       <ActionTooltip
@@ -12,8 +15,7 @@ const NavigationAction = () => {
         side="right"
         align="center"
       >
-        {/* FIXME: after click the button, server modal should popped out */}
-        <button className="group flex items-center justify-center">
+        <button className="group flex items-center justify-center" onClick={onOpen}>
           <div className="flex items-center justify-center h-12 w-12 transition-all
           rounded-[24px]
           bg-[var(--light-page)]
