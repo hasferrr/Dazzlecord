@@ -1,7 +1,9 @@
-const ServerPage = () => {
+const ServerIdPage = () => {
   return (
-    <div>TODO: Hello server</div>
+    <div className="h-full">
+      TODO: Hello server
+    </div>
   )
 }
 
-export default ServerPage
+export default ServerIdPage

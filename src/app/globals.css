@@ -11,13 +11,13 @@ body,
 :root {
   /* Dark */
   --dark-navigation: #1E1F22;
-  --dark-channel: #2b2d31;
-  --dark-channel-bot: #232428;
+  --dark-server: #2b2d31;
+  --dark-server-bot: #232428;
   --dark-page: #313338;
   /* Light */
   --light-navigation: #e3e5e8;
-  --light-channel: #f2f3f5;
-  --light-channel-bot: #ebedef;
+  --light-server: #f2f3f5;
+  --light-server-bot: #ebedef;
   --light-page: #ffffff;
 }
 

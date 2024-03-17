@@ -4,14 +4,12 @@ const MainLayout = async ({ children }: {
   children: React.ReactNode
 }) => {
   return (
-    <div className="h-full">
-      <div className="hidden md:flex flex-col fixed h-full w-60 z-20 inset-y-0">
+    <main className="h-full flex">
+      <div className="hidden md:flex flex-col h-full inset-y-0">
         <NavigationSidebar />
       </div>
-      <main className="h-full md:pl-60">
-        {children}
-      </main>
-    </div>
+      {children}
+    </main>
   )
 }
 

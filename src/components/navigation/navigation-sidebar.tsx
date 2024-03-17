@@ -4,7 +4,7 @@ import { auth } from '@/auth'
 import ServerModal from '@/components/modals/server-modal'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
-import { getServersByUserId } from '@/services/server'
+import { getAllServersByUserId } from '@/services/server'
 
 import NavigationAction from './navigation-action'
 import NavigationItem from './navigation-item'
@@ -14,7 +14,7 @@ const NavigationSidebar = async () => {
   if (!session) {
     return redirect('/')
   }
-  const servers = await getServersByUserId(session.user.id)
+  const servers = await getAllServersByUserId(session.user.id)
 
   return (
     <div className="flex flex-col items-center gap-2
