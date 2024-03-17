@@ -1,7 +1,7 @@
 'use server'
 
 import { storage } from '@/lib/cloud-storage'
-import { GCS_BUCKET_NAME, ORIGIN_URL } from '@/utils/config'
+import { DEPLOYMENT_URL, GCS_BUCKET_NAME } from '@/utils/config'
 
 /**
  * Upload an object with HTML forms
@@ -16,7 +16,7 @@ export const generateV4SignedPolicy = async (fileName: string) => {
     {
       maxAgeSeconds: 3600,
       method: ['POST'],
-      origin: [ORIGIN_URL],
+      origin: [DEPLOYMENT_URL],
     },
   ])
 
