@@ -14,13 +14,11 @@ export const createNewServer = async (serverName: string, imageName: string) => 
   }
   const currentUser = session.user
 
-  const uuid = uuidv4()
-
   const newServer = await db.server.create({
     data: {
       name: trimString(serverName),
-      inviteCode: uuid,
-      image: uuid,
+      inviteCode: uuidv4(),
+      image: `img-server-${uuidv4()}`,
       userId: currentUser.id,
       members: {
         create: [
