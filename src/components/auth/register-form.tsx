@@ -64,6 +64,7 @@ const RegisterForm = () => {
                 <FormLabel>Display Name</FormLabel>
                 <FormControl>
                   <Input
+                    className="input-primary dark:border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                     placeholder="John Doe"
                     {...field}
                   />
@@ -80,6 +81,7 @@ const RegisterForm = () => {
                 <FormLabel className={cn(emailError ? 'text-destructive' : null)}>Email</FormLabel>
                 <FormControl>
                   <Input
+                    className="input-primary dark:border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                     type="email"
                     placeholder="john@example.com"
                     {...field}
@@ -97,6 +99,7 @@ const RegisterForm = () => {
                 <FormLabel className={cn(usernameError ? 'text-destructive' : null)}>Username</FormLabel>
                 <FormControl>
                   <Input
+                    className="input-primary dark:border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                     placeholder="john_doe"
                     {...field}
                   />
@@ -113,6 +116,7 @@ const RegisterForm = () => {
                 <FormLabel>Password</FormLabel>
                 <FormControl>
                   <Input
+                    className="input-primary dark:border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                     type="password"
                     placeholder="******"
                     {...field}

@@ -23,10 +23,6 @@ body,
   --light-page: #ffffff;
 }
 
-* {
-  outline: 0px;
-}
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -98,5 +94,11 @@ body,
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .input-primary {
+    @apply bg-zinc-300/50 dark:bg-[var(--dark-navigation)];
   }
 }

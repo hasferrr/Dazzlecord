@@ -59,6 +59,7 @@ const LoginForm = () => {
                 <FormLabel className={cn(error ? 'text-destructive' : null)}>Username</FormLabel>
                 <FormControl>
                   <Input
+                    className="input-primary dark:border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                     placeholder="john_doe"
                     {...field}
                   />
@@ -75,6 +76,7 @@ const LoginForm = () => {
                 <FormLabel className={cn(error ? 'text-destructive' : null)}>Password</FormLabel>
                 <FormControl>
                   <Input
+                    className="input-primary dark:border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                     type="password"
                     placeholder="******"
                     {...field}
