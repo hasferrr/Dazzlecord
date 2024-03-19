@@ -29,7 +29,7 @@ const NavigationItem = ({ id, name, image }: NavigationItemProps) => {
           onClick={handleClick}
           className="group flex items-center"
         >
-          <div className={cn('absolute left-0 bg-primary rounded-[24px] transition-all w-[4px]',
+          <div className={cn('absolute left-0 bg-primary rounded-r-[24px] transition-all w-[4px]',
             params?.serverId !== id && 'group-hover:h-[20px]',
             params?.serverId === id ? 'h-[36px]' : 'h-[8px]',
           )} />

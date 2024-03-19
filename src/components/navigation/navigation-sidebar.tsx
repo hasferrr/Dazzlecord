@@ -23,7 +23,7 @@ const NavigationSidebar = async () => {
     dark:bg-[var(--dark-navigation)]">
       <ServerModal />
       <NavigationAction />
-      <Separator className="h-[2px] w-8 rounded-md mx-auto bg-[var(--light-page)] dark:bg-[var(--dark-page)]" />
+      <Separator className="h-[2px] w-8 rounded-md mx-auto bg-zinc-300 dark:bg-[var(--dark-page)]" />
       <ScrollArea className="w-full">
         {servers.map((server) =>
           <div key={server.id} className="flex justify-center mb-2">

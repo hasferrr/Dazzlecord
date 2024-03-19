@@ -50,7 +50,7 @@ const ServerHeader = ({
           <button className="
           w-full h-12 py-3 px-4 overflow-hidden
           flex items-center text-left align-bottom
-          text-md font-semibold border-b-1 shadow-md transition
+          text-md font-semibold border-b-[1.5px] transition
           bg-[--var(--light-server)] dark:bg-[--var(--dark-server)]
           hover:[--var(--light-server-hover)] dark:hover:bg-[--var(--dark-server-hover)]
           ">
