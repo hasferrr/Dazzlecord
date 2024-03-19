@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 
-import { joinServer } from '@/actions/invite/joinServer'
+import { joinServer } from '@/actions/server/joinServer'
 import { auth } from '@/auth'
 
 const InviteCodePage = async ({ params }: {
