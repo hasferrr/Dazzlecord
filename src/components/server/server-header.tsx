@@ -19,7 +19,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { useOpenInvite } from '@/context/modalContext'
+import { useInviteOpen } from '@/context/modalContext'
 import { ServerWithMembersWithUsers } from '@/types/types'
 
 const ServerHeader = ({
@@ -31,7 +31,7 @@ const ServerHeader = ({
   currentMember: Member,
   origin: string,
 }) => {
-  const openInvite = useOpenInvite()
+  const openInvite = useInviteOpen()
 
   const role = currentMember.role
   const isAdmin = role === MemberRole.ADMIN

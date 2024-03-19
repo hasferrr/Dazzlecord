@@ -4,7 +4,6 @@ import { Open_Sans } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 import { ModalContextProvider } from '@/context/modalContext'
-import { ServerModalContextProvider } from '@/context/serverModalContext'
 import { cn } from '@/lib/utils'
 
 const font = Open_Sans({ subsets: ['latin'] })
@@ -31,9 +30,7 @@ export default function RootLayout({ children }: Readonly<{
           disableTransitionOnChange
         >
           <ModalContextProvider>
-            <ServerModalContextProvider>
-              {children}
-            </ServerModalContextProvider>
+            {children}
           </ModalContextProvider>
         </ThemeProvider>
       </body>

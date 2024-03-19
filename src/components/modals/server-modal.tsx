@@ -30,10 +30,9 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import {
-  useOnClose,
-  useOnOpen,
-  useServerModal,
-} from '@/context/serverModalContext'
+  useServerClose,
+  useServerValue,
+} from '@/context/modalContext'
 import { serverModalSchema } from '@/schemas'
 import { uploadPhoto } from '@/services/upload-photo'
 import SVGUploadIcon from '@/svg/SVGUploadIcon'
@@ -43,8 +42,8 @@ const ServerModal = () => {
 
   const router = useRouter()
 
-  const onClose = useOnClose()
-  const isModalOpen = useServerModal()
+  const onClose = useServerClose()
+  const isModalOpen = useServerValue()
 
   const form = useForm<z.infer<typeof serverModalSchema>>({
     resolver: zodResolver(serverModalSchema),

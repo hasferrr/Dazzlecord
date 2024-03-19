@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { useCloseInvite, useModal } from '@/context/modalContext'
+import { useInviteClose, useInviteValue } from '@/context/modalContext'
 
 const InvitationModal = ({ origin, inviteCode }: {
   origin: string,
@@ -21,8 +21,8 @@ const InvitationModal = ({ origin, inviteCode }: {
 }) => {
   const [copied, setCopied] = useState(false)
 
-  const modal = useModal()
-  const inviteClose = useCloseInvite()
+  const inviteValue = useInviteValue()
+  const inviteClose = useInviteClose()
 
   const handleOpenDialog = () => {
     inviteClose()
@@ -39,7 +39,7 @@ const InvitationModal = ({ origin, inviteCode }: {
   }
 
   return (
-    <Dialog open={modal.invite} onOpenChange={handleOpenDialog}>
+    <Dialog open={inviteValue} onOpenChange={handleOpenDialog}>
       <DialogContent className="py-6 px-0 m-0 dark:bg-[#313338] text-black dark:text-white w-[29rem]
       focus-visible:ring-0 focus-visible:ring-offset-0">
 

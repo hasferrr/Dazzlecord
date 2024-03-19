@@ -47,7 +47,17 @@ export const useModal = () => {
   return value
 }
 
-export const useOpenInvite = () => {
+export const useInviteValue = () => {
+  const [value] = useContext(ModalContext)
+  return value.invite
+}
+
+export const useServerValue = () => {
+  const [value] = useContext(ModalContext)
+  return value.server
+}
+
+export const useInviteOpen = () => {
   const [state, dispatch] = useContext(ModalContext)
   return () => {
     dispatch({
@@ -60,7 +70,7 @@ export const useOpenInvite = () => {
   }
 }
 
-export const useCloseInvite = () => {
+export const useInviteClose = () => {
   const [state, dispatch] = useContext(ModalContext)
   return () => {
     dispatch({
@@ -68,6 +78,32 @@ export const useCloseInvite = () => {
       payload: {
         ...state,
         invite: false,
+      },
+    })
+  }
+}
+
+export const useServerOpen = () => {
+  const [state, dispatch] = useContext(ModalContext)
+  return () => {
+    dispatch({
+      type: 'SET',
+      payload: {
+        ...state,
+        server: true,
+      },
+    })
+  }
+}
+
+export const useServerClose = () => {
+  const [state, dispatch] = useContext(ModalContext)
+  return () => {
+    dispatch({
+      type: 'SET',
+      payload: {
+        ...state,
+        server: false,
       },
     })
   }
