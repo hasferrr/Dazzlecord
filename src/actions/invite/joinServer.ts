@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation'
 
 import { db } from '@/lib/db'
 
-export const invite = async (userId: string, inviteCode: string) => {
+export const joinServer = async (userId: string, inviteCode: string) => {
   const existingServer = await db.server.findFirst({
     where: {
       inviteCode: inviteCode,

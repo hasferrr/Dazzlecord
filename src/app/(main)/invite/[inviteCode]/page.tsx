@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 
-import { invite } from '@/actions/invite'
+import { joinServer } from '@/actions/invite/joinServer'
 import { auth } from '@/auth'
 
 const InviteCodePage = async ({ params }: {
@@ -10,7 +10,7 @@ const InviteCodePage = async ({ params }: {
   if (!session) {
     return redirect('/')
   }
-  await invite(session.user.id, params.inviteCode)
+  await joinServer(session.user.id, params.inviteCode)
 }
 
 export default InviteCodePage
