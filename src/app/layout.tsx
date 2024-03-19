@@ -3,6 +3,7 @@ import { Open_Sans } from 'next/font/google'
 
 import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
+import { ModalContextProvider } from '@/context/modalContext'
 import { ServerModalContextProvider } from '@/context/serverModalContext'
 import { cn } from '@/lib/utils'
 
@@ -29,9 +30,11 @@ export default function RootLayout({ children }: Readonly<{
           enableSystem
           disableTransitionOnChange
         >
-          <ServerModalContextProvider>
-            {children}
-          </ServerModalContextProvider>
+          <ModalContextProvider>
+            <ServerModalContextProvider>
+              {children}
+            </ServerModalContextProvider>
+          </ModalContextProvider>
         </ThemeProvider>
       </body>
     </html>

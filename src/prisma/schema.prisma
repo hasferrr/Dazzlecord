@@ -24,8 +24,8 @@ model User {
 model Server {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
   name       String
-  inviteCode String
-  image      String?
+  inviteCode String    @unique
+  image      String?   @unique
   userId     String    @db.ObjectId
   members    Member[]
   channels   Channel[]

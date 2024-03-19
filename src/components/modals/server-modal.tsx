@@ -163,7 +163,7 @@ const ServerModal = () => {
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className="input-primary border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                        className="bg-zinc-300/50 dark:bg-[var(--dark-navigation)] border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                         placeholder="Server Name"
                         {...field}
                       />
