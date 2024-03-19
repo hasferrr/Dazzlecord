@@ -46,133 +46,38 @@ ModalContextProvider.propTypes = {
   children: PropTypes.node,
 }
 
-export const useModal = () => {
+const useAbstractGetState = (type: keyof Modal) => {
   const [value] = useContext(ModalContext)
-  return value
+  return value[type]
 }
 
-export const useInviteValue = () => {
-  const [value] = useContext(ModalContext)
-  return value.invite
-}
-
-export const useServerValue = () => {
-  const [value] = useContext(ModalContext)
-  return value.server
-}
-
-export const useDeleteServerValue = () => {
-  const [value] = useContext(ModalContext)
-  return value.delete
-}
-
-export const useLeaveServerValue = () => {
-  const [value] = useContext(ModalContext)
-  return value.leave
-}
-
-export const useInviteOpen = () => {
+const useAbstractDispatch = (type: keyof Modal, value: boolean) => {
   const [state, dispatch] = useContext(ModalContext)
+
   return () => {
     dispatch({
       type: 'SET',
       payload: {
         ...state,
-        invite: true,
+        [type]: value,
       },
     })
   }
 }
 
-export const useInviteClose = () => {
-  const [state, dispatch] = useContext(ModalContext)
-  return () => {
-    dispatch({
-      type: 'SET',
-      payload: {
-        ...state,
-        invite: false,
-      },
-    })
-  }
-}
+export const useInviteValue = () => useAbstractGetState('invite')
+export const useServerValue = () => useAbstractGetState('server')
+export const useDeleteServerValue = () => useAbstractGetState('delete')
+export const useLeaveServerValue = () => useAbstractGetState('leave')
 
-export const useServerOpen = () => {
-  const [state, dispatch] = useContext(ModalContext)
-  return () => {
-    dispatch({
-      type: 'SET',
-      payload: {
-        ...state,
-        server: true,
-      },
-    })
-  }
-}
+export const useInviteOpen = () => useAbstractDispatch('invite', true)
+export const useServerOpen = () => useAbstractDispatch('server', true)
+export const useDeleteServerOpen = () => useAbstractDispatch('delete', true)
+export const useLeaveServerOpen = () => useAbstractDispatch('leave', true)
 
-export const useServerClose = () => {
-  const [state, dispatch] = useContext(ModalContext)
-  return () => {
-    dispatch({
-      type: 'SET',
-      payload: {
-        ...state,
-        server: false,
-      },
-    })
-  }
-}
-
-export const useDeleteServerOpen = () => {
-  const [state, dispatch] = useContext(ModalContext)
-  return () => {
-    dispatch({
-      type: 'SET',
-      payload: {
-        ...state,
-        delete: true,
-      },
-    })
-  }
-}
-
-export const useDeleteServerClose = () => {
-  const [state, dispatch] = useContext(ModalContext)
-  return () => {
-    dispatch({
-      type: 'SET',
-      payload: {
-        ...state,
-        delete: false,
-      },
-    })
-  }
-}
-
-export const useLeaveServerOpen = () => {
-  const [state, dispatch] = useContext(ModalContext)
-  return () => {
-    dispatch({
-      type: 'SET',
-      payload: {
-        ...state,
-        leave: true,
-      },
-    })
-  }
-}
-
-export const useLeaveServerClose = () => {
-  const [state, dispatch] = useContext(ModalContext)
-  return () => {
-    dispatch({
-      type: 'SET',
-      payload: {
-        ...state,
-        leave: false,
-      },
-    })
-  }
-}
+export const useInviteClose = () => useAbstractDispatch('invite', false)
+export const useServerClose = () => useAbstractDispatch('server', false)
+export const useDeleteServerClose = () => useAbstractDispatch('delete', false)
+export const useLeaveServerClose = () => useAbstractDispatch('leave', false)
 
 export default ModalContext
