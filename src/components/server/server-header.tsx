@@ -81,12 +81,14 @@ const ServerHeader = ({
             </DropdownMenuItem>
           )}
           {(isAdmin || isModerator) && (
-            <DropdownMenuItem className={style}>
-              Create Channel
-              <PlusCircle className={iconStyle} />
-            </DropdownMenuItem>
+            <>
+              <DropdownMenuItem className={style}>
+                Create Channel
+                <PlusCircle className={iconStyle} />
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+            </>
           )}
-          <DropdownMenuSeparator />
           {isAdmin && (
             <DropdownMenuItem className={redStyle}>
               Delete Server
