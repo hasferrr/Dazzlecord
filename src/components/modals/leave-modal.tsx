@@ -40,7 +40,7 @@ const LeaveModal = ({ server }: { server: Server }) => {
         <DialogHeader className="px-6 pt-6">
           <DialogTitle className="text-lg font-bold">Leave {`'${server.name}'`}</DialogTitle>
           <DialogDescription className="text-sm mt-8 text-primary">
-            Are you sure you want to leave <strong>{server.name}</strong>? You won{'/'}t be able to.
+            Are you sure you want to leave <strong>{server.name}</strong>? You won{'\''}t be able to
             rejoin this server unless you are re-invited.
           </DialogDescription>
         </DialogHeader>
