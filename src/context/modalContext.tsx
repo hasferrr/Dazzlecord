@@ -7,6 +7,8 @@ import PropTypes from 'prop-types'
 interface Modal {
   server: boolean
   invite: boolean
+  delete: boolean
+  leave: boolean
 }
 type ModalDispatch = { type: 'SET', payload: Modal }
 type ModalReducer = [Modal, Dispatch<ModalDispatch>]
@@ -23,6 +25,8 @@ const modalReducer = (state: Modal, action: ModalDispatch): Modal => {
 const initialValue = {
   server: false,
   invite: false,
+  delete: false,
+  leave: false,
 }
 
 const ModalContext = createContext<ModalReducer>([initialValue, () => initialValue])
@@ -55,6 +59,16 @@ export const useInviteValue = () => {
 export const useServerValue = () => {
   const [value] = useContext(ModalContext)
   return value.server
+}
+
+export const useDeleteServerValue = () => {
+  const [value] = useContext(ModalContext)
+  return value.delete
+}
+
+export const useLeaveServerValue = () => {
+  const [value] = useContext(ModalContext)
+  return value.leave
 }
 
 export const useInviteOpen = () => {
@@ -104,6 +118,58 @@ export const useServerClose = () => {
       payload: {
         ...state,
         server: false,
+      },
+    })
+  }
+}
+
+export const useDeleteServerOpen = () => {
+  const [state, dispatch] = useContext(ModalContext)
+  return () => {
+    dispatch({
+      type: 'SET',
+      payload: {
+        ...state,
+        delete: true,
+      },
+    })
+  }
+}
+
+export const useDeleteServerClose = () => {
+  const [state, dispatch] = useContext(ModalContext)
+  return () => {
+    dispatch({
+      type: 'SET',
+      payload: {
+        ...state,
+        delete: false,
+      },
+    })
+  }
+}
+
+export const useLeaveServerOpen = () => {
+  const [state, dispatch] = useContext(ModalContext)
+  return () => {
+    dispatch({
+      type: 'SET',
+      payload: {
+        ...state,
+        leave: true,
+      },
+    })
+  }
+}
+
+export const useLeaveServerClose = () => {
+  const [state, dispatch] = useContext(ModalContext)
+  return () => {
+    dispatch({
+      type: 'SET',
+      payload: {
+        ...state,
+        leave: false,
       },
     })
   }

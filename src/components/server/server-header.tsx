@@ -11,7 +11,9 @@ import {
   Users,
 } from 'lucide-react'
 
+import DeleteModal from '@/components/modals/delete-modal'
 import InvitationModal from '@/components/modals/invitation-modal'
+import LeaveModal from '@/components/modals/leave-modal'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,7 +21,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { useInviteOpen } from '@/context/modalContext'
+import {
+  useDeleteServerOpen,
+  useInviteOpen,
+  useLeaveServerOpen,
+} from '@/context/modalContext'
 import { ServerWithMembersWithUsers } from '@/types/types'
 
 const ServerHeader = ({
@@ -32,6 +38,8 @@ const ServerHeader = ({
   origin: string,
 }) => {
   const openInvite = useInviteOpen()
+  const openDeleteServer = useDeleteServerOpen()
+  const openLeaveServer = useLeaveServerOpen()
 
   const role = currentMember.role
   const isAdmin = role === MemberRole.ADMIN
@@ -45,6 +53,8 @@ const ServerHeader = ({
   return (
     <div>
       <InvitationModal origin={origin} inviteCode={server.inviteCode} />
+      <DeleteModal server={server} />
+      <LeaveModal server={server} />
       <DropdownMenu>
         <DropdownMenuTrigger asChild className="focus:outline-none">
           <button className="
@@ -61,7 +71,7 @@ const ServerHeader = ({
         <DropdownMenuContent className="px-[6px] py-[8px] w-56">
           {(isAdmin || isModerator) && (
             <>
-              <DropdownMenuItem className={blueStyle} onClick={() => openInvite()}>
+              <DropdownMenuItem className={blueStyle} onClick={openInvite}>
                 Invite People
                 <UserPlus className={iconStyle} />
               </DropdownMenuItem>
@@ -90,13 +100,13 @@ const ServerHeader = ({
             </>
           )}
           {isAdmin && (
-            <DropdownMenuItem className={redStyle}>
+            <DropdownMenuItem className={redStyle} onClick={openDeleteServer}>
               Delete Server
               <Trash className={iconStyle} />
             </DropdownMenuItem>
           )}
           {!isAdmin && (
-            <DropdownMenuItem className={redStyle}>
+            <DropdownMenuItem className={redStyle} onClick={openLeaveServer}>
               Leave Server
               <LogOut className={iconStyle} />
             </DropdownMenuItem>
