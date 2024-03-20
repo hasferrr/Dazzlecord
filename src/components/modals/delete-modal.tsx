@@ -3,6 +3,7 @@
 import type { Server } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 
+import { deleteServer } from '@/actions/server/deleteServer'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -16,8 +17,9 @@ import {
   useDeleteServerClose,
   useDeleteServerValue,
 } from '@/context/modalContext'
+import { ServerWithMembersWithUsers } from '@/types/types'
 
-const DeleteModal = ({ server }: { server: Server }) => {
+const DeleteModal = ({ server }: { server: ServerWithMembersWithUsers }) => {
   const router = useRouter()
 
   const onDeleteModalClose = useDeleteServerClose()
@@ -27,9 +29,15 @@ const DeleteModal = ({ server }: { server: Server }) => {
     onDeleteModalClose()
   }
 
-  const handleDelete = () => {
-    console.log('deleted')
+  const handleDelete = async () => {
+    const res = await deleteServer(server.id, server.image)
+    if (res.error) {
+      console.log(res)
+      return
+    }
+    console.log(res.success)
     onDeleteModalClose()
+    router.push('/app')
     router.refresh()
   }
 
