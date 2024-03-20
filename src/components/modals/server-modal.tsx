@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useTransition } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { X } from 'lucide-react'
@@ -39,6 +39,7 @@ import SVGUploadIcon from '@/svg/SVGUploadIcon'
 
 const ServerModal = () => {
   const [file, setFile] = useState<File | null>(null)
+  const [isPending, startTransition] = useTransition()
 
   const router = useRouter()
 
@@ -56,20 +57,22 @@ const ServerModal = () => {
 
   const onSubmit = async (values: z.infer<typeof serverModalSchema>) => {
     console.log('uploading...')
-    try {
-      const fileName = `${values.name}-${values.files[0].name}`
-      const newServer = await createNewServer(values.name, fileName)
-      if (newServer.image) {
-        await uploadPhoto(values.files[0], newServer.image)
+    startTransition(async () => {
+      try {
+        const fileName = `${values.name}-${values.files[0].name}`
+        const newServer = await createNewServer(values.name, fileName)
+        if (newServer.image) {
+          await uploadPhoto(values.files[0], newServer.image)
+        }
+        console.log('success!!!')
+        form.reset()
+        setFile(null)
+        onClose()
+        router.refresh()
+      } catch (error) {
+        console.log('error:', error)
       }
-      console.log('success!!!')
-      form.reset()
-      setFile(null)
-      onClose()
-      router.refresh()
-    } catch (error) {
-      console.log('error:', error)
-    }
+    })
   }
 
   const handleOpenDialog = () => {
@@ -120,10 +123,11 @@ const ServerModal = () => {
                         <div className="relative h-20 w-20">
                           <label htmlFor="fileInput" className="cursor-pointer">
                             <Input
+                              disabled={isPending}
                               id="fileInput"
                               type="file"
                               {...filesRef}
-                              className="cursor-pointer opacity-0 absolute w-0 h-0"
+                              className="cursor-pointer opacity-0 absolute w-0 h-0 top-[10000px]"
                               onChange={handleImageChange}
                             />
                             {file
@@ -164,6 +168,7 @@ const ServerModal = () => {
                     </FormLabel>
                     <FormControl>
                       <Input
+                        disabled={isPending}
                         className="bg-zinc-300/50 dark:bg-[var(--dark-navigation)] border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                         placeholder="Server Name"
                         {...field}
@@ -184,7 +189,7 @@ const ServerModal = () => {
             </div>
 
             <DialogFooter className="p-4 bg-gray-100 dark:bg-[#2b2d31] rounded-b-lg">
-              <Button variant="primary" type="submit">
+              <Button variant="primary" type="submit" disabled={isPending}>
                 Create
               </Button>
             </DialogFooter>

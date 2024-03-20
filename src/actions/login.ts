@@ -22,6 +22,7 @@ export const login = async (values: z.infer<typeof loginSchema>) => {
       password,
       redirectTo: DEFAULT_LOGIN_REDIRECT,
     })
+    return { success: 'Login success.' }
   } catch (error) {
     if (error instanceof AuthError && error.type === 'CredentialsSignin') {
       return { error: 'Wrong username or password.' }

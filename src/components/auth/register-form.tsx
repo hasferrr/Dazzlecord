@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useTransition } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ChevronLeft } from 'lucide-react'
@@ -26,6 +26,7 @@ import FormWrapper from './form-wrapper'
 const RegisterForm = () => {
   const [usernameError, setUsernameError] = useState<string | undefined>()
   const [emailError, setEmailError] = useState<string | undefined>()
+  const [isPending, startTransition] = useTransition()
 
   const router = useRouter()
   const navigate = (path: string) => router.push(path)
@@ -41,15 +42,19 @@ const RegisterForm = () => {
   })
 
   const onSubmit = async (values: z.infer<typeof registerSchema>) => {
-    const data = await register(values)
-    if (data?.error) {
-      setUsernameError(data.error.includes('username') ? 'Username is already exist' : undefined)
-      setEmailError(data.error.includes('email') ? 'Email is already exist' : undefined)
-      setTimeout(() => {
-        setUsernameError(undefined)
-        setEmailError(undefined)
-      }, 3000)
-    }
+    startTransition(async () => {
+      const data = await register(values)
+      if (data?.error) {
+        setUsernameError(data.error.includes('username') ? 'Username is already exist' : undefined)
+        setEmailError(data.error.includes('email') ? 'Email is already exist' : undefined)
+        setTimeout(() => {
+          setUsernameError(undefined)
+          setEmailError(undefined)
+        }, 3000)
+      } else {
+        console.log(data.success)
+      }
+    })
   }
 
   return (
@@ -64,6 +69,7 @@ const RegisterForm = () => {
                 <FormLabel>Display Name</FormLabel>
                 <FormControl>
                   <Input
+                    disabled={isPending}
                     className="input-primary dark:border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                     placeholder="John Doe"
                     {...field}
@@ -81,6 +87,7 @@ const RegisterForm = () => {
                 <FormLabel className={cn(emailError ? 'text-destructive' : null)}>Email</FormLabel>
                 <FormControl>
                   <Input
+                    disabled={isPending}
                     className="input-primary dark:border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                     type="email"
                     placeholder="john@example.com"
@@ -99,6 +106,7 @@ const RegisterForm = () => {
                 <FormLabel className={cn(usernameError ? 'text-destructive' : null)}>Username</FormLabel>
                 <FormControl>
                   <Input
+                    disabled={isPending}
                     className="input-primary dark:border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                     placeholder="john_doe"
                     {...field}
@@ -116,6 +124,7 @@ const RegisterForm = () => {
                 <FormLabel>Password</FormLabel>
                 <FormControl>
                   <Input
+                    disabled={isPending}
                     className="input-primary dark:border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                     type="password"
                     placeholder="******"
@@ -127,7 +136,7 @@ const RegisterForm = () => {
             )}
           />
           <div className="flex flex-wrap gap-3">
-            <Button type="submit">Submit</Button>
+            <Button type="submit" disabled={isPending}>Submit</Button>
             <div className="grow"></div>
             <Button
               type="button"

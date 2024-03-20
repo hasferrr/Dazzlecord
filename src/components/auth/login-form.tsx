@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useTransition } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ChevronLeft } from 'lucide-react'
@@ -25,6 +25,7 @@ import FormWrapper from './form-wrapper'
 
 const LoginForm = () => {
   const [error, setError] = useState<string | undefined>()
+  const [isPending, startTransition] = useTransition()
 
   const router = useRouter()
   const navigate = (path: string) => router.push(path)
@@ -38,13 +39,17 @@ const LoginForm = () => {
   })
 
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
-    const data = await login(values)
-    if (data?.error) {
-      setError(data.error)
-      setTimeout(() => {
-        setError(undefined)
-      }, 3000)
-    }
+    startTransition(async () => {
+      const data = await login(values)
+      if (data?.error) {
+        setError(data.error)
+        setTimeout(() => {
+          setError(undefined)
+        }, 3000)
+      } else {
+        console.log(data.success)
+      }
+    })
   }
 
   return (
@@ -59,6 +64,7 @@ const LoginForm = () => {
                 <FormLabel className={cn(error ? 'text-destructive' : null)}>Username</FormLabel>
                 <FormControl>
                   <Input
+                    disabled={isPending}
                     className="input-primary dark:border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                     placeholder="john_doe"
                     {...field}
@@ -76,6 +82,7 @@ const LoginForm = () => {
                 <FormLabel className={cn(error ? 'text-destructive' : null)}>Password</FormLabel>
                 <FormControl>
                   <Input
+                    disabled={isPending}
                     className="input-primary dark:border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                     type="password"
                     placeholder="******"
@@ -87,7 +94,7 @@ const LoginForm = () => {
             )}
           />
           <div className="flex flex-wrap gap-3">
-            <Button type="submit">Submit</Button>
+            <Button type="submit" disabled={isPending}>Submit</Button>
             <div className="grow"></div>
             <Button
               type="button"

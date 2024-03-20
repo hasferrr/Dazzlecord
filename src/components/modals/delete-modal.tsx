@@ -1,6 +1,7 @@
 'use client'
 
-import type { Server } from '@prisma/client'
+import { useTransition } from 'react'
+
 import { useRouter } from 'next/navigation'
 
 import { deleteServer } from '@/actions/server/deleteServer'
@@ -20,6 +21,8 @@ import {
 import { ServerWithMembersWithUsers } from '@/types/types'
 
 const DeleteModal = ({ server }: { server: ServerWithMembersWithUsers }) => {
+  const [isPending, startTransition] = useTransition()
+
   const router = useRouter()
 
   const onDeleteModalClose = useDeleteServerClose()
@@ -30,15 +33,17 @@ const DeleteModal = ({ server }: { server: ServerWithMembersWithUsers }) => {
   }
 
   const handleDelete = async () => {
-    const res = await deleteServer(server.id, server.image)
-    if (res.error) {
-      console.log(res)
-      return
-    }
-    console.log(res.success)
-    onDeleteModalClose()
-    router.push('/app')
-    router.refresh()
+    startTransition(async () => {
+      const res = await deleteServer(server.id, server.image)
+      if (res.error) {
+        console.log(res)
+        return
+      }
+      console.log(res.success)
+      onDeleteModalClose()
+      router.push('/app')
+      router.refresh()
+    })
   }
 
   return (
@@ -53,7 +58,7 @@ const DeleteModal = ({ server }: { server: ServerWithMembersWithUsers }) => {
         </DialogHeader>
 
         <DialogFooter className="p-4 bg-gray-100 dark:bg-[#2b2d31] rounded-b-lg">
-          <Button variant="destructive" onClick={handleDelete}>
+          <Button variant="destructive" onClick={handleDelete} disabled={isPending}>
             Delete Server
           </Button>
         </DialogFooter>

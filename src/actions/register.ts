@@ -53,6 +53,7 @@ export const register = async (values: z.infer<typeof registerSchema>) => {
       password,
       redirectTo: DEFAULT_LOGIN_REDIRECT,
     })
+    return { success: 'Register success.' }
   } catch (error) {
     if (error instanceof AuthError && error.type === 'CredentialsSignin') {
       return { error: 'Wrong username or password.' }
