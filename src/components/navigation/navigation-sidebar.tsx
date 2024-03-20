@@ -7,6 +7,7 @@ import { Separator } from '@/components/ui/separator'
 import { getAllServersByUserId } from '@/services/server'
 
 import NavigationAction from './navigation-action'
+import NavigationHome from './navigation-home'
 import NavigationItem from './navigation-item'
 
 const NavigationSidebar = async () => {
@@ -22,7 +23,7 @@ const NavigationSidebar = async () => {
     bg-[var(--light-navigation)]
     dark:bg-[var(--dark-navigation)]">
       <ServerModal />
-      <NavigationAction />
+      <NavigationHome />
       <Separator className="h-[2px] w-8 rounded-md mx-auto bg-zinc-300 dark:bg-[var(--dark-page)]" />
       <ScrollArea className="w-full">
         {servers.map((server) =>
@@ -35,6 +36,9 @@ const NavigationSidebar = async () => {
           </div>
         )}
       </ScrollArea>
+      <div className="grow"></div>
+      <Separator className="h-[2px] w-8 rounded-md mx-auto bg-zinc-300 dark:bg-[var(--dark-page)]" />
+      <NavigationAction />
     </div>
   )
 }
