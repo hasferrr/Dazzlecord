@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "tsc": "tsc --project tsconfig.json",
-    "prisma": "prisma studio"
+    "db": "prisma studio"
   },
   "prisma": {
     "schema": "src/prisma/schema.prisma"

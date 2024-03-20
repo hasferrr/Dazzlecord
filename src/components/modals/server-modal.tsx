@@ -59,7 +59,9 @@ const ServerModal = () => {
     try {
       const fileName = `${values.name}-${values.files[0].name}`
       const newServer = await createNewServer(values.name, fileName)
-      await uploadPhoto(values.files[0], newServer.image)
+      if (newServer.image) {
+        await uploadPhoto(values.files[0], newServer.image)
+      }
       console.log('success!!!')
       form.reset()
       setFile(null)

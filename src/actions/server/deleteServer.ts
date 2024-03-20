@@ -2,7 +2,7 @@
 
 import { db } from '@/lib/db'
 
-import { deleteImage } from '../deleteImage'
+import { deleteImage } from '../cloudStorage/deleteImage'
 
 export const deleteServer = async (serverId: string, serverImage: string | null) => {
   const deletedServer = await db.server.delete({
