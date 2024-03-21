@@ -26,7 +26,7 @@ const NavigationHome = () => {
         )}>
           <div className={cn('absolute left-0 bg-primary rounded-r-[24px] transition-all w-[4px]',
             pathname !== '/app' && 'group-hover:h-[20px]',
-            pathname === '/app' ? 'h-[36px]' : 'h-[8px]',
+            pathname === '/app' ? 'h-[36px]' : 'h-0',
           )} />
           <Bot
             className="group-hover:text-white transition"
