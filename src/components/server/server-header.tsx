@@ -12,6 +12,7 @@ import {
 } from 'lucide-react'
 import { Session } from 'next-auth'
 
+import ChannelModal from '@/components/modals/channel-modal'
 import DeleteModal from '@/components/modals/delete-modal'
 import InvitationModal from '@/components/modals/invitation-modal'
 import LeaveModal from '@/components/modals/leave-modal'
@@ -23,6 +24,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import {
+  useCreateChannelOpen,
   useDeleteServerOpen,
   useInviteOpen,
   useLeaveServerOpen,
@@ -42,6 +44,7 @@ const ServerHeader = ({
   const openInvite = useInviteOpen()
   const openDeleteServer = useDeleteServerOpen()
   const openLeaveServer = useLeaveServerOpen()
+  const openCreateChannel = useCreateChannelOpen()
 
   const role = currentMember.role
   const isOwner = role === MemberRole.OWNER
@@ -57,6 +60,7 @@ const ServerHeader = ({
       <InvitationModal origin={origin} inviteCode={server.inviteCode} />
       <DeleteModal server={server} currentUserId={session.user.id} />
       <LeaveModal server={server} userId={session.user.id} />
+      <ChannelModal />
       <DropdownMenu>
         <DropdownMenuTrigger asChild className="focus:outline-none">
           <button className="
@@ -94,7 +98,7 @@ const ServerHeader = ({
           )}
           {(isOwner || isAdmin) && (
             <>
-              <DropdownMenuItem className={style}>
+              <DropdownMenuItem className={style}  onClick={openCreateChannel}>
                 Create Channel
                 <PlusCircle className={iconStyle} />
               </DropdownMenuItem>

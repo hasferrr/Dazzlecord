@@ -9,6 +9,7 @@ interface Modal {
   invite: boolean
   delete: boolean
   leave: boolean
+  channel: boolean
 }
 type ModalDispatch = { type: 'SET', payload: Modal }
 type ModalReducer = [Modal, Dispatch<ModalDispatch>]
@@ -27,6 +28,7 @@ const initialValue = {
   invite: false,
   delete: false,
   leave: false,
+  channel: false,
 }
 
 const ModalContext = createContext<ModalReducer>([initialValue, () => initialValue])
@@ -69,15 +71,18 @@ export const useInviteValue = () => useAbstractGetState('invite')
 export const useServerValue = () => useAbstractGetState('server')
 export const useDeleteServerValue = () => useAbstractGetState('delete')
 export const useLeaveServerValue = () => useAbstractGetState('leave')
+export const useCreateChannelValue = () => useAbstractGetState('channel')
 
 export const useInviteOpen = () => useAbstractDispatch('invite', true)
 export const useServerOpen = () => useAbstractDispatch('server', true)
 export const useDeleteServerOpen = () => useAbstractDispatch('delete', true)
 export const useLeaveServerOpen = () => useAbstractDispatch('leave', true)
+export const useCreateChannelOpen = () => useAbstractDispatch('channel', true)
 
 export const useInviteClose = () => useAbstractDispatch('invite', false)
 export const useServerClose = () => useAbstractDispatch('server', false)
 export const useDeleteServerClose = () => useAbstractDispatch('delete', false)
 export const useLeaveServerClose = () => useAbstractDispatch('leave', false)
+export const useCreateChannelClose = () => useAbstractDispatch('channel', false)
 
 export default ModalContext
