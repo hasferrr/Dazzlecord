@@ -1,6 +1,6 @@
 'use client'
 
-import { Member, MemberRole } from '@prisma/client'
+import { Member, MemberRole, Server } from '@prisma/client'
 import {
   ChevronDown,
   LogOut,
@@ -27,7 +27,6 @@ import {
   useInviteOpen,
   useLeaveServerOpen,
 } from '@/context/modalContext'
-import { ServerWithMembersWithUsers } from '@/types/types'
 
 const ServerHeader = ({
   server,
@@ -35,7 +34,7 @@ const ServerHeader = ({
   origin,
   session,
 }: {
-  server: ServerWithMembersWithUsers,
+  server: Server,
   currentMember: Member,
   origin: string,
   session: Session
@@ -56,7 +55,7 @@ const ServerHeader = ({
   return (
     <div>
       <InvitationModal origin={origin} inviteCode={server.inviteCode} />
-      <DeleteModal server={server} />
+      <DeleteModal server={server} currentUserId={session.user.id} />
       <LeaveModal server={server} userId={session.user.id} />
       <DropdownMenu>
         <DropdownMenuTrigger asChild className="focus:outline-none">

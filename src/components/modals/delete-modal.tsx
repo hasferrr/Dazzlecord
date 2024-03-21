@@ -2,6 +2,7 @@
 
 import { useTransition } from 'react'
 
+import { Server } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 
 import { deleteServer } from '@/actions/server/deleteServer'
@@ -18,9 +19,11 @@ import {
   useDeleteServerClose,
   useDeleteServerValue,
 } from '@/context/modalContext'
-import { ServerWithMembersWithUsers } from '@/types/types'
 
-const DeleteModal = ({ server }: { server: ServerWithMembersWithUsers }) => {
+const DeleteModal = ({ server, currentUserId }: {
+  server: Server,
+  currentUserId: string,
+}) => {
   const [isPending, startTransition] = useTransition()
 
   const router = useRouter()
@@ -34,7 +37,7 @@ const DeleteModal = ({ server }: { server: ServerWithMembersWithUsers }) => {
 
   const handleDelete = async () => {
     startTransition(async () => {
-      const res = await deleteServer(server.id, server.image)
+      const res = await deleteServer(server, currentUserId)
       if (res.error) {
         console.log(res)
         return

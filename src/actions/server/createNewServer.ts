@@ -19,7 +19,7 @@ export const createNewServer = async (serverName: string, imageName: string) => 
       name: trimString(serverName),
       inviteCode: uuidv4(),
       image: `img-server-${uuidv4()}`,
-      userId: currentUser.id,
+      owner: currentUser.id,
       members: {
         create: [
           { role: MemberRole.ADMIN, userId: currentUser.id },

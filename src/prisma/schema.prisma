@@ -26,13 +26,13 @@ model Server {
   name       String
   inviteCode String    @unique
   image      String?   @unique
-  userId     String    @db.ObjectId
+  owner      String    @db.ObjectId
   members    Member[]
   channels   Channel[]
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [owner], references: [id], onDelete: Cascade)
 }
 
 model Member {

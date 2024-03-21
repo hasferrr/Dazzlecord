@@ -1,13 +1,22 @@
 'use server'
 
+import { Server } from '@prisma/client'
+
+import { deleteImage } from '@/actions/cloudStorage/deleteImage'
 import { db } from '@/lib/db'
 
-import { deleteImage } from '../cloudStorage/deleteImage'
+export const deleteServer = async (
+  server: Server,
+  currentUserId: string,
+) => {
+  if (server.owner !== currentUserId) {
+    return { error: 'only server owner can delete the server' }
+  }
 
-export const deleteServer = async (serverId: string, serverImage: string | null) => {
   const deletedServer = await db.server.delete({
     where: {
-      id: serverId,
+      id: server.id,
+      owner: currentUserId,
     },
   })
 
@@ -15,11 +24,11 @@ export const deleteServer = async (serverId: string, serverImage: string | null)
     return { error: 'server deletion is failed' }
   }
 
-  if (!serverImage) {
+  if (!server.image) {
     return { error: 'image deletion is failed' }
   }
 
-  await deleteImage(serverImage)
+  await deleteImage(server.image)
 
   return { success: 'server and image are successfully deleted!!!' }
 }
