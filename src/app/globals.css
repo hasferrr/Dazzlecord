@@ -13,12 +13,16 @@ body,
   --dark-navigation: #1E1F22;
   --dark-server: #2b2d31;
   --dark-server-hover: #404249;
+  --dark-server-selected: #35373c;
+  --dark-server-active: #3f4147;
   --dark-server-bot: #232428;
   --dark-page: #313338;
   /* Light */
   --light-navigation: #e3e5e8;
   --light-server: #f2f3f5;
-  --light-server-hover: #ebedef;
+  --light-server-hover: #dfe1e5;
+  --light-server-selected: #d7d9dc;
+  --light-server-active: #e6e6e8;
   --light-server-bot: #ebedef;
   --light-page: #ffffff;
 }

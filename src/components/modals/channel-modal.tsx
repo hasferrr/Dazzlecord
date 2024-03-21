@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { createNewChannel } from '@/actions/channel/createNewChannel'
+import ChannelModalRadio from '@/components/modals/channel-modal-radio'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -70,7 +71,7 @@ const ChannelModal = () => {
     <Dialog open={isCreateChannelOpen} onOpenChange={handleOpenDialog}>
       <DialogContent className="p-0 m-0 dark:bg-[var(--dark-page)] text-black dark:text-white w-[29rem]">
 
-        <DialogHeader className="px-6 pt-6">
+        <DialogHeader className="px-4 pt-5">
           <DialogTitle className="text-lg">Create Channel</DialogTitle>
         </DialogHeader>
 
@@ -80,105 +81,48 @@ const ChannelModal = () => {
             className="space-y-8 flex flex-col justify-center"
           >
 
-            <div className="mx-4">
+            <div className="flex flex-col px-4 gap-4">
               <FormField
                 control={form.control}
-                name="name"
+                name="name" // TODO: change this
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="uppercase font-bold text-xs text-inherit">
                       Channel Type
                     </FormLabel>
                     <FormControl>
-                      <div>
-                        <Input
-                          type="radio"
-                          id="hosting-small"
-                          value="hosting-small"
-                          name="hosting"
-                          className="hidden peer/one"
-                          disabled={isPending}
+                      <div className="flex flex-col gap-2">
+                        <ChannelModalRadio
+                          isPending={isPending}
+                          textTop="Text"
+                          textBot="Send messages, images, GIFs, emoji, opinions, and other."
+                          id="text"
+                          value="text"
+                          className=""
                         />
-                        <Label
-                          htmlFor="hosting-small"
-                          className="inline-flex items-center justify-between w-full p-5
-                          border rounded-lg cursor-pointer
-                          bg-white
-                          dark:bg-gray-800
-                          dark:hover:bg-gray-700
-                          hover:bg-gray-100
-
-                          border-gray-200
-                          dark:border-gray-700
-
-                          text-gray-500
-                          dark:text-gray-400
-                          hover:text-gray-600
-                          dark:hover:text-gray-300
-
-                          peer-checked/one:border-blue-600
-                          peer-checked/one:text-blue-600
-                          dark:peer-checked/one:text-blue-500
-                        ">
-                          <div>
-                            <div className="w-full text-lg font-semibold">
-                              0-50 MB
-                            </div>
-                            <div className="w-full">
-                              Good for small websites
-                            </div>
-                          </div>
-                          {/* svg here */}
-                        </Label>
-
-                        <Input
-                          type="radio"
-                          id="hosting-big"
-                          value="hosting-big"
-                          name="hosting"
-                          className="hidden peer/two"
-                          disabled={isPending}
+                        <ChannelModalRadio
+                          isPending={true}
+                          textTop="Voice"
+                          textBot="Hang out together with voice, video, and screen share."
+                          id="voice"
+                          value="voice"
+                          className="cursor-not-allowed"
                         />
-                        <Label
-                          htmlFor="hosting-big"
-                          className="inline-flex items-center justify-between w-full p-5
-                          border rounded-lg cursor-pointer
-                          bg-white
-                          dark:bg-gray-800
-                          dark:hover:bg-gray-700
-                          hover:bg-gray-100
-
-                          border-gray-200
-                          dark:border-gray-700
-
-                          text-gray-500
-                          dark:text-gray-400
-                          hover:text-gray-600
-                          dark:hover:text-gray-300
-
-                          peer-checked/two:border-blue-600
-                          peer-checked/two:text-blue-600
-                          dark:peer-checked/two:text-blue-500
-                        ">
-                          <div>
-                            <div className="w-full text-lg font-semibold">
-                              500-1000 MB
-                            </div>
-                            <div className="w-full">
-                              Good for large websites
-                            </div>
-                          </div>
-                          {/* svg here */}
-                        </Label>
+                        <ChannelModalRadio
+                          isPending={true}
+                          textTop="Video"
+                          textBot="Hang out together with video channel."
+                          id="video"
+                          value="video"
+                          className="cursor-not-allowed"
+                        />
                       </div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-            </div>
 
-            <div className="mx-4">
               <FormField
                 control={form.control}
                 name="name"
