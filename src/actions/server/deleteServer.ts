@@ -14,7 +14,7 @@ export const deleteServer = async (
       where: {
         id: server.id,
         members: {
-          some: {
+          every: {
             userId: currentUserId,
             role: MemberRole.OWNER,
           },
