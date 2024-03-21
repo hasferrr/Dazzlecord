@@ -68,6 +68,7 @@ const ServerModal = () => {
         form.reset()
         setFile(null)
         onClose()
+        router.push(`servers/${newServer.id}`)
         router.refresh()
       } catch (error) {
         console.log('error:', error)
