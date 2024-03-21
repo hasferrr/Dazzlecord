@@ -1,8 +1,11 @@
 'use client'
 
+import { useTransition } from 'react'
+
 import type { Server } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 
+import { leaveServer } from '@/actions/server/leaveServer'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -17,7 +20,9 @@ import {
   useLeaveServerValue,
 } from '@/context/modalContext'
 
-const LeaveModal = ({ server }: { server: Server }) => {
+const LeaveModal = ({ server, userId }: { server: Server, userId: string }) => {
+  const [isPending, startTransition] = useTransition()
+
   const router = useRouter()
 
   const onLeaveModalClose = useLeaveServerClose()
@@ -28,9 +33,17 @@ const LeaveModal = ({ server }: { server: Server }) => {
   }
 
   const handleLeave = () => {
-    console.log('leave')
-    onLeaveModalClose()
-    router.refresh()
+    startTransition(async () => {
+      const res = await leaveServer(server.id, userId)
+      if (res.error) {
+        console.log(res)
+        return
+      }
+      console.log(res.success)
+      onLeaveModalClose()
+      router.push('/app')
+      router.refresh()
+    })
   }
 
   return (
@@ -46,7 +59,7 @@ const LeaveModal = ({ server }: { server: Server }) => {
         </DialogHeader>
 
         <DialogFooter className="p-4 bg-gray-100 dark:bg-[#2b2d31] rounded-b-lg">
-          <Button variant="destructive" onClick={handleLeave}>
+          <Button variant="destructive" onClick={handleLeave} disabled={isPending}>
             Leave Server
           </Button>
         </DialogFooter>

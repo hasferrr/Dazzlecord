@@ -10,6 +10,7 @@ import {
   UserPlus,
   Users,
 } from 'lucide-react'
+import { Session } from 'next-auth'
 
 import DeleteModal from '@/components/modals/delete-modal'
 import InvitationModal from '@/components/modals/invitation-modal'
@@ -32,10 +33,12 @@ const ServerHeader = ({
   server,
   currentMember,
   origin,
+  session,
 }: {
   server: ServerWithMembersWithUsers,
   currentMember: Member,
   origin: string,
+  session: Session
 }) => {
   const openInvite = useInviteOpen()
   const openDeleteServer = useDeleteServerOpen()
@@ -54,7 +57,7 @@ const ServerHeader = ({
     <div>
       <InvitationModal origin={origin} inviteCode={server.inviteCode} />
       <DeleteModal server={server} />
-      <LeaveModal server={server} />
+      <LeaveModal server={server} userId={session.user.id} />
       <DropdownMenu>
         <DropdownMenuTrigger asChild className="focus:outline-none">
           <button className="

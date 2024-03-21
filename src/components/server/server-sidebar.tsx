@@ -33,6 +33,7 @@ const ServerSidebar = async ({ serverId }: { serverId: string }) => {
         server={server}
         currentMember={currentMember}
         origin={DEPLOYMENT_URL}
+        session={session}
       />
       TODO:
       <ScrollArea className="w-full">
