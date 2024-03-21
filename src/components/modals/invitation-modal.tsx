@@ -40,7 +40,7 @@ const InvitationModal = ({ origin, inviteCode }: {
 
   return (
     <Dialog open={inviteValue} onOpenChange={handleOpenDialog}>
-      <DialogContent className="py-6 px-0 m-0 dark:bg-[#313338] text-black dark:text-white w-[29rem]
+      <DialogContent className="py-6 px-0 m-0 dark:bg-[var(--dark-page)] text-black dark:text-white w-[29rem]
       focus-visible:ring-0 focus-visible:ring-offset-0">
 
         <DialogHeader className="px-6">

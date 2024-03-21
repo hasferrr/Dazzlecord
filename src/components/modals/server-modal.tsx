@@ -188,7 +188,7 @@ const ServerModal = () => {
               />
             </div>
 
-            <DialogFooter className="p-4 bg-gray-100 dark:bg-[#2b2d31] rounded-b-lg">
+            <DialogFooter className="p-4 bg-gray-100 dark:bg-[var(--dark-server)] rounded-b-lg">
               <Button variant="primary" type="submit" disabled={isPending}>
                 Create
               </Button>
