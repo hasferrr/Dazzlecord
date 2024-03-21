@@ -15,7 +15,6 @@ model User {
   name         String
   image        String?
   members      Member[]
-  servers      Server[]
   channels     Channel[]
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
@@ -26,13 +25,10 @@ model Server {
   name       String
   inviteCode String    @unique
   image      String?   @unique
-  owner      String    @db.ObjectId
   members    Member[]
   channels   Channel[]
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
-
-  user User @relation(fields: [owner], references: [id], onDelete: Cascade)
 }
 
 model Member {
@@ -61,8 +57,8 @@ model Channel {
 }
 
 enum MemberRole {
+  OWNER
   ADMIN
-  MODERATOR
   GUEST
 }
 

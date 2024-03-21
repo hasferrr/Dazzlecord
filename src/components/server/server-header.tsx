@@ -44,8 +44,8 @@ const ServerHeader = ({
   const openLeaveServer = useLeaveServerOpen()
 
   const role = currentMember.role
+  const isOwner = role === MemberRole.OWNER
   const isAdmin = role === MemberRole.ADMIN
-  const isModerator = role === MemberRole.MODERATOR
 
   const style = 'px-[8px] py-[6px] text-sm cursor-pointer flex gap-8'
   const blueStyle = `${style} text-indigo-600 dark:text-indigo-400`
@@ -71,7 +71,7 @@ const ServerHeader = ({
           </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="px-[6px] py-[8px] w-56">
-          {(isAdmin || isModerator) && (
+          {(isOwner || isAdmin) && (
             <>
               <DropdownMenuItem className={blueStyle} onClick={openInvite}>
                 Invite People
@@ -80,19 +80,19 @@ const ServerHeader = ({
               <DropdownMenuSeparator />
             </>
           )}
-          {(isAdmin || isModerator) && (
+          {(isOwner || isAdmin) && (
             <DropdownMenuItem className={style}>
               Server Settings
               <Settings className={iconStyle} />
             </DropdownMenuItem>
           )}
-          {(isAdmin || isModerator) && (
+          {(isOwner || isAdmin) && (
             <DropdownMenuItem className={style}>
               Manage Members
               <Users className={iconStyle} />
             </DropdownMenuItem>
           )}
-          {(isAdmin || isModerator) && (
+          {(isOwner || isAdmin) && (
             <>
               <DropdownMenuItem className={style}>
                 Create Channel
@@ -101,13 +101,13 @@ const ServerHeader = ({
               <DropdownMenuSeparator />
             </>
           )}
-          {isAdmin && (
+          {isOwner && (
             <DropdownMenuItem className={redStyle} onClick={openDeleteServer}>
               Delete Server
               <Trash className={iconStyle} />
             </DropdownMenuItem>
           )}
-          {!isAdmin && (
+          {!isOwner && (
             <DropdownMenuItem className={redStyle} onClick={openLeaveServer}>
               Leave Server
               <LogOut className={iconStyle} />

@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "tsc": "tsc --project tsconfig.json",
-    "db": "prisma studio"
+    "db": "prisma studio",
+    "db:update": "prisma generate && prisma db push"
   },
   "prisma": {
     "schema": "src/prisma/schema.prisma"
