@@ -44,7 +44,7 @@ const NavigationItem = ({ id, name, image }: NavigationItemProps) => {
               alt="server"
               width={48}
               height={48}
-              quality={100}
+              priority
               unoptimized
             />
           </div>
