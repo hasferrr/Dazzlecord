@@ -1,8 +1,9 @@
 'use client'
 
-import { useTransition } from 'react'
+import { useState, useTransition } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { ChannelType } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -27,33 +28,38 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+import { RadioGroup } from '@/components/ui/radio-group'
 import {
   useCreateChannelClose,
   useCreateChannelValue,
 } from '@/context/modalContext'
-import { serverModalSchema } from '@/schemas'
+import { channelModalSchema } from '@/schemas'
 
 const ChannelModal = () => {
   const [isPending, startTransition] = useTransition()
+  const [radio, setRadio] = useState<string | undefined>(undefined)
 
   const router = useRouter()
 
   const onCreateChannelClose = useCreateChannelClose()
   const isCreateChannelOpen = useCreateChannelValue()
 
-  const form = useForm<z.infer<typeof serverModalSchema>>({
-    resolver: zodResolver(serverModalSchema),
+  const form = useForm<z.infer<typeof channelModalSchema>>({
+    resolver: zodResolver(channelModalSchema),
     defaultValues: {
       name: '',
+      type: undefined,
     },
   })
 
   const handleOpenDialog = () => {
     onCreateChannelClose()
+    form.reset()
+    setRadio(undefined)
   }
 
-  const onSubmit = async () => {
+  const onSubmit = async (values: z.infer<typeof channelModalSchema>) => {
+    console.log(values)
     startTransition(async () => {
       const res = await createNewChannel()
       if (res.error) {
@@ -84,39 +90,46 @@ const ChannelModal = () => {
             <div className="flex flex-col px-4 gap-4">
               <FormField
                 control={form.control}
-                name="name" // TODO: change this
+                name="type"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="uppercase font-bold text-xs text-inherit">
                       Channel Type
                     </FormLabel>
                     <FormControl>
-                      <div className="flex flex-col gap-2">
+                      <RadioGroup
+                        className="flex flex-col gap-2"
+                        onValueChange={(event) => {
+                          field.onChange(event)
+                          setRadio(form.getValues('type'))
+                        }}
+                        defaultValue={field.value}
+                      >
                         <ChannelModalRadio
+                          radio={radio}
+                          id={ChannelType.TEXT}
                           isPending={isPending}
                           textTop="Text"
                           textBot="Send messages, images, GIFs, emoji, opinions, and other."
-                          id="text"
-                          value="text"
                           className=""
                         />
                         <ChannelModalRadio
+                          radio={radio}
+                          id={ChannelType.VOICE}
                           isPending={true}
                           textTop="Voice"
                           textBot="Hang out together with voice, video, and screen share."
-                          id="voice"
-                          value="voice"
                           className="cursor-not-allowed"
                         />
                         <ChannelModalRadio
+                          radio={radio}
+                          id={ChannelType.VIDEO}
                           isPending={true}
                           textTop="Video"
                           textBot="Hang out together with video channel."
-                          id="video"
-                          value="video"
                           className="cursor-not-allowed"
                         />
-                      </div>
+                      </RadioGroup>
                     </FormControl>
                     <FormMessage />
                   </FormItem>

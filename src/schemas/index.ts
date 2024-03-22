@@ -1,3 +1,4 @@
+import { ChannelType } from '@prisma/client'
 import { z } from 'zod'
 
 const ACCEPTED_IMAGE_TYPES = ['image/png', 'image/jpg', 'image/jpeg']
@@ -57,4 +58,13 @@ export const serverModalSchema = z.object({
         ACCEPTED_IMAGE_TYPES.includes(file.type)
       )
     }, 'File type is not supported'),
+})
+
+export const channelModalSchema = z.object({
+  name: z
+    .string()
+    .min(1, {
+      message: 'Channel name is required.',
+    }),
+  type: z.nativeEnum(ChannelType),
 })
