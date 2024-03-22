@@ -1,6 +1,6 @@
 'use client'
 
-import { Member, MemberRole, Server } from '@prisma/client'
+import { type Member, MemberRole, type Server } from '@prisma/client'
 import {
   ChevronDown,
   LogOut,
@@ -10,7 +10,7 @@ import {
   UserPlus,
   Users,
 } from 'lucide-react'
-import { Session } from 'next-auth'
+import type { Session } from 'next-auth'
 
 import ChannelModal from '@/components/modals/channel-modal'
 import DeleteModal from '@/components/modals/delete-modal'

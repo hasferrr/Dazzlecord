@@ -7,7 +7,7 @@ import { auth } from '@/auth'
 import { db } from '@/lib/db'
 import { trimString } from '@/lib/helpers'
 
-export const createNewServer = async (serverName: string, imageName: string) => {
+export const createNewServer = async (serverName: string) => {
   const session = await auth()
   if (!session) {
     throw Error('Unauthorized')

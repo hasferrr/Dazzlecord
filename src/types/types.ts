@@ -1,4 +1,4 @@
-import { Channel, Member, Server, User } from '@prisma/client'
+import type { Channel, Member, Server, User } from '@prisma/client'
 
 export type ServerWithMembersWithUsers = Server & {
   channels: Channel[]

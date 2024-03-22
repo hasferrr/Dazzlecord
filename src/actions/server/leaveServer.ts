@@ -1,8 +1,15 @@
 'use server'
 
+import { auth } from '@/auth'
 import { db } from '@/lib/db'
 
-export const leaveServer = async (serverId: string, userId: string) => {
+export const leaveServer = async (serverId: string, _: string) => {
+  const session = await auth()
+  if (!session) {
+    throw Error('Unauthorized')
+  }
+  const userId = session.user.id
+
   const server = await db.member.deleteMany({
     where: {
       serverId,

@@ -59,8 +59,7 @@ const ServerModal = () => {
     console.log('uploading...')
     startTransition(async () => {
       try {
-        const fileName = `${values.name}-${values.files[0].name}`
-        const newServer = await createNewServer(values.name, fileName)
+        const newServer = await createNewServer(values.name)
         if (newServer.image) {
           await uploadPhoto(values.files[0], newServer.image)
         }

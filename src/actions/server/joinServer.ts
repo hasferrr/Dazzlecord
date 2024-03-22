@@ -2,9 +2,16 @@
 
 import { redirect } from 'next/navigation'
 
+import { auth } from '@/auth'
 import { db } from '@/lib/db'
 
-export const joinServer = async (userId: string, inviteCode: string) => {
+export const joinServer = async (inviteCode: string) => {
+  const session = await auth()
+  if (!session) {
+    throw Error('Unauthorized')
+  }
+  const userId = session.user.id
+
   const existingServer = await db.server.findFirst({
     where: {
       inviteCode: inviteCode,

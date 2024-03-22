@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, Dispatch, useContext, useReducer } from 'react'
+import { createContext, type Dispatch, useContext, useReducer } from 'react'
 
 import PropTypes from 'prop-types'
 

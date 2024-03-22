@@ -1,6 +1,6 @@
 'use server'
 
-import { MemberRole, Server } from '@prisma/client'
+import { MemberRole, type Server } from '@prisma/client'
 
 import { deleteImage } from '@/actions/cloudStorage/deleteImage'
 import { db } from '@/lib/db'
