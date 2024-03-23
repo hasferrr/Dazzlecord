@@ -32,11 +32,13 @@ import {
   useCreateChannelClose,
   useCreateChannelValue,
 } from '@/context/modalContext'
+import { modifyString } from '@/lib/helpers'
 import { channelModalSchema } from '@/schemas/channelModalSchema'
 
 const ChannelModal = ({ serverId }: { serverId: string }) => {
   const [isPending, startTransition] = useTransition()
   const [radio, setRadio] = useState<string | undefined>(undefined)
+  const [channelName, setChannelName] = useState<string | undefined>(undefined)
 
   const router = useRouter()
 
@@ -55,6 +57,7 @@ const ChannelModal = ({ serverId }: { serverId: string }) => {
     onCreateChannelClose()
     form.reset()
     setRadio(undefined)
+    setChannelName(undefined)
   }
 
   const onSubmit = async (values: z.infer<typeof channelModalSchema>) => {
@@ -65,6 +68,9 @@ const ChannelModal = ({ serverId }: { serverId: string }) => {
         return
       }
       console.log(res.success, res.data)
+      form.reset()
+      setRadio(undefined)
+      setChannelName(undefined)
       onCreateChannelClose()
       router.refresh()
     })
@@ -147,6 +153,12 @@ const ChannelModal = ({ serverId }: { serverId: string }) => {
                         className="bg-zinc-300/50 dark:bg-[var(--dark-navigation)] border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                         placeholder="Channel Name"
                         {...field}
+                        value={channelName}
+                        onChange={(e) => {
+                          const modified = modifyString(e.target.value)
+                          setChannelName(modified)
+                          form.setValue('name', modified)
+                        }}
                       />
                     </FormControl>
                     <FormMessage />

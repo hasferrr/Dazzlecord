@@ -4,7 +4,7 @@ import { ChannelType } from '@prisma/client'
 
 import { auth } from '@/auth'
 import { db } from '@/lib/db'
-import { trimString } from '@/lib/helpers'
+import { isValidChannelName } from '@/lib/helpers'
 
 export const createNewChannel = async (
   channelName: string,
@@ -17,10 +17,14 @@ export const createNewChannel = async (
   }
   const userId = session.user.id
 
+  if (!isValidChannelName(channelName)) {
+    return { error: 'the channel name is not meets its criteria' }
+  }
+
   try {
     const newChannel = await db.channel.create({
       data: {
-        name: trimString(channelName),
+        name: channelName,
         type: channelType,
         userId,
         serverId,
