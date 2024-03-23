@@ -34,7 +34,7 @@ import {
 } from '@/context/modalContext'
 import { channelModalSchema } from '@/schemas/channelModalSchema'
 
-const ChannelModal = () => {
+const ChannelModal = ({ serverId }: { serverId: string }) => {
   const [isPending, startTransition] = useTransition()
   const [radio, setRadio] = useState<string | undefined>(undefined)
 
@@ -58,16 +58,14 @@ const ChannelModal = () => {
   }
 
   const onSubmit = async (values: z.infer<typeof channelModalSchema>) => {
-    console.log(values)
     startTransition(async () => {
-      const res = await createNewChannel()
+      const res = await createNewChannel(values.name, values.type, serverId)
       if (res.error) {
         console.log(res)
         return
       }
-      console.log(res.success)
+      console.log(res.success, res.data)
       onCreateChannelClose()
-      router.push('/app')
       router.refresh()
     })
   }

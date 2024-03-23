@@ -60,7 +60,7 @@ const ServerHeader = ({
       <InvitationModal origin={origin} inviteCode={server.inviteCode} />
       <DeleteModal server={server} currentUserId={session.user.id} />
       <LeaveModal server={server} userId={session.user.id} />
-      <ChannelModal />
+      <ChannelModal serverId={server.id} />
       <DropdownMenu>
         <DropdownMenuTrigger asChild className="focus:outline-none">
           <button className="
