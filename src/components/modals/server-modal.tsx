@@ -33,12 +33,21 @@ import {
   useServerClose,
   useServerValue,
 } from '@/context/modalContext'
-import { serverModalSchema } from '@/schemas'
+import {
+  checkLength,
+  checkSize,
+  checkTypes,
+  failedLength,
+  failedSize,
+  failedTypes,
+  serverModalSchema,
+} from '@/schemas/serverModalSchema'
 import { uploadPhoto } from '@/services/upload-photo'
 import SVGUploadIcon from '@/svg/SVGUploadIcon'
 
 const ServerModal = () => {
   const [file, setFile] = useState<File | null>(null)
+  const [fileErrorMsg, setFileErrorMsg] = useState<string | undefined>(undefined)
   const [isPending, startTransition] = useTransition()
 
   const router = useRouter()
@@ -85,9 +94,25 @@ const ServerModal = () => {
 
   const handleImageChange = (event: React.FormEvent<HTMLInputElement>) => {
     const inputElement = event.target as HTMLInputElement
-    if (inputElement.files) {
-      setFile(inputElement.files[0])
+    const files = inputElement.files
+    if (!files) {
+      setFileErrorMsg(undefined)
+      return
     }
+    if (!checkLength(files)) {
+      setFileErrorMsg(failedLength)
+      return
+    }
+    if (!checkSize(files)) {
+      setFileErrorMsg(failedSize)
+      return
+    }
+    if (!checkTypes(files)) {
+      setFileErrorMsg(failedTypes)
+      return
+    }
+    setFileErrorMsg(undefined)
+    setFile(files[0])
   }
 
   const handleResetImage = () => {
@@ -150,7 +175,7 @@ const ServerModal = () => {
                           }
                         </div>
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage>{fileErrorMsg}</FormMessage>
                     </FormItem>
                   )
                 }}
