@@ -32,7 +32,7 @@ import {
   useCreateChannelClose,
   useCreateChannelValue,
 } from '@/context/modalContext'
-import { channelModalSchema } from '@/schemas'
+import { channelModalSchema } from '@/schemas/channelModalSchema'
 
 const ChannelModal = () => {
   const [isPending, startTransition] = useTransition()

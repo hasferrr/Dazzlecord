@@ -19,7 +19,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
-import { registerSchema } from '@/schemas'
+import { registerSchema } from '@/schemas/registerSchema'
 
 import FormWrapper from './form-wrapper'
 
