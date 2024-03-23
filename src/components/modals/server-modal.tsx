@@ -75,8 +75,9 @@ const ServerModal = () => {
         console.log('success!!!')
         form.reset()
         setFile(null)
+        setFileErrorMsg(undefined)
         onClose()
-        router.push(`servers/${newServer.id}`)
+        router.push(`/servers/${newServer.id}`)
         router.refresh()
       } catch (error) {
         console.log('error:', error)
@@ -88,6 +89,7 @@ const ServerModal = () => {
     setTimeout(() => {
       form.reset()
       setFile(null)
+      setFileErrorMsg(undefined)
     }, 100)
     onClose()
   }
@@ -96,18 +98,25 @@ const ServerModal = () => {
     const inputElement = event.target as HTMLInputElement
     const files = inputElement.files
     if (!files) {
+      setFile(null)
       setFileErrorMsg(undefined)
       return
     }
     if (!checkLength(files)) {
+      form.resetField('files')
+      setFile(null)
       setFileErrorMsg(failedLength)
       return
     }
     if (!checkSize(files)) {
+      form.resetField('files')
+      setFile(null)
       setFileErrorMsg(failedSize)
       return
     }
     if (!checkTypes(files)) {
+      form.resetField('files')
+      setFile(null)
       setFileErrorMsg(failedTypes)
       return
     }
@@ -118,6 +127,7 @@ const ServerModal = () => {
   const handleResetImage = () => {
     form.resetField('files')
     setFile(null)
+    setFileErrorMsg(undefined)
   }
 
   return (
@@ -167,7 +177,7 @@ const ServerModal = () => {
                             }
                           </label>
                           {file
-                            ? <button onClick={handleResetImage} type="button">
+                            ? <button onClick={handleResetImage} type="button" disabled={isPending}>
                               <X className="absolute z-50 top-0 right-0 rounded-full
                               bg-rose-500 text-white p-1" />
                             </button>
