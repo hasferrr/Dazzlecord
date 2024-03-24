@@ -70,7 +70,7 @@ const ServerHeader = ({
           bg-[--var(--light-server)] dark:bg-[--var(--dark-server)]
           hover:[--var(--light-server-hover)] dark:hover:bg-[--var(--dark-server-hover)]
           ">
-            {server.name}
+            <p className="line-clamp-1">{server.name}</p>
             <ChevronDown className="h-5 w-5 ml-auto" />
           </button>
         </DropdownMenuTrigger>
@@ -98,7 +98,7 @@ const ServerHeader = ({
           )}
           {(isOwner || isAdmin) && (
             <>
-              <DropdownMenuItem className={style}  onClick={openCreateChannel}>
+              <DropdownMenuItem className={style} onClick={openCreateChannel}>
                 Create Channel
                 <PlusCircle className={iconStyle} />
               </DropdownMenuItem>
