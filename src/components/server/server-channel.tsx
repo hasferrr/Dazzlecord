@@ -45,8 +45,10 @@ const ServerChannel = ({
     >
       <Icon className="w-5 h-5 text-channel-btn-no-hover" />
       <p className={cn(
-        'line-clamp-1 font-medium text-sm transition',
+        'truncate font-medium text-sm transition',
         'text-channel-btn-group',
+        'text-left',
+        'w-[156px] group-hover:w-[116px]',
       )}>
         {channel.name}
       </p>
