@@ -53,7 +53,7 @@ const DeleteChannelModal = ({ channel }: {
       <DialogContent className="p-0 m-0 dark:bg-[var(--dark-page)] text-black dark:text-white w-[29rem]">
 
         <DialogHeader className="px-6 pt-6">
-          <DialogTitle className="text-lg font-bold">Delete {`'${channel.name}'`}</DialogTitle>
+          <DialogTitle className="text-lg font-bold">Delete Channel</DialogTitle>
           <DialogDescription className="text-sm mt-8 text-primary">
             Are you sure you want to delete <strong>#{channel.name}</strong>? This action cannot be undone.
           </DialogDescription>

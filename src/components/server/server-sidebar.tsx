@@ -1,4 +1,4 @@
-import { ChannelType } from '@prisma/client'
+import { type Channel, ChannelType } from '@prisma/client'
 import { redirect } from 'next/navigation'
 
 import { auth } from '@/auth'
@@ -27,6 +27,28 @@ const ServerSidebar = async ({ serverId }: { serverId: string }) => {
     return redirect('/')
   }
 
+  const textChannel: JSX.Element[] = []
+  const voiceChannel: JSX.Element[] = []
+  const videoChannel: JSX.Element[] = []
+
+  const serverChannel = (ch: Channel) => (
+    <ServerChannel
+      key={ch.id}
+      role={currentMember.role}
+      channel={ch}
+    />
+  )
+
+  server.channels.forEach((channel) => {
+    if (channel.type === ChannelType.TEXT) {
+      textChannel.push(serverChannel(channel))
+    } else if (channel.type === ChannelType.VOICE) {
+      voiceChannel.push(serverChannel(channel))
+    } else {
+      videoChannel.push(serverChannel(channel))
+    }
+  })
+
   return (
     <div className="flex flex-col gap-2
     h-full w-60 text-primary
@@ -38,20 +60,36 @@ const ServerSidebar = async ({ serverId }: { serverId: string }) => {
         origin={DEPLOYMENT_URL}
       />
       <ScrollArea className="w-full px-4 flex flex-col gap-y-2">
-        {server.channels.length && (
+        {textChannel.length > 0 && (
           <div>
             <ServerSection
               role={currentMember.role}
               channelType={ChannelType.TEXT}
             />
             <div className="flex flex-col gap-[2px]">
-              {server.channels.map((channel) => (
-                <ServerChannel
-                  key={channel.id}
-                  role={currentMember.role}
-                  channel={channel}
-                />
-              ))}
+              {textChannel}
+            </div>
+          </div>
+        )}
+        {voiceChannel.length > 0 && (
+          <div>
+            <ServerSection
+              role={currentMember.role}
+              channelType={ChannelType.VOICE}
+            />
+            <div className="flex flex-col gap-[2px]">
+              {voiceChannel}
+            </div>
+          </div>
+        )}
+        {videoChannel.length > 0 && (
+          <div>
+            <ServerSection
+              role={currentMember.role}
+              channelType={ChannelType.VIDEO}
+            />
+            <div className="flex flex-col gap-[2px]">
+              {videoChannel}
             </div>
           </div>
         )}

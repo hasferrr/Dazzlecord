@@ -119,18 +119,18 @@ const ChannelModal = ({ serverId }: { serverId: string }) => {
                         <ChannelModalRadio
                           radio={radio}
                           id={ChannelType.VOICE}
-                          isPending={true}
+                          isPending={isPending}
                           textTop="Voice"
                           textBot="Hang out together with voice, video, and screen share."
-                          className="cursor-not-allowed"
+                          className=""
                         />
                         <ChannelModalRadio
                           radio={radio}
                           id={ChannelType.VIDEO}
-                          isPending={true}
+                          isPending={isPending}
                           textTop="Video"
                           textBot="Hang out together with video channel."
-                          className="cursor-not-allowed"
+                          className=""
                         />
                       </RadioGroup>
                     </FormControl>
