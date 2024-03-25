@@ -4,13 +4,15 @@ import { createContext, type Dispatch, useContext, useReducer } from 'react'
 
 import PropTypes from 'prop-types'
 
-interface Modal {
-  server: boolean
-  invite: boolean
-  delete: boolean
-  leave: boolean
-  channel: boolean
+const initialValue = {
+  invite: false,
+  createServer: false,
+  deleteServer: false,
+  leaveServer: false,
+  createChannel: false,
 }
+
+type Modal = typeof initialValue
 type ModalDispatch = { type: 'SET', payload: Modal }
 type ModalReducer = [Modal, Dispatch<ModalDispatch>]
 
@@ -21,14 +23,6 @@ const modalReducer = (state: Modal, action: ModalDispatch): Modal => {
   default:
     return state
   }
-}
-
-const initialValue = {
-  server: false,
-  invite: false,
-  delete: false,
-  leave: false,
-  channel: false,
 }
 
 const ModalContext = createContext<ModalReducer>([initialValue, () => initialValue])
@@ -55,7 +49,6 @@ const useAbstractGetState = (type: keyof Modal) => {
 
 const useAbstractDispatch = (type: keyof Modal, value: boolean) => {
   const [state, dispatch] = useContext(ModalContext)
-
   return () => {
     dispatch({
       type: 'SET',
@@ -68,21 +61,21 @@ const useAbstractDispatch = (type: keyof Modal, value: boolean) => {
 }
 
 export const useInviteValue = () => useAbstractGetState('invite')
-export const useServerValue = () => useAbstractGetState('server')
-export const useDeleteServerValue = () => useAbstractGetState('delete')
-export const useLeaveServerValue = () => useAbstractGetState('leave')
-export const useCreateChannelValue = () => useAbstractGetState('channel')
+export const useCreateServerValue = () => useAbstractGetState('createServer')
+export const useDeleteServerValue = () => useAbstractGetState('deleteServer')
+export const useLeaveServerValue = () => useAbstractGetState('leaveServer')
+export const useCreateChannelValue = () => useAbstractGetState('createChannel')
 
 export const useInviteOpen = () => useAbstractDispatch('invite', true)
-export const useServerOpen = () => useAbstractDispatch('server', true)
-export const useDeleteServerOpen = () => useAbstractDispatch('delete', true)
-export const useLeaveServerOpen = () => useAbstractDispatch('leave', true)
-export const useCreateChannelOpen = () => useAbstractDispatch('channel', true)
+export const useCreateServerOpen = () => useAbstractDispatch('createServer', true)
+export const useDeleteServerOpen = () => useAbstractDispatch('deleteServer', true)
+export const useLeaveServerOpen = () => useAbstractDispatch('leaveServer', true)
+export const useCreateChannelOpen = () => useAbstractDispatch('createChannel', true)
 
 export const useInviteClose = () => useAbstractDispatch('invite', false)
-export const useServerClose = () => useAbstractDispatch('server', false)
-export const useDeleteServerClose = () => useAbstractDispatch('delete', false)
-export const useLeaveServerClose = () => useAbstractDispatch('leave', false)
-export const useCreateChannelClose = () => useAbstractDispatch('channel', false)
+export const useCreateServerClose = () => useAbstractDispatch('createServer', false)
+export const useDeleteServerClose = () => useAbstractDispatch('deleteServer', false)
+export const useLeaveServerClose = () => useAbstractDispatch('leaveServer', false)
+export const useCreateChannelClose = () => useAbstractDispatch('createChannel', false)
 
 export default ModalContext

@@ -3,10 +3,10 @@
 import { Plus } from 'lucide-react'
 
 import { ActionTooltip } from '@/components/action-tooltip'
-import { useServerOpen } from '@/context/modalContext'
+import { useCreateServerOpen } from '@/context/modalContext'
 
 const NavigationAction = () => {
-  const onOpen = useServerOpen()
+  const onOpen = useCreateServerOpen()
 
   return (
     <div>

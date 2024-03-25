@@ -30,8 +30,8 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import {
-  useServerClose,
-  useServerValue,
+  useCreateServerClose,
+  useCreateServerValue,
 } from '@/context/modalContext'
 import {
   checkLength,
@@ -52,8 +52,8 @@ const ServerModal = () => {
 
   const router = useRouter()
 
-  const onClose = useServerClose()
-  const isModalOpen = useServerValue()
+  const onClose = useCreateServerClose()
+  const isModalOpen = useCreateServerValue()
 
   const form = useForm<z.infer<typeof serverModalSchema>>({
     resolver: zodResolver(serverModalSchema),
