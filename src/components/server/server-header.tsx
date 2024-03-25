@@ -13,9 +13,9 @@ import {
 import type { Session } from 'next-auth'
 
 import ChannelModal from '@/components/modals/channel-modal'
-import DeleteModal from '@/components/modals/delete-modal'
+import DeleteServerModal from '@/components/modals/delete-server-modal'
 import InvitationModal from '@/components/modals/invitation-modal'
-import LeaveModal from '@/components/modals/leave-modal'
+import LeaveServerModal from '@/components/modals/leave-server-modal'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -58,8 +58,8 @@ const ServerHeader = ({
   return (
     <div>
       <InvitationModal origin={origin} inviteCode={server.inviteCode} />
-      <DeleteModal server={server} currentUserId={session.user.id} />
-      <LeaveModal server={server} userId={session.user.id} />
+      <DeleteServerModal server={server} currentUserId={session.user.id} />
+      <LeaveServerModal server={server} userId={session.user.id} />
       <ChannelModal serverId={server.id} />
       <DropdownMenu>
         <DropdownMenuTrigger asChild className="focus:outline-none">

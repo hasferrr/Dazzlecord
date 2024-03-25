@@ -20,7 +20,7 @@ import {
   useDeleteServerValue,
 } from '@/context/modalContext'
 
-const DeleteModal = ({ server, currentUserId }: {
+const DeleteServerModal = ({ server, currentUserId }: {
   server: Server,
   currentUserId: string,
 }) => {
@@ -71,4 +71,4 @@ const DeleteModal = ({ server, currentUserId }: {
   )
 }
 
-export default DeleteModal
+export default DeleteServerModal

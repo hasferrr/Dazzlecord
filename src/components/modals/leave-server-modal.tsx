@@ -20,7 +20,7 @@ import {
   useLeaveServerValue,
 } from '@/context/modalContext'
 
-const LeaveModal = ({ server, userId }: { server: Server, userId: string }) => {
+const LeaveServerModal = ({ server, userId }: { server: Server, userId: string }) => {
   const [isPending, startTransition] = useTransition()
 
   const router = useRouter()
@@ -69,4 +69,4 @@ const LeaveModal = ({ server, userId }: { server: Server, userId: string }) => {
   )
 }
 
-export default LeaveModal
+export default LeaveServerModal

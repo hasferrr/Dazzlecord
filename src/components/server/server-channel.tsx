@@ -4,10 +4,9 @@ import {
   type Channel,
   ChannelType,
   MemberRole,
-  type Server,
 } from '@prisma/client'
 import { Edit, Hash, Mic, Trash, Video } from 'lucide-react'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams } from 'next/navigation'
 
 import { ActionTooltip } from '@/components/action-tooltip'
 import { cn } from '@/lib/utils'
