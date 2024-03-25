@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation'
 
 import { auth } from '@/auth'
-import ServerModal from '@/components/modals/server-modal'
+import ServerModal from '@/components/modals/server/server-modal'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
 import { getAllServersByUserId } from '@/services/server'

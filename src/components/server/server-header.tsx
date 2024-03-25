@@ -12,10 +12,10 @@ import {
 } from 'lucide-react'
 import type { Session } from 'next-auth'
 
-import ChannelModal from '@/components/modals/channel-modal'
-import DeleteServerModal from '@/components/modals/delete-server-modal'
+import ChannelModal from '@/components/modals/channel/channel-modal'
 import InvitationModal from '@/components/modals/invitation-modal'
-import LeaveServerModal from '@/components/modals/leave-server-modal'
+import DeleteServerModal from '@/components/modals/server/delete-server-modal'
+import LeaveServerModal from '@/components/modals/server/leave-server-modal'
 import {
   DropdownMenu,
   DropdownMenuContent,

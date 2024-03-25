@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { createNewChannel } from '@/actions/channel/createNewChannel'
-import ChannelModalRadio from '@/components/modals/channel-modal-radio'
+import ChannelModalRadio from '@/components/modals/channel/channel-modal-radio'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
