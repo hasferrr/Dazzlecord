@@ -10,7 +10,9 @@ import { useParams } from 'next/navigation'
 
 import { ActionTooltip } from '@/components/action-tooltip'
 import DeleteChannelModal from '@/components/modals/channel/delete-server-modal'
+import EditChannelModal from '@/components/modals/channel/edit-channel-modal'
 import { useDeleteChannelOpen } from '@/context/deleteChannelContext'
+import { useEditChannelOpen } from '@/context/editChannelContext'
 import { cn } from '@/lib/utils'
 
 interface ServerChannelProps {
@@ -31,12 +33,14 @@ const ServerChannel = ({
   const params = useParams()
 
   const deleteChannelOpen = useDeleteChannelOpen(channel.id)
+  const editChannelOpen = useEditChannelOpen(channel.id)
 
   const Icon = iconMap[channel.type]
 
   return (
     <div>
       <DeleteChannelModal channel={channel} />
+      <EditChannelModal channel={channel} />
       <button
         onClick={() => { }}
         className={cn(
@@ -61,7 +65,7 @@ const ServerChannel = ({
           <div className="ml-auto flex items-center gap-x-2">
             <ActionTooltip label="Edit">
               <Edit
-                onClick={() => { }}
+                onClick={editChannelOpen}
                 className="hidden group-hover:block w-4 h-4 text-channel-btn transition"
               />
             </ActionTooltip>
