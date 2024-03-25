@@ -36,7 +36,6 @@ const ServerSidebar = async ({ serverId }: { serverId: string }) => {
         server={server}
         currentMember={currentMember}
         origin={DEPLOYMENT_URL}
-        session={session}
       />
       <ScrollArea className="w-full px-4 flex flex-col gap-y-2">
         {server.channels.length && (

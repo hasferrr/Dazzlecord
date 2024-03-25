@@ -3,7 +3,7 @@
 import { auth } from '@/auth'
 import { db } from '@/lib/db'
 
-export const leaveServer = async (serverId: string, _: string) => {
+export const leaveServer = async (serverId: string) => {
   const session = await auth()
   if (!session) {
     throw Error('Unauthorized')

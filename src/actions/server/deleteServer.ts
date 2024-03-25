@@ -3,19 +3,25 @@
 import { MemberRole, type Server } from '@prisma/client'
 
 import { deleteImage } from '@/actions/cloudStorage/deleteImage'
+import { auth } from '@/auth'
 import { db } from '@/lib/db'
 
 export const deleteServer = async (
   server: Server,
-  currentUserId: string,
 ) => {
+  const session = await auth()
+  if (!session) {
+    throw Error('Unauthorized')
+  }
+  const userId = session.user.id
+
   try {
     await db.server.delete({
       where: {
         id: server.id,
         members: {
           every: {
-            userId: currentUserId,
+            userId: userId,
             role: MemberRole.OWNER,
           },
         },

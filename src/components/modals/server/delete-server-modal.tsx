@@ -20,9 +20,8 @@ import {
   useDeleteServerValue,
 } from '@/context/modalContext'
 
-const DeleteServerModal = ({ server, currentUserId }: {
+const DeleteServerModal = ({ server }: {
   server: Server,
-  currentUserId: string,
 }) => {
   const [isPending, startTransition] = useTransition()
 
@@ -37,7 +36,7 @@ const DeleteServerModal = ({ server, currentUserId }: {
 
   const handleDelete = async () => {
     startTransition(async () => {
-      const res = await deleteServer(server, currentUserId)
+      const res = await deleteServer(server)
       if (res.error) {
         console.log(res)
         return

@@ -20,7 +20,7 @@ import {
   useLeaveServerValue,
 } from '@/context/modalContext'
 
-const LeaveServerModal = ({ server, userId }: { server: Server, userId: string }) => {
+const LeaveServerModal = ({ server }: { server: Server }) => {
   const [isPending, startTransition] = useTransition()
 
   const router = useRouter()
@@ -34,7 +34,7 @@ const LeaveServerModal = ({ server, userId }: { server: Server, userId: string }
 
   const handleLeave = () => {
     startTransition(async () => {
-      const res = await leaveServer(server.id, userId)
+      const res = await leaveServer(server.id)
       if (res.error) {
         console.log(res)
         return
