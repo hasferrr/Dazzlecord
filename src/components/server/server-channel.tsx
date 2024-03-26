@@ -6,7 +6,7 @@ import {
   MemberRole,
 } from '@prisma/client'
 import { Edit, Hash, Mic, Trash, Video } from 'lucide-react'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 
 import { ActionTooltip } from '@/components/action-tooltip'
 import DeleteChannelModal from '@/components/modals/channel/delete-server-modal'
@@ -31,18 +31,23 @@ const ServerChannel = ({
   channel,
 }: ServerChannelProps) => {
   const params = useParams()
+  const router = useRouter()
 
   const deleteChannelOpen = useDeleteChannelOpen(channel.id)
   const editChannelOpen = useEditChannelOpen(channel.id)
 
   const Icon = iconMap[channel.type]
 
+  const navigateToChannel = () => {
+    router.push(`/servers/${params?.['serverId']}/${channel.id}`)
+  }
+
   return (
     <div>
       <DeleteChannelModal channel={channel} />
       <EditChannelModal channel={channel} />
       <button
-        onClick={() => { }}
+        onClick={navigateToChannel}
         className={cn(
           'flex items-center gap-x-2',
           'p-2 w-full',
@@ -58,6 +63,7 @@ const ServerChannel = ({
           'text-channel-btn-group',
           'text-left',
           'w-[156px] group-hover:w-[116px]',
+          params?.['channelId'] === channel.id && 'text-on-channel'
         )}>
           {channel.name}
         </p>
