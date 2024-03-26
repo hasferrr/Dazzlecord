@@ -1,3 +1,5 @@
+'use client'
+
 import axios from 'axios'
 
 import { generateV4SignedPolicy } from '@/actions/cloudStorage/generate-v4-url'

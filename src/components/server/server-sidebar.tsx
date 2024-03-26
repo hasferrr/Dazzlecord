@@ -1,10 +1,10 @@
 import { type Channel, ChannelType } from '@prisma/client'
 import { redirect } from 'next/navigation'
 
+import { findMember } from '@/actions/prisma/member'
+import { getServerByUserIdIncludesAll } from '@/actions/prisma/server'
 import { auth } from '@/auth'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { findMember } from '@/services/member'
-import { getServerByUserIdIncludesAll } from '@/services/server'
 import { DEPLOYMENT_URL } from '@/utils/config'
 
 import ServerChannel from './server-channel'

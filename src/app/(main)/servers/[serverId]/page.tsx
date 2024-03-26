@@ -1,13 +1,11 @@
 import { redirect } from 'next/navigation'
 
+import { getServerWithAnyChannel } from '@/actions/prisma/server'
 import { auth } from '@/auth'
-import { db } from '@/lib/db'
 
 const ServerIdPage = async ({ params }: {
   params: { serverId: string }
 }) => {
-  'use server'
-
   const session = await auth()
   if (!session) {
     throw Error('Unauthorized')
@@ -16,26 +14,7 @@ const ServerIdPage = async ({ params }: {
 
   let server
   try {
-    server = await db.server.findUnique({
-      where: {
-        id: params.serverId,
-        members: {
-          some: {
-            userId,
-          },
-        },
-      },
-      include: {
-        channels: {
-          where: {
-            name: {
-              contains: '',
-            },
-          },
-        },
-      },
-    })
-    console.log(server)
+    server = await getServerWithAnyChannel(params.serverId, userId)
   } catch (error) {
     console.log(error)
   }

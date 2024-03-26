@@ -1,3 +1,5 @@
+'use server'
+
 import { db } from '@/lib/db'
 
 export const getAllServersByUserId = async (userId: string) =>
@@ -28,6 +30,27 @@ export const getServerByUserIdIncludesAll = async (serverId: string) =>
         },
         orderBy: {
           role: 'asc',
+        },
+      },
+    },
+  })
+
+export const getServerWithAnyChannel = async (serverId: string, userId: string) =>
+  await db.server.findUnique({
+    where: {
+      id: serverId,
+      members: {
+        some: {
+          userId,
+        },
+      },
+    },
+    include: {
+      channels: {
+        where: {
+          name: {
+            contains: '',
+          },
         },
       },
     },

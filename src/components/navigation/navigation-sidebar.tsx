@@ -1,10 +1,10 @@
 import { redirect } from 'next/navigation'
 
+import { getAllServersByUserId } from '@/actions/prisma/server'
 import { auth } from '@/auth'
 import ServerModal from '@/components/modals/server/server-modal'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
-import { getAllServersByUserId } from '@/services/server'
 
 import NavigationAction from './navigation-action'
 import NavigationHome from './navigation-home'
