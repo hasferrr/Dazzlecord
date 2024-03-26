@@ -1,4 +1,5 @@
 import { auth, signOut } from '@/auth'
+import ChatHeader from '@/components/chat/chat-header'
 import { ModeToggle } from '@/components/mode-toggle'
 
 const App = async () => {
@@ -6,6 +7,11 @@ const App = async () => {
 
   return (
     <div>
+      <ChatHeader
+        name="App"
+        serverId=""
+        channelType="TEXT"
+      />
       {JSON.stringify(session)}
       <form action={async () => {
         'use server'
