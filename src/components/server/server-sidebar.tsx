@@ -8,6 +8,7 @@ import { getServerByUserIdIncludesAll } from '@/services/server'
 import { DEPLOYMENT_URL } from '@/utils/config'
 
 import ServerChannel from './server-channel'
+import ServerFooter from './server-footer'
 import ServerHeader from './server-header'
 import ServerSection from './server-section'
 
@@ -94,6 +95,12 @@ const ServerSidebar = async ({ serverId }: { serverId: string }) => {
           </div>
         )}
       </ScrollArea>
+      <div className="grow" />
+      <ServerFooter
+        username={session.user.username}
+        desc={currentMember.role}
+        image={session.user.image}
+      />
     </div>
   )
 }
