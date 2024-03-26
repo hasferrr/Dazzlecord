@@ -1,7 +1,8 @@
-import { User } from 'lucide-react'
 import Image from 'next/image'
 
 import { ModeToggle } from '@/components/mode-toggle'
+
+import ProfilePhoto from '../profile-photo'
 
 const ServerFooter = async ({ username, desc, image }: {
   username: string
@@ -23,7 +24,7 @@ const ServerFooter = async ({ username, desc, image }: {
           />
           : <div className="h-8 w-8 flex items-center justify-center
           border-black dark:border-white">
-            <User size={25} />
+            <ProfilePhoto username={username} />
           </div>
         }
       </div>
