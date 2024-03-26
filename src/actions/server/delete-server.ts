@@ -2,7 +2,7 @@
 
 import { MemberRole, type Server } from '@prisma/client'
 
-import { deleteImage } from '@/actions/cloudStorage/deleteImage'
+import { deleteImage } from '@/actions/cloudStorage/delete-image'
 import { auth } from '@/auth'
 import { db } from '@/lib/db'
 

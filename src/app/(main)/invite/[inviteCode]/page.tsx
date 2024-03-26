@@ -1,4 +1,4 @@
-import { joinServer } from '@/actions/server/joinServer'
+import { joinServer } from '@/actions/server/join-server'
 
 const InviteCodePage = async ({ params }: {
   params: { inviteCode: string }

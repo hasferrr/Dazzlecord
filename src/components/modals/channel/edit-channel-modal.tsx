@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { editChannel } from '@/actions/channel/editChannel'
+import { editChannel } from '@/actions/channel/edit-channel'
 import ChannelModalRadio from '@/components/modals/channel/channel-modal-radio'
 import { Button } from '@/components/ui/button'
 import {

@@ -5,7 +5,7 @@ import { useTransition } from 'react'
 import type { Channel } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 
-import { deleteChannel } from '@/actions/channel/deleteChannel'
+import { deleteChannel } from '@/actions/channel/delete-channel'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,

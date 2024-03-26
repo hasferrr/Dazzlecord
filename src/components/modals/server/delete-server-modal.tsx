@@ -5,7 +5,7 @@ import { useTransition } from 'react'
 import type { Server } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 
-import { deleteServer } from '@/actions/server/deleteServer'
+import { deleteServer } from '@/actions/server/delete-server'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,

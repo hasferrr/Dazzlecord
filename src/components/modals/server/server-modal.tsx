@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { createNewServer } from '@/actions/server/createNewServer'
+import { createNewServer } from '@/actions/server/create-new-server'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
