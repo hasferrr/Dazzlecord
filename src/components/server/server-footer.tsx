@@ -1,7 +1,7 @@
 import Image from 'next/image'
 
 import { ModeToggle } from '@/components/mode-toggle'
-import ProfilePhoto from '@/components/profile-photo'
+import { ProfilePhoto } from '@/components/profile-photo'
 
 const ServerFooter = async ({ username, desc, image }: {
   username: string

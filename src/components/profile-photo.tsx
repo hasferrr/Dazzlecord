@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils'
 
-const ProfilePhoto = ({ username }: { username: string }) => {
+export const ProfilePhoto = ({ username }: { username: string }) => {
   const initials = username.charAt(0).toUpperCase()
   const bgColorClasses = 'bg-black text-white dark:bg-white dark:text-black'
 
@@ -10,5 +10,3 @@ const ProfilePhoto = ({ username }: { username: string }) => {
     </div>
   )
 }
-
-export default ProfilePhoto
