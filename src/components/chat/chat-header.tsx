@@ -40,6 +40,10 @@ const ChatHeader = ({
       <p className="font-semibold text-md text-black dark:text-white line-clamp-1">
         {name}
       </p>
+      <div className="grow" />
+      <MobileScreen>
+        <MobileToggle type="members" side="right" />
+      </MobileScreen>
     </div>
   )
 }

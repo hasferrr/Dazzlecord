@@ -10,8 +10,8 @@ const MemberSidebar = () => {
 
   return (
     <div className="flex flex-col gap-2
-    h-full w-60 text-primary py-2
-    bg-[var(--light-server)] dark:bg-[var(--dark-server)]">
+      h-full w-60 text-primary py-2
+      bg-[var(--light-server)] dark:bg-[var(--dark-server)]">
       <ScrollArea className="w-full px-4 flex flex-col gap-y-2">
         <div>
           <MemberSection />

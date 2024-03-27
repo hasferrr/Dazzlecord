@@ -1,5 +1,6 @@
-import { Menu } from 'lucide-react'
+import { Menu, Users } from 'lucide-react'
 
+import MemberSidebar from '@/components/member/member-sidebar'
 import NavigationSidebar from '@/components/navigation/navigation-sidebar'
 import ServerSidebar from '@/components/server/server-sidebar'
 import { Button } from '@/components/ui/button'
@@ -11,19 +12,31 @@ import {
 
 export const MobileToggle = ({
   serverId,
+  type = 'server',
+  side = 'left',
 }: {
-  serverId: string
+  serverId?: string
+  type?: 'server' | 'members'
+  side?: 'left' | 'right'
 }) => {
   return (
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="ghost" size="icon" className="md:hidden">
-          <Menu />
+          {type === 'server'
+            ? <Menu />
+            : <Users />
+          }
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" xbutton={false} className="flex p-0 gap-0 w-fit" >
-        <NavigationSidebar />
-        {serverId && <ServerSidebar serverId={serverId} />}
+      <SheetContent side={side} xbutton={false} className="flex p-0 gap-0 w-fit" >
+        {type === 'server'
+          ? <>
+            <NavigationSidebar />
+            {serverId && <ServerSidebar serverId={serverId} />}
+          </>
+          : <MemberSidebar />
+        }
       </SheetContent>
     </Sheet>
   )
