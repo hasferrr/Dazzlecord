@@ -5,6 +5,7 @@ import {
   Video,
 } from 'lucide-react'
 
+import MobileScreen from '@/components/media-query/mobile-screen'
 import { MobileToggle } from '@/components/mobile-toggle'
 
 interface ChatHeaderProps {
@@ -30,7 +31,9 @@ const ChatHeader = ({
     <div className="flex items-center gap-2
     text-md font-semibold px-3 h-12 w-full
     border-neutral-200 dark:border-neutral-800 border-b-[1.5px]">
-      <MobileToggle serverId={serverId} />
+      <MobileScreen>
+        <MobileToggle serverId={serverId} />
+      </MobileScreen>
       <Icon className="w-5 h-5 text-zinc-500 dark:text-zinc-400" />
       <p className="font-semibold text-md text-black dark:text-white">
         {name}

@@ -1,3 +1,4 @@
+import BigScreen from '@/components/media-query/big-screen'
 import ServerSidebar from '@/components/server/server-sidebar'
 
 const ServerIdLayout = ({ children, params }: {
@@ -6,8 +7,10 @@ const ServerIdLayout = ({ children, params }: {
 }) => {
   return (
     <>
-      <div className="hidden md:flex flex-col h-full inset-y-0">
-        <ServerSidebar serverId={params.serverId} />
+      <div className="flex-col h-full inset-y-0">
+        <BigScreen>
+          <ServerSidebar serverId={params.serverId} />
+        </BigScreen>
       </div>
       {children}
     </>
