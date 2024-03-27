@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 
 import { auth } from '@/auth'
 import ChatHeader from '@/components/chat/chat-header'
+import MemberSidebar from '@/components/member/member-sidebar'
 import { db } from '@/lib/db'
 
 interface ChannelIdPageProps {
@@ -38,12 +39,21 @@ const ChannelIdPage = async ({
   }
 
   return (
-    <div className="bg-white dark:bg-[var(--dark-page)] flex flex-col h-full w-full" >
-      <ChatHeader
-        name={channel.name}
-        serverId={channel.serverId}
-        channelType={channel.type}
-      />
+    <div className="bg-white dark:bg-[var(--dark-page)] h-full w-full
+    grid grid-cols-[auto_15rem] grid-rows-[3rem_auto]">
+      <div className="col-span-2 h-12">
+        <ChatHeader
+          name={channel.name}
+          serverId={channel.serverId}
+          channelType={channel.type}
+        />
+      </div>
+      <div>
+        Hello Chat!
+      </div>
+      <div className="h-full inset-y-0">
+        <MemberSidebar />
+      </div>
     </div>
   )
 }
