@@ -52,7 +52,7 @@ const ChannelIdPage = async ({
       <div>
         Hello Chat!
       </div>
-      <BigScreen>
+      <BigScreen width={992}>
         <MemberSidebar />
       </BigScreen>
     </div>
