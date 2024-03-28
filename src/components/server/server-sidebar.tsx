@@ -2,7 +2,7 @@ import { type Channel, ChannelType } from '@prisma/client'
 import { redirect } from 'next/navigation'
 
 import { findMember } from '@/actions/prisma/member'
-import { getServerByUserIdIncludesAll } from '@/actions/prisma/server'
+import { getServerIncludesAllChannel } from '@/actions/prisma/server'
 import { auth } from '@/auth'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { DEPLOYMENT_URL } from '@/utils/config'
@@ -18,7 +18,7 @@ const ServerSidebar = async ({ serverId }: { serverId: string }) => {
     return redirect('/')
   }
 
-  const server = await getServerByUserIdIncludesAll(serverId)
+  const server = await getServerIncludesAllChannel(serverId)
   if (!server) {
     return redirect('/')
   }
