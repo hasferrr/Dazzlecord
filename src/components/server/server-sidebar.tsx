@@ -5,7 +5,7 @@ import { findMember } from '@/actions/prisma/member'
 import { getServerIncludesAllChannel } from '@/actions/prisma/server'
 import { auth } from '@/auth'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { DEPLOYMENT_URL } from '@/utils/config'
+import { ORIGIN_URL } from '@/utils/config'
 
 import ServerChannel from './server-channel'
 import ServerFooter from './server-footer'
@@ -58,7 +58,7 @@ const ServerSidebar = async ({ serverId }: { serverId: string }) => {
       <ServerHeader
         server={server}
         currentMember={currentMember}
-        origin={DEPLOYMENT_URL}
+        origin={ORIGIN_URL}
       />
       <ScrollArea className="w-full px-4 flex flex-col gap-y-2">
         {textChannel.length > 0 && (

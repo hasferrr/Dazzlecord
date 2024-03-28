@@ -14,7 +14,7 @@ export const AUTH_SECRET = passOrError(process.env['AUTH_SECRET'])
 export const GCS_PROJECT_ID = passOrError(process.env['GCS_PROJECT_ID'])
 export const GCS_SERVICE_ACCOUNT_KEY_FILE = passOrError(process.env['GCS_SERVICE_ACCOUNT_KEY_FILE'])
 export const GCS_BUCKET_NAME = passOrError(process.env['GCS_BUCKET_NAME'])
-export const DEPLOYMENT_URL = (() => {
-  const url = passOrError(process.env['DEPLOYMENT_URL'])
+export const ORIGIN_URL = (() => {
+  const url = passOrError(process.env['ORIGIN_URL'])
   return url.endsWith('/') ? url.slice(0, -1) : url
 })()
