@@ -9,3 +9,10 @@ export const findMember = async (serverId: string, userId: string) =>
       userId,
     },
   })
+
+export const getAllMembersByServerIdSorted = async (serverId: string) =>
+  await db.member.findMany({
+    where: { serverId },
+    orderBy: { user: { username: 'asc' } },
+    include: { user: true },
+  })

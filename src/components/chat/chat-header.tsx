@@ -42,7 +42,7 @@ const ChatHeader = ({
       </p>
       <div className="grow" />
       <MobileScreen width={992}>
-        <MobileToggle type="members" side="right" />
+        <MobileToggle type="members" side="right" serverId={serverId} />
       </MobileScreen>
     </div>
   )
