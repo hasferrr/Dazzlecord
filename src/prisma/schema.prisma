@@ -16,6 +16,7 @@ model User {
   image        String?
   members      Member[]
   channels     Channel[]
+  Message      Message[]
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 }
@@ -51,9 +52,23 @@ model Channel {
   serverId  String      @db.ObjectId
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
+  Message   Message[]
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   server Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+}
+
+model Message {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  content   String
+  fileName  String?
+  userId    String   @db.ObjectId
+  channelId String   @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  chanel Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
 }
 
 enum MemberRole {
