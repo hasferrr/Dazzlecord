@@ -8,12 +8,6 @@ import {
 import MobileScreen from '@/components/media-query/mobile-screen'
 import { MobileToggle } from '@/components/mobile-toggle'
 
-interface ChatHeaderProps {
-  name: string
-  serverId: string
-  channelType: ChannelType
-}
-
 const iconMap = {
   [ChannelType.TEXT]: Hash,
   [ChannelType.VOICE]: Mic,
@@ -24,7 +18,11 @@ const ChatHeader = ({
   name,
   serverId,
   channelType,
-}: ChatHeaderProps) => {
+}: {
+  name: string
+  serverId?: string
+  channelType: ChannelType
+}) => {
   const Icon = iconMap[channelType]
 
   return (

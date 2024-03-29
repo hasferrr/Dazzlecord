@@ -15,7 +15,7 @@ export const MobileToggle = ({
   type = 'server',
   side = 'left',
 }: {
-  serverId: string
+  serverId?: string
   type?: 'server' | 'members'
   side?: 'left' | 'right'
 }) => {
@@ -35,7 +35,9 @@ export const MobileToggle = ({
             <NavigationSidebar />
             {serverId && <ServerSidebar serverId={serverId} />}
           </>
-          : <MemberSidebar serverId={serverId} />
+          : <>
+            {serverId && <MemberSidebar serverId={serverId} />}
+          </>
         }
       </SheetContent>
     </Sheet>

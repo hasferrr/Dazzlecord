@@ -9,7 +9,6 @@ const App = async () => {
     <div>
       <ChatHeader
         name="App"
-        serverId=""
         channelType="TEXT"
       />
       {JSON.stringify(session)}
