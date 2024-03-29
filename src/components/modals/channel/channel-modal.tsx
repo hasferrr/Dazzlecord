@@ -31,9 +31,9 @@ import { RadioGroup } from '@/components/ui/radio-group'
 import {
   useCreateChannelClose,
   useCreateChannelValue,
-} from '@/context/modalContext'
+} from '@/context/modal-context'
 import { modifyString } from '@/lib/helpers'
-import { channelModalSchema } from '@/schemas/channelModalSchema'
+import { channelModalSchema } from '@/schemas/channel-modal-schema'
 
 const ChannelModal = ({ serverId }: { serverId: string }) => {
   const [isPending, startTransition] = useTransition()

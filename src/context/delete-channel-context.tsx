@@ -2,8 +2,6 @@
 
 import { createContext, type Dispatch, useContext, useReducer } from 'react'
 
-import PropTypes from 'prop-types'
-
 type DeleteChannelModal = {
   [key: string]: boolean
 }
@@ -35,19 +33,13 @@ const initialValue = {}
 
 const DeleteChannelModalContext = createContext<DeleteChannelModalReducer>([initialValue, () => initialValue])
 
-export const DeleteChannelModalContextProvider: React.FC<{
-  children?: React.ReactNode
-}> = ({ children }) => {
+export const DeleteChannelModalContextProvider = ({ children }: { children?: React.ReactNode }) => {
   const [modal, modalDispatch] = useReducer(modalReducer, initialValue)
   return (
     <DeleteChannelModalContext.Provider value={[modal, modalDispatch]}>
       {children}
     </DeleteChannelModalContext.Provider>
   )
-}
-
-DeleteChannelModalContextProvider.propTypes = {
-  children: PropTypes.node,
 }
 
 const useAbstractDispatch = (channelId: string, value: boolean) => {

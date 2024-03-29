@@ -18,7 +18,7 @@ import {
 import {
   useLeaveServerClose,
   useLeaveServerValue,
-} from '@/context/modalContext'
+} from '@/context/modal-context'
 
 const LeaveServerModal = ({ server }: { server: Server }) => {
   const [isPending, startTransition] = useTransition()

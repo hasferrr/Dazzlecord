@@ -2,8 +2,6 @@
 
 import { createContext, type Dispatch, useContext, useReducer } from 'react'
 
-import PropTypes from 'prop-types'
-
 const initialValue = {
   invite: false,
   createServer: false,
@@ -27,19 +25,13 @@ const modalReducer = (state: Modal, action: ModalDispatch): Modal => {
 
 const ModalContext = createContext<ModalReducer>([initialValue, () => initialValue])
 
-export const ModalContextProvider: React.FC<{
-  children?: React.ReactNode
-}> = ({ children }) => {
+export const ModalContextProvider = ({ children }: { children?: React.ReactNode }) => {
   const [modal, modalDispatch] = useReducer(modalReducer, initialValue)
   return (
     <ModalContext.Provider value={[modal, modalDispatch]}>
       {children}
     </ModalContext.Provider>
   )
-}
-
-ModalContextProvider.propTypes = {
-  children: PropTypes.node,
 }
 
 const useAbstractGetState = (type: keyof Modal) => {

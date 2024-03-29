@@ -18,7 +18,7 @@ import {
 import {
   useDeleteServerClose,
   useDeleteServerValue,
-} from '@/context/modalContext'
+} from '@/context/modal-context'
 
 const DeleteServerModal = ({ server }: {
   server: Server,

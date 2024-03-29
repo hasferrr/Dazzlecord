@@ -2,8 +2,6 @@
 
 import { createContext, type Dispatch, useContext, useReducer } from 'react'
 
-import PropTypes from 'prop-types'
-
 type EditChannelModal = {
   [key: string]: boolean
 }
@@ -35,19 +33,13 @@ const initialValue = {}
 
 const EditChannelModalContext = createContext<EditChannelModalReducer>([initialValue, () => initialValue])
 
-export const EditChannelModalContextProvider: React.FC<{
-  children?: React.ReactNode
-}> = ({ children }) => {
+export const EditChannelModalContextProvider = ({ children }: { children?: React.ReactNode }) => {
   const [modal, modalDispatch] = useReducer(modalReducer, initialValue)
   return (
     <EditChannelModalContext.Provider value={[modal, modalDispatch]}>
       {children}
     </EditChannelModalContext.Provider>
   )
-}
-
-EditChannelModalContextProvider.propTypes = {
-  children: PropTypes.node,
 }
 
 const useAbstractDispatch = (channelId: string, value: boolean) => {

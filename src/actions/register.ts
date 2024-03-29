@@ -9,7 +9,7 @@ import { signIn } from '@/auth'
 import { db } from '@/lib/db'
 import { trimString } from '@/lib/helpers'
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes'
-import { registerSchema } from '@/schemas/registerSchema'
+import { registerSchema } from '@/schemas/register-schema'
 
 export const register = async (values: z.infer<typeof registerSchema>) => {
   const validatedFields = registerSchema.safeParse(values)

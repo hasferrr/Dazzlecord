@@ -3,7 +3,7 @@ import type { NextAuthConfig } from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 
 import { getUserByUsername } from './actions/prisma/user'
-import { loginSchema } from './schemas/loginSchema'
+import { loginSchema } from './schemas/login-schema'
 
 export default {
   providers: [

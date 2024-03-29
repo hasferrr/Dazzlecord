@@ -18,7 +18,7 @@ import {
 import {
   useDeleteChannelClose,
   useDeleteChannelValue,
-} from '@/context/deleteChannelContext'
+} from '@/context/delete-channel-context'
 
 const DeleteChannelModal = ({ channel }: {
   channel: Channel,

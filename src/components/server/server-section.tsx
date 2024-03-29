@@ -4,7 +4,7 @@ import { ChannelType, MemberRole } from '@prisma/client'
 import { Plus } from 'lucide-react'
 
 import { ActionTooltip } from '@/components/action-tooltip'
-import { useCreateChannelOpen } from '@/context/modalContext'
+import { useCreateChannelOpen } from '@/context/modal-context'
 
 interface ServerSectionProps {
   role?: MemberRole

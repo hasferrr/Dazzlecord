@@ -27,7 +27,7 @@ import {
   useDeleteServerOpen,
   useInviteOpen,
   useLeaveServerOpen,
-} from '@/context/modalContext'
+} from '@/context/modal-context'
 
 const ServerHeader = ({
   server,

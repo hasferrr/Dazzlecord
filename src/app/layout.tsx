@@ -3,9 +3,9 @@ import { Open_Sans } from 'next/font/google'
 
 import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
-import { DeleteChannelModalContextProvider } from '@/context/deleteChannelContext'
-import { EditChannelModalContextProvider } from '@/context/editChannelContext'
-import { ModalContextProvider } from '@/context/modalContext'
+import { DeleteChannelModalContextProvider } from '@/context/delete-channel-context'
+import { EditChannelModalContextProvider } from '@/context/edit-channel-context'
+import { ModalContextProvider } from '@/context/modal-context'
 import { cn } from '@/lib/utils'
 
 const font = Open_Sans({ subsets: ['latin'] })

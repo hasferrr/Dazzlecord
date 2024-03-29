@@ -11,8 +11,8 @@ import { useParams, useRouter } from 'next/navigation'
 import { ActionTooltip } from '@/components/action-tooltip'
 import DeleteChannelModal from '@/components/modals/channel/delete-server-modal'
 import EditChannelModal from '@/components/modals/channel/edit-channel-modal'
-import { useDeleteChannelOpen } from '@/context/deleteChannelContext'
-import { useEditChannelOpen } from '@/context/editChannelContext'
+import { useDeleteChannelOpen } from '@/context/delete-channel-context'
+import { useEditChannelOpen } from '@/context/edit-channel-context'
 import { cn } from '@/lib/utils'
 
 interface ServerChannelProps {

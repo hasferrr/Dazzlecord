@@ -31,9 +31,9 @@ import { RadioGroup } from '@/components/ui/radio-group'
 import {
   useEditChannelClose,
   useEditChannelValue,
-} from '@/context/editChannelContext'
+} from '@/context/edit-channel-context'
 import { modifyString } from '@/lib/helpers'
-import { channelModalSchema } from '@/schemas/channelModalSchema'
+import { channelModalSchema } from '@/schemas/channel-modal-schema'
 
 const EditChannelModal = ({ channel }: { channel: Channel }) => {
   const [isPending, startTransition] = useTransition()

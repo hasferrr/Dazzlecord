@@ -32,7 +32,7 @@ import { Input } from '@/components/ui/input'
 import {
   useCreateServerClose,
   useCreateServerValue,
-} from '@/context/modalContext'
+} from '@/context/modal-context'
 import {
   checkLength,
   checkSize,
@@ -41,9 +41,9 @@ import {
   failedSize,
   failedTypes,
   serverModalSchema,
-} from '@/schemas/serverModalSchema'
+} from '@/schemas/server-modal-schema'
 import { uploadPhoto } from '@/services/upload-photo'
-import SVGUploadIcon from '@/svg/SVGUploadIcon'
+import SVGUploadIcon from '@/svg/SVG-upload-icon'
 
 const ServerModal = () => {
   const [file, setFile] = useState<File | null>(null)

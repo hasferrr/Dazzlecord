@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { useInviteClose, useInviteValue } from '@/context/modalContext'
+import { useInviteClose, useInviteValue } from '@/context/modal-context'
 
 const InvitationModal = ({ origin, inviteCode }: {
   origin: string,
