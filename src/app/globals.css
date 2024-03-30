@@ -18,6 +18,7 @@ body,
   --dark-server-active: #3f4147;
   --dark-server-footer: #232428;
   --dark-page: #313338;
+  --dark-chat-input: #383a40;
   /* Light */
   --light-navigation: #e3e5e8;
   --light-server: #f2f3f5;
@@ -26,6 +27,7 @@ body,
   --light-server-active: #e6e6e8;
   --light-server-footer: #ebedef;
   --light-page: #ffffff;
+  --light-chat-input: #ebedef;
 }
 
 @layer base {
