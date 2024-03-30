@@ -7,6 +7,7 @@ import {
 
 import MobileScreen from '@/components/media-query/mobile-screen'
 import { MobileToggle } from '@/components/mobile-toggle'
+import { SocketIndicator } from '@/components/socket-indicator'
 
 const iconMap = {
   [ChannelType.TEXT]: Hash,
@@ -39,6 +40,7 @@ const ChatHeader = ({
         {name}
       </p>
       <div className="grow" />
+      {serverId && <SocketIndicator />}
       <MobileScreen width={992}>
         <MobileToggle type="members" side="right" serverId={serverId} />
       </MobileScreen>

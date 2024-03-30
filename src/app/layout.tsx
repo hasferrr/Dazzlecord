@@ -6,6 +6,7 @@ import { ThemeProvider } from '@/components/theme-provider'
 import { DeleteChannelModalContextProvider } from '@/context/delete-channel-context'
 import { EditChannelModalContextProvider } from '@/context/edit-channel-context'
 import { ModalContextProvider } from '@/context/modal-context'
+import { SocketContextProvider } from '@/context/socket-context'
 import { cn } from '@/lib/utils'
 
 const font = Open_Sans({ subsets: ['latin'] })
@@ -34,7 +35,9 @@ export default function RootLayout({ children }: Readonly<{
           <ModalContextProvider>
             <EditChannelModalContextProvider>
               <DeleteChannelModalContextProvider>
-                {children}
+                <SocketContextProvider>
+                  {children}
+                </SocketContextProvider>
               </DeleteChannelModalContextProvider>
             </EditChannelModalContextProvider>
           </ModalContextProvider>

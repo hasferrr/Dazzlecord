@@ -36,7 +36,7 @@ const NavigationItem = ({ id, name, image }: NavigationItemProps) => {
           <div className={cn('w-[48px] h-[48px] rounded-[24px] mx-3',
             'flex overflow-hidden transition-all select-none',
             'group group-hover:rounded-[16px]',
-            params['serverId'] === id && 'rounded-[16px]',
+            params?.['serverId'] === id && 'rounded-[16px]',
           )}>
             <Image
               className="object-cover"
