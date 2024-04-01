@@ -1,3 +1,5 @@
+'use client'
+
 import { useState, useTransition } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -24,8 +26,8 @@ import { registerSchema } from '@/schemas/register-schema'
 import FormWrapper from './form-wrapper'
 
 const RegisterForm = () => {
-  const [usernameError, setUsernameError] = useState<string | undefined>()
-  const [emailError, setEmailError] = useState<string | undefined>()
+  const [usernameError, setUsernameError] = useState<string | undefined>(undefined)
+  const [emailError, setEmailError] = useState<string | undefined>(undefined)
   const [isPending, startTransition] = useTransition()
 
   const router = useRouter()
