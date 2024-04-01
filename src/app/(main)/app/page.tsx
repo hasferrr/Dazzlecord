@@ -14,7 +14,14 @@ const App = async () => {
       {JSON.stringify(session)}
       <form action={async () => {
         'use server'
-        await signOut()
+        try {
+          await signOut({
+            redirectTo: '/',
+          })
+        } catch (error) {
+          console.log(error)
+          throw error
+        }
       }}>
         <button type="submit">Sign out</button>
       </form>
