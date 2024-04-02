@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import { auth } from '@/auth'
 import ChatHeader from '@/components/chat/chat-header'
 import ChatInput from '@/components/chat/chat-input'
+import ChatWelcome from '@/components/chat/chat-welcome'
 import BigScreen from '@/components/media-query/big-screen'
 import MemberSidebar from '@/components/member/member-sidebar'
 import { db } from '@/lib/db'
@@ -50,11 +51,13 @@ const ChannelIdPage = async ({
           channelType={channel.type}
         />
       </div>
-      <div className="flex flex-col">
-        <div className="flex-1">Hello Chat!</div>
+      <div className="flex flex-col justify-end px-5">
+        <div className="py-4">
+          <ChatWelcome name={channel.name} />
+          <div>Hello Chat!</div>
+        </div>
         <ChatInput
           name={channel.name}
-          type="channel"
           id={params.channelId}
         />
       </div>

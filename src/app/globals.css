@@ -96,7 +96,7 @@ body,
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border focus-visible:ring-0 focus-visible:ring-offset-0;
   }
 
   body {

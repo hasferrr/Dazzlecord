@@ -13,21 +13,14 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 
-interface ChatInputProps {
-  name: string
-  type: 'channel' | 'conversation'
-  id: string
-}
-
 const formSchema = z.object({
   content: z.string().min(1),
 })
 
-const ChatInput = ({
-  name,
-  type,
-  id,
-}: ChatInputProps) => {
+const ChatInput = ({ name, id }: {
+  name: string
+  id: string
+}) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -59,12 +52,12 @@ const ChatInput = ({
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <div className="relative p-4 pb-6">
+                <div className="relative py-4 pb-6">
                   <button
                     type="button"
                     onClick={() => { }}
-                    className="absolute top-7 left-8 h-[24px] w-[24px]
-                    bg-zinc-500 dark:bg-zinc-400 hover:bg-zinc-600 dark:hover:bg-zinc-300
+                    className="absolute top-7 left-4 h-[24px] w-[24px]
+                    bg-zinc-500 dark:bg-zinc-300 hover:bg-zinc-600 dark:hover:bg-white
                     transition rounded-full p-1 flex items-center justify-center"
                   >
                     <Plus className="text-white dark:text-[var(--dark-page)]" />
@@ -72,12 +65,12 @@ const ChatInput = ({
                   <Input
                     disabled={isLoading}
                     className="px-14 py-6 bg-[var(--light-chat-input)] dark:bg-[var(--dark-chat-input)]
-                    text-[#A1A1AA] dark:text-zinc-200 border-none border-0
+                    text-[#A1A1AA] dark:text-[#B5BAC1] border-none border-0
                     focus-visible:ring-0 focus-visible:ring-offset-0"
-                    placeholder={`Message ${type === 'conversation' ? name : `#${name}`}`}
+                    placeholder={`Message #${name}`}
                     {...field}
                   />
-                  <button className="absolute top-7 right-8">
+                  <button className="absolute top-7 right-4">
                     <Smile />
                   </button>
                 </div>

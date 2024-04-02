@@ -34,7 +34,7 @@ const ChatHeader = ({
         <MobileToggle serverId={serverId} />
       </MobileScreen>
       <div>
-        <Icon className="w-5 h-5 text-zinc-500 dark:text-zinc-400" />
+        <Icon className="w-5 h-5 text-[#A1A1AA] dark:text-[#B5BAC1]" />
       </div>
       <p className="font-semibold text-md text-black dark:text-white line-clamp-1">
         {name}
