@@ -35,10 +35,10 @@ const NavigationSidebar = async () => {
             />
           </div>
         )}
+        <div className="flex justify-center">
+          <NavigationAction />
+        </div>
       </ScrollArea>
-      <div className="grow"></div>
-      <Separator className="h-[2px] w-8 rounded-md mx-auto bg-zinc-300 dark:bg-[var(--dark-page)]" />
-      <NavigationAction />
     </div>
   )
 }

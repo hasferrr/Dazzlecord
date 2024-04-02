@@ -1,6 +1,6 @@
 'use client'
 
-import { Bot } from 'lucide-react'
+import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 
 import { cn } from '@/lib/utils'
@@ -28,9 +28,12 @@ const NavigationHome = () => {
             pathname !== '/app' && 'group-hover:h-[20px]',
             pathname === '/app' ? 'h-[36px]' : 'h-0',
           )} />
-          <Bot
+          <Image
             className="group-hover:text-white transition"
-            size={30}
+            src="https://assets-global.website-files.com/6257adef93867e50d84d30e2/653714c1f22aef3b6921d63d_636e0a6ca814282eca7172c6_icon_clyde_white_RGB.svg"
+            alt=""
+            height={30}
+            width={30}
           />
         </div>
       </button>
