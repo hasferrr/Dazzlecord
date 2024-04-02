@@ -31,14 +31,15 @@ DialogOverlay.displayName = DialogPrimitive.Overlay.displayName
 
 interface DialogContentProps extends React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> {
   enableX?: boolean
+  noDim?: boolean
 }
 
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
   DialogContentProps
->(({ enableX = true, className, children, ...props }, ref) => (
+>(({ enableX = true, noDim = false, className, children, ...props }, ref) => (
   <DialogPortal>
-    <DialogOverlay />
+    <DialogOverlay className={cn(noDim && 'bg-[#00000000]')} />
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
