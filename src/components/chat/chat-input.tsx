@@ -33,8 +33,10 @@ const ChatInput = ({ name, id }: {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     values.content = values.content.trim()
     try {
-      console.log(id, values)
-      form.reset()
+      if (values.content !== '') {
+        console.log(id, values)
+        form.reset()
+      }
       setTimeout(() => {
         form.setFocus('content')
       }, 10)
