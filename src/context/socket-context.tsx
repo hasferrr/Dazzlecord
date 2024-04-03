@@ -2,9 +2,10 @@
 
 import {
   createContext,
+  type Dispatch,
   useContext,
   useEffect,
-  useState,
+  useReducer,
 } from 'react'
 
 import type { Socket } from 'socket.io-client'
@@ -15,14 +16,47 @@ type SocketContextType = {
   isConnected: boolean
 }
 
-const SocketContext = createContext<SocketContextType>({
+type SocketContextDispatch =
+  | { type: 'SET_SOCKET', payload: SocketContextType['socket'] }
+  | { type: 'SET_IS_CONNECTED', payload: SocketContextType['isConnected'] }
+
+type SocketContextReducer = [SocketContextType, Dispatch<SocketContextDispatch>]
+
+const socketContextReducer = (
+  state: SocketContextType,
+  action: SocketContextDispatch,
+): SocketContextType => {
+  switch (action.type) {
+  case 'SET_SOCKET':
+    return { ...state, socket: action.payload }
+  case 'SET_IS_CONNECTED':
+    return { ...state, isConnected: action.payload }
+  default:
+    return state
+  }
+}
+
+const initialValue = {
   socket: null,
   isConnected: false,
-})
+}
+
+const SocketContext = createContext<SocketContextReducer>([initialValue, () => initialValue])
 
 export const SocketContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const [socket, setSocket] = useState<Socket | null>(null)
-  const [isConnected, setIsConnected] = useState(false)
+  const [state, dispatch] = useReducer(socketContextReducer, initialValue)
+
+  const setSocket = (val: SocketContextType['socket']) =>
+    dispatch({
+      type: 'SET_SOCKET',
+      payload: val,
+    })
+
+  const setIsConnected = (val: SocketContextType['isConnected']) =>
+    dispatch({
+      type: 'SET_IS_CONNECTED',
+      payload: val,
+    })
 
   useEffect(() => {
     // eslint-disable-next-line no-process-env
@@ -46,19 +80,19 @@ export const SocketContextProvider = ({ children }: { children: React.ReactNode 
   }, [])
 
   return (
-    <SocketContext.Provider value={{ socket, isConnected }}>
+    <SocketContext.Provider value={[state, dispatch]}>
       {children}
     </SocketContext.Provider>
   )
 }
 
 export const useSocket = () => {
-  const { socket } = useContext(SocketContext)
+  const [{ socket }] = useContext(SocketContext)
   return socket
 }
 
 export const useIsConnected = () => {
-  const { isConnected } = useContext(SocketContext)
+  const [{ isConnected }] = useContext(SocketContext)
   return isConnected
 }
 
