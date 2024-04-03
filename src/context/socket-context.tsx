@@ -9,7 +9,8 @@ import {
 } from 'react'
 
 import type { Socket } from 'socket.io-client'
-import { io } from 'socket.io-client'
+
+import { socket } from '@/app/socket'
 
 type SocketContextType = {
   socket: Socket | null
@@ -59,24 +60,15 @@ export const SocketContextProvider = ({ children }: { children: React.ReactNode 
     })
 
   useEffect(() => {
-    // eslint-disable-next-line no-process-env
-    const URL = process.env['NEXT_PUBLIC_SITE_URL'] as string
-
-    const socketInstance = io(URL, {
-      path: '/api/socket/io',
-      addTrailingSlash: false,
-      autoConnect: false,
-    })
-
-    socketInstance.on('connect', () => {
+    socket.on('connect', () => {
       setIsConnected(true)
     })
 
-    socketInstance.on('disconnect', () => {
+    socket.on('disconnect', () => {
       setIsConnected(false)
     })
 
-    setSocket(socketInstance)
+    setSocket(socket)
   }, [])
 
   return (
