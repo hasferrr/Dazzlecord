@@ -10,7 +10,7 @@ import {
 
 import type { Socket } from 'socket.io-client'
 
-import { socket } from '@/app/socket'
+import { socket } from '@/services/socket'
 
 type SocketContextType = {
   socket: Socket | null
