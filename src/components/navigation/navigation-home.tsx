@@ -29,11 +29,11 @@ const NavigationHome = () => {
             pathname === '/app' ? 'h-[36px]' : 'h-0',
           )} />
           <Image
-            className="group-hover:text-white transition"
-            src="https://assets-global.website-files.com/6257adef93867e50d84d30e2/653714c1f22aef3b6921d63d_636e0a6ca814282eca7172c6_icon_clyde_white_RGB.svg"
+            className="group-hover:text-white transition dark:invert group-hover:invert"
+            src="https://assets-global.website-files.com/6257adef93867e50d84d30e2/653714c17467993e7b389c83_636e0a6918e57475a843f59f_icon_clyde_black_RGB.svg"
             alt=""
-            height={30}
-            width={30}
+            height={29}
+            width={29}
           />
         </div>
       </button>

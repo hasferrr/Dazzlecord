@@ -35,7 +35,7 @@ const Home = async () => {
         height={352}
         width={689}
       />
-      <div className="h-20 flex justify-between items-center">
+      <div className="h-20 flex justify-between items-center text-white">
         <button className="flex h-[34px] w-[138px] gap-2 items-center">
           <Image
             src="https://assets-global.website-files.com/6257adef93867e50d84d30e2/653714c1f22aef3b6921d63d_636e0a6ca814282eca7172c6_icon_clyde_white_RGB.svg"
@@ -45,7 +45,7 @@ const Home = async () => {
           />
           <p className="text-xl font-extrabold">Deezcord</p>
         </button>
-        <div className="hidden lg:flex gap-8 font-semibold">
+        <div className="hidden lg:flex gap-8 font-semibold text-white">
           <button className="hover:underline">Download</button>
           <button className="hover:underline">Nitro</button>
           <button className="hover:underline">Discover</button>

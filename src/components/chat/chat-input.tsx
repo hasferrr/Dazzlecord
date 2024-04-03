@@ -65,7 +65,7 @@ const ChatInput = ({ name, id }: {
                   <Input
                     disabled={isLoading}
                     className="px-14 py-6 bg-[var(--light-chat-input)] dark:bg-[var(--dark-chat-input)]
-                    text-[#A1A1AA] dark:text-[#B5BAC1] border-none border-0
+                    text-[#4b4b50] dark:text-[#B5BAC1] border-none border-0
                     focus-visible:ring-0 focus-visible:ring-offset-0"
                     placeholder={`Message #${name}`}
                     {...field}
