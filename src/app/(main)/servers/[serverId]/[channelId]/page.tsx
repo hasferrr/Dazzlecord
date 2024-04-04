@@ -53,7 +53,7 @@ const ChannelIdPage = async ({
           channelType={channel.type}
         />
       </div>
-      <div className="flex flex-col-reverse pt-4 px-5 overflow-y-auto">
+      <div className="flex flex-col-reverse pt-4 overflow-y-auto">
         <div className="flex-1 flex flex-col justify-end">
           <ChatWelcome name={channel.name} />
           <ChatMessages />
