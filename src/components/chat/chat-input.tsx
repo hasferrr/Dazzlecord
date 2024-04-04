@@ -17,9 +17,9 @@ const formSchema = z.object({
   content: z.string().min(1),
 })
 
-const ChatInput = ({ name, id }: {
-  name: string
-  id: string
+const ChatInput = ({ channelName, channelId }: {
+  channelName: string
+  channelId: string
 }) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -34,7 +34,7 @@ const ChatInput = ({ name, id }: {
     values.content = values.content.trim()
     try {
       if (values.content !== '') {
-        console.log(id, values)
+        console.log(channelId, values)
         form.reset()
       }
       setTimeout(() => {
@@ -54,11 +54,11 @@ const ChatInput = ({ name, id }: {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <div className="relative py-4 pb-6">
+                <div className="relative pb-6">
                   <button
                     type="button"
                     onClick={() => { }}
-                    className="absolute top-7 left-4 h-[24px] w-[24px]
+                    className="absolute top-3 bottom-3 left-4 h-[24px] w-[24px]
                     bg-zinc-500 dark:bg-zinc-300 hover:bg-zinc-600 dark:hover:bg-white
                     transition rounded-full p-1 flex items-center justify-center"
                   >
@@ -69,10 +69,10 @@ const ChatInput = ({ name, id }: {
                     className="px-14 py-6 bg-[var(--light-chat-input)] dark:bg-[var(--dark-chat-input)]
                     text-[#4b4b50] dark:text-[#B5BAC1] border-none border-0
                     focus-visible:ring-0 focus-visible:ring-offset-0"
-                    placeholder={`Message #${name}`}
+                    placeholder={`Message #${channelName}`}
                     {...field}
                   />
-                  <button className="absolute top-7 right-4">
+                  <button className="absolute top-3 right-4">
                     <Smile />
                   </button>
                 </div>
