@@ -5,6 +5,7 @@ import { Plus, Smile } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { sendMessage } from '@/actions/message/send-message'
 import {
   Form,
   FormControl,
@@ -32,17 +33,22 @@ const ChatInput = ({ channelName, channelId }: {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     values.content = values.content.trim()
-    try {
-      if (values.content !== '') {
-        console.log(channelId, values)
-        form.reset()
+    if (values.content !== '') {
+      try {
+        const res = await sendMessage(channelId, values.content, undefined)
+        if (res.success) {
+          console.log(res.data)
+          form.reset()
+        } else {
+          console.log(res.error)
+        }
+      } catch (error) {
+        console.log(error)
       }
-      setTimeout(() => {
-        form.setFocus('content')
-      }, 10)
-    } catch (error) {
-      console.log(error)
     }
+    setTimeout(() => {
+      form.setFocus('content')
+    }, 10)
   }
 
   return (

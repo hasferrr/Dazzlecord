@@ -16,7 +16,7 @@ model User {
   image        String?
   members      Member[]
   channels     Channel[]
-  Message      Message[]
+  message      Message[]
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 }
@@ -28,7 +28,7 @@ model Server {
   image      String?   @unique
   members    Member[]
   channels   Channel[]
-  Message    Message[]
+  messages    Message[]
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
 }
@@ -51,9 +51,9 @@ model Channel {
   type      ChannelType @default(TEXT)
   userId    String      @db.ObjectId
   serverId  String      @db.ObjectId
+  messages   Message[]
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
-  Message   Message[]
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   server Server @relation(fields: [serverId], references: [id], onDelete: Cascade)

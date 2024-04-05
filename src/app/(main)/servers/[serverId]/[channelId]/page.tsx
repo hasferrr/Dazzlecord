@@ -56,7 +56,10 @@ const ChannelIdPage = async ({
       <div className="flex flex-col-reverse pt-4 overflow-y-auto">
         <div className="flex-1 flex flex-col justify-end">
           <ChatWelcome name={channel.name} />
-          <ChatMessages />
+          <ChatMessages
+            channelId={params.channelId}
+            member={member}
+          />
         </div>
       </div>
       <div className="row-span-2">

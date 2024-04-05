@@ -3,11 +3,7 @@
 import { auth } from '@/auth'
 import { db } from '@/lib/db'
 
-export const sendMessage = async (
-  channelId: string,
-  content: string,
-  fileName?: string,
-) => {
+export const getAllChannelMessage = async (channelId: string) => {
   try {
     const session = await auth()
     if (!session) {
@@ -18,6 +14,13 @@ export const sendMessage = async (
     const channel = await db.channel.findUnique({
       where: {
         id: channelId,
+      },
+      include: {
+        messages: {
+          include: {
+            user: true,
+          },
+        },
       },
     })
     if (!channel) {
@@ -38,22 +41,9 @@ export const sendMessage = async (
       return { error: 'Server not found' }
     }
 
-    const message = await db.message.create({
-      data: {
-        content,
-        fileName,
-        userId,
-        channelId,
-        serverId: channel.serverId,
-      },
-    })
-
-    //TODO: Impelments socket connection
-    const channelKey = `chat:${channelId}:messages`
-
     return {
-      success: 'Message saved',
-      data: { channelKey, message },
+      success: 'Success retrieved',
+      data: channel.messages,
     }
   } catch (error) {
     console.error(error)

@@ -1,36 +1,31 @@
-import type { Message, User } from '@prisma/client'
+import type { Member } from '@prisma/client'
 
-import { db } from '@/lib/db'
+import { getAllChannelMessage } from '@/actions/message/get-all-channel-messages'
 
 import ChatItem from './chat-item'
 
-const ChatMessages = async () => {
-  const dummyMsg = await db.message.findUnique({
-    where: { id: '660e18b33b8850463bb711ab' },
-    include: { user: true },
-  }) as Message & { user: User }
+const ChatMessages = async ({ channelId, member }: {
+  channelId: string
+  member: Member
+}) => {
+  //TODO: Implements react query to fetch messages
+  const res = await getAllChannelMessage(channelId)
+  if (res.error) {
+    return null
+  }
 
-  const dummy = (n: number) =>
-    <ChatItem
-      key={n}
-      message={dummyMsg}
-      currentUserId="65ebf43ce4715d18fd760fa0"
-      currentUserRole="OWNER"
-    />
+  const messages = res.data
 
   return (
     <div className="overflow-hidden">
-      {
-        (() => {
-          const chats = []
-          let i = 0
-          while (i < 10) {
-            chats.push(dummy(i))
-            i++
-          }
-          return chats
-        })()
-      }
+      {messages?.map((message, i) => (
+        <ChatItem
+          key={i}
+          message={message}
+          currentUserId={member.userId}
+          currentUserRole={member.role}
+        />
+      ))}
     </div>
   )
 }
