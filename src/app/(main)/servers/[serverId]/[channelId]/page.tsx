@@ -7,6 +7,7 @@ import ChatMessages from '@/components/chat/chat-messages'
 import ChatWelcome from '@/components/chat/chat-welcome'
 import BigScreen from '@/components/media-query/big-screen'
 import MemberSidebar from '@/components/member/member-sidebar'
+import ProvidesTheQueryClient from '@/components/react-query/provides-the-query-client'
 import { db } from '@/lib/db'
 
 interface ChannelIdPageProps {
@@ -56,10 +57,12 @@ const ChannelIdPage = async ({
       <div className="flex flex-col-reverse pt-4 overflow-y-auto">
         <div className="flex-1 flex flex-col justify-end">
           <ChatWelcome name={channel.name} />
-          <ChatMessages
-            channelId={params.channelId}
-            currentMember={member}
-          />
+          <ProvidesTheQueryClient>
+            <ChatMessages
+              channelId={params.channelId}
+              currentMember={member}
+            />
+          </ProvidesTheQueryClient>
         </div>
       </div>
       <div className="row-span-2">

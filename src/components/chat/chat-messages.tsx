@@ -1,31 +1,69 @@
-import type { Member } from '@prisma/client'
+'use client'
 
-import { getAllChannelMessage } from '@/actions/message/get-all-channel-messages'
+import { Fragment } from 'react'
+
+import type { Member } from '@prisma/client'
+import { useInfiniteQuery } from '@tanstack/react-query'
+
+import { queryMessages } from '@/actions/message/query-message'
 
 import ChatItem from './chat-item'
 
-const ChatMessages = async ({ channelId, currentMember }: {
+const ChatMessages = ({ channelId, currentMember }: {
   channelId: string
   currentMember: Member
 }) => {
-  //TODO: Implements react query to fetch messages
-  const res = await getAllChannelMessage(channelId)
-  if (res.error) {
-    return null
+  const {
+    status,
+    data,
+    error,
+    isFetchingNextPage,
+    fetchNextPage,
+    hasNextPage,
+  } = useInfiniteQuery({
+    queryKey: ['message'],
+    queryFn: async ({ pageParam }) => {
+      const res = await queryMessages(pageParam, channelId)
+      return res
+    },
+    initialPageParam: '',
+    getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
+  })
+
+  if (status === 'pending') {
+    return <div>Loading...</div>
   }
 
-  const messages = res.data
+  if (status === 'error') {
+    return <div>Error: {error.message}</div>
+  }
 
   return (
     <div className="overflow-hidden">
-      {messages?.map((message, i) => (
-        <ChatItem
-          key={i}
-          message={message}
-          currentUserId={currentMember.userId}
-          currentUserRole={currentMember.role}
-        />
-      ))}
+      <button
+        onClick={() => fetchNextPage()}
+        disabled={!hasNextPage || isFetchingNextPage}
+      >
+        {isFetchingNextPage
+          ? 'Loading more...'
+          : hasNextPage
+            ? 'Load More'
+            : 'Nothing more to load'}
+      </button>
+      <div className="flex flex-col-reverse">
+        {data.pages.map((page) => (
+          <Fragment key={page.nextCursor}>
+            {page.data.map((message, i) => (
+              <ChatItem
+                key={i}
+                message={message}
+                currentUserId={currentMember.userId}
+                currentUserRole={currentMember.role}
+              />
+            ))}
+          </Fragment>
+        ))}
+      </div>
     </div>
   )
 }
