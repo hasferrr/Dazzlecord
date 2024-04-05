@@ -58,7 +58,7 @@ const ChannelIdPage = async ({
           <ChatWelcome name={channel.name} />
           <ChatMessages
             channelId={params.channelId}
-            member={member}
+            currentMember={member}
           />
         </div>
       </div>

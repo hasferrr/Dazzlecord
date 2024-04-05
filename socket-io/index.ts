@@ -6,6 +6,7 @@ import { Server } from 'socket.io'
 
 import { connectHandler } from './handler/connect-handler'
 import { messageHandler } from './handler/message-handler'
+import { tokenHandler } from './handler/token-handler'
 
 const app = express()
 const server = createServer(app)
@@ -25,6 +26,7 @@ const io = new Server(server, {
 io.on('connection', (socket) => {
   connectHandler(io, socket)
   messageHandler(io, socket)
+  tokenHandler(io, socket)
 })
 
 const PORT = process.env['PORT'] || 3001

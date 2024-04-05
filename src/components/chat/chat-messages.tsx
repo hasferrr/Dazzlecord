@@ -4,9 +4,9 @@ import { getAllChannelMessage } from '@/actions/message/get-all-channel-messages
 
 import ChatItem from './chat-item'
 
-const ChatMessages = async ({ channelId, member }: {
+const ChatMessages = async ({ channelId, currentMember }: {
   channelId: string
-  member: Member
+  currentMember: Member
 }) => {
   //TODO: Implements react query to fetch messages
   const res = await getAllChannelMessage(channelId)
@@ -22,8 +22,8 @@ const ChatMessages = async ({ channelId, member }: {
         <ChatItem
           key={i}
           message={message}
-          currentUserId={member.userId}
-          currentUserRole={member.role}
+          currentUserId={currentMember.userId}
+          currentUserRole={currentMember.role}
         />
       ))}
     </div>

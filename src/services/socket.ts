@@ -8,4 +8,7 @@ const URL = process.env['NEXT_PUBLIC_SOCKET_IO_URL'] as string
 export const socket = io(URL, {
   addTrailingSlash: false,
   autoConnect: false,
+  auth: {
+    token: null,
+  },
 })
