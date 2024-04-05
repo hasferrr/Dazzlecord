@@ -4,8 +4,8 @@ import express from 'express'
 import { createServer } from 'node:http'
 import { Server } from 'socket.io'
 
-import { connectHandler } from './handler/connectHandler'
-import { messageHandler } from './handler/messageHandler'
+import { connectHandler } from './handler/connect-handler'
+import { messageHandler } from './handler/message-handler'
 
 const app = express()
 const server = createServer(app)
