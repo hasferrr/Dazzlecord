@@ -4,7 +4,6 @@ import express from 'express'
 import { createServer } from 'node:http'
 import { Server } from 'socket.io'
 
-import { tokens } from './data/tokens'
 import { connectHandler } from './handler/connect-handler'
 import { messageHandler } from './handler/message-handler'
 
@@ -23,15 +22,7 @@ app.use(cors({
   origin: process.env['CLIENT_URL'],
 }))
 
-app.get('/', (_, res) => {
-  return res.json({ status: 'ok' })
-})
-
-app.post('/addtoken', (req, res) => {
-  const { token } = req.body
-  tokens.add(token)
-  return res.status(200).end()
-})
+app.get('/', (_req, res) => res.json({ status: 'ok' }))
 
 io.on('connection', (socket) => {
   connectHandler(io, socket)

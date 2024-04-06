@@ -7,6 +7,7 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 
 import { queryMessages } from '@/actions/message/query-message'
 import { generateToken } from '@/actions/socket-io/generate-token'
+import { useSocket } from '@/context/socket-context'
 
 import ChatItem from './chat-item'
 
@@ -14,11 +15,18 @@ const ChatMessages = ({ channelId, currentMember }: {
   channelId: string
   currentMember: Member
 }) => {
+  const socket = useSocket()
+
   useEffect(() => {
-    generateToken(channelId, currentMember.userId)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err))
-  }, [channelId, currentMember.userId])
+    if (!socket) return
+
+    const join = async () => {
+      const { token } = await generateToken(channelId, currentMember.userId)
+      console.log(token)
+      // socket emit
+    }
+    join()
+  }, [channelId, currentMember.userId, socket])
 
   const {
     status,

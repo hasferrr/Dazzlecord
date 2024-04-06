@@ -14,20 +14,14 @@ export const generateToken = async (
     socketServer.connect()
   }
   const dataForToken = { channelId, userId }
-  const token = jwt.sign(dataForToken, AUTH_SECRET)
-
-  try {
-    await axios.post(
-      `${NEXT_PUBLIC_SOCKET_IO_URL}/addtoken`,
-      { token },
-    )
-  } catch (error) {
-    console.log('error:', error)
-    return { error: 'error generate a token' }
-  }
+  const token = jwt.sign(
+    dataForToken,
+    AUTH_SECRET,
+    { expiresIn: '0.5 * 60000' }, // 30 seconds
+  )
 
   return {
     success: 'token generated',
-    data: { token },
+    token,
   }
 }
