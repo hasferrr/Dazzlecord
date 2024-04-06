@@ -1,11 +1,12 @@
 'use client'
 
-import { Fragment } from 'react'
+import { Fragment, useEffect } from 'react'
 
 import type { Member } from '@prisma/client'
 import { useInfiniteQuery } from '@tanstack/react-query'
 
 import { queryMessages } from '@/actions/message/query-message'
+import { generateToken } from '@/actions/socket-io/generate-token'
 
 import ChatItem from './chat-item'
 
@@ -13,6 +14,12 @@ const ChatMessages = ({ channelId, currentMember }: {
   channelId: string
   currentMember: Member
 }) => {
+  useEffect(() => {
+    generateToken(channelId, currentMember.userId)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err))
+  }, [channelId, currentMember.userId])
+
   const {
     status,
     data,

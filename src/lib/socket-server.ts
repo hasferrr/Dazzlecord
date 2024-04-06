@@ -9,6 +9,5 @@ const URL = NEXT_PUBLIC_SOCKET_IO_URL
  * and socket.io server)
  */
 export const socketServer = io(URL, {
-  addTrailingSlash: false,
   autoConnect: false,
 })
