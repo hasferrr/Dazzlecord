@@ -6,6 +6,7 @@ import { Server } from 'socket.io'
 
 import { connectHandler } from './handler/connect-handler'
 import { messageHandler } from './handler/message-handler'
+import { roomHandler } from './handler/room-handler'
 
 const app = express()
 const server = createServer(app)
@@ -27,6 +28,7 @@ app.get('/', (_req, res) => res.json({ status: 'ok' }))
 io.on('connection', (socket) => {
   connectHandler(io, socket)
   messageHandler(io, socket)
+  roomHandler(io, socket)
 })
 
 const PORT = process.env['PORT'] || 3001

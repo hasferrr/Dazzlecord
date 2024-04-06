@@ -18,12 +18,12 @@ const ChatMessages = ({ channelId, currentMember }: {
   const socket = useSocket()
 
   useEffect(() => {
-    if (!socket) return
-
+    if (!socket) {
+      return
+    }
     const join = async () => {
       const { token } = await generateToken(channelId, currentMember.userId)
-      console.log(token)
-      // socket emit
+      socket.emit('joinChannelRoom', { channelId, userId: currentMember.userId }, token)
     }
     join()
   }, [channelId, currentMember.userId, socket])
