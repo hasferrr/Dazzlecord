@@ -27,7 +27,7 @@ export const roomHandler = async (_io: Server, socket: Socket) => {
         process.env['AUTH_SECRET'] as string,
       ) as { [key: string]: string }
 
-      if (decodedToken.channelId !== channelId || decodedToken.userId !== userId) {
+      if (decodedToken['channelId'] !== channelId || decodedToken['userId'] !== userId) {
         console.log('invalid token', { channelId, userId })
         return
       }
@@ -38,6 +38,6 @@ export const roomHandler = async (_io: Server, socket: Socket) => {
     }
 
     leaveAllRooms(socket)
-    socket.join(decodedToken.channelId)
+    socket.join(decodedToken['channelId'])
   })
 }
