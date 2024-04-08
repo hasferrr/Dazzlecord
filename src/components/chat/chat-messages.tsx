@@ -53,6 +53,8 @@ const ChatMessages = ({ channelId, currentMember }: {
     return <div>Error: {error.message}</div>
   }
 
+  // TODO: socket listening to the broadcast message to call fetchNextPage()
+
   return (
     <div className="overflow-hidden">
       <button

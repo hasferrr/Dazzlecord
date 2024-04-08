@@ -18,9 +18,10 @@ const formSchema = z.object({
   content: z.string().min(1),
 })
 
-const ChatInput = ({ channelName, channelId }: {
+const ChatInput = ({ channelName, channelId, serverId }: {
   channelName: string
   channelId: string
+  serverId: string
 }) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -35,7 +36,7 @@ const ChatInput = ({ channelName, channelId }: {
     values.content = values.content.trim()
     if (values.content !== '') {
       try {
-        const res = await sendMessage(channelId, values.content, undefined)
+        const res = await sendMessage(values.content, null, channelId, serverId)
         if (res.success) {
           console.log(res.data)
           form.reset()
