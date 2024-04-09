@@ -10,10 +10,6 @@ export const sendMessage = async (
   channelId: string,
   serverId: string,
 ) => {
-  if (!socketServer.connected) {
-    socketServer.connect()
-  }
-
   try {
     const session = await auth()
     if (!session) {
@@ -29,13 +25,13 @@ export const sendMessage = async (
         channelId,
         serverId,
       },
+      include: { user: true },
     })
 
-    socketServer.emit('message', {
-      type: 'channel',
-      channelId,
-      message,
-    })
+    if (!socketServer.connected) {
+      socketServer.connect()
+    }
+    socketServer.emit('message', 'channel', channelId, message)
 
     return {
       success: 'Message saved',

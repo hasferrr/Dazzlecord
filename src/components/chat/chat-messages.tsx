@@ -2,7 +2,7 @@
 
 import { Fragment, useEffect } from 'react'
 
-import type { Member } from '@prisma/client'
+import type { Member, Message } from '@prisma/client'
 import { useInfiniteQuery } from '@tanstack/react-query'
 
 import { queryMessages } from '@/actions/message/query-message'
@@ -28,6 +28,17 @@ const ChatMessages = ({ channelId, currentMember }: {
     join()
   }, [channelId, currentMember.userId, socket])
 
+  useEffect(() => {
+    if (!socket) {
+      return
+    }
+    socket.off('message:channel')
+    socket.on('message:channel', (message: Message) => {
+      // TODO: append the new message to the data
+      console.log('msg:channel', message)
+    })
+  }, [socket])
+
   const {
     status,
     data,
@@ -52,8 +63,6 @@ const ChatMessages = ({ channelId, currentMember }: {
   if (status === 'error') {
     return <div>Error: {error.message}</div>
   }
-
-  // TODO: socket listening to the broadcast message to call fetchNextPage()
 
   return (
     <div className="overflow-hidden">
