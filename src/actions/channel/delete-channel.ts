@@ -1,6 +1,7 @@
 'use server'
 
 import { type Channel, MemberRole } from '@prisma/client'
+import { redirect } from 'next/navigation'
 
 import { auth } from '@/auth'
 import { db } from '@/lib/db'
@@ -10,7 +11,7 @@ export const deleteChannel = async (
 ) => {
   const session = await auth()
   if (!session) {
-    throw Error('Unauthorized')
+    return redirect('/')
   }
   const userId = session.user.id
 

@@ -8,7 +8,7 @@ const ServerIdPage = async ({ params }: {
 }) => {
   const session = await auth()
   if (!session) {
-    throw Error('Unauthorized')
+    return redirect('/')
   }
   const userId = session.user.id
 

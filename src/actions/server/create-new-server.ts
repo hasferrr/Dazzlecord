@@ -1,6 +1,7 @@
 'use server'
 
 import { MemberRole } from '@prisma/client'
+import { redirect } from 'next/navigation'
 import { v4 as uuidv4 } from 'uuid'
 
 import { auth } from '@/auth'
@@ -10,7 +11,7 @@ import { trimString } from '@/lib/helpers'
 export const createNewServer = async (serverName: string) => {
   const session = await auth()
   if (!session) {
-    throw Error('Unauthorized')
+    return redirect('/')
   }
   const currentUser = session.user
 

@@ -8,7 +8,7 @@ import { db } from '@/lib/db'
 export const joinServer = async (inviteCode: string) => {
   const session = await auth()
   if (!session) {
-    throw Error('Unauthorized')
+    return redirect('/')
   }
   const userId = session.user.id
 

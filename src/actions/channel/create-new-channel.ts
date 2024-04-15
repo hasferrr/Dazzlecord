@@ -1,10 +1,12 @@
 'use server'
 
 import { ChannelType } from '@prisma/client'
+import { redirect } from 'next/navigation'
 
 import { auth } from '@/auth'
 import { db } from '@/lib/db'
 import { isValidChannelName } from '@/lib/helpers'
+
 
 export const createNewChannel = async (
   channelName: string,
@@ -13,7 +15,7 @@ export const createNewChannel = async (
 ) => {
   const session = await auth()
   if (!session) {
-    throw Error('Unauthorized')
+    return redirect('/')
   }
   const userId = session.user.id
 

@@ -1,6 +1,7 @@
 'use server'
 
 import { MemberRole, type Server } from '@prisma/client'
+import { redirect } from 'next/navigation'
 
 import { deleteImage } from '@/actions/cloud-storage/delete-image'
 import { auth } from '@/auth'
@@ -11,7 +12,7 @@ export const deleteServer = async (
 ) => {
   const session = await auth()
   if (!session) {
-    throw Error('Unauthorized')
+    return redirect('/')
   }
   const userId = session.user.id
 

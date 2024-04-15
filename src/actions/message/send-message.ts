@@ -1,5 +1,7 @@
 'use server'
 
+import { redirect } from 'next/navigation'
+
 import { auth } from '@/auth'
 import { db } from '@/lib/db'
 import { socketServer } from '@/lib/socket-server'
@@ -10,13 +12,13 @@ export const sendMessage = async (
   channelId: string,
   serverId: string,
 ) => {
-  try {
-    const session = await auth()
-    if (!session) {
-      throw Error('Unauthorized')
-    }
-    const userId = session.user.id
+  const session = await auth()
+  if (!session) {
+    return redirect('/')
+  }
+  const userId = session.user.id
 
+  try {
     const message = await db.message.create({
       data: {
         content,
