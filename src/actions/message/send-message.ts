@@ -33,7 +33,7 @@ export const sendMessage = async (
     if (!socketServer.connected) {
       socketServer.connect()
     }
-    socketServer.emit('message', message, 'channel', channelId)
+    socketServer.emit('message:channel', message, channelId)
 
     return {
       success: 'Message saved',
