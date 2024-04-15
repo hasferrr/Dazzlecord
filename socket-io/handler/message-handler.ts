@@ -4,11 +4,11 @@ import type { Message } from '../../node_modules/@prisma/client'
 
 export const messageHandler = (io: Server, socket: Socket) => {
   socket.on('message', (
+    message: Message,
     type: 'channel',
     channelId: string,
-    message: Message,
   ) => {
-    console.log('message from next server', message)
+    console.log('receive a message', message)
     if (type === 'channel') {
       io.to(channelId).emit('message:channel', message)
     }
