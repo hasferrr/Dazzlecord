@@ -18,7 +18,11 @@ const formSchema = z.object({
   content: z.string().min(1),
 })
 
-const ChatInput = ({ channelName, channelId, serverId }: {
+const ChatInput = ({
+  channelName,
+  channelId,
+  serverId,
+}: {
   channelName: string
   channelId: string
   serverId: string

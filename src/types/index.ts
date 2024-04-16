@@ -1,3 +1,3 @@
-import type { Member, User } from '@prisma/client'
+import type { Message, User } from '@prisma/client'
 
-export type MemberWithUser = Member & { user: User }
+export type MessageWithUser = Message & { user: User }

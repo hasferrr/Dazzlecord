@@ -1,15 +1,14 @@
 'use client'
 
-import type { MemberRole, Message, User } from '@prisma/client'
+import type { MemberRole } from '@prisma/client'
 
 import { ProfilePhoto } from '@/components/profile-photo'
 import { formatDate } from '@/lib/helpers'
 import { cn } from '@/lib/utils'
+import type { MessageWithUser } from '@/types'
 
 interface ChatItemProps {
-  message: Message & {
-    user: User
-  }
+  message: MessageWithUser
   currentUserId: String
   currentUserRole: MemberRole
 }

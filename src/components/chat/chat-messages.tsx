@@ -8,7 +8,7 @@ import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query'
 import { queryMessages } from '@/actions/message/query-message'
 import { generateToken } from '@/actions/socket-io/generate-token'
 import { useSocket } from '@/context/socket-context'
-import type { MemberWithUser } from '@/types'
+import type { MessageWithUser } from '@/types'
 
 import ChatItem from './chat-item'
 
@@ -53,7 +53,7 @@ const ChatMessages = ({ channelId, currentMember }: {
     if (!socket) {
       return
     }
-    const handleIncomingMessage = (message: MemberWithUser) => {
+    const handleIncomingMessage = (message: MessageWithUser) => {
       console.log('message added', message)
       queryClient.setQueryData([`message:channel:${channelId}`], (data: infiniteData) =>
         !data
