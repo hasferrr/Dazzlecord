@@ -38,7 +38,6 @@ const ChatInput = ({ channelName, channelId, serverId }: {
       try {
         const res = await sendMessage(values.content, null, channelId, serverId)
         if (res.success) {
-          console.log(res.data)
           form.reset()
         } else {
           console.log(res.error)
