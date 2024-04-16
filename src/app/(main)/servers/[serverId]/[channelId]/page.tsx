@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation'
 import { auth } from '@/auth'
 import ChatHeader from '@/components/chat/chat-header'
 import ChatInput from '@/components/chat/chat-input'
-import ChatSection from '@/components/chat/chat-section'
+import ChatWrapper from '@/components/chat/chat-wrapper'
 import BigScreen from '@/components/media-query/big-screen'
 import MemberSidebar from '@/components/member/member-sidebar'
 import { db } from '@/lib/db'
@@ -52,7 +52,7 @@ const ChannelIdPage = async ({
           channelType={channel.type}
         />
       </div>
-      <ChatSection
+      <ChatWrapper
         channelName={channel.name}
         channelId={params.channelId}
         currentMember={member}

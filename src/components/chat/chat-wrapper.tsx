@@ -4,7 +4,7 @@ import ChatMessages from '@/components/chat/chat-messages'
 import ChatWelcome from '@/components/chat/chat-welcome'
 import ProvidesTheQueryClient from '@/components/react-query/provides-the-query-client'
 
-const ChatSection = ({
+const ChatWrapper = ({
   channelName,
   channelId,
   currentMember,
@@ -28,4 +28,4 @@ const ChatSection = ({
   )
 }
 
-export default ChatSection
+export default ChatWrapper
