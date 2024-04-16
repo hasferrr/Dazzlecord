@@ -10,7 +10,7 @@ export const queryMessages = async (
   pageParam: string | null,
   channelId: string
 ) => {
-  const take = 5
+  const take = 10
   let messages
 
   if (!pageParam) {
