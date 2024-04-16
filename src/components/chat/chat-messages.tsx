@@ -2,12 +2,13 @@
 
 import { Fragment, useEffect } from 'react'
 
-import type { Member, Message } from '@prisma/client'
-import { useInfiniteQuery } from '@tanstack/react-query'
+import type { Member } from '@prisma/client'
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query'
 
 import { queryMessages } from '@/actions/message/query-message'
 import { generateToken } from '@/actions/socket-io/generate-token'
 import { useSocket } from '@/context/socket-context'
+import type { MemberWithUser } from '@/types'
 
 import ChatItem from './chat-item'
 
@@ -15,6 +16,7 @@ const ChatMessages = ({ channelId, currentMember }: {
   channelId: string
   currentMember: Member
 }) => {
+  const queryClient = useQueryClient()
   const socket = useSocket()
 
   useEffect(() => {
@@ -27,17 +29,6 @@ const ChatMessages = ({ channelId, currentMember }: {
     }
     join()
   }, [channelId, currentMember.userId, socket])
-
-  useEffect(() => {
-    if (!socket) {
-      return
-    }
-    socket.off('message:channel')
-    socket.on('message:channel', (message: Message) => {
-      // TODO: append the new message to the data
-      console.log('msg:channel', message)
-    })
-  }, [socket])
 
   const {
     status,
@@ -55,6 +46,37 @@ const ChatMessages = ({ channelId, currentMember }: {
     initialPageParam: '',
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
   })
+
+  type infiniteData = typeof data
+
+  useEffect(() => {
+    if (!socket) {
+      return
+    }
+    const handleIncomingMessage = (message: MemberWithUser) => {
+      console.log('message added', message)
+      queryClient.setQueryData([`message:channel:${channelId}`], (data: infiniteData) =>
+        !data
+          ? undefined
+          : ({
+            pages: [
+              {
+                data: [message, ...data.pages[0].data],
+                nextCursor: data.pages[0].nextCursor,
+              },
+              ...data.pages.slice(1),
+            ],
+            pageParams: data.pageParams,
+          })
+      )
+    }
+
+    socket.on('message:channel', handleIncomingMessage)
+
+    return () => {
+      socket.off('message:channel', handleIncomingMessage)
+    }
+  }, [channelId, queryClient, socket])
 
   if (status === 'pending') {
     return <div>Loading...</div>
@@ -90,6 +112,9 @@ const ChatMessages = ({ channelId, currentMember }: {
           </Fragment>
         ))}
       </div>
+      <button onClick={() => console.log(data)}>
+        log
+      </button>
     </div>
   )
 }
