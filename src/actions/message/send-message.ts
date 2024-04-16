@@ -1,10 +1,11 @@
 'use server'
 
+import axios from 'axios'
 import { redirect } from 'next/navigation'
 
 import { auth } from '@/auth'
 import { db } from '@/lib/db'
-import { socketServer } from '@/lib/socket-server'
+import { NEXT_PUBLIC_SOCKET_IO_URL } from '@/utils/config'
 
 export const sendMessage = async (
   content: string,
@@ -30,14 +31,17 @@ export const sendMessage = async (
       include: { user: true },
     })
 
-    if (!socketServer.connected) {
-      socketServer.connect()
+    const URL = `${NEXT_PUBLIC_SOCKET_IO_URL}/message`
+    const res = await axios.post(URL, { message, channelId })
+    if (res.status === 200) {
+      return {
+        success: 'Message saved',
+        data: { message },
+      }
     }
-    socketServer.emit('message:channel', message, channelId)
 
     return {
-      success: 'Message saved',
-      data: { message },
+      error: res.data.error,
     }
   } catch (error) {
     console.error(error)

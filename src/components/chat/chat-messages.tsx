@@ -47,7 +47,7 @@ const ChatMessages = ({ channelId, currentMember }: {
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery({
-    queryKey: ['message'],
+    queryKey: [`message:channel:${channelId}`],
     queryFn: async ({ pageParam }) => {
       const res = await queryMessages(pageParam, channelId)
       return res

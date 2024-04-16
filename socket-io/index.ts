@@ -4,6 +4,7 @@ import express from 'express'
 import { createServer } from 'node:http'
 import { Server } from 'socket.io'
 
+import messageRouter from './controllers/messageRouter'
 import { connectHandler } from './handler/connect-handler'
 import { messageHandler } from './handler/message-handler'
 import { roomHandler } from './handler/room-handler'
@@ -11,7 +12,7 @@ import { roomHandler } from './handler/room-handler'
 const app = express()
 const server = createServer(app)
 
-const io = new Server(server, {
+export const io = new Server(server, {
   cors: {
     origin: process.env['CLIENT_URL'],
   },
@@ -24,6 +25,7 @@ app.use(cors({
 }))
 
 app.get('/', (_req, res) => res.json({ status: 'ok' }))
+app.use('/message', messageRouter)
 
 io.on('connection', (socket) => {
   connectHandler(io, socket)
