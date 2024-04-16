@@ -8,13 +8,15 @@ import { useInView } from 'react-intersection-observer'
 
 import { queryMessages } from '@/actions/message/query-message'
 import { generateToken } from '@/actions/socket-io/generate-token'
+import ChatWelcome from '@/components/chat/chat-welcome'
 import { useSocket } from '@/context/socket-context'
 import type { MessageWithUser } from '@/types'
 
 import ChatItem from './chat-item'
 
-const ChatMessages = ({ channelId, currentMember }: {
+const ChatMessages = ({ channelId, channelName, currentMember }: {
   channelId: string
+  channelName: string
   currentMember: Member
 }) => {
   const queryClient = useQueryClient()
@@ -96,17 +98,17 @@ const ChatMessages = ({ channelId, currentMember }: {
 
   return (
     <div className="overflow-hidden">
-      <button
-        ref={ref}
-        onClick={() => fetchNextPage()}
-        disabled={!hasNextPage || isFetchingNextPage}
-      >
-        {isFetchingNextPage
-          ? 'Loading more...'
-          : hasNextPage
+      {!hasNextPage && <ChatWelcome name={channelName} />}
+      {!isFetchingNextPage &&
+        <button
+          ref={ref}
+          onClick={() => fetchNextPage()}
+          disabled={!hasNextPage}
+        >
+          {hasNextPage
             ? 'Load More'
             : 'Nothing more to load'}
-      </button>
+        </button>}
       <div className="flex flex-col-reverse">
         {data.pages.map((page) => (
           <Fragment key={page.nextCursor}>
@@ -121,9 +123,6 @@ const ChatMessages = ({ channelId, currentMember }: {
           </Fragment>
         ))}
       </div>
-      <button onClick={() => console.log(data)}>
-        log
-      </button>
     </div>
   )
 }
