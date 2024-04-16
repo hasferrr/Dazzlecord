@@ -5,9 +5,9 @@ import { createServer } from 'node:http'
 import { Server } from 'socket.io'
 
 import messageRouter from './controllers/messageRouter'
-import { connectHandler } from './handler/connect-handler'
-import { messageHandler } from './handler/message-handler'
-import { roomHandler } from './handler/room-handler'
+import { connectHandler } from './handlers/connect-handler'
+import { messageHandler } from './handlers/message-handler'
+import { roomHandler } from './handlers/room-handler'
 
 const app = express()
 const server = createServer(app)
