@@ -4,6 +4,7 @@ import { Fragment, useEffect } from 'react'
 
 import type { Member } from '@prisma/client'
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query'
+import { useInView } from 'react-intersection-observer'
 
 import { queryMessages } from '@/actions/message/query-message'
 import { generateToken } from '@/actions/socket-io/generate-token'
@@ -18,6 +19,7 @@ const ChatMessages = ({ channelId, currentMember }: {
 }) => {
   const queryClient = useQueryClient()
   const socket = useSocket()
+  const { ref, inView } = useInView()
 
   useEffect(() => {
     if (!socket) {
@@ -78,6 +80,12 @@ const ChatMessages = ({ channelId, currentMember }: {
     }
   }, [channelId, queryClient, socket])
 
+  useEffect(() => {
+    if (inView) {
+      fetchNextPage()
+    }
+  }, [fetchNextPage, inView])
+
   if (status === 'pending') {
     return <div>Loading...</div>
   }
@@ -89,6 +97,7 @@ const ChatMessages = ({ channelId, currentMember }: {
   return (
     <div className="overflow-hidden">
       <button
+        ref={ref}
         onClick={() => fetchNextPage()}
         disabled={!hasNextPage || isFetchingNextPage}
       >
