@@ -1,11 +1,14 @@
 'use client'
 
-import { type Dispatch, type SetStateAction } from 'react'
+import { useState, useTransition } from 'react'
 
-import { ChannelType } from '@prisma/client'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { type Channel, ChannelType } from '@prisma/client'
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import type { createNewChannel } from '@/actions/channel/create-new-channel'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -31,29 +34,62 @@ import ChannelModalRadio from './channel-modal-radio'
 
 interface AbstractChannelModalProps {
   title: string
-  form: ReturnType<typeof useForm<z.infer<typeof channelModalSchema>>>
+  onModalClose: () => void
   isModalOpen: boolean
-  handleOpenDialog: () => void
-  onSubmit: (values: z.infer<typeof channelModalSchema>) => void
-  isPending: boolean
-  radio: string | undefined
-  setRadio: Dispatch<SetStateAction<string | undefined>>
-  channelName: string | undefined
-  setChannelName: Dispatch<SetStateAction<string | undefined>>
+  onSubmitAction: (name: string, type: ChannelType) => ReturnType<typeof createNewChannel>
+  currentChannel?: Channel
 }
 
 const AbstractChannelModal = ({
   title,
-  form,
+  onModalClose,
   isModalOpen,
-  handleOpenDialog,
-  onSubmit,
-  isPending,
-  radio,
-  setRadio,
-  channelName,
-  setChannelName,
+  onSubmitAction,
+  currentChannel,
 }: AbstractChannelModalProps) => {
+  const [isPending, startTransition] = useTransition()
+  const [radio, setRadio] = useState<string | undefined>(currentChannel?.type)
+  const [channelName, setChannelName] = useState<string | undefined>(currentChannel?.name)
+
+  const router = useRouter()
+
+  const form = useForm<z.infer<typeof channelModalSchema>>({
+    resolver: zodResolver(channelModalSchema),
+    defaultValues: {
+      name: currentChannel?.name,
+      type: currentChannel?.type,
+    },
+  })
+
+  const formReset = (name?: string, type?: string) => {
+    form.reset()
+    setChannelName(name ?? currentChannel?.name)
+    setRadio(type ?? currentChannel?.type)
+  }
+
+  const handleOpenDialog = () => {
+    onModalClose()
+    formReset()
+  }
+
+  const onSubmit = async (values: z.infer<typeof channelModalSchema>) => {
+    startTransition(async () => {
+      const res = await onSubmitAction(values.name, values.type)
+      if (res.error) {
+        console.log(res)
+        return
+      }
+      console.log(res.success, res.data)
+      onModalClose()
+      // If editing a channel, then reset to new values
+      // Otherwise (creating a channel), then reset to blank
+      currentChannel
+        ? formReset(values.name, values.type)
+        : formReset()
+      router.refresh()
+    })
+  }
+
   return (
     <Dialog open={isModalOpen} onOpenChange={handleOpenDialog}>
       <DialogContent className="p-0 m-0 dark:bg-[var(--dark-page)] text-black dark:text-white w-[29rem]">

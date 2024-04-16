@@ -23,7 +23,7 @@ export const editChannel = async (
   }
 
   try {
-    const updatedServer = await db.server.update({
+    await db.server.update({
       where: {
         id: channel.serverId,
         members: {
@@ -49,7 +49,14 @@ export const editChannel = async (
         },
       },
     })
-    return { success: 'channel edited', data: updatedServer }
+    return {
+      success: 'channel edited',
+      data: {
+        ...channel,
+        name: channelName,
+        type: channelType,
+      },
+    }
   } catch (error) {
     return { error: 'failed edit the channel' }
   }
