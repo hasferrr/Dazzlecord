@@ -30,7 +30,11 @@ export const modifyString = (input: string): string => {
 /**
  * Takes a Date, returns formatted string "04/01/2024 10:30 AM"
  */
-export const formatDate = (date: Date): string => {
+export const formatDate = (date0: Date | string): string => {
+  const date = typeof date0 === 'string'
+    ? new Date(date0)
+    : date0
+
   const month = String(date.getMonth() + 1).padStart(2, '0')
   const day = String(date.getDate()).padStart(2, '0')
   const year = date.getFullYear()
