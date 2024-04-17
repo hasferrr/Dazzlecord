@@ -1,12 +1,11 @@
 'use client'
 
 import { createNewChannel } from '@/actions/channel/create-new-channel'
+import AbstractChannelModal from '@/components/modals/abstract-modal/abstract-channel-modal'
 import {
   useCreateChannelClose,
   useCreateChannelValue,
 } from '@/context/modal-context'
-
-import AbstractChannelModal from './abstract-channel-modal'
 
 const ChannelModal = ({ serverId }: { serverId: string }) => {
   const onCreateChannelClose = useCreateChannelClose()

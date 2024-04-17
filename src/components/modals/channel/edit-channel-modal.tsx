@@ -8,7 +8,7 @@ import {
   useEditChannelValue,
 } from '@/context/edit-channel-context'
 
-import AbstractChannelModal from './abstract-channel-modal'
+import AbstractChannelModal from '../abstract-modal/abstract-channel-modal'
 
 const EditChannelModal = ({ channel }: { channel: Channel }) => {
   const onEditChannelClose = useEditChannelClose(channel.id)
