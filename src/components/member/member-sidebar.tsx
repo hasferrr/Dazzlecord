@@ -45,7 +45,7 @@ const MemberSidebar = async ({ serverId }: { serverId: string }) => {
         {owners.length > 0 &&
           <div className="mb-2">
             <MemberSection title="owners" />
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col">
               {owners}
             </div>
           </div>
@@ -53,7 +53,7 @@ const MemberSidebar = async ({ serverId }: { serverId: string }) => {
         {admins.length > 0 &&
           <div className="mb-2">
             <MemberSection title="admins" />
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col">
               {admins}
             </div>
           </div>
@@ -61,7 +61,7 @@ const MemberSidebar = async ({ serverId }: { serverId: string }) => {
         {guests.length > 0 &&
           <div className="mb-2">
             <MemberSection title="members" />
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col">
               {guests}
             </div>
           </div>

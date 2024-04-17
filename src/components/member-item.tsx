@@ -9,7 +9,7 @@ export const MemberItem = ({ username, image, desc, className }: {
 }) => {
   return (
     <button className={cn(
-      'grid grid-cols-[auto_1fr] grid-rows-1 gap-x-2 items-center',
+      'grid grid-cols-[auto_1fr] grid-rows-1 gap-x-3 items-center',
       'group rounded-md transition text-left',
       'hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50',
       className
