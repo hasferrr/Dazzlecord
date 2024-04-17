@@ -7,7 +7,7 @@ import {
   useCreateChannelValue,
 } from '@/context/modal-context'
 
-const ChannelModal = ({ serverId }: { serverId: string }) => {
+const CreateChannelModal = ({ serverId }: { serverId: string }) => {
   const onCreateChannelClose = useCreateChannelClose()
   const isCreateChannelOpen = useCreateChannelValue()
 
@@ -22,4 +22,4 @@ const ChannelModal = ({ serverId }: { serverId: string }) => {
   )
 }
 
-export default ChannelModal
+export default CreateChannelModal

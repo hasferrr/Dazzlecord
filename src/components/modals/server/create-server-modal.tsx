@@ -45,7 +45,7 @@ import {
 import { uploadPhoto } from '@/services/upload-photo'
 import SVGUploadIcon from '@/svg/SVG-upload-icon'
 
-const ServerModal = () => {
+const CreateServerModal = () => {
   const [file, setFile] = useState<File | null>(null)
   const [fileErrorMsg, setFileErrorMsg] = useState<string | undefined>(undefined)
   const [isPending, startTransition] = useTransition()
@@ -236,4 +236,4 @@ const ServerModal = () => {
   )
 }
 
-export default ServerModal
+export default CreateServerModal
