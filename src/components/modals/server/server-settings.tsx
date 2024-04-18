@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 
+import BigScreen from '@/components/media-query/big-screen'
 import {
   useServerSettingsClose,
   useServerSettingsValue,
@@ -41,17 +42,21 @@ const ServerSettings = () => {
       {serverSettingsValue &&
         <div className={cn(
           opacity,
-          'fixed top-0 left-0 right-0 bottom-0 bg-black/50 z-[1000]',
-          'grid grid-cols-[17.375rem_51.25rem_2.25rem] justify-center',
+          'bg-page dark:bg-page-dark',
+          'flex fixed top-0 left-0 right-0 bottom-0 z-[1000]',
           'transition-all animate-overlayShow',
         )}>
-          <div className="py-[60px] pl-[60px] pr-[6px]">
-            HELLO LEFT
-          </div>
-          <div className="py-[60px] px-[40px]">
+          <BigScreen>
+            <div className="py-[60px] bg-server dark:bg-server-dark flex flex-grow flex-shrink-0 justify-end">
+              <div className="w-[14rem]">
+                HELLO LEFT
+              </div>
+            </div>
+          </BigScreen>
+          <div className="w-[52rem] py-[60px] px-[40px]">
             HELLO RIGHT
           </div>
-          <div className="py-[60px] flex justify-center items-start">
+          <div className="w-[3rem] py-[60px] flex items-start flex-grow flex-shrink-0">
             <button onClick={handleClose}>
               [X]
             </button>
