@@ -23,8 +23,8 @@ export default function RootLayout({ children }: Readonly<{
     <html lang="en">
       <body className={cn(
         font.className,
-        'bg-white',
-        'dark:bg-[#313338]',
+        'bg-page',
+        'dark:bg-page-dark',
       )}>
         <ThemeProvider
           attribute="class"

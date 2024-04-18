@@ -10,6 +10,7 @@ body,
 }
 
 :root {
+  /* Do not remove theese variables! Legacy only purposes! */
   /* Dark */
   --dark-navigation: #1E1F22;
   --dark-server: #2b2d31;

@@ -19,6 +19,42 @@ const config = {
     },
     extend: {
       colors: {
+        // Color group for navigation
+        navigation: {
+          DEFAULT: '#e3e5e8',
+          dark: '#1E1F22',
+        },
+        // Color group for server elements
+        server: {
+          DEFAULT: '#f2f3f5',
+          dark: '#2b2d31',
+          // Variants for hover state (light and dark)
+          hover: {
+            DEFAULT: '#dfe1e5',
+            dark: '#404249',
+          },
+          // Variants for selected state (light and dark)
+          selected: {
+            DEFAULT: '#d7d9dc',
+            dark: '#3f4147',
+          },
+          // Variants for active state (light and dark)
+          active: {
+            DEFAULT: '#e6e6e8',
+            dark: '#35373c',
+          },
+          // Variants for footer state (light and dark)
+          footer: {
+            DEFAULT: '#ebedef',
+            dark: '#232428',
+          },
+        },
+        // Color group for page background
+        page: {
+          DEFAULT: '#ffffff',
+          dark: '#313338',
+        },
+        // Other
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
