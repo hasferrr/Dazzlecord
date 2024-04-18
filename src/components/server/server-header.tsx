@@ -23,8 +23,8 @@ import {
   useDeleteServerOpen,
   useInviteOpen,
   useLeaveServerOpen,
-  useServerSettingsOpen,
 } from '@/context/modal-context'
+import { useServerSettingsOpen } from '@/context/settings/server-settings'
 
 const ServerHeader = ({
   server,

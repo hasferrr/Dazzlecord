@@ -7,9 +7,10 @@ import { CircleX } from 'lucide-react'
 import BigScreen from '@/components/media-query/big-screen'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import {
+  useServerSettings,
   useServerSettingsClose,
   useServerSettingsValue,
-} from '@/context/modal-context'
+} from '@/context/settings/server-settings'
 import { cn } from '@/lib/utils'
 
 import ButtonSelection from './button-selection'
@@ -19,6 +20,7 @@ const ServerSettings = ({ serverName }: {
   serverName: string
 }) => {
   const [opacity, setOpacity] = useState<'opacity-0' | 'opacity-100'>('opacity-100')
+  const [serverSettings, _setServerSettings] = useServerSettings()
   const serverSettingsValue = useServerSettingsValue()
   const serverSettingsClose = useServerSettingsClose()
 
@@ -66,11 +68,11 @@ const ServerSettings = ({ serverName }: {
                   />
                   <ButtonSelection
                     title="Overview"
-                    activeCondition={true}
+                    activeCondition={serverSettings.overview}
                   />
                   <ButtonSelection
                     title="Members"
-                    activeCondition={false}
+                    activeCondition={serverSettings.members}
                   />
                   <ButtonSelection
                     title="Delete Server"
