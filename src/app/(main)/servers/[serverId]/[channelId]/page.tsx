@@ -30,6 +30,9 @@ const ChannelIdPage = async ({
     where: {
       id: params.channelId,
     },
+    include: {
+      server: true,
+    },
   })
 
   const member = await db.member.findFirst({
@@ -42,7 +45,7 @@ const ChannelIdPage = async ({
   if (!channel || !member) {
     redirect('/')
   }
-
+  console.log(channel.name)
   return (
     <div className="bg-white dark:bg-[var(--dark-page)] h-full w-full
     max-h-screen min-h-screen
