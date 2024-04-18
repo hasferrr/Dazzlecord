@@ -103,10 +103,15 @@ const config = {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' },
         },
+        overlayShow: {
+          from: { opacity: '0' },
+          to: { opacity: '1' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        overlayShow: 'overlayShow 200ms cubic-bezier(0.16, 1, 0.3, 1)',
       },
     },
   },

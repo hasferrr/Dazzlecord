@@ -8,6 +8,7 @@ const initialValue = {
   deleteServer: false,
   leaveServer: false,
   createChannel: false,
+  serverSettings: false,
 }
 
 type Modal = typeof initialValue
@@ -57,17 +58,20 @@ export const useCreateServerValue = () => useAbstractGetState('createServer')
 export const useDeleteServerValue = () => useAbstractGetState('deleteServer')
 export const useLeaveServerValue = () => useAbstractGetState('leaveServer')
 export const useCreateChannelValue = () => useAbstractGetState('createChannel')
+export const useServerSettingsValue = () => useAbstractGetState('serverSettings')
 
 export const useInviteOpen = () => useAbstractDispatch('invite', true)
 export const useCreateServerOpen = () => useAbstractDispatch('createServer', true)
 export const useDeleteServerOpen = () => useAbstractDispatch('deleteServer', true)
 export const useLeaveServerOpen = () => useAbstractDispatch('leaveServer', true)
 export const useCreateChannelOpen = () => useAbstractDispatch('createChannel', true)
+export const useServerSettingsOpen = () => useAbstractDispatch('serverSettings', true)
 
 export const useInviteClose = () => useAbstractDispatch('invite', false)
 export const useCreateServerClose = () => useAbstractDispatch('createServer', false)
 export const useDeleteServerClose = () => useAbstractDispatch('deleteServer', false)
 export const useLeaveServerClose = () => useAbstractDispatch('leaveServer', false)
 export const useCreateChannelClose = () => useAbstractDispatch('createChannel', false)
+export const useServerSettingsClose = () => useAbstractDispatch('serverSettings', false)
 
 export default ModalContext
