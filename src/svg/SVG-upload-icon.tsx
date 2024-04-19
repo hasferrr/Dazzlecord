@@ -1,7 +1,10 @@
 import * as React from 'react'
 
-const SVGUploadIcon = () => (
-  <svg width={80} height={80} viewBox="0 0 80 80" fill="none">
+const SVGUploadIcon = ({ width = 80, height = 80 }: {
+  width?: number
+  height?: number
+}) => (
+  <svg width={width} height={height} viewBox="0 0 80 80" fill="none">
     <path
       fillRule="evenodd"
       clipRule="evenodd"

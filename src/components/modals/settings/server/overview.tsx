@@ -1,9 +1,148 @@
 'use client'
 
+import { useTransition } from 'react'
+
+import { X } from 'lucide-react'
+import Image from 'next/image'
+import { z } from 'zod'
+
+import { Button } from '@/components/ui/button'
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { useServerForm } from '@/hooks/useServerForm'
+import {
+  serverModalSchema,
+} from '@/schemas/server-modal-schema'
+import SVGUploadIcon from '@/svg/SVG-upload-icon'
+
 const Overview = () => {
+  const [isPending, startTransition] = useTransition()
+
+  const {
+    form,
+    file,
+    fileErrorMsg,
+    filesRef,
+    handleOnSubmit,
+    handleImageChange,
+    handleResetAll,
+    handleResetImage,
+  } = useServerForm()
+
+  const onSubmit = (values: z.infer<typeof serverModalSchema>) => {
+    startTransition(() => {
+      handleOnSubmit(values)
+    })
+  }
+
   return (
     <div>
       <h1 className="text-lg font-bold">Server Overview</h1>
+      <div>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="lg:grid block grid-cols-2 grid-flow-row"
+          >
+            <div className="flex items-center mt-4">
+              <FormField
+                control={form.control}
+                name="files"
+                render={() => {
+                  return (
+                    <FormItem className="flex justify-center gap-5">
+                      <div>
+                        <FormControl>
+                          <div className="relative h-[120px] w-[120px] flex justify-center items-center">
+                            <label htmlFor="fileInput" className="cursor-pointer">
+                              <Input
+                                disabled={isPending}
+                                id="fileInput"
+                                type="file"
+                                {...filesRef}
+                                className="cursor-pointer opacity-0 absolute w-0 h-0 top-[10000px]"
+                                onChange={handleImageChange}
+                              />
+                              {file
+                                ? <Image
+                                  className="h-24 w-24 rounded-full object-cover"
+                                  src={URL.createObjectURL(file)}
+                                  alt=""
+                                  width={96}
+                                  height={96}
+                                />
+                                : <SVGUploadIcon width={96} height={96} />
+                              }
+                            </label>
+                            {file
+                              ? <button onClick={handleResetImage} type="button" disabled={isPending}>
+                                <X className="absolute z-50 top-0 right-0 rounded-full
+                              bg-rose-500 text-white p-1" />
+                              </button>
+                              : <></>
+                            }
+                          </div>
+                        </FormControl>
+                        <FormMessage className="pt-1 text-center">
+                          {fileErrorMsg ?? <span className="text-foreground">Required</span>}
+                        </FormMessage>
+                      </div>
+                      <div className="flex flex-col gap-2">
+                        <FormDescription className="text-[13px] w-[200px]">
+                          We recommend an image of at least 512x512 for the server.
+                        </FormDescription>
+                        <label htmlFor="fileInput">
+                          <div className="border-secondary-foreground/40 bg-transparent hover:bg-secondary-foreground/10
+                          py-2 px-3 border-[1px] rounded-sm w-fit text-[13px] cursor-pointer">
+                            Upload Image
+                          </div>
+                        </label>
+                      </div>
+                    </FormItem>
+                  )
+                }}
+              />
+            </div>
+
+            <div className="lg:ml-4 pt-9">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="uppercase font-bold text-xs text-inherit">
+                      Server Name
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        disabled={isPending}
+                        className="bg-zinc-300/50 dark:bg-[var(--dark-navigation)] border-0 focus-visible:ring-0 focus-visible:ring-offset-0 lg:max-w-[999px] max-w-[320px]"
+                        placeholder="Server Name"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div className="col-span-2 pt-10 rounded-b-lg flex lg:justify-end">
+              <Button variant="primary" type="submit" disabled={isPending}>
+                Update
+              </Button>
+            </div>
+          </form>
+        </Form>
+      </div>
     </div>
   )
 }
