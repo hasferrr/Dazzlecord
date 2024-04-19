@@ -12,6 +12,7 @@ export const uploadPhoto = async (file: File, filename: string) => {
     formData.append(key, value)
   })
 
+  console.log('uploading an image to gcs...')
   return axios.post(url, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',

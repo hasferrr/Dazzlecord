@@ -1,15 +1,12 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useTransition } from 'react'
 
-import { zodResolver } from '@hookform/resolvers/zod'
 import { X } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { createNewServer } from '@/actions/server/create-new-server'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -33,21 +30,13 @@ import {
   useCreateServerClose,
   useCreateServerValue,
 } from '@/context/modal-context'
+import { useServerForm } from '@/hooks/useServerForm'
 import {
-  checkLength,
-  checkSize,
-  checkTypes,
-  failedLength,
-  failedSize,
-  failedTypes,
   serverModalSchema,
 } from '@/schemas/server-modal-schema'
-import { uploadPhoto } from '@/services/upload-photo'
 import SVGUploadIcon from '@/svg/SVG-upload-icon'
 
 const CreateServerModal = () => {
-  const [file, setFile] = useState<File | null>(null)
-  const [fileErrorMsg, setFileErrorMsg] = useState<string | undefined>(undefined)
   const [isPending, startTransition] = useTransition()
 
   const router = useRouter()
@@ -55,79 +44,30 @@ const CreateServerModal = () => {
   const onClose = useCreateServerClose()
   const isModalOpen = useCreateServerValue()
 
-  const form = useForm<z.infer<typeof serverModalSchema>>({
-    resolver: zodResolver(serverModalSchema),
-    defaultValues: {
-      name: '',
-    },
-  })
+  const {
+    form,
+    file,
+    fileErrorMsg,
+    filesRef,
+    handleOnSubmit,
+    handleImageChange,
+    handleResetAll,
+    handleResetImage,
+  } = useServerForm()
 
-  const filesRef = form.register('files')
-
-  const onSubmit = async (values: z.infer<typeof serverModalSchema>) => {
-    console.log('uploading...')
-    startTransition(async () => {
-      try {
-        const newServer = await createNewServer(values.name)
-        if (newServer.image) {
-          await uploadPhoto(values.files[0], newServer.image)
-        }
-        console.log('success!!!')
-        form.reset()
-        setFile(null)
-        setFileErrorMsg(undefined)
+  const onSubmit = (values: z.infer<typeof serverModalSchema>) => {
+    startTransition(() => {
+      handleOnSubmit(values, (newServer) => {
         onClose()
         router.push(`/servers/${newServer.id}`)
         router.refresh()
-      } catch (error) {
-        console.log('error:', error)
-      }
+      })
     })
   }
 
   const handleOpenDialog = () => {
-    setTimeout(() => {
-      form.reset()
-      setFile(null)
-      setFileErrorMsg(undefined)
-    }, 100)
+    handleResetAll(100)
     onClose()
-  }
-
-  const handleImageChange = (event: React.FormEvent<HTMLInputElement>) => {
-    const inputElement = event.target as HTMLInputElement
-    const files = inputElement.files
-    if (!files) {
-      setFile(null)
-      setFileErrorMsg(undefined)
-      return
-    }
-    if (!checkLength(files)) {
-      form.resetField('files')
-      setFile(null)
-      setFileErrorMsg(failedLength)
-      return
-    }
-    if (!checkSize(files)) {
-      form.resetField('files')
-      setFile(null)
-      setFileErrorMsg(failedSize)
-      return
-    }
-    if (!checkTypes(files)) {
-      form.resetField('files')
-      setFile(null)
-      setFileErrorMsg(failedTypes)
-      return
-    }
-    setFileErrorMsg(undefined)
-    setFile(files[0])
-  }
-
-  const handleResetImage = () => {
-    form.resetField('files')
-    setFile(null)
-    setFileErrorMsg(undefined)
   }
 
   return (
