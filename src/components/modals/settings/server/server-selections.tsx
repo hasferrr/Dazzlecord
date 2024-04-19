@@ -7,8 +7,8 @@ import {
   useSetServerSettings,
 } from '@/context/settings/server-settings'
 
-import ButtonSelection from './button-selection'
-import LabelSelection from './label-selection'
+import ButtonSelection from '../button-selection'
+import LabelSelection from '../label-selection'
 
 const ServerSelections = ({ serverName }: { serverName: string }) => {
   const serverSettingsValue = useServerSettingsValue()

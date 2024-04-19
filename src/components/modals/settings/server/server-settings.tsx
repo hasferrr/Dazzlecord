@@ -11,10 +11,13 @@ import { MobileToggleV2 } from '@/components/mobile-toggle-v2'
 import {
   useServerSettingsPageClose,
   useServerSettingsPageValue,
+  useServerSettingsValue,
   useSetServerSettings,
 } from '@/context/settings/server-settings'
 import { cn } from '@/lib/utils'
 
+import Members from './members'
+import Overview from './overview'
 import ServerSelections from './server-selections'
 
 const ServerSettings = ({ serverName }: {
@@ -22,6 +25,7 @@ const ServerSettings = ({ serverName }: {
 }) => {
   const [opacity, setOpacity] = useState<'opacity-0' | 'opacity-100'>('opacity-100')
   const setServerSettings = useSetServerSettings()
+  const serverSettingsValue = useServerSettingsValue()
   const serverSettingsPageValue = useServerSettingsPageValue()
   const serverSettingsPageClose = useServerSettingsPageClose()
 
@@ -71,7 +75,8 @@ const ServerSettings = ({ serverName }: {
             {serverSelectionsComponent}
           </BigScreen>
           <div className="w-[52rem] py-[60px] px-[40px]">
-            Server Overview
+            {serverSettingsValue.overview && <Overview />}
+            {serverSettingsValue.members && <Members />}
           </div>
           <div className="w-[72px] py-[60px] flex items-start flex-grow flex-shrink-0">
             <button onClick={handleClose}>
