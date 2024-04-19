@@ -11,10 +11,6 @@ import {
   Users,
 } from 'lucide-react'
 
-import CreateChannelModal from '@/components/modals/channel/create-channel-modal'
-import InvitationModal from '@/components/modals/invitation-modal'
-import DeleteServerModal from '@/components/modals/server/delete-server-modal'
-import LeaveServerModal from '@/components/modals/server/leave-server-modal'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -32,11 +28,9 @@ import {
 const ServerHeader = ({
   server,
   currentMember,
-  origin,
 }: {
   server: Server,
   currentMember: Member,
-  origin: string,
 }) => {
   const openInvite = useInviteOpen()
   const openDeleteServer = useDeleteServerOpen()
@@ -54,10 +48,6 @@ const ServerHeader = ({
 
   return (
     <div>
-      <InvitationModal origin={origin} inviteCode={server.inviteCode} />
-      <DeleteServerModal server={server} />
-      <LeaveServerModal server={server} />
-      <CreateChannelModal serverId={server.id} />
       <DropdownMenu>
         <DropdownMenuTrigger asChild className="focus:outline-none">
           <button className="

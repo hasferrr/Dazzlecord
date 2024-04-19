@@ -2,7 +2,6 @@ import { redirect } from 'next/navigation'
 
 import { getAllServersByUserId } from '@/actions/prisma/server'
 import { auth } from '@/auth'
-import CreateServerModal from '@/components/modals/server/create-server-modal'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
 
@@ -22,7 +21,6 @@ const NavigationSidebar = async () => {
     h-full w-[4.5rem] text-primary py-3
     bg-[var(--light-navigation)]
     dark:bg-[var(--dark-navigation)]">
-      <CreateServerModal />
       <NavigationHome />
       <Separator className="h-[2px] w-8 rounded-md mx-auto bg-zinc-300 dark:bg-[var(--dark-page)]" />
       <ScrollArea className="w-full">

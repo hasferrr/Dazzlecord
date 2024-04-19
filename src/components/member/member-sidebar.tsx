@@ -7,7 +7,9 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 
 import MemberSection from './member-section'
 
-const MemberSidebar = async ({ serverId }: { serverId: string }) => {
+const MemberSidebar = async ({ serverId }: {
+  serverId: string
+}) => {
   const members = await getAllMembersByServerIdSorted(serverId)
   if (!members) {
     return redirect('/')

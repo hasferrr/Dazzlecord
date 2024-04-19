@@ -2,24 +2,20 @@ import { type Channel, ChannelType } from '@prisma/client'
 import { redirect } from 'next/navigation'
 
 import { findMember } from '@/actions/prisma/member'
-import { getServerIncludesAllChannel } from '@/actions/prisma/server'
 import { auth } from '@/auth'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { ORIGIN_URL } from '@/utils/config'
+import type { ServerWithChannel } from '@/types'
 
 import ServerChannel from './server-channel'
 import ServerFooter from './server-footer'
 import ServerHeader from './server-header'
 import ServerSection from './server-section'
 
-const ServerSidebar = async ({ serverId }: { serverId: string }) => {
+const ServerSidebar = async ({ server }: {
+  server: ServerWithChannel
+}) => {
   const session = await auth()
   if (!session) {
-    return redirect('/')
-  }
-
-  const server = await getServerIncludesAllChannel(serverId)
-  if (!server) {
     return redirect('/')
   }
 
@@ -58,7 +54,6 @@ const ServerSidebar = async ({ serverId }: { serverId: string }) => {
       <ServerHeader
         server={server}
         currentMember={currentMember}
-        origin={ORIGIN_URL}
       />
       <ScrollArea className="w-full px-4 flex flex-col gap-y-2">
         {textChannel.length > 0 && (

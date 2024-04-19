@@ -6,6 +6,8 @@ import ChatInput from '@/components/chat/chat-input'
 import ChatWrapper from '@/components/chat/chat-wrapper'
 import BigScreen from '@/components/media-query/big-screen'
 import MemberSidebar from '@/components/member/member-sidebar'
+import DeleteChannelModal from '@/components/modals/channel/delete-channel-modal'
+import EditChannelModal from '@/components/modals/channel/edit-channel-modal'
 import { db } from '@/lib/db'
 
 interface ChannelIdPageProps {
@@ -69,6 +71,8 @@ const ChannelIdPage = async ({
           serverId={params.serverId}
         />
       </div>
+      <DeleteChannelModal channel={channel} />
+      <EditChannelModal channel={channel} />
     </div>
   )
 }

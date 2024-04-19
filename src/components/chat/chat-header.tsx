@@ -4,7 +4,10 @@ import {
   Mic,
   Video,
 } from 'lucide-react'
+import { redirect } from 'next/navigation'
 
+import { getServerWithAnyChannel } from '@/actions/prisma/server'
+import { auth } from '@/auth'
 import MobileScreen from '@/components/media-query/mobile-screen'
 import MemberSidebar from '@/components/member/member-sidebar'
 import { MobileToggleV2 } from '@/components/mobile-toggle-v2'
@@ -24,12 +27,27 @@ interface ChatHeaderProps {
   channelType: ChannelType
 }
 
-const ChatHeader = ({
+const ChatHeader = async ({
   name,
   serverId,
   channelType,
 }: ChatHeaderProps) => {
   const Icon = iconMap[channelType]
+
+  const session = await auth()
+  if (!session) {
+    return redirect('/')
+  }
+  const userId = session.user.id
+
+  let server
+  try {
+    if (serverId) {
+      server = await getServerWithAnyChannel(serverId, userId)
+    }
+  } catch (error) {
+    console.log(error)
+  }
 
   return (
     <div className="flex items-center gap-2
@@ -38,7 +56,7 @@ const ChatHeader = ({
       <MobileScreen>
         <MobileToggleV2>
           <NavigationSidebar />
-          {serverId && <ServerSidebar serverId={serverId} />}
+          {server && <ServerSidebar server={server} />}
         </MobileToggleV2>
       </MobileScreen>
       <div>

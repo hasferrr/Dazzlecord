@@ -9,8 +9,6 @@ import { Edit, Hash, Mic, Trash, Video } from 'lucide-react'
 import { useParams, useRouter } from 'next/navigation'
 
 import { ActionTooltip } from '@/components/action-tooltip'
-import DeleteChannelModal from '@/components/modals/channel/delete-channel-modal'
-import EditChannelModal from '@/components/modals/channel/edit-channel-modal'
 import { useDeleteChannelOpen } from '@/context/delete-channel-context'
 import { useEditChannelOpen } from '@/context/edit-channel-context'
 import { cn } from '@/lib/utils'
@@ -44,8 +42,6 @@ const ServerChannel = ({
 
   return (
     <div>
-      <DeleteChannelModal channel={channel} />
-      <EditChannelModal channel={channel} />
       <button
         onClick={navigateToChannel}
         className={cn(
