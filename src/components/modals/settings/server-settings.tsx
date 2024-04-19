@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 
 import { useEffect, useState } from 'react'
@@ -6,10 +7,12 @@ import { CircleX } from 'lucide-react'
 
 import BigScreen from '@/components/media-query/big-screen'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { useDeleteServerOpen } from '@/context/modal-context'
 import {
-  useServerSettings,
-  useServerSettingsClose,
+  useServerSettingsPageClose,
+  useServerSettingsPageValue,
   useServerSettingsValue,
+  useSetServerSettings,
 } from '@/context/settings/server-settings'
 import { cn } from '@/lib/utils'
 
@@ -20,20 +23,23 @@ const ServerSettings = ({ serverName }: {
   serverName: string
 }) => {
   const [opacity, setOpacity] = useState<'opacity-0' | 'opacity-100'>('opacity-100')
-  const [serverSettings, _setServerSettings] = useServerSettings()
   const serverSettingsValue = useServerSettingsValue()
-  const serverSettingsClose = useServerSettingsClose()
+  const setServerSettings = useSetServerSettings()
+  const serverSettingsPageValue = useServerSettingsPageValue()
+  const serverSettingsPageClose = useServerSettingsPageClose()
+  const deleteServerOpen = useDeleteServerOpen()
 
   const handleClose = () => {
     setOpacity('opacity-0')
     setTimeout(() => {
-      serverSettingsClose()
+      serverSettingsPageClose()
     }, 200)
   }
 
   useEffect(() => {
+    setServerSettings('overview', true)
     setOpacity('opacity-100')
-  }, [serverSettingsValue])
+  }, [serverSettingsPageValue])
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -45,16 +51,15 @@ const ServerSettings = ({ serverName }: {
     return () => {
       window.removeEventListener('keydown', handleEsc)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
     <>
-      {serverSettingsValue &&
+      {serverSettingsPageValue &&
         <div className={cn(
           opacity,
           'bg-page dark:bg-page-dark',
-          'flex fixed top-0 left-0 right-0 bottom-0 z-[1000]',
+          'flex fixed top-0 left-0 right-0 bottom-0 z-40',
           'transition-all animate-overlayShow',
         )}>
           <BigScreen>
@@ -68,14 +73,17 @@ const ServerSettings = ({ serverName }: {
                   />
                   <ButtonSelection
                     title="Overview"
-                    activeCondition={serverSettings.overview}
+                    onClick={() => setServerSettings('overview', true)}
+                    activeCondition={serverSettingsValue.overview}
                   />
                   <ButtonSelection
                     title="Members"
-                    activeCondition={serverSettings.members}
+                    onClick={() => setServerSettings('members', true)}
+                    activeCondition={serverSettingsValue.members}
                   />
                   <ButtonSelection
                     title="Delete Server"
+                    onClick={deleteServerOpen}
                     activeCondition={false}
                   />
                 </div>

@@ -24,7 +24,7 @@ import {
   useInviteOpen,
   useLeaveServerOpen,
 } from '@/context/modal-context'
-import { useServerSettingsOpen } from '@/context/settings/server-settings'
+import { useServerSettingsPageOpen } from '@/context/settings/server-settings'
 
 const ServerHeader = ({
   server,
@@ -37,7 +37,7 @@ const ServerHeader = ({
   const openDeleteServer = useDeleteServerOpen()
   const openLeaveServer = useLeaveServerOpen()
   const openCreateChannel = useCreateChannelOpen()
-  const serverSettingsOpen = useServerSettingsOpen()
+  const serverSettingsPageOpen = useServerSettingsPageOpen()
 
   const role = currentMember.role
   const isOwner = role === MemberRole.OWNER
@@ -74,7 +74,7 @@ const ServerHeader = ({
             </>
           )}
           {(isOwner || isAdmin) && (
-            <DropdownMenuItem className={style} onClick={serverSettingsOpen}>
+            <DropdownMenuItem className={style} onClick={serverSettingsPageOpen}>
               Server Settings
               <Settings className={iconStyle} />
             </DropdownMenuItem>
