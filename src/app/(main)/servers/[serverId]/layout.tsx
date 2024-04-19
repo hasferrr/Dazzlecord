@@ -7,6 +7,7 @@ import InvitationModal from '@/components/modals/invitation-modal'
 import CreateServerModal from '@/components/modals/server/create-server-modal'
 import DeleteServerModal from '@/components/modals/server/delete-server-modal'
 import LeaveServerModal from '@/components/modals/server/leave-server-modal'
+import ServerSettings from '@/components/modals/settings/server/server-settings'
 import ServerSidebar from '@/components/server/server-sidebar'
 import { ORIGIN_URL } from '@/utils/config'
 
@@ -32,6 +33,7 @@ const ServerIdLayout = async ({ children, params }: {
       <LeaveServerModal server={server} />
       <DeleteServerModal server={server} />
       <CreateChannelModal serverId={server.id} />
+      <ServerSettings serverName={server.name} />
     </>
   )
 }
