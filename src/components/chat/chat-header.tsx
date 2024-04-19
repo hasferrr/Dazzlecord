@@ -6,7 +6,10 @@ import {
 } from 'lucide-react'
 
 import MobileScreen from '@/components/media-query/mobile-screen'
-import { MobileToggle } from '@/components/mobile-toggle'
+import MemberSidebar from '@/components/member/member-sidebar'
+import { MobileToggleV2 } from '@/components/mobile-toggle-v2'
+import NavigationSidebar from '@/components/navigation/navigation-sidebar'
+import ServerSidebar from '@/components/server/server-sidebar'
 import { SocketIndicator } from '@/components/socket-indicator'
 
 const iconMap = {
@@ -15,15 +18,17 @@ const iconMap = {
   [ChannelType.VIDEO]: Video,
 }
 
+interface ChatHeaderProps {
+  name: string
+  serverId?: string
+  channelType: ChannelType
+}
+
 const ChatHeader = ({
   name,
   serverId,
   channelType,
-}: {
-  name: string
-  serverId?: string
-  channelType: ChannelType
-}) => {
+}: ChatHeaderProps) => {
   const Icon = iconMap[channelType]
 
   return (
@@ -31,7 +36,10 @@ const ChatHeader = ({
     text-md font-semibold px-3 h-12 w-full
     border-neutral-200 dark:border-neutral-800 border-b-[1.5px]">
       <MobileScreen>
-        <MobileToggle serverId={serverId} />
+        <MobileToggleV2>
+          <NavigationSidebar />
+          {serverId && <ServerSidebar serverId={serverId} />}
+        </MobileToggleV2>
       </MobileScreen>
       <div>
         <Icon className="w-5 h-5 text-[#A1A1AA] dark:text-[#B5BAC1]" />
@@ -40,10 +48,14 @@ const ChatHeader = ({
         {name}
       </p>
       <div className="grow" />
-      {serverId && <SocketIndicator />}
-      <MobileScreen width={992}>
-        <MobileToggle type="members" side="right" serverId={serverId} />
-      </MobileScreen>
+      {serverId && <>
+        <SocketIndicator />
+        <MobileScreen width={992}>
+          <MobileToggleV2 side="right" buttonVariant="users">
+            <MemberSidebar serverId={serverId} />
+          </MobileToggleV2>
+        </MobileScreen>
+      </>}
     </div>
   )
 }
