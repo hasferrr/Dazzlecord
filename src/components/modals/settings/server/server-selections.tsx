@@ -1,5 +1,7 @@
 'use client'
 
+import { type Member, MemberRole } from '@prisma/client'
+
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { useDeleteServerOpen } from '@/context/modal-context'
 import {
@@ -10,7 +12,15 @@ import {
 import ButtonSelection from '../button-selection'
 import LabelSelection from '../label-selection'
 
-const ServerSelections = ({ serverName }: { serverName: string }) => {
+interface ServerSelectionsProps {
+  serverName: string
+  currentMember: Member
+}
+
+const ServerSelections = ({
+  serverName,
+  currentMember,
+}: ServerSelectionsProps) => {
   const serverSettingsValue = useServerSettingsValue()
   const setServerSettings = useSetServerSettings()
   const deleteServerOpen = useDeleteServerOpen()
@@ -33,11 +43,12 @@ const ServerSelections = ({ serverName }: { serverName: string }) => {
             onClick={() => setServerSettings('members', true)}
             activeCondition={serverSettingsValue.members}
           />
-          <ButtonSelection
-            title="Delete Server"
-            onClick={deleteServerOpen}
-            activeCondition={false}
-          />
+          {currentMember.role === MemberRole.OWNER &&
+            <ButtonSelection
+              title="Delete Server"
+              onClick={deleteServerOpen}
+              activeCondition={false}
+            />}
         </div>
       </ScrollArea>
     </div>
