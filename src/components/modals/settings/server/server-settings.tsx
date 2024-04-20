@@ -9,6 +9,7 @@ import { CircleX } from 'lucide-react'
 import BigScreen from '@/components/media-query/big-screen'
 import MobileScreen from '@/components/media-query/mobile-screen'
 import { MobileToggleV2 } from '@/components/mobile-toggle-v2'
+import { ScrollArea } from '@/components/ui/scroll-area'
 import {
   useServerSettingsPageClose,
   useServerSettingsPageValue,
@@ -66,7 +67,7 @@ const ServerSettings = ({ server }: {
           'transition-all animate-overlayShow',
         )}>
           <MobileScreen>
-            <div className="pl-[20px] pt-[52.5px]">
+            <div className="pl-3 pt-[55px]">
               <MobileToggleV2 side="left">
                 {serverSelectionsComponent}
               </MobileToggleV2>
@@ -75,11 +76,11 @@ const ServerSettings = ({ server }: {
           <BigScreen>
             {serverSelectionsComponent}
           </BigScreen>
-          <div className="w-[52rem] py-[60px] px-[40px]">
+          <div className="md:w-[52rem] py-[60px] md:px-[40px] px-1">
             {serverSettingsValue.overview && <Overview server={server} />}
             {serverSettingsValue.members && <Members />}
           </div>
-          <div className="w-[72px] py-[60px] flex items-start flex-grow flex-shrink-0">
+          <div className="w-[72px] md:pr-[40px] pr-[12px] py-[60px] flex items-start justify-end flex-grow">
             <button onClick={handleClose}>
               <CircleX className="h-8 w-8" />
             </button>

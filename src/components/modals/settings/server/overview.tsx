@@ -71,12 +71,12 @@ const Overview = ({ server }: {
                         <FormControl>
                           <div className="relative h-[120px] w-[120px] flex justify-center items-center">
                             <label htmlFor="fileInput" className="cursor-pointer">
-                              <Input
+                              <input
                                 disabled={isPending}
                                 id="fileInput"
                                 type="file"
                                 {...filesRef}
-                                className="cursor-pointer opacity-0 absolute w-0 h-0 top-[10000px]"
+                                className="cursor-pointer opacity-0 absolute w-0 h-0"
                                 onChange={handleImageChange}
                               />
                               {file
