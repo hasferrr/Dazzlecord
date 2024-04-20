@@ -38,3 +38,13 @@ export const serverModalSchema = z.object({
     .refine(checkSize, failedSize)
     .refine(checkTypes, failedTypes),
 })
+
+export const serverModalSchemaAllow0Length = z.object({
+  name: z.string().min(1, {
+    message: 'Server name is required.',
+  }),
+  files: z
+    .custom<FileList>()
+    .refine(checkSize, failedSize)
+    .refine(checkTypes, failedTypes),
+})

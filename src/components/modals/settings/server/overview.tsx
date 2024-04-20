@@ -21,8 +21,10 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { useServerForm } from '@/hooks/useServerForm'
+import { getFileURLFromGCS } from '@/lib/helpers'
 import {
   serverModalSchema,
+  serverModalSchemaAllow0Length,
 } from '@/schemas/server-modal-schema'
 import SVGUploadIcon from '@/svg/SVG-upload-icon'
 
@@ -41,11 +43,15 @@ const Overview = ({ server }: {
     handleImageChange,
     handleResetAll,
     handleResetImage,
-  } = useServerForm()
+  } = useServerForm(
+    { name: server.name, files: undefined },
+    serverModalSchemaAllow0Length,
+  )
 
   const onSubmit = (values: z.infer<typeof serverModalSchema>) => {
     startTransition(() => {
-      handleOnSubmit(() => updateServer(server.id, values.name, false), false, () => {
+      handleOnSubmit(() => updateServer(server.id, values.name, !!file), !!file, () => {
+        handleResetAll(0, values.name)
         router.refresh()
       })
     })
@@ -77,12 +83,13 @@ const Overview = ({ server }: {
                                 type="file"
                                 {...filesRef}
                                 className="cursor-pointer opacity-0 absolute w-0 h-0"
-                                onChange={handleImageChange}
+                                onChange={(e) => handleImageChange(e, false)}
                               />
-                              {file
+                              {file ?? server.image
                                 ? <Image
                                   className="h-24 w-24 rounded-full object-cover"
-                                  src={URL.createObjectURL(file)}
+                                  //@ts-ignore
+                                  src={file ? URL.createObjectURL(file) : getFileURLFromGCS(server.image)}
                                   alt=""
                                   width={96}
                                   height={96}

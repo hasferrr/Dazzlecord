@@ -11,8 +11,8 @@ import { trimString } from '@/lib/helpers'
 
 export const updateServer = async (
   serverId: string,
-  serverName: string | null,
-  serverImage: boolean,
+  newServerName: string | null,
+  newServerImage: boolean,
 ) => {
   const session = await auth()
   if (!session) {
@@ -37,10 +37,10 @@ export const updateServer = async (
   }
 
   const data: { name?: string; image?: string } = {}
-  if (serverName) {
-    data.name = trimString(serverName)
+  if (newServerName) {
+    data.name = trimString(newServerName)
   }
-  if (serverImage) {
+  if (newServerImage) {
     data.image = `img-server-${uuidv4()}`
   }
 
@@ -58,7 +58,7 @@ export const updateServer = async (
       data,
     })
 
-    if (serverImage && existingServer.image) {
+    if (newServerImage && existingServer.image) {
       await deleteImage(existingServer.image)
     }
     return updatedServer

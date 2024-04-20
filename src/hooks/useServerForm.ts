@@ -15,16 +15,20 @@ import {
   failedSize,
   failedTypes,
   serverModalSchema,
+  serverModalSchemaAllow0Length,
 } from '@/schemas/server-modal-schema'
 import { uploadPhoto } from '@/services/upload-photo'
 
-export const useServerForm = () => {
+export const useServerForm = (
+  defaultValues?: { name?: string, files?: FileList },
+  customSchema?: typeof serverModalSchema | typeof serverModalSchemaAllow0Length,
+) => {
   const [file, setFile] = useState<File | null>(null)
   const [fileErrorMsg, setFileErrorMsg] = useState<string | undefined>(undefined)
 
   const form = useForm<z.infer<typeof serverModalSchema>>({
-    resolver: zodResolver(serverModalSchema),
-    defaultValues: {
+    resolver: zodResolver(customSchema ?? serverModalSchema),
+    defaultValues: defaultValues ?? {
       name: '',
       files: undefined,
     },
@@ -58,7 +62,10 @@ export const useServerForm = () => {
     }
   }
 
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    needToCheckLength: boolean = true,
+  ) => {
     const inputElement = event.target
     const files = inputElement.files
     if (!files) {
@@ -66,7 +73,7 @@ export const useServerForm = () => {
       setFileErrorMsg(undefined)
       return
     }
-    if (!checkLength(files)) {
+    if (needToCheckLength && !checkLength(files)) {
       form.resetField('files')
       setFile(null)
       setFileErrorMsg(failedLength)
@@ -88,11 +95,14 @@ export const useServerForm = () => {
     setFile(files[0])
   }
 
-  const handleResetAll = (delay?: number) => {
+  const handleResetAll = (delay?: number, newName?: string) => {
     setTimeout(() => {
       form.reset()
       setFile(null)
       setFileErrorMsg(undefined)
+      if (newName) {
+        form.setValue('name', newName)
+      }
     }, delay ?? 0)
   }
 

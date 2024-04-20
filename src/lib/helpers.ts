@@ -72,3 +72,5 @@ export const formatDateWithTime = (date: Date): string => {
 
   return `${day}, ${month} ${dayOfMonth}, ${year} ${adjustedHour}:${minutes} ${ampm}`
 }
+
+export const getFileURLFromGCS = (fileName: string) => `https://storage.googleapis.com/server-profile/${fileName}`
