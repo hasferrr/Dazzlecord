@@ -29,7 +29,9 @@ const NavigationHome = () => {
             pathname === '/app' ? 'h-[36px]' : 'h-0',
           )} />
           <Image
-            className="group-hover:text-white transition dark:invert group-hover:invert"
+            className={cn('group-hover:text-white transition dark:invert group-hover:invert',
+              pathname === '/app' && 'invert',
+            )}
             src="https://assets-global.website-files.com/6257adef93867e50d84d30e2/653714c17467993e7b389c83_636e0a6918e57475a843f59f_icon_clyde_black_RGB.svg"
             alt=""
             height={29}
