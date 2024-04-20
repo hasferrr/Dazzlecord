@@ -7,7 +7,6 @@ import type { Server } from '@prisma/client'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { createNewServer } from '@/actions/server/create-new-server'
 import {
   checkLength,
   checkSize,
@@ -34,12 +33,17 @@ export const useServerForm = () => {
   const filesRef = form.register('files')
 
   const handleOnSubmit = async (
-    values: z.infer<typeof serverModalSchema>,
+    fn: () => Promise<Server | null>,
+    isUploadFile: boolean,
     onSuccess?: (newServer: Server) => void,
   ) => {
     try {
-      const newServer = await createNewServer(values.name)
-      if (newServer.image && file) {
+      const newServer = await fn()
+      if (!newServer) {
+        console.log('create/update server is failed')
+        return
+      }
+      if (isUploadFile && newServer.image && file) {
         await uploadPhoto(file, newServer.image)
       }
       console.log('success!!!')

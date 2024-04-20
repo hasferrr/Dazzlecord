@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from 'react'
 
+import type { Server } from '@prisma/client'
 import { CircleX } from 'lucide-react'
 
 import BigScreen from '@/components/media-query/big-screen'
@@ -20,8 +21,8 @@ import Members from './members'
 import Overview from './overview'
 import ServerSelections from './server-selections'
 
-const ServerSettings = ({ serverName }: {
-  serverName: string
+const ServerSettings = ({ server }: {
+  server: Server
 }) => {
   const [opacity, setOpacity] = useState<'opacity-0' | 'opacity-100'>('opacity-100')
   const setServerSettings = useSetServerSettings()
@@ -53,7 +54,7 @@ const ServerSettings = ({ serverName }: {
     }
   }, [])
 
-  const serverSelectionsComponent = <ServerSelections serverName={serverName} />
+  const serverSelectionsComponent = <ServerSelections serverName={server.name} />
 
   return (
     <>
@@ -75,7 +76,7 @@ const ServerSettings = ({ serverName }: {
             {serverSelectionsComponent}
           </BigScreen>
           <div className="w-[52rem] py-[60px] px-[40px]">
-            {serverSettingsValue.overview && <Overview />}
+            {serverSettingsValue.overview && <Overview server={server} />}
             {serverSettingsValue.members && <Members />}
           </div>
           <div className="w-[72px] py-[60px] flex items-start flex-grow flex-shrink-0">

@@ -2,10 +2,13 @@
 
 import { useTransition } from 'react'
 
+import type { Server } from '@prisma/client'
 import { X } from 'lucide-react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { z } from 'zod'
 
+import { updateServer } from '@/actions/server/update-server'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -23,8 +26,11 @@ import {
 } from '@/schemas/server-modal-schema'
 import SVGUploadIcon from '@/svg/SVG-upload-icon'
 
-const Overview = () => {
+const Overview = ({ server }: {
+  server: Server
+}) => {
   const [isPending, startTransition] = useTransition()
+  const router = useRouter()
 
   const {
     form,
@@ -39,7 +45,9 @@ const Overview = () => {
 
   const onSubmit = (values: z.infer<typeof serverModalSchema>) => {
     startTransition(() => {
-      handleOnSubmit(values)
+      handleOnSubmit(() => updateServer(server.id, values.name, false), false, () => {
+        router.refresh()
+      })
     })
   }
 
@@ -84,7 +92,7 @@ const Overview = () => {
                             </label>
                             {file
                               ? <button onClick={handleResetImage} type="button" disabled={isPending}>
-                                <X className="absolute z-50 top-0 right-0 rounded-full
+                                <X className="absolute z-50 top-3 right-3 rounded-full
                               bg-rose-500 text-white p-1" />
                               </button>
                               : <></>

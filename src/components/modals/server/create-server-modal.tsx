@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { z } from 'zod'
 
+import { createNewServer } from '@/actions/server/create-new-server'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -57,7 +58,7 @@ const CreateServerModal = () => {
 
   const onSubmit = (values: z.infer<typeof serverModalSchema>) => {
     startTransition(() => {
-      handleOnSubmit(values, (newServer) => {
+      handleOnSubmit(() => createNewServer(values.name), true, (newServer) => {
         onClose()
         router.push(`/servers/${newServer.id}`)
         router.refresh()

@@ -33,7 +33,7 @@ const ServerIdLayout = async ({ children, params }: {
       <LeaveServerModal server={server} />
       <DeleteServerModal server={server} />
       <CreateChannelModal serverId={server.id} />
-      <ServerSettings serverName={server.name} />
+      <ServerSettings server={server} />
     </>
   )
 }
