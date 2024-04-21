@@ -40,61 +40,76 @@ const Members = ({
 }: MembersProps) => {
   const currentRole = currentMember.role
 
-  const memberTableRows = members.map((member, i) => {
-    return (
-      <TableRow key={i}>
-        <TableCell>
-          <MemberItem
-            username={member.user.username}
-            image={member.user.image}
-          />
-        </TableCell>
-        <TableCell>{yearDifferenceYearFromNow(member.createdAt)}</TableCell>
-        <TableCell>
-          {currentMember.userId === member.userId || currentRole === MODERATOR
-            ? <div className="hover:cursor-not-allowed">
+  const owners: JSX.Element[] = []
+  const admins: JSX.Element[] = []
+  const moderators: JSX.Element[] = []
+  const guests: JSX.Element[] = []
+
+  const makeTableRow = (member: MemberWithUser) => (
+    <TableRow>
+      <TableCell>
+        <MemberItem
+          username={member.user.username}
+          image={member.user.image}
+        />
+      </TableCell>
+      <TableCell>{yearDifferenceYearFromNow(member.createdAt)}</TableCell>
+      <TableCell>
+        {currentMember.userId === member.userId || currentRole === MODERATOR
+          ? <div className="hover:cursor-not-allowed">
+            {member.role}
+          </div>
+          : <DropdownMenu>
+            <DropdownMenuTrigger className="hover:underline">
               {member.role}
-            </div>
-            : <DropdownMenu>
-              <DropdownMenuTrigger className="hover:underline">
-                {member.role}
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuLabel>Change Role</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                {currentRole === OWNER &&
-                  <DropdownMenuItem>{OWNER}</DropdownMenuItem>}
-                {currentRole !== GUEST &&
-                  <DropdownMenuItem>{ADMIN}</DropdownMenuItem>}
-                {currentRole !== GUEST &&
-                  <DropdownMenuItem>{MODERATOR}</DropdownMenuItem>}
-                {currentRole !== GUEST &&
-                  <DropdownMenuItem>{GUEST}</DropdownMenuItem>}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          }
-        </TableCell>
-        <TableCell>
-          {currentMember.userId === member.userId
-            ? <div className="hover:cursor-not-allowed">
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>Change Role</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              {currentRole === OWNER &&
+                <DropdownMenuItem>{OWNER}</DropdownMenuItem>}
+              {currentRole !== GUEST &&
+                <DropdownMenuItem>{ADMIN}</DropdownMenuItem>}
+              {currentRole !== GUEST &&
+                <DropdownMenuItem>{MODERATOR}</DropdownMenuItem>}
+              {currentRole !== GUEST &&
+                <DropdownMenuItem>{GUEST}</DropdownMenuItem>}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        }
+      </TableCell>
+      <TableCell>
+        {currentMember.userId === member.userId
+          ? <div className="hover:cursor-not-allowed">
+            Select
+          </div>
+          : <DropdownMenu>
+            <DropdownMenuTrigger className="hover:underline">
               Select
-            </div>
-            : <DropdownMenu>
-              <DropdownMenuTrigger className="hover:underline">
-                Select
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                {(currentRole === OWNER
-                  || currentRole === ADMIN && member.role !== OWNER
-                  || currentRole === MODERATOR && member.role === GUEST)
-                  && <DropdownMenuItem className="text-red-500">Kick</DropdownMenuItem>
-                }
-              </DropdownMenuContent>
-            </DropdownMenu>
-          }
-        </TableCell>
-      </TableRow>
-    )
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              {(currentRole === OWNER
+                || currentRole === ADMIN && member.role !== OWNER
+                || currentRole === MODERATOR && member.role === GUEST)
+                && <DropdownMenuItem className="text-red-500">Kick</DropdownMenuItem>
+              }
+            </DropdownMenuContent>
+          </DropdownMenu>
+        }
+      </TableCell>
+    </TableRow>
+  )
+
+  members.map((member) => {
+    if (member.role === OWNER) {
+      owners.push(makeTableRow(member))
+    } else if (member.role === ADMIN) {
+      admins.push(makeTableRow(member))
+    } else if (member.role === MODERATOR) {
+      moderators.push(makeTableRow(member))
+    } else {
+      guests.push(makeTableRow(member))
+    }
   })
 
   return (
@@ -110,9 +125,14 @@ const Members = ({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {memberTableRows}
+          {owners}
+          {admins}
+          {moderators}
+          {guests}
           <TableRow>
-            <TableCell colSpan={4} className="rounded-b-2xl">Showing {memberTableRows.length} Members</TableCell>
+            <TableCell colSpan={4} className="rounded-b-2xl">
+              Showing {owners.length + admins.length + moderators.length + guests.length} Members
+            </TableCell>
           </TableRow>
         </TableBody>
       </Table>
