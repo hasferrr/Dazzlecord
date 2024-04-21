@@ -1,7 +1,9 @@
 'use client'
 
 import { type Member, MemberRole } from '@prisma/client'
+import { useRouter } from 'next/navigation'
 
+import { changeRole } from '@/actions/member/change-role'
 import { MemberItem } from '@/components/member-item'
 import {
   DropdownMenu,
@@ -38,7 +40,23 @@ const Members = ({
   members,
   currentMember,
 }: MembersProps) => {
+  const router = useRouter()
+
   const currentRole = currentMember.role
+
+  const handleChangeRole = async (member: Member, newRole: MemberRole) => {
+    if (newRole === member.role) {
+      console.log('failed to update: want to update the same role?')
+      return null
+    }
+    const updatedRole = await changeRole(member, newRole, currentMember.id)
+    if (!updatedRole) {
+      console.log('failed to update')
+      return
+    }
+    console.log('role updated')
+    router.refresh()
+  }
 
   const owners: JSX.Element[] = []
   const admins: JSX.Element[] = []
@@ -67,13 +85,21 @@ const Members = ({
               <DropdownMenuLabel>Change Role</DropdownMenuLabel>
               <DropdownMenuSeparator />
               {currentRole === OWNER &&
-                <DropdownMenuItem>{OWNER}</DropdownMenuItem>}
+                <DropdownMenuItem onClick={() => handleChangeRole(member, OWNER)}>
+                  {OWNER}
+                </DropdownMenuItem>}
               {currentRole !== GUEST &&
-                <DropdownMenuItem>{ADMIN}</DropdownMenuItem>}
+                <DropdownMenuItem onClick={() => handleChangeRole(member, ADMIN)}>
+                  {ADMIN}
+                </DropdownMenuItem>}
               {currentRole !== GUEST &&
-                <DropdownMenuItem>{MODERATOR}</DropdownMenuItem>}
+                <DropdownMenuItem onClick={() => handleChangeRole(member, MODERATOR)}>
+                  {MODERATOR}
+                </DropdownMenuItem>}
               {currentRole !== GUEST &&
-                <DropdownMenuItem>{GUEST}</DropdownMenuItem>}
+                <DropdownMenuItem onClick={() => handleChangeRole(member, GUEST)}>
+                  {GUEST}
+                </DropdownMenuItem>}
             </DropdownMenuContent>
           </DropdownMenu>
         }
