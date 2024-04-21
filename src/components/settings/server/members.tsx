@@ -27,10 +27,19 @@ interface MembersProps {
   currentMember: Member
 }
 
+const {
+  OWNER,
+  ADMIN,
+  MODERATOR,
+  GUEST,
+} = MemberRole
+
 const Members = ({
   members,
   currentMember,
 }: MembersProps) => {
+  const currentRole = currentMember.role
+
   const memberTableRows = members.map((member, i) => {
     return (
       <TableRow key={i}>
@@ -42,7 +51,7 @@ const Members = ({
         </TableCell>
         <TableCell>{yearDifferenceYearFromNow(member.createdAt)}</TableCell>
         <TableCell>
-          {currentMember.userId === member.userId
+          {currentMember.userId === member.userId || currentRole === MODERATOR
             ? <div className="hover:cursor-not-allowed">
               {member.role}
             </div>
@@ -53,12 +62,14 @@ const Members = ({
               <DropdownMenuContent>
                 <DropdownMenuLabel>Change Role</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                {currentMember.role === MemberRole.OWNER &&
-                  <DropdownMenuItem>{MemberRole.OWNER}</DropdownMenuItem>}
-                {currentMember.role !== MemberRole.GUEST &&
-                  <DropdownMenuItem>{MemberRole.ADMIN}</DropdownMenuItem>}
-                {currentMember.role !== MemberRole.GUEST &&
-                  <DropdownMenuItem>{MemberRole.GUEST}</DropdownMenuItem>}
+                {currentRole === OWNER &&
+                  <DropdownMenuItem>{OWNER}</DropdownMenuItem>}
+                {currentRole !== GUEST &&
+                  <DropdownMenuItem>{ADMIN}</DropdownMenuItem>}
+                {currentRole !== GUEST &&
+                  <DropdownMenuItem>{MODERATOR}</DropdownMenuItem>}
+                {currentRole !== GUEST &&
+                  <DropdownMenuItem>{GUEST}</DropdownMenuItem>}
               </DropdownMenuContent>
             </DropdownMenu>
           }
@@ -73,11 +84,11 @@ const Members = ({
                 Select
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                {currentMember.role === MemberRole.OWNER &&
-                  <DropdownMenuItem className="text-red-500">Kick</DropdownMenuItem>}
-                {currentMember.role === MemberRole.ADMIN &&
-                  member.role !== MemberRole.OWNER &&
-                  <DropdownMenuItem className="text-red-500">Kick</DropdownMenuItem>}
+                {(currentRole === OWNER
+                  || currentRole === ADMIN && member.role !== OWNER
+                  || currentRole === MODERATOR && member.role === GUEST)
+                  && <DropdownMenuItem className="text-red-500">Kick</DropdownMenuItem>
+                }
               </DropdownMenuContent>
             </DropdownMenu>
           }

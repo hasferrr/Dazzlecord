@@ -28,7 +28,7 @@ const ServerSection = ({
       <p className="text-xs uppercase font-bold text-channel-section">
         {labelMap[channelType]}
       </p>
-      {role !== MemberRole.GUEST && (
+      {role !== MemberRole.GUEST && role !== MemberRole.MODERATOR && (
         <ActionTooltip label="Create Channel" side="top">
           <button
             onClick={openCreateChannel}

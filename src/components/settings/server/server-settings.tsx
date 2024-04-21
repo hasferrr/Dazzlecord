@@ -3,17 +3,16 @@
 
 import { useEffect, useState } from 'react'
 
-import type { Member, Server } from '@prisma/client'
+import { type Member, MemberRole, type Server } from '@prisma/client'
 import { CircleX } from 'lucide-react'
 
 import BigScreen from '@/components/media-query/big-screen'
 import MobileScreen from '@/components/media-query/mobile-screen'
 import { MobileToggleV2 } from '@/components/mobile-toggle-v2'
 import {
-  useServerSettingsPageClose,
+  useCloseServerSettingsPage,
   useServerSettingsPageValue,
   useServerSettingsValue,
-  useSetServerSettings,
 } from '@/context/settings/server-settings'
 import { cn } from '@/lib/utils'
 import type { MemberWithUser } from '@/types'
@@ -34,20 +33,18 @@ const ServerSettings = ({
   serverMembers,
 }: ServerSettingsProps) => {
   const [opacity, setOpacity] = useState<'opacity-0' | 'opacity-100'>('opacity-100')
-  const setServerSettings = useSetServerSettings()
   const serverSettingsValue = useServerSettingsValue()
   const serverSettingsPageValue = useServerSettingsPageValue()
-  const serverSettingsPageClose = useServerSettingsPageClose()
+  const closeServerSettingsPage = useCloseServerSettingsPage()
 
   const handleClose = () => {
     setOpacity('opacity-0')
     setTimeout(() => {
-      serverSettingsPageClose()
+      closeServerSettingsPage()
     }, 200)
   }
 
   useEffect(() => {
-    setServerSettings('overview', true)
     setOpacity('opacity-100')
   }, [serverSettingsPageValue])
 
@@ -86,8 +83,10 @@ const ServerSettings = ({
             {serverSelectionsComponent}
           </BigScreen>
           <div className="md:w-[52rem] py-[60px] md:px-[40px] px-1">
-            {serverSettingsValue.overview && <Overview server={server} />}
-            {serverSettingsValue.members && <Members members={serverMembers} currentMember={currentMember} />}
+            {serverSettingsValue.overview && currentMember.role !== MemberRole.MODERATOR &&
+              <Overview server={server} />}
+            {serverSettingsValue.members &&
+              <Members members={serverMembers} currentMember={currentMember} />}
           </div>
           <div className="w-[72px] md:pr-[40px] pr-[12px] py-[60px] flex items-start justify-end flex-grow">
             <button onClick={handleClose}>

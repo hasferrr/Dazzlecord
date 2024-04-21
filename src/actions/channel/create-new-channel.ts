@@ -1,6 +1,6 @@
 'use server'
 
-import { ChannelType } from '@prisma/client'
+import { ChannelType, MemberRole } from '@prisma/client'
 import { redirect } from 'next/navigation'
 
 import { auth } from '@/auth'
@@ -21,6 +21,29 @@ export const createNewChannel = async (
 
   if (!isValidChannelName(channelName)) {
     return { error: 'the channel name is not meets its criteria' }
+  }
+
+  const existingServer = await db.server.findUnique({
+    where: {
+      id: serverId,
+      members: {
+        some: {
+          AND: [
+            {
+              userId,
+              role: { not: MemberRole.GUEST },
+            },
+            {
+              userId,
+              role: { not: MemberRole.MODERATOR },
+            },
+          ],
+        },
+      },
+    },
+  })
+  if (!existingServer) {
+    return { error: 'create channel aborted' }
   }
 
   try {

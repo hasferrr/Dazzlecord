@@ -17,6 +17,7 @@ const MemberSidebar = async ({ serverId }: {
 
   const owners: JSX.Element[] = []
   const admins: JSX.Element[] = []
+  const moderators: JSX.Element[] = []
   const guests: JSX.Element[] = []
 
   const memberList = (m: (Member & { user: User })) => (
@@ -34,6 +35,8 @@ const MemberSidebar = async ({ serverId }: {
       owners.push(memberList(member))
     } else if (member.role === MemberRole.ADMIN) {
       admins.push(memberList(member))
+    } else if (member.role === MemberRole.MODERATOR) {
+      moderators.push(memberList(member))
     } else {
       guests.push(memberList(member))
     }
@@ -57,6 +60,14 @@ const MemberSidebar = async ({ serverId }: {
             <MemberSection title="admins" />
             <div className="flex flex-col">
               {admins}
+            </div>
+          </div>
+        }
+        {moderators.length > 0 &&
+          <div className="mb-2">
+            <MemberSection title="moderators" />
+            <div className="flex flex-col">
+              {moderators}
             </div>
           </div>
         }

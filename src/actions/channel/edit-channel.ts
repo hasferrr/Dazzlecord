@@ -28,10 +28,16 @@ export const editChannel = async (
         id: channel.serverId,
         members: {
           some: {
-            userId,
-            role: {
-              not: MemberRole.GUEST,
-            },
+            AND: [
+              {
+                userId,
+                role: { not: MemberRole.GUEST },
+              },
+              {
+                userId,
+                role: { not: MemberRole.MODERATOR },
+              },
+            ],
           },
         },
       },

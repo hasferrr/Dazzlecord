@@ -25,8 +25,16 @@ export const updateServer = async (
       id: serverId,
       members: {
         some: {
-          userId,
-          role: { not: MemberRole.GUEST },
+          AND: [
+            {
+              userId,
+              role: { not: MemberRole.GUEST },
+            },
+            {
+              userId,
+              role: { not: MemberRole.MODERATOR },
+            },
+          ],
         },
       },
     },

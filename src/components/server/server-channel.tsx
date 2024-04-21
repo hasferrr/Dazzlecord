@@ -63,7 +63,7 @@ const ServerChannel = ({
         )}>
           {channel.name}
         </p>
-        {role !== MemberRole.GUEST && (
+        {role !== MemberRole.GUEST && role !== MemberRole.MODERATOR && (
           <div className="ml-auto flex items-center gap-x-2">
             <ActionTooltip label="Edit">
               <Edit

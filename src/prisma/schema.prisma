@@ -28,7 +28,7 @@ model Server {
   image      String?   @unique
   members    Member[]
   channels   Channel[]
-  messages    Message[]
+  messages   Message[]
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
 }
@@ -51,7 +51,7 @@ model Channel {
   type      ChannelType @default(TEXT)
   userId    String      @db.ObjectId
   serverId  String      @db.ObjectId
-  messages   Message[]
+  messages  Message[]
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
 
@@ -79,6 +79,7 @@ model Message {
 enum MemberRole {
   OWNER
   ADMIN
+  MODERATOR
   GUEST
 }
 

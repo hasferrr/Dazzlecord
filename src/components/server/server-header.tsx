@@ -24,7 +24,7 @@ import {
   useInviteOpen,
   useLeaveServerOpen,
 } from '@/context/modal-context'
-import { useServerSettingsPageOpen } from '@/context/settings/server-settings'
+import { useOpenManageMember, useOpenServerSettingsPage } from '@/context/settings/server-settings'
 
 const ServerHeader = ({
   server,
@@ -37,11 +37,13 @@ const ServerHeader = ({
   const openDeleteServer = useDeleteServerOpen()
   const openLeaveServer = useLeaveServerOpen()
   const openCreateChannel = useCreateChannelOpen()
-  const serverSettingsPageOpen = useServerSettingsPageOpen()
+  const openServerSettingsPage = useOpenServerSettingsPage()
+  const openManageMember = useOpenManageMember()
 
   const role = currentMember.role
   const isOwner = role === MemberRole.OWNER
-  const isAdmin = role === MemberRole.ADMIN
+  const isModerator = role === MemberRole.MODERATOR
+  const isGuest = role === MemberRole.GUEST
 
   const style = 'px-[8px] py-[6px] text-sm cursor-pointer flex gap-8'
   const blueStyle = `${style} text-indigo-600 dark:text-indigo-400`
@@ -64,7 +66,7 @@ const ServerHeader = ({
           </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="px-[6px] py-[8px] w-56">
-          {(isOwner || isAdmin) && (
+          {!isGuest && (
             <>
               <DropdownMenuItem className={blueStyle} onClick={openInvite}>
                 Invite People
@@ -73,27 +75,27 @@ const ServerHeader = ({
               <DropdownMenuSeparator />
             </>
           )}
-          {(isOwner || isAdmin) && (
-            <DropdownMenuItem className={style} onClick={serverSettingsPageOpen}>
+          {!isModerator && !isGuest && (
+            <DropdownMenuItem className={style} onClick={openServerSettingsPage}>
               Server Settings
               <Settings className={iconStyle} />
             </DropdownMenuItem>
           )}
-          {(isOwner || isAdmin) && (
-            <DropdownMenuItem className={style}>
+          {!isGuest && (
+            <DropdownMenuItem className={style} onClick={openManageMember}>
               Manage Members
               <Users className={iconStyle} />
             </DropdownMenuItem>
           )}
-          {(isOwner || isAdmin) && (
+          {!isModerator && !isGuest && (
             <>
               <DropdownMenuItem className={style} onClick={openCreateChannel}>
                 Create Channel
                 <PlusCircle className={iconStyle} />
               </DropdownMenuItem>
-              <DropdownMenuSeparator />
             </>
           )}
+          {!isGuest && <DropdownMenuSeparator />}
           {isOwner && (
             <DropdownMenuItem className={redStyle} onClick={openDeleteServer}>
               Delete Server
