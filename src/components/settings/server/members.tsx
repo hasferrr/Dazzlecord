@@ -1,10 +1,24 @@
 'use client'
 
+import { useState } from 'react'
+
 import { type Member, MemberRole } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 
 import { changeRole } from '@/actions/member/change-role'
+import { kickMember } from '@/actions/member/kick-member'
 import { MemberItem } from '@/components/member-item'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -40,9 +54,20 @@ const Members = ({
   members,
   currentMember,
 }: MembersProps) => {
+  const [memberToBeKicked, setMemberToBeKicked] = useState<MemberWithUser | null>(null)
+
   const router = useRouter()
 
   const currentRole = currentMember.role
+
+  const handleKick = async () => {
+    if (memberToBeKicked) {
+      const kickedUser = await kickMember(memberToBeKicked, currentMember.id)
+      kickedUser ? console.log('kicked') : console.log('failed to kick member')
+    }
+    setMemberToBeKicked(null)
+    router.refresh()
+  }
 
   const handleChangeRole = async (member: Member, newRole: MemberRole) => {
     if (newRole === member.role) {
@@ -117,7 +142,12 @@ const Members = ({
               {(currentRole === OWNER
                 || currentRole === ADMIN && member.role !== OWNER
                 || currentRole === MODERATOR && member.role === GUEST)
-                && <DropdownMenuItem className="text-red-500">Kick</DropdownMenuItem>
+                && <DropdownMenuItem
+                  className="text-red-500"
+                  onClick={() => setMemberToBeKicked(member)}
+                >
+                  Kick
+                </DropdownMenuItem>
               }
             </DropdownMenuContent>
           </DropdownMenu>
@@ -146,7 +176,7 @@ const Members = ({
           <TableRow>
             <TableHead className="rounded-tl-2xl w-[300px] min-w-[150px]">Name</TableHead>
             <TableHead>Member Since</TableHead>
-            <TableHead>Roles</TableHead>
+            <TableHead className="w-[150px]">Roles</TableHead>
             <TableHead className="rounded-tr-2xl">Actions</TableHead>
           </TableRow>
         </TableHeader>
@@ -162,6 +192,31 @@ const Members = ({
           </TableRow>
         </TableBody>
       </Table>
+      <AlertDialog open={!!memberToBeKicked}>
+        <AlertDialogContent className="dark:bg-server-dark">
+          <AlertDialogHeader>
+            <AlertDialogTitle>Kick {memberToBeKicked?.user.username} from Server</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to kick @{memberToBeKicked?.user.username} from the server?
+              They will be able to rejoin again with a new invite.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel
+              className="bg-transparent border-0 hover:bg-transparent hover:underline"
+              onClick={() => setMemberToBeKicked(null)}
+            >
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-red-500 hover:bg-red-600 text-white"
+              onClick={handleKick}
+            >
+              Kick
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   )
 }
