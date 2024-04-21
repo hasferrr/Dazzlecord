@@ -21,7 +21,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { useServerForm } from '@/hooks/useServerForm'
-import { getFileURLFromGCS } from '@/lib/helpers'
+import { getFileURLFromGCS, trimString } from '@/lib/helpers'
 import {
   serverModalSchema,
   serverModalSchemaAllow0Length,
@@ -49,6 +49,10 @@ const Overview = ({ server }: {
   )
 
   const onSubmit = (values: z.infer<typeof serverModalSchema>) => {
+    if (trimString(values.name) === server.name && !file) {
+      return
+    }
+
     startTransition(() => {
       handleOnSubmit(() => updateServer(server.id, values.name, !!file), !!file, () => {
         handleResetAll(0, values.name)
