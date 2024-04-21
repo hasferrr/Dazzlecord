@@ -16,6 +16,7 @@ import {
   useSetServerSettings,
 } from '@/context/settings/server-settings'
 import { cn } from '@/lib/utils'
+import type { MemberWithUser } from '@/types'
 
 import Members from './members'
 import Overview from './overview'
@@ -24,11 +25,13 @@ import ServerSelections from './server-selections'
 interface ServerSettingsProps {
   server: Server
   currentMember: Member
+  serverMembers: MemberWithUser[]
 }
 
 const ServerSettings = ({
   server,
   currentMember,
+  serverMembers,
 }: ServerSettingsProps) => {
   const [opacity, setOpacity] = useState<'opacity-0' | 'opacity-100'>('opacity-100')
   const setServerSettings = useSetServerSettings()
@@ -84,7 +87,7 @@ const ServerSettings = ({
           </BigScreen>
           <div className="md:w-[52rem] py-[60px] md:px-[40px] px-1">
             {serverSettingsValue.overview && <Overview server={server} />}
-            {serverSettingsValue.members && <Members />}
+            {serverSettingsValue.members && <Members members={serverMembers} currentMember={currentMember} />}
           </div>
           <div className="w-[72px] md:pr-[40px] pr-[12px] py-[60px] flex items-start justify-end flex-grow">
             <button onClick={handleClose}>

@@ -73,4 +73,22 @@ export const formatDateWithTime = (date: Date): string => {
   return `${day}, ${month} ${dayOfMonth}, ${year} ${adjustedHour}:${minutes} ${ampm}`
 }
 
+/**
+ * Takes a date and return like "X years ago" from now
+ */
+export const yearDifferenceYearFromNow = (date0: Date | string): string => {
+  const date = typeof date0 === 'string'
+    ? new Date(date0)
+    : date0
+
+  // Calculate the difference in milliseconds
+  const diff = Date.now() - date.getTime()
+
+  // Convert milliseconds to years
+  const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365))
+
+  // Return formatted string
+  return years > 0 ? `${years} year${years > 1 ? 's' : ''} ago` : 'this year'
+}
+
 export const getFileURLFromGCS = (fileName: string) => `https://storage.googleapis.com/server-profile/${fileName}`

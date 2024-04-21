@@ -1,6 +1,7 @@
 import { MemberRole } from '@prisma/client'
 import { redirect } from 'next/navigation'
 
+import { getAllMembersByServerIdSorted } from '@/actions/prisma/member'
 import { getServerIncludesAllChannel } from '@/actions/prisma/server'
 import { auth } from '@/auth'
 import BigScreen from '@/components/media-query/big-screen'
@@ -39,6 +40,11 @@ const ServerIdLayout = async ({ children, params }: {
     return redirect('/')
   }
 
+  const members = await getAllMembersByServerIdSorted(params.serverId)
+  if (!members) {
+    return redirect('/')
+  }
+
   return (
     <>
       <div className="flex-col h-full inset-y-0">
@@ -54,7 +60,11 @@ const ServerIdLayout = async ({ children, params }: {
         <DeleteServerModal server={server} />}
       <CreateChannelModal serverId={server.id} />
       {currentMember.role !== MemberRole.GUEST &&
-        <ServerSettings server={server} currentMember={currentMember} />}
+        <ServerSettings
+          server={server}
+          currentMember={currentMember}
+          serverMembers={members}
+        />}
     </>
   )
 }
