@@ -31,13 +31,13 @@ export const useCloseServerSettingsPage = () => {
 }
 
 export const useOpenServerSettingsPage = () => {
-  const [state, setState] = useContext(ServerSettingsContext)
-  return () => setState({ ...state, serverSettingsPage: true, overview: true })
+  const [_, setState] = useContext(ServerSettingsContext)
+  return () => setState({ ...initialValue, serverSettingsPage: true, overview: true })
 }
 
 export const useOpenManageMember = () => {
-  const [state, setState] = useContext(ServerSettingsContext)
-  return () => setState({ ...state, serverSettingsPage: true, members: true })
+  const [_, setState] = useContext(ServerSettingsContext)
+  return () => setState({ ...initialValue, serverSettingsPage: true, members: true })
 }
 
 export default ServerSettingsContext
