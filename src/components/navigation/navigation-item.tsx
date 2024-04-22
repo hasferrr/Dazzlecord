@@ -1,9 +1,9 @@
 'use client'
 
-import Image from 'next/image'
 import { useParams, useRouter } from 'next/navigation'
 
 import { ActionTooltip } from '@/components/action-tooltip'
+import { ProfilePhoto } from '@/components/profile-photo'
 import { cn } from '@/lib/utils'
 
 interface NavigationItemProps {
@@ -38,14 +38,11 @@ const NavigationItem = ({ id, name, image }: NavigationItemProps) => {
             'group group-hover:rounded-[16px]',
             params?.['serverId'] === id && 'rounded-[16px]',
           )}>
-            <Image
-              className="object-cover"
-              src={`https://storage.googleapis.com/server-profile/${image}`}
-              alt="server"
+            <ProfilePhoto
+              username={name}
+              image={image}
               width={48}
               height={48}
-              priority
-              unoptimized
             />
           </div>
         </button>

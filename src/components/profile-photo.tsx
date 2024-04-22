@@ -1,42 +1,42 @@
-import Image from 'next/image'
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from '@/components/ui/avatar'
 
-import { cn } from '@/lib/utils'
+type size = 32 | 40 | 48 | 80 | 96
 
-export const ProfilePhoto = ({ username, image, width = 32, height = 32 }: {
+interface ProfilePhotoProps {
   username: string
   image?: string | null
-  width?: 32 | 40
-  height?: 32 | 40
-}) => {
-  const initials = username.charAt(0).toUpperCase()
-  const wpx = new Map([
-    [32, 'w-[32px]'],
-    [40, 'w-[40px]'],
-  ])
-  const hpx = new Map([
-    [32, 'h-[32px]'],
-    [40, 'h-[40px]'],
-  ])
+  src?: string
+  width?: size
+  height?: size
+}
 
-  if (image) {
-    return (
-      <Image
-        className="object-cover rounded-full overflow-hidden"
-        src={`https://storage.googleapis.com/server-profile/${image}`}
-        alt=""
-        height={height}
-        width={width}
-      />
-    )
-  }
+export const ProfilePhoto = ({
+  username,
+  image,
+  src,
+  width = 32,
+  height = 32,
+}: ProfilePhotoProps) => {
+  const initials = username.slice(0, 2).toUpperCase()
+  const sizeClasses = new Map([
+    [32, 'w-[32px] h-[32px]'],
+    [40, 'w-[40px] h-[40px]'],
+    [48, 'w-[48px] h-[48px]'],
+    [80, 'w-[80px] h-[80px]'],
+    [96, 'w-[96px] h-[96px]'],
+  ])
 
   return (
-    <div className={cn(
-      wpx.get(width), hpx.get(height),
-      'flex items-center justify-center rounded-full',
-      'bg-black text-white dark:bg-white dark:text-black',
-    )}>
-      <span className="text-xl font-bold select-none">{initials}</span>
-    </div>
+    <Avatar className={sizeClasses.get(width ?? height)}>
+      <AvatarImage
+        className="object-cover"
+        src={src ?? `https://storage.googleapis.com/server-profile/${image}`}
+      />
+      <AvatarFallback>{initials}</AvatarFallback>
+    </Avatar>
   )
 }

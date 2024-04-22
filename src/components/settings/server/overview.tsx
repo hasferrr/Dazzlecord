@@ -4,11 +4,11 @@ import { useTransition } from 'react'
 
 import type { Server } from '@prisma/client'
 import { X } from 'lucide-react'
-import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { z } from 'zod'
 
 import { updateServer } from '@/actions/server/update-server'
+import { ProfilePhoto } from '@/components/profile-photo'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -90,13 +90,14 @@ const Overview = ({ server }: {
                                 onChange={(e) => handleImageChange(e, false)}
                               />
                               {file ?? server.image
-                                ? <Image
-                                  className="h-24 w-24 rounded-full object-cover"
-                                  //@ts-ignore
-                                  src={file ? URL.createObjectURL(file) : getFileURLFromGCS(server.image)}
-                                  alt=""
+                                ? <ProfilePhoto
+                                  src={file
+                                    ? URL.createObjectURL(file)
+                                    //@ts-ignore
+                                    : getFileURLFromGCS(server.image)}
                                   width={96}
                                   height={96}
+                                  username={form.getValues('name') ?? ''}
                                 />
                                 : <SVGUploadIcon width={96} height={96} />
                               }

@@ -3,11 +3,11 @@
 import { useTransition } from 'react'
 
 import { X } from 'lucide-react'
-import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { z } from 'zod'
 
 import { createNewServer } from '@/actions/server/create-new-server'
+import { ProfilePhoto } from '@/components/profile-photo'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -107,12 +107,18 @@ const CreateServerModal = () => {
                               onChange={handleImageChange}
                             />
                             {file
-                              ? <Image
-                                className="h-20 w-20 rounded-full object-cover"
+                              // ? <Image
+                              //   className="h-20 w-20 rounded-full object-cover"
+                              //   src={URL.createObjectURL(file)}
+                              //   alt=""
+                              //   width={80}
+                              //   height={80}
+                              // />
+                              ? <ProfilePhoto
                                 src={URL.createObjectURL(file)}
-                                alt=""
                                 width={80}
                                 height={80}
+                                username={form.getValues('name') ?? ''}
                               />
                               : <SVGUploadIcon />
                             }
