@@ -1,6 +1,14 @@
 import { z } from 'zod'
 
-const ACCEPTED_IMAGE_TYPES = ['image/png', 'image/jpg', 'image/jpeg']
+const ACCEPTED_IMAGE_TYPES = [
+  'image/apng',
+  'image/png',
+  'image/x-png',
+  'image/jpg',
+  'image/jpeg',
+  'image/webp',
+  'image/gif',
+]
 const MAX_IMAGE_SIZE_IN_MB = 2
 
 const sizeInMB = (sizeInBytes: number, decimalsNum = 2) => {
@@ -24,9 +32,9 @@ export const checkTypes = (files: FileList) => {
   )
 }
 
-export const failedLength =  'Image is required'
-export const failedSize =  `The maximum image size is ${MAX_IMAGE_SIZE_IN_MB}MB`
-export const failedTypes =  'File type is not supported'
+export const failedLength = 'Image is required'
+export const failedSize = `The maximum image size is ${MAX_IMAGE_SIZE_IN_MB}MB`
+export const failedTypes = 'File type is not supported'
 
 export const serverModalSchema = z.object({
   name: z.string().min(1, {
