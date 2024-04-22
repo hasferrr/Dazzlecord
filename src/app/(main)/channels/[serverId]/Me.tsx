@@ -4,7 +4,7 @@ import { getUserById } from '@/actions/prisma/user'
 import { auth, signOut } from '@/auth'
 import ChatHeader from '@/components/chat/chat-header'
 import { ModeToggle } from '@/components/mode-toggle'
-import UserWrapper from '@/components/user/user-wrapper'
+import UserPopover from '@/components/user/user-popover'
 
 const Me = async () => {
   const session = await auth()
@@ -39,9 +39,9 @@ const Me = async () => {
         <button type="submit">Sign out</button>
       </form>
       <ModeToggle />
-      <UserWrapper user={user} side="right">
+      <UserPopover user={user} side="right">
         <button type="button">USER</button>
-      </UserWrapper>
+      </UserPopover>
     </div>
   )
 }
