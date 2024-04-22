@@ -15,9 +15,13 @@ import ServerSettings from '@/components/settings/server/server-settings'
 import { db } from '@/lib/db'
 import { ORIGIN_URL } from '@/utils/config'
 
+import Me from './Me'
+
 const ServerIdLayout = async ({ children, params }: {
   children: React.ReactNode
-  params: { serverId: string }
+  params: {
+    serverId: string
+  }
 }) => {
   const session = await auth()
   if (!session) {
@@ -25,48 +29,62 @@ const ServerIdLayout = async ({ children, params }: {
   }
   const userId = session.user.id
 
-  const server = await getServerIncludesAllChannel(params.serverId)
-  if (!server) {
-    return redirect('/')
-  }
-
-  const currentMember = await db.member.findFirst({
-    where: {
-      serverId: params.serverId,
-      userId,
-    },
-  })
-  if (!currentMember) {
-    return redirect('/')
-  }
-
-  const members = await getAllMembersByServerIdSorted(params.serverId)
-  if (!members) {
-    return redirect('/')
-  }
-
-  return (
-    <>
-      <div className="flex-col h-full inset-y-0">
-        <BigScreen>
-          <ServerSidebar server={server} />
-        </BigScreen>
+  if (params.serverId === '%40me' || params.serverId === '@me') {
+    return (
+      <div>
+        <Me />
+        <CreateServerModal />
       </div>
-      {children}
-      <CreateServerModal />
-      <InvitationModal origin={ORIGIN_URL} inviteCode={server.inviteCode} />
-      <LeaveServerModal server={server} />
-      {currentMember.role === MemberRole.OWNER &&
-        <DeleteServerModal server={server} />}
-      <CreateChannelModal serverId={server.id} />
-      {currentMember.role !== MemberRole.GUEST &&
-        <ServerSettings
-          server={server}
-          currentMember={currentMember}
-          serverMembers={members}
-        />}
-    </>
-  )
+    )
+  }
+
+  try {
+    const server = await getServerIncludesAllChannel(params.serverId)
+    if (!server) {
+      return redirect('/')
+    }
+
+    const currentMember = await db.member.findFirst({
+      where: {
+        serverId: params.serverId,
+        userId,
+      },
+    })
+    if (!currentMember) {
+      return redirect('/')
+    }
+
+    const members = await getAllMembersByServerIdSorted(params.serverId)
+    if (!members) {
+      return redirect('/')
+    }
+
+    return (
+      <>
+        <div className="flex-col h-full inset-y-0">
+          <BigScreen>
+            <ServerSidebar server={server} />
+          </BigScreen>
+        </div>
+        {children}
+        <CreateServerModal />
+        <InvitationModal origin={ORIGIN_URL} inviteCode={server.inviteCode} />
+        <LeaveServerModal server={server} />
+        {currentMember.role === MemberRole.OWNER &&
+          <DeleteServerModal server={server} />}
+        <CreateChannelModal serverId={server.id} />
+        {currentMember.role !== MemberRole.GUEST &&
+          <ServerSettings
+            server={server}
+            currentMember={currentMember}
+            serverMembers={members}
+          />}
+      </>
+    )
+  } catch (error) {
+    console.log(error)
+    return redirect('/')
+  }
 }
 
 export default ServerIdLayout
