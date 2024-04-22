@@ -91,11 +91,7 @@ const ServerSidebar = async ({ server }: {
         )}
       </ScrollArea>
       <div className="grow" />
-      <ServerFooter
-        username={session.user.username}
-        desc={currentMember.role}
-        image={session.user.image}
-      />
+      <ServerFooter />
     </div>
   )
 }

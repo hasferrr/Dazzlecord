@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils'
 export const MemberItem = ({ username, image, desc, className }: {
   username: string
   image?: string | null
-  desc?: string
+  desc?: string | null
   className?: string
 }) => {
   return (

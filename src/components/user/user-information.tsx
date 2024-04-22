@@ -1,26 +1,61 @@
-import { Separator } from '@/components/ui/separator'
+import type { User } from '@prisma/client'
+import { LogOut } from 'lucide-react'
 
-const UserInformation = () => {
+import { signOut } from '@/auth'
+import { Separator } from '@/components/ui/separator'
+import { formatDateMinimal } from '@/lib/helpers'
+
+interface UserInformationProps {
+  user: User
+}
+
+const UserInformation = async ({
+  user,
+}: UserInformationProps) => {
+  const handleSignOut = async () => {
+    'use server'
+    try {
+      await signOut({
+        redirectTo: '/',
+      })
+    } catch (error) {
+      console.log(error)
+      throw error
+    }
+  }
+
   return (
     <div className="text-[13px] w-[308px] p-3 bg-text dark:bg-text-dark rounded-lg space-y-3">
       <div>
-        <p className="text-base font-bold">name</p>
-        <p>username</p>
-        <p>status</p>
+        <p className="text-base font-bold">{user.name}</p>
+        <p>{user.username}</p>
       </div>
       <Separator />
       <div>
         <h2 className="font-bold uppercase">About me</h2>
-        <p>description</p>
+        <p>{user.about}</p>
       </div>
       <div>
         <h2 className="font-bold uppercase">Deezcord Member since</h2>
-        <p>Oct 13, 2018</p>
+        <p>{formatDateMinimal(user.createdAt)}</p>
       </div>
-      <Separator />
-      <div>Online</div>
-      <Separator />
-      <div>Sign Out</div>
+      <div className="space-y-2">
+        <Separator />
+        <button className="flex items-center gap-2 hover:bg-server-hover dark:hover:bg-server-hover-dark w-full p-[6px] rounded-sm transition-all">
+          <div className="bg-green-500 rounded-full w-3 h-3" />
+          <div>Online</div>
+        </button>
+        <Separator />
+        <form action={handleSignOut}>
+          <button
+            type="submit"
+            className="flex items-center gap-2 hover:bg-red-500 hover:text-white w-full p-[6px] rounded-sm transition-all"
+          >
+            <LogOut size={18} />
+            <div>Sign Out</div>
+          </button>
+        </form>
+      </div>
     </div>
   )
 }
