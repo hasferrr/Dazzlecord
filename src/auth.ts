@@ -25,6 +25,10 @@ export const {
         session.user.username = token.username
       }
 
+      if (token.image && session.user) {
+        session.user.image = token.image
+      }
+
       return session
     },
     async jwt({ token }) {
@@ -38,6 +42,7 @@ export const {
       }
 
       token.username = existingUser.username
+      token.image = existingUser.image
       return token
     },
   },
