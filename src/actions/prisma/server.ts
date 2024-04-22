@@ -38,12 +38,6 @@ export const getServerWithAnyChannel = async (serverId: string, userId: string) 
       },
     },
     include: {
-      channels: {
-        where: {
-          name: {
-            contains: '',
-          },
-        },
-      },
+      channels: true,
     },
   })
