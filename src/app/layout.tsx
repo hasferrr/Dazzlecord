@@ -7,6 +7,7 @@ import { DeleteChannelModalContextProvider } from '@/context/delete-channel-cont
 import { EditChannelModalContextProvider } from '@/context/edit-channel-context'
 import { ModalContextProvider } from '@/context/modal-context'
 import { ServerSettingsContextProvider } from '@/context/settings/server-settings'
+import { UserSettingsContextProvider } from '@/context/settings/user-settings-context'
 import { SocketContextProvider } from '@/context/socket-context'
 import { cn } from '@/lib/utils'
 
@@ -38,7 +39,9 @@ export default function RootLayout({ children }: Readonly<{
               <DeleteChannelModalContextProvider>
                 <SocketContextProvider>
                   <ServerSettingsContextProvider>
-                    {children}
+                    <UserSettingsContextProvider>
+                      {children}
+                    </UserSettingsContextProvider>
                   </ServerSettingsContextProvider>
                 </SocketContextProvider>
               </DeleteChannelModalContextProvider>

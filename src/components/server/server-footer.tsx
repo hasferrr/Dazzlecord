@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation'
 import { getUserById } from '@/actions/prisma/user'
 import { auth } from '@/auth'
 import { MemberItem } from '@/components/member-item'
-import { ModeToggle } from '@/components/mode-toggle'
+import TriggerButton from '@/components/settings/user/trigger-button'
 import UserWrapper from '@/components/user/user-wrapper'
 
 const ServerFooter = async () => {
@@ -19,7 +19,7 @@ const ServerFooter = async () => {
   }
 
   return (
-    <div className="grid grid-cols-[1fr_auto] gap-2 h-[53px] w-full p-2
+    <div className="grid grid-cols-[1fr_auto] gap-2 h-[53px] w-full py-2 px-3 items-center
       bg-server-footer dark:bg-server-footer-dark">
       <UserWrapper user={user} side="top" className="ml-12">
         <MemberItem
@@ -29,7 +29,7 @@ const ServerFooter = async () => {
           className="px-1"
         />
       </UserWrapper>
-      <ModeToggle />
+      <TriggerButton />
     </div>
   )
 }

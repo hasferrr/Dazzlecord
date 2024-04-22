@@ -3,51 +3,43 @@
 
 import { useEffect, useState } from 'react'
 
-import { type Member, MemberRole, type Server } from '@prisma/client'
 import { CircleX } from 'lucide-react'
 
 import BigScreen from '@/components/media-query/big-screen'
 import MobileScreen from '@/components/media-query/mobile-screen'
 import { MobileToggleV2 } from '@/components/mobile-toggle-v2'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
-import {
-  useCloseServerSettingsPage,
-  useServerSettingsPageValue,
-  useServerSettingsValue,
-} from '@/context/settings/server-settings'
 import { cn } from '@/lib/utils'
-import type { MemberWithUser } from '@/types'
 
-import Members from './members'
-import Overview from './overview'
-import ServerSelections from './server-selections'
+import LabelSelection from './label-selection'
 
-interface ServerSettingsProps {
-  server: Server
-  currentMember: Member
-  serverMembers: MemberWithUser[]
+interface SettingsLayoutProps {
+  label: string
+  isSettingsPageOpen: boolean
+  closeSettingsPage: () => void
+  selectionComponents: JSX.Element
+  children: React.ReactNode
 }
 
-const ServerSettings = ({
-  server,
-  currentMember,
-  serverMembers,
-}: ServerSettingsProps) => {
+const SettingsLayout = ({
+  label,
+  isSettingsPageOpen,
+  closeSettingsPage,
+  selectionComponents,
+  children,
+}: SettingsLayoutProps) => {
   const [opacity, setOpacity] = useState<'opacity-0' | 'opacity-100'>('opacity-100')
-  const serverSettingsValue = useServerSettingsValue()
-  const serverSettingsPageValue = useServerSettingsPageValue()
-  const closeServerSettingsPage = useCloseServerSettingsPage()
 
   const handleClose = () => {
     setOpacity('opacity-0')
     setTimeout(() => {
-      closeServerSettingsPage()
+      closeSettingsPage()
     }, 200)
   }
 
   useEffect(() => {
     setOpacity('opacity-100')
-  }, [serverSettingsPageValue])
+  }, [isSettingsPageOpen])
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -61,12 +53,9 @@ const ServerSettings = ({
     }
   }, [])
 
-  const serverSelectionsComponent =
-    <ServerSelections serverName={server.name} currentMember={currentMember} />
-
   return (
     <>
-      {serverSettingsPageValue &&
+      {isSettingsPageOpen &&
         <div className={cn(
           opacity,
           'bg-page dark:bg-page-dark',
@@ -76,18 +65,35 @@ const ServerSettings = ({
           <MobileScreen>
             <div className="pl-3 pt-[55px]">
               <MobileToggleV2 side="left">
-                {serverSelectionsComponent}
+                <div className="bg-server dark:bg-server-dark flex flex-grow flex-shrink-0 justify-end">
+                  <ScrollArea className="pl-4">
+                    <div className="py-[60px] w-[13rem] flex flex-col gap-y-1">
+                      <LabelSelection
+                        title={label}
+                        className="pl-2"
+                      />
+                      {selectionComponents}
+                    </div>
+                  </ScrollArea>
+                </div>
               </MobileToggleV2>
             </div>
           </MobileScreen>
           <BigScreen>
-            {serverSelectionsComponent}
+            <div className="bg-server dark:bg-server-dark flex flex-grow flex-shrink-0 justify-end">
+              <ScrollArea className="pl-4">
+                <div className="py-[60px] w-[13rem] flex flex-col gap-y-1">
+                  <LabelSelection
+                    title={label}
+                    className="pl-2"
+                  />
+                  {selectionComponents}
+                </div>
+              </ScrollArea>
+            </div>
           </BigScreen>
           <ScrollArea className="md:w-[52rem] py-[60px] md:px-[40px] px-1">
-            {serverSettingsValue.overview && currentMember.role !== MemberRole.MODERATOR &&
-              <Overview server={server} />}
-            {serverSettingsValue.members &&
-              <Members members={serverMembers} currentMember={currentMember} />}
+            {children}
             <ScrollBar orientation="horizontal" />
           </ScrollArea>
           <div className="w-[72px] md:pr-[40px] pr-[12px] py-[60px] flex items-start justify-end flex-grow">
@@ -101,4 +107,4 @@ const ServerSettings = ({
   )
 }
 
-export default ServerSettings
+export default SettingsLayout

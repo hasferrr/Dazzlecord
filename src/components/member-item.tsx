@@ -12,6 +12,7 @@ export const MemberItem = ({ username, image, desc, className }: {
       'grid grid-cols-[auto_1fr] grid-rows-1 gap-x-3 items-center',
       'group rounded-md transition text-left',
       'hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50',
+      'outline-none',
       className
     )}>
       <div className="row-span-2 my-auto">

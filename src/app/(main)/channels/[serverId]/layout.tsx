@@ -12,6 +12,7 @@ import DeleteServerModal from '@/components/modals/server/delete-server-modal'
 import LeaveServerModal from '@/components/modals/server/leave-server-modal'
 import ServerSidebar from '@/components/server/server-sidebar'
 import ServerSettings from '@/components/settings/server/server-settings'
+import UserSettings from '@/components/settings/user/user-settings'
 import { db } from '@/lib/db'
 import { ORIGIN_URL } from '@/utils/config'
 
@@ -33,6 +34,7 @@ const ServerIdLayout = async ({ children, params }: {
     return (
       <div>
         <Me />
+        <UserSettings />
         <CreateServerModal />
       </div>
     )
@@ -67,6 +69,7 @@ const ServerIdLayout = async ({ children, params }: {
           </BigScreen>
         </div>
         {children}
+        <UserSettings />
         <CreateServerModal />
         <InvitationModal origin={ORIGIN_URL} inviteCode={server.inviteCode} />
         <LeaveServerModal server={server} />
