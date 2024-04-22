@@ -37,7 +37,7 @@ const ServerChannel = ({
   const Icon = iconMap[channel.type]
 
   const navigateToChannel = () => {
-    router.push(`/servers/${params?.['serverId']}/${channel.id}`)
+    router.push(`/channels/${params?.['serverId']}/${channel.id}`)
   }
 
   return (

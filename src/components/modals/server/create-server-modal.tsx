@@ -60,7 +60,7 @@ const CreateServerModal = () => {
     startTransition(() => {
       handleOnSubmit(() => createNewServer(values.name), true, (newServer) => {
         onClose()
-        router.push(`/servers/${newServer.id}`)
+        router.push(`/channels/${newServer.id}`)
         router.refresh()
       })
     })

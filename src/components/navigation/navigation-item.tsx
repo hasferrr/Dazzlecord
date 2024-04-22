@@ -16,7 +16,7 @@ const NavigationItem = ({ id, name, image }: NavigationItemProps) => {
   const params = useParams()
   const router = useRouter()
 
-  const handleClick = () => router.push(`/servers/${id}`)
+  const handleClick = () => router.push(`/channels/${id}`)
 
   return (
     <div>

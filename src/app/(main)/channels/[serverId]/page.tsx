@@ -21,7 +21,7 @@ const ServerIdPage = async ({ params }: {
 
   if (server?.channels.length) {
     const initialChannel = server.channels[0]
-    return redirect(`/servers/${params.serverId}/${initialChannel.id}`)
+    return redirect(`/channels/${params.serverId}/${initialChannel.id}`)
   }
 
   return null

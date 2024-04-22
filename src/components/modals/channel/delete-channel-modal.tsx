@@ -24,7 +24,7 @@ const DeleteChannelModal = ({ channel }: {
       isDeleteModalOpen={isDeleteModalOpen[channel.id]}
       onDeleteModalClose={onDeleteModalClose}
       onSubmitAction={() => deleteChannel(channel)}
-      redirectPath={`/servers/${channel.serverId}`}
+      redirectPath={`/channels/${channel.serverId}`}
     />
   )
 }

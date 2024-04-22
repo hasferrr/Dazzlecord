@@ -24,7 +24,7 @@ export const joinServer = async (inviteCode: string) => {
   })
 
   if (existingServer) {
-    return redirect(`/servers/${existingServer.id}`)
+    return redirect(`/channels/${existingServer.id}`)
   }
 
   const server = await db.server.update({
@@ -43,7 +43,7 @@ export const joinServer = async (inviteCode: string) => {
   })
 
   if (server) {
-    return redirect(`/servers/${server.id}`)
+    return redirect(`/channels/${server.id}`)
   }
 
   return redirect('/')
