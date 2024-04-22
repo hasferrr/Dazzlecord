@@ -19,6 +19,11 @@ const config = {
     },
     extend: {
       colors: {
+        // Color group for text information
+        text: {
+          DEFAULT: '#ffffff',
+          dark: '#111214',
+        },
         // Color group for navigation
         navigation: {
           DEFAULT: '#e3e5e8',

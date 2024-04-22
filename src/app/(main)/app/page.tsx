@@ -1,6 +1,7 @@
 import { auth, signOut } from '@/auth'
 import ChatHeader from '@/components/chat/chat-header'
 import { ModeToggle } from '@/components/mode-toggle'
+import UserWrapper from '@/components/user/user-wrapper'
 
 const App = async () => {
   const session = await auth()
@@ -26,6 +27,7 @@ const App = async () => {
         <button type="submit">Sign out</button>
       </form>
       <ModeToggle />
+      <UserWrapper />
     </div>
   )
 }

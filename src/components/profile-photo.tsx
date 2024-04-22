@@ -3,8 +3,9 @@ import {
   AvatarFallback,
   AvatarImage,
 } from '@/components/ui/avatar'
+import { cn } from '@/lib/utils'
 
-type size = 32 | 40 | 48 | 80 | 96
+type size = 32 | 40 | 48 | 80 | 92 | 96
 
 interface ProfilePhotoProps {
   username: string
@@ -12,6 +13,7 @@ interface ProfilePhotoProps {
   src?: string
   width?: size
   height?: size
+  className?: string
 }
 
 export const ProfilePhoto = ({
@@ -20,6 +22,7 @@ export const ProfilePhoto = ({
   src,
   width = 32,
   height = 32,
+  className,
 }: ProfilePhotoProps) => {
   const initials = username.slice(0, 2).toUpperCase()
   const sizeClasses = new Map([
@@ -27,11 +30,12 @@ export const ProfilePhoto = ({
     [40, 'w-[40px] h-[40px]'],
     [48, 'w-[48px] h-[48px]'],
     [80, 'w-[80px] h-[80px]'],
+    [92, 'w-[92px] h-[92px]'],
     [96, 'w-[96px] h-[96px]'],
   ])
 
   return (
-    <Avatar className={sizeClasses.get(width ?? height)}>
+    <Avatar className={cn(sizeClasses.get(width ?? height), className)}>
       <AvatarImage
         className="object-cover"
         src={src ?? `https://storage.googleapis.com/server-profile/${image}`}
