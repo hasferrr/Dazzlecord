@@ -1,10 +1,14 @@
 'use client'
 
+import { useTransition } from 'react'
+
 import { zodResolver } from '@hookform/resolvers/zod'
+import type { User } from '@prisma/client'
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-
+import { editProfile } from '@/actions/user/edit-profile'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -26,18 +30,37 @@ const formSchema = z.object({
   }),
 })
 
-const ProfilesForm = () => {
+interface ProfilesFormProps {
+  user: User
+}
+
+const ProfilesForm = ({
+  user,
+}: ProfilesFormProps) => {
+  const [isPending, startTransition] = useTransition()
+  const router = useRouter()
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: '',
-      about: '',
+      name: user.name,
+      about: user.about ?? '',
     },
   })
 
   // TODO: onsubmit edit profile, add change photo
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values)
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    startTransition(async () => {
+      const updatedUser = await editProfile(values.name, values.about)
+      if (updatedUser) {
+        console.log('successfully updated')
+        form.setValue('name', updatedUser.name)
+        form.setValue('about', updatedUser.about ?? '')
+        router.refresh()
+        return
+      }
+      console.log('failed to update profile')
+    })
   }
 
   return (
@@ -53,6 +76,7 @@ const ProfilesForm = () => {
               </FormLabel>
               <FormControl>
                 <Input
+                  disabled={isPending}
                   className="bg-navigation dark:bg-navigation-dark border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                   placeholder="What is your name?"
                   {...field}
@@ -72,6 +96,7 @@ const ProfilesForm = () => {
               </FormLabel>
               <FormControl>
                 <Textarea
+                  disabled={isPending}
                   className="bg-navigation dark:bg-navigation-dark border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                   placeholder="Type your bio here."
                   {...field}
@@ -83,6 +108,7 @@ const ProfilesForm = () => {
         />
         <div className="flex justify-end">
           <Button
+            disabled={isPending}
             variant="ghost"
             type="button"
             onClick={() => form.reset()}
@@ -90,7 +116,13 @@ const ProfilesForm = () => {
           >
             Reset
           </Button>
-          <Button variant="primary" type="submit">Submit</Button>
+          <Button
+            disabled={isPending}
+            variant="primary"
+            type="submit"
+          >
+            Submit
+          </Button>
         </div>
       </form>
     </Form>

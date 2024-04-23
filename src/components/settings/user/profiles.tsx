@@ -19,7 +19,7 @@ const Profiles = ({
       <h1 className="text-lg font-bold pb-5">Profiles</h1>
       <div className="flex flex-wrap-reverse gap-8">
         <div className="w-[315px]">
-          <ProfilesForm />
+          <ProfilesForm user={user} />
         </div>
         <div className="space-y-2">
           <p className="uppercase font-bold text-xs">Preview</p>
