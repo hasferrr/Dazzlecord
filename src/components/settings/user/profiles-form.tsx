@@ -22,15 +22,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { useSetPreviewProfiles } from '@/context/settings/user/preview-profiles-context'
 import { trimString } from '@/lib/helpers'
-
-const formSchema = z.object({
-  name: z.string().min(1, {
-    message: 'Please provide your display name.',
-  }),
-  about: z.string().max(190, {
-    message: 'Maximum is 190 characters.',
-  }),
-})
+import { editProfileSchema } from '@/schemas/edit-profile-schema'
 
 interface ProfilesFormProps {
   user: User
@@ -43,8 +35,8 @@ const ProfilesForm = ({
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof editProfileSchema>>({
+    resolver: zodResolver(editProfileSchema),
     defaultValues: {
       name: user.name,
       about: user.about ?? '',
@@ -52,7 +44,7 @@ const ProfilesForm = ({
   })
 
   // TODO: onsubmit edit profile, add change photo
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof editProfileSchema>) => {
     if (trimString(values.name) === user.name
       && trimString(values.about) === user.about) {
       return
