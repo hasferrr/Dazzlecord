@@ -19,6 +19,11 @@ const config = {
     },
     extend: {
       colors: {
+        // Color group background for alternate profile photo
+        'alt-profile-photo': {
+          DEFAULT: '#f4f4f5',
+          dark: '#27272a',
+        },
         // Color group for text information
         text: {
           DEFAULT: '#ffffff',

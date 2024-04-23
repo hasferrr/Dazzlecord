@@ -38,12 +38,17 @@ export const ProfilePhoto = ({
     <div
       className={cn(
         'flex items-center justify-center rounded-full',
-        'bg-black text-white dark:bg-white dark:text-black',
+        'bg-alt-profile-photo dark:bg-alt-profile-photo-dark',
         className,
       )}
       style={{ height: `${height}px`, width: `${width}px` }}
     >
-      <span className="text-xl font-bold select-none">{initials}</span>
+      <span
+        className="select-none"
+        style={{ fontSize: `${(width + height) / 2 / 2}px` }}
+      >
+        {initials}
+      </span>
     </div>
   )
 }
