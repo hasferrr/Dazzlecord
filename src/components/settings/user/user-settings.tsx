@@ -1,5 +1,7 @@
 'use client'
 
+import type { User } from '@prisma/client'
+
 import ButtonSelection from '@/components/settings/button-selection'
 import SettingsLayout from '@/components/settings/settings-layout'
 import {
@@ -11,7 +13,13 @@ import {
 
 import Profiles from './profiles'
 
-const UserSettings = () => {
+interface UserSettingsProps {
+  user: User
+}
+
+const UserSettings = ({
+  user,
+}: UserSettingsProps) => {
   const userSettingsValue = useUserSettingsValue()
   const userSettingsPageValue = useUserSettingsPageValue()
   const closeUserSettingsPage = useCloseUserSettingsPage()
@@ -30,7 +38,7 @@ const UserSettings = () => {
         />
       }
     >
-      <Profiles />
+      <Profiles user={user} />
     </SettingsLayout>
   )
 }

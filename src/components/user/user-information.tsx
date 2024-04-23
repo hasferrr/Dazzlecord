@@ -1,29 +1,21 @@
 import type { User } from '@prisma/client'
 import { LogOut } from 'lucide-react'
 
-import { signOut } from '@/auth'
 import { Separator } from '@/components/ui/separator'
 import { formatDateMinimal } from '@/lib/helpers'
+import { cn } from '@/lib/utils'
 
 interface UserInformationProps {
+  children?: React.ReactNode
   user: User
+  hideButton: boolean
 }
 
-const UserInformation = async ({
+const UserInformation = ({
+  children,
   user,
+  hideButton,
 }: UserInformationProps) => {
-  const handleSignOut = async () => {
-    'use server'
-    try {
-      await signOut({
-        redirectTo: '/',
-      })
-    } catch (error) {
-      console.log(error)
-      throw error
-    }
-  }
-
   return (
     <div className="text-[13px] w-[308px] p-3 bg-text dark:bg-text-dark rounded-lg space-y-3">
       <div>
@@ -39,23 +31,22 @@ const UserInformation = async ({
         <h2 className="font-bold uppercase">Deezcord Member since</h2>
         <p>{formatDateMinimal(user.createdAt)}</p>
       </div>
-      <div className="space-y-2">
+      <div className={cn(hideButton && 'hidden', 'space-y-2')}>
         <Separator />
         <button className="flex items-center gap-2 hover:bg-server-hover dark:hover:bg-server-hover-dark w-full p-[6px] rounded-sm transition-all">
           <div className="bg-green-500 rounded-full w-3 h-3" />
           <div>Online</div>
         </button>
         <Separator />
-        <form action={handleSignOut}>
-          <button
-            type="submit"
-            className="flex items-center gap-2 hover:bg-red-500 hover:text-white w-full p-[6px] rounded-sm transition-all"
-          >
-            <LogOut size={18} />
-            <div>Sign Out</div>
-          </button>
-        </form>
+        <button
+          type="submit"
+          className="flex items-center gap-2 hover:bg-red-500 hover:text-white w-full p-[6px] rounded-sm transition-all"
+        >
+          <LogOut size={18} />
+          <div>Sign Out</div>
+        </button>
       </div>
+      {children}
     </div>
   )
 }

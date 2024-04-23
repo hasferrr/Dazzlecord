@@ -6,20 +6,26 @@ import UserInformation from './user-information'
 import UserPhoto from './user-photo'
 
 interface UserWrapperProps {
+  children?: React.ReactNode
   user: User
   className?: string
+  hideButton?: boolean
 }
 
 const UserWrapper = ({
+  children,
   user,
   className,
+  hideButton = false,
 }: UserWrapperProps) => {
   return (
     <div className={cn('relative w-[340px] max-h-[530px] rounded-lg p-0 m-0 bg-server dark:bg-server-dark', className)}>
       <div className="absolute rounded-t-lg bg-[rgb(188,156,154)] h-[3.75rem] w-full" />
       <div className="p-4 m-0 space-y-3">
         <UserPhoto image={user.image} username={user.username} />
-        <UserInformation user={user} />
+        <UserInformation user={user} hideButton={hideButton}>
+          {children}
+        </UserInformation>
       </div>
     </div>
   )

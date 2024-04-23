@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 
 import { getAllMembersByServerIdSorted } from '@/actions/prisma/member'
 import { getServerIncludesAllChannel } from '@/actions/prisma/server'
+import { getUserById } from '@/actions/prisma/user'
 import { auth } from '@/auth'
 import BigScreen from '@/components/media-query/big-screen'
 import CreateChannelModal from '@/components/modals/channel/create-channel-modal'
@@ -30,11 +31,16 @@ const ServerIdLayout = async ({ children, params }: {
   }
   const userId = session.user.id
 
+  const user = await getUserById(userId)
+  if (!user) {
+    return redirect('/')
+  }
+
   if (params.serverId === '%40me' || params.serverId === '@me') {
     return (
       <div>
         <Me />
-        <UserSettings />
+        <UserSettings user={user} />
         <CreateServerModal />
       </div>
     )
@@ -69,7 +75,7 @@ const ServerIdLayout = async ({ children, params }: {
           </BigScreen>
         </div>
         {children}
-        <UserSettings />
+        <UserSettings user={user} />
         <CreateServerModal />
         <InvitationModal origin={ORIGIN_URL} inviteCode={server.inviteCode} />
         <LeaveServerModal server={server} />
