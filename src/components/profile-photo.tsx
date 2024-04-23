@@ -1,8 +1,5 @@
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/components/ui/avatar'
+import Image from 'next/image'
+
 import { cn } from '@/lib/utils'
 
 type size = 32 | 40 | 48 | 80 | 92 | 96
@@ -34,13 +31,30 @@ export const ProfilePhoto = ({
     [96, 'w-[96px] h-[96px]'],
   ])
 
-  return (
-    <Avatar className={cn(sizeClasses.get(width ?? height), className)}>
-      <AvatarImage
-        className="object-cover"
+  if (src || image) {
+    return (
+      <Image
+        className={cn(
+          'object-cover rounded-full overflow-hidden',
+          sizeClasses.get(width),
+          className
+        )}
         src={src ?? `https://storage.googleapis.com/server-profile/${image}`}
+        alt=""
+        height={height}
+        width={width}
       />
-      <AvatarFallback>{initials}</AvatarFallback>
-    </Avatar>
+    )
+  }
+
+  return (
+    <div className={cn(
+      sizeClasses.get(width),
+      'flex items-center justify-center rounded-full',
+      'bg-black text-white dark:bg-white dark:text-black',
+      className,
+    )}>
+      <span className="text-xl font-bold select-none">{initials}</span>
+    </div>
   )
 }
