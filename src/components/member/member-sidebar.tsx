@@ -23,9 +23,9 @@ const MemberSidebar = async ({ serverId }: {
   const memberList = (m: (Member & { user: User })) => (
     <MemberItem
       key={m.id}
-      username={m.user.username}
+      name={m.user.name}
       image={m.user.image}
-      desc=""
+      about={m.user.about}
       className="w-full p-2"
     />
   )

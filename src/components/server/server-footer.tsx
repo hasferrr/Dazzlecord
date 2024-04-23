@@ -23,9 +23,9 @@ const ServerFooter = async () => {
       bg-server-footer dark:bg-server-footer-dark">
       <UserPopover user={user} side="top" className="ml-12">
         <MemberItem
-          username={user.username}
+          name={user.name}
           image={user.image}
-          desc={user.about}
+          about={user.about}
           className="px-1"
         />
       </UserPopover>

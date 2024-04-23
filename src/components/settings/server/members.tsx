@@ -91,7 +91,8 @@ const Members = ({
     <TableRow>
       <TableCell>
         <MemberItem
-          username={member.user.username}
+          name={member.user.name}
+          about={member.user.about}
           image={member.user.image}
         />
       </TableCell>

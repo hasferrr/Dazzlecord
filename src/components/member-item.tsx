@@ -1,10 +1,10 @@
 import { ProfilePhoto } from '@/components/profile-photo'
 import { cn } from '@/lib/utils'
 
-export const MemberItem = ({ username, image, desc, className }: {
-  username: string
+export const MemberItem = ({ name, image, about, className }: {
+  name: string
   image?: string | null
-  desc?: string | null
+  about?: string | null
   className?: string
 }) => {
   return (
@@ -16,13 +16,13 @@ export const MemberItem = ({ username, image, desc, className }: {
       className
     )}>
       <div className="row-span-2 my-auto">
-        <ProfilePhoto username={username} image={image} />
+        <ProfilePhoto username={name} image={image} />
       </div>
       <div className="grid">
-        <p className="text-sm truncate">{username}</p>
-        {desc &&
+        <p className="text-sm truncate">{name}</p>
+        {about &&
           <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
-            {desc}
+            {about}
           </p>
         }
       </div>
