@@ -30,14 +30,15 @@ const ChatItem = ({
         />
       </div>
       <p>
-        <span className="">
+        <span className="max-w-[280px] truncate">
           {message.user.name}
         </span>
-        <span className={smolText}>
+        <span>{' '}</span>
+        <span className={cn(smolText)}>
           {formatDate(message.createdAt)}
         </span>
       </p>
-      <p className="text-[15px]">
+      <p className="text-[15px] leading-[1.375rem] whitespace-break-spaces" style={{ wordBreak: 'break-word' }}>
         {message.content}
         {message.isUpdated && (
           <span className={smolText}>
