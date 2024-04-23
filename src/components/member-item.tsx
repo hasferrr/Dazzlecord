@@ -16,7 +16,12 @@ export const MemberItem = ({ name, image, about, className }: {
       className
     )}>
       <div className="row-span-2 my-auto">
-        <ProfilePhoto username={name} image={image} />
+        <ProfilePhoto
+          username={name}
+          image={image}
+          width={32}
+          height={32}
+        />
       </div>
       <div className="grid">
         <p className="text-sm truncate">{name}</p>

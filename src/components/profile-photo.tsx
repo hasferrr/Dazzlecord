@@ -2,14 +2,12 @@ import Image from 'next/image'
 
 import { cn } from '@/lib/utils'
 
-type size = 32 | 40 | 48 | 80 | 92 | 96
-
 interface ProfilePhotoProps {
   username: string
   image?: string | null
   src?: string
-  width?: size
-  height?: size
+  width: number
+  height: number
   className?: string
 }
 
@@ -17,43 +15,34 @@ export const ProfilePhoto = ({
   username,
   image,
   src,
-  width = 32,
-  height = 32,
+  width,
+  height,
   className,
 }: ProfilePhotoProps) => {
   const initials = username.slice(0, 2).toUpperCase()
-  const sizeClasses = new Map([
-    [32, 'w-[32px] h-[32px]'],
-    [40, 'w-[40px] h-[40px]'],
-    [48, 'w-[48px] h-[48px]'],
-    [80, 'w-[80px] h-[80px]'],
-    [92, 'w-[92px] h-[92px]'],
-    [96, 'w-[96px] h-[96px]'],
-  ])
 
   if (src || image) {
     return (
       <Image
-        className={cn(
-          'object-cover rounded-full overflow-hidden',
-          sizeClasses.get(width),
-          className
-        )}
+        className={cn('object-cover rounded-full overflow-hidden', className)}
         src={src ?? `https://storage.googleapis.com/server-profile/${image}`}
         alt=""
         height={height}
         width={width}
+        style={{ height: `${height}px`, width: `${width}px` }}
       />
     )
   }
 
   return (
-    <div className={cn(
-      sizeClasses.get(width),
-      'flex items-center justify-center rounded-full',
-      'bg-black text-white dark:bg-white dark:text-black',
-      className,
-    )}>
+    <div
+      className={cn(
+        'flex items-center justify-center rounded-full',
+        'bg-black text-white dark:bg-white dark:text-black',
+        className,
+      )}
+      style={{ height: `${height}px`, width: `${width}px` }}
+    >
       <span className="text-xl font-bold select-none">{initials}</span>
     </div>
   )
