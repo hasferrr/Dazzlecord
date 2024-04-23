@@ -17,7 +17,7 @@ const UserInformation = ({
   hideButton,
 }: UserInformationProps) => {
   return (
-    <div className="text-[13px] w-[308px] p-3 bg-text dark:bg-text-dark rounded-lg space-y-3">
+    <div className="break-words text-[13px] w-[308px] p-3 bg-text dark:bg-text-dark rounded-lg space-y-3">
       <div>
         <p className="text-base font-bold">{user.name}</p>
         <p>{user.username}</p>
@@ -25,7 +25,9 @@ const UserInformation = ({
       <Separator />
       <div>
         <h2 className="font-bold uppercase">About me</h2>
-        <p>{user.about}</p>
+        <p className="whitespace-break-spaces max-h-[215px] overflow-auto thin-scrollbar">
+          {user.about}
+        </p>
       </div>
       <div>
         <h2 className="font-bold uppercase">Deezcord Member since</h2>

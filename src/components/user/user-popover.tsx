@@ -29,7 +29,7 @@ const UserPopover = ({
       </PopoverTrigger>
       <PopoverContent
         side={side}
-        className={cn('border-0 w-[340px] max-h-[530px] rounded-lg p-0 m-0 bg-server dark:bg-server-dark', className)}
+        className={cn('border-0 w-[340px] rounded-lg p-0 m-0 bg-server dark:bg-server-dark', className)}
       >
         <UserWrapper user={user} />
       </PopoverContent>
