@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+import { filesValidatorAllow0Length } from './server-modal-schema'
+
 export const editProfileSchema = z.object({
   name: z.string()
     .min(1, {
@@ -12,4 +14,5 @@ export const editProfileSchema = z.object({
     .max(190, {
       message: 'Maximum is 190 characters.',
     }),
+  files: filesValidatorAllow0Length,
 })

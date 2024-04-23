@@ -36,16 +36,20 @@ export const failedLength = 'Image is required'
 export const failedSize = `The maximum image size is ${MAX_IMAGE_SIZE_IN_MB}MB`
 export const failedTypes = 'File type is not supported'
 
+export const filesValidatorAllow0Length = z
+  .custom<FileList>()
+  .refine(checkSize, failedSize)
+  .refine(checkTypes, failedTypes)
+
+export const filesValidator = filesValidatorAllow0Length
+  .refine(checkLength, failedLength)
+
 export const serverModalSchema = z.object({
   name: z.string()
     .min(1, {
       message: 'Server name is required.',
     }),
-  files: z
-    .custom<FileList>()
-    .refine(checkLength, failedLength)
-    .refine(checkSize, failedSize)
-    .refine(checkTypes, failedTypes),
+  files: filesValidator,
 })
 
 export const serverModalSchemaAllow0Length = z.object({
@@ -53,8 +57,5 @@ export const serverModalSchemaAllow0Length = z.object({
     .min(1, {
       message: 'Server name is required.',
     }),
-  files: z
-    .custom<FileList>()
-    .refine(checkSize, failedSize)
-    .refine(checkTypes, failedTypes),
+  files: filesValidatorAllow0Length,
 })
