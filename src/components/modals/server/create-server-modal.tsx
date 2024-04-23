@@ -107,13 +107,6 @@ const CreateServerModal = () => {
                               onChange={handleImageChange}
                             />
                             {file
-                              // ? <Image
-                              //   className="h-20 w-20 rounded-full object-cover"
-                              //   src={URL.createObjectURL(file)}
-                              //   alt=""
-                              //   width={80}
-                              //   height={80}
-                              // />
                               ? <ProfilePhoto
                                 src={URL.createObjectURL(file)}
                                 width={80}

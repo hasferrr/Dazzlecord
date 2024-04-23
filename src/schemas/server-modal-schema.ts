@@ -37,9 +37,10 @@ export const failedSize = `The maximum image size is ${MAX_IMAGE_SIZE_IN_MB}MB`
 export const failedTypes = 'File type is not supported'
 
 export const serverModalSchema = z.object({
-  name: z.string().min(1, {
-    message: 'Server name is required.',
-  }),
+  name: z.string()
+    .min(1, {
+      message: 'Server name is required.',
+    }),
   files: z
     .custom<FileList>()
     .refine(checkLength, failedLength)
@@ -48,9 +49,10 @@ export const serverModalSchema = z.object({
 })
 
 export const serverModalSchemaAllow0Length = z.object({
-  name: z.string().min(1, {
-    message: 'Server name is required.',
-  }),
+  name: z.string()
+    .min(1, {
+      message: 'Server name is required.',
+    }),
   files: z
     .custom<FileList>()
     .refine(checkSize, failedSize)
