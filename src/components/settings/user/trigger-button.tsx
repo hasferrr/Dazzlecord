@@ -1,6 +1,6 @@
 'use client'
 
-import { Settings } from 'lucide-react'
+import { Bolt } from 'lucide-react'
 
 import { ActionTooltip } from '@/components/action-tooltip'
 import { useOpenUserSettingsPage } from '@/context/settings/user-settings-context'
@@ -15,7 +15,10 @@ const TriggerButton = () => {
       align="center"
     >
       <button onClick={openUserSettingsPage} className="outline-none">
-        <Settings size={20} />
+        <Bolt
+          size={20}
+          className="transition-transform duration-1000 hover:rotate-180"
+        />
       </button>
     </ActionTooltip>
   )
