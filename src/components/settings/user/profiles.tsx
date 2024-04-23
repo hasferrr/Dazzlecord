@@ -3,6 +3,7 @@
 import type { User } from '@prisma/client'
 
 import UserWrapper from '@/components/user/user-wrapper'
+import { usePreviewProfilesValue } from '@/context/settings/user/preview-profiles-context'
 
 import ProfilesForm from './profiles-form'
 import TimeElapsed from './time-elapsed'
@@ -14,6 +15,14 @@ interface ProfilesProps {
 const Profiles = ({
   user,
 }: ProfilesProps) => {
+  const previewProfilesValue = usePreviewProfilesValue()
+
+  const previewUser = {
+    ...user,
+    name: previewProfilesValue.name,
+    about: previewProfilesValue.about,
+  }
+
   return (
     <div>
       <h1 className="text-lg font-bold pb-5">Profiles</h1>
@@ -23,7 +32,7 @@ const Profiles = ({
         </div>
         <div className="space-y-2">
           <p className="uppercase font-bold text-xs">Preview</p>
-          <UserWrapper user={user} hideButton>
+          <UserWrapper user={previewUser} hideButton>
             <div>
               <h2 className="font-bold uppercase">Customizing My Profile</h2>
               {/* TODO: add pencil image, style it, add Example button */}
@@ -34,7 +43,7 @@ const Profiles = ({
           </UserWrapper>
         </div>
       </div>
-    </div>
+    </div >
   )
 }
 

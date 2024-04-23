@@ -20,6 +20,8 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+import { useSetPreviewProfiles } from '@/context/settings/user/preview-profiles-context'
+import { trimString } from '@/lib/helpers'
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -37,6 +39,7 @@ interface ProfilesFormProps {
 const ProfilesForm = ({
   user,
 }: ProfilesFormProps) => {
+  const setPreviewProfiles = useSetPreviewProfiles()
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
 
@@ -50,6 +53,10 @@ const ProfilesForm = ({
 
   // TODO: onsubmit edit profile, add change photo
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    if (trimString(values.name) === user.name
+      && trimString(values.about) === user.about) {
+      return
+    }
     startTransition(async () => {
       const updatedUser = await editProfile(values.name, values.about)
       if (updatedUser) {
@@ -80,6 +87,13 @@ const ProfilesForm = ({
                   className="bg-navigation dark:bg-navigation-dark border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                   placeholder="What is your name?"
                   {...field}
+                  onChange={(e) => {
+                    setPreviewProfiles({
+                      name: e.target.value,
+                      about: form.getValues('about') ?? '',
+                    })
+                    field.onChange(e)
+                  }}
                 />
               </FormControl>
               <FormMessage />
@@ -100,6 +114,13 @@ const ProfilesForm = ({
                   className="bg-navigation dark:bg-navigation-dark border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                   placeholder="Type your bio here."
                   {...field}
+                  onChange={(e) => {
+                    setPreviewProfiles({
+                      name: form.getValues('name'),
+                      about: e.target.value,
+                    })
+                    field.onChange(e)
+                  }}
                 />
               </FormControl>
               <FormMessage />
@@ -111,7 +132,14 @@ const ProfilesForm = ({
             disabled={isPending}
             variant="ghost"
             type="button"
-            onClick={() => form.reset()}
+            onClick={() => {
+              setPreviewProfiles({
+                name: user.name,
+                about: user.about ?? '',
+              })
+              form.setValue('name', user.name)
+              form.setValue('about', user.about ?? '')
+            }}
             className="hover:bg-transparent hover:underline"
           >
             Reset

@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation'
 
 import { auth } from '@/auth'
 import { db } from '@/lib/db'
+import { trimString } from '@/lib/helpers'
 
 export const editProfile = async (
   name: string,
@@ -18,7 +19,7 @@ export const editProfile = async (
 
   const data: { name?: string, about?: string } = {}
   if (name) {
-    data.name = name
+    data.name = trimString(name)
   }
   if (about) {
     data.about = about

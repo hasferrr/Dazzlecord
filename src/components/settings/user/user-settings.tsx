@@ -4,6 +4,7 @@ import type { User } from '@prisma/client'
 
 import ButtonSelection from '@/components/settings/button-selection'
 import SettingsLayout from '@/components/settings/settings-layout'
+import { PreviewProfilesContextProvider } from '@/context/settings/user/preview-profiles-context'
 import {
   useCloseUserSettingsPage,
   useOpenUserSettingsPage,
@@ -38,7 +39,9 @@ const UserSettings = ({
         />
       }
     >
-      <Profiles user={user} />
+      <PreviewProfilesContextProvider name={user.name} about={user.about ?? ''}>
+        <Profiles user={user} />
+      </PreviewProfilesContextProvider>
     </SettingsLayout>
   )
 }
