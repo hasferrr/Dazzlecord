@@ -25,6 +25,7 @@ export const useServerForm = (
   defaultValues?: { name?: string, files?: FileList },
   customSchema?: typeof serverModalSchema | typeof serverModalSchemaAllowNoFile,
 ) => {
+  // TODO: remove `file` useState and use the form `files` field instead. See profile-form.tsx
   const [file, setFile] = useState<File | null>(null)
   const [fileErrorMsg, setFileErrorMsg] = useState<string | undefined>(undefined)
 
