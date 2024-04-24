@@ -1,20 +1,17 @@
 {
   "extends": [
+    "airbnb",
+    "airbnb-typescript",
     "next/core-web-vitals",
-    "plugin:react/recommended",
-    "plugin:react/jsx-runtime",
-    "plugin:react-hooks/recommended",
     "plugin:import/typescript"
   ],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
   "plugins": [
     "import"
   ],
   "rules": {
-    "jsx-quotes": [
-      "error",
-      "prefer-double"
-    ],
-    "react/react-in-jsx-scope": "off",
     "import/no-unresolved": "error",
     "sort-imports": [
       "error",
@@ -60,58 +57,16 @@
         }
       }
     ],
-    "indent": [
-      "error",
-      2
-    ],
-    "linebreak-style": [
-      "error",
-      "unix"
-    ],
-    "quotes": [
-      "error",
-      "single"
-    ],
-    "semi": [
+    "semi": "off",
+    "@typescript-eslint/semi": [
       "error",
       "never"
     ],
-    "eqeqeq": "error",
-    "no-trailing-spaces": "error",
-    "object-curly-spacing": [
-      "error",
-      "always"
-    ],
-    "arrow-spacing": [
-      "error",
+    "react/function-component-definition": [
+      2,
       {
-        "before": true,
-        "after": true
+        "namedComponents": "arrow-function"
       }
-    ],
-    "eol-last": [
-      "error",
-      "always"
-    ],
-    "comma-dangle": [
-      "error",
-      "always-multiline"
-    ],
-    "no-process-env": "error"
-  },
-  "settings": {
-    "import/parsers": {
-      "@typescript-eslint/parser": [
-        ".ts",
-        ".tsx"
-      ]
-    },
-    "import/resolver": {
-      "typescript": {
-        "alwaysTryTypes": true,
-        "project": "tsconfig.json"
-      },
-      "node": true
-    }
+    ]
   }
 }
