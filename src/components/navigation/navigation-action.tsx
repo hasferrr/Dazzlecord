@@ -2,7 +2,7 @@
 
 import { Plus } from 'lucide-react'
 
-import { ActionTooltip } from '@/components/action-tooltip'
+import ActionTooltip from '@/components/action-tooltip'
 import { useCreateServerOpen } from '@/context/modal-context'
 
 const NavigationAction = () => {

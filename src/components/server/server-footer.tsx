@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation'
 
 import { getUserById } from '@/actions/prisma/user'
 import { auth } from '@/auth'
-import { MemberItem } from '@/components/member-item'
+import MemberItem from '@/components/member-item'
 import TriggerButton from '@/components/settings/user/trigger-button'
 import UserPopover from '@/components/user/user-popover'
 

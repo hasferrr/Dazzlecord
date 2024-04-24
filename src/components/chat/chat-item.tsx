@@ -2,7 +2,7 @@
 
 import type { MemberRole } from '@prisma/client'
 
-import { ProfilePhoto } from '@/components/profile-photo'
+import ProfilePhoto from '@/components/profile-photo'
 import { formatDate, getFileURLFromGCS } from '@/lib/helpers'
 import { cn } from '@/lib/utils'
 import type { MessageWithUser } from '@/types'

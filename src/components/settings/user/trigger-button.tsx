@@ -2,7 +2,7 @@
 
 import { Bolt } from 'lucide-react'
 
-import { ActionTooltip } from '@/components/action-tooltip'
+import ActionTooltip from '@/components/action-tooltip'
 import { useOpenUserSettingsPage } from '@/context/settings/user-settings-context'
 
 const TriggerButton = () => {

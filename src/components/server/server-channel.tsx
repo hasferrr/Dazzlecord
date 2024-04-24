@@ -8,7 +8,7 @@ import {
 import { Edit, Hash, Mic, Trash, Video } from 'lucide-react'
 import { useParams, useRouter } from 'next/navigation'
 
-import { ActionTooltip } from '@/components/action-tooltip'
+import ActionTooltip from '@/components/action-tooltip'
 import { useDeleteChannelOpen } from '@/context/delete-channel-context'
 import { useEditChannelOpen } from '@/context/edit-channel-context'
 import { cn } from '@/lib/utils'

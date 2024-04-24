@@ -10,10 +10,10 @@ import { getServerWithAnyChannel } from '@/actions/prisma/server'
 import { auth } from '@/auth'
 import MobileScreen from '@/components/media-query/mobile-screen'
 import MemberSidebar from '@/components/member/member-sidebar'
-import { MobileToggleV2 } from '@/components/mobile-toggle-v2'
+import MobileToggleV2 from '@/components/mobile-toggle-v2'
 import NavigationSidebar from '@/components/navigation/navigation-sidebar'
 import ServerSidebar from '@/components/server/server-sidebar'
-import { SocketIndicator } from '@/components/socket-indicator'
+import SocketIndicator from '@/components/socket-indicator'
 
 const iconMap = {
   [ChannelType.TEXT]: Hash,

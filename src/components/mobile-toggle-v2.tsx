@@ -13,7 +13,7 @@ interface MobileToggleProps {
   buttonVariant?: 'menu' | 'users'
 }
 
-export const MobileToggleV2 = ({
+const MobileToggleV2 = ({
   children,
   side = 'left',
   buttonVariant = 'menu',
@@ -34,3 +34,5 @@ export const MobileToggleV2 = ({
     </Sheet>
   )
 }
+
+export default MobileToggleV2

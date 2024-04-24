@@ -7,7 +7,7 @@ interface LabelSelectionProps {
   className?: string
 }
 
-export const LabelSelection = ({
+const LabelSelection = ({
   title,
   className,
 }: LabelSelectionProps) => {

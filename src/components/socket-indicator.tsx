@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 import { Badge } from '@/components/ui/badge'
 import { useIsConnected, useSocket } from '@/context/socket-context'
 
-export const SocketIndicator = () => {
+const SocketIndicator = () => {
   const socket = useSocket()
   const isConnected = useIsConnected()
 
@@ -34,3 +34,5 @@ export const SocketIndicator = () => {
     </Badge>
   )
 }
+
+export default SocketIndicator

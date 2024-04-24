@@ -10,7 +10,7 @@ interface ProfilePhotoProps {
   className?: string
 }
 
-export const ProfilePhoto = ({
+const ProfilePhoto = ({
   username,
   src,
   width,
@@ -50,3 +50,5 @@ export const ProfilePhoto = ({
     </div>
   )
 }
+
+export default ProfilePhoto

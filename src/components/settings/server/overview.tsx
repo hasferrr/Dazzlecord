@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation'
 import { z } from 'zod'
 
 import { updateServer } from '@/actions/server/update-server'
-import { ProfilePhoto } from '@/components/profile-photo'
+import ProfilePhoto from '@/components/profile-photo'
 import { Button } from '@/components/ui/button'
 import {
   Form,

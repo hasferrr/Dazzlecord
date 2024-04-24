@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 
 import { changeRole } from '@/actions/member/change-role'
 import { kickMember } from '@/actions/member/kick-member'
-import { MemberItem } from '@/components/member-item'
+import MemberItem from '@/components/member-item'
 import {
   AlertDialog,
   AlertDialogAction,

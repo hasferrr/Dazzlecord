@@ -8,7 +8,7 @@ import { CircleX } from 'lucide-react'
 
 import BigScreen from '@/components/media-query/big-screen'
 import MobileScreen from '@/components/media-query/mobile-screen'
-import { MobileToggleV2 } from '@/components/mobile-toggle-v2'
+import MobileToggleV2 from '@/components/mobile-toggle-v2'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 import {
   useCloseServerSettingsPage,

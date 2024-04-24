@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation'
 import { getUserById } from '@/actions/prisma/user'
 import { auth, signOut } from '@/auth'
 import ChatHeader from '@/components/chat/chat-header'
-import { ModeToggle } from '@/components/mode-toggle'
+import ModeToggle from '@/components/mode-toggle'
 import UserPopover from '@/components/user/user-popover'
 
 const Me = async () => {

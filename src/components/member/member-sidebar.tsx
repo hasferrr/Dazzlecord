@@ -2,7 +2,7 @@ import { type Member, MemberRole, type User } from '@prisma/client'
 import { redirect } from 'next/navigation'
 
 import { getAllMembersByServerIdSorted } from '@/actions/prisma/member'
-import { MemberItem } from '@/components/member-item'
+import MemberItem from '@/components/member-item'
 import { ScrollArea } from '@/components/ui/scroll-area'
 
 import MemberSection from './member-section'

@@ -1,8 +1,8 @@
-import { ProfilePhoto } from '@/components/profile-photo'
+import ProfilePhoto from '@/components/profile-photo'
 import { getFileURLFromGCS } from '@/lib/helpers'
 import { cn } from '@/lib/utils'
 
-export const MemberItem = ({ name, image, about, className }: {
+const MemberItem = ({ name, image, about, className }: {
   name: string
   image?: string | null
   about?: string | null
@@ -35,3 +35,5 @@ export const MemberItem = ({ name, image, about, className }: {
     </button>
   )
 }
+
+export default MemberItem

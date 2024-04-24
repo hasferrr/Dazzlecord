@@ -1,4 +1,4 @@
-import { ProfilePhoto } from '@/components/profile-photo'
+import ProfilePhoto from '@/components/profile-photo'
 import { getFileURLFromGCS } from '@/lib/helpers'
 
 interface UserPhotoProps {

@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 import { z } from 'zod'
 
 import { createNewServer } from '@/actions/server/create-new-server'
-import { ProfilePhoto } from '@/components/profile-photo'
+import ProfilePhoto from '@/components/profile-photo'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,

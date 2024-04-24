@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 /**
   * The children only rendered if screen width is LESS than 768px (Mobile)
  */
-export const MobileScreen = ({ children, width = 768 }: {
+const MobileScreen = ({ children, width = 768 }: {
   children: React.ReactNode
   width?: number
 }) => {

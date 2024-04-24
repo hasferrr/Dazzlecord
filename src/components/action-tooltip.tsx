@@ -15,7 +15,7 @@ interface ActionTooltipProps {
   delay?: number
 }
 
-export const ActionTooltip = ({
+const ActionTooltip = ({
   children,
   label,
   side,
@@ -37,3 +37,5 @@ export const ActionTooltip = ({
     </TooltipProvider>
   )
 }
+
+export default ActionTooltip
