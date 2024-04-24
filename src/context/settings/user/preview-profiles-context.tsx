@@ -32,7 +32,7 @@ export const usePreviewProfilesValue = () => useContext(PreviewProfilesContext)[
 export const useSetAllStatePreviewProfiles = () => useContext(PreviewProfilesContext)[1]
 export const useSetPreviewProfiles = () => {
   const [state, setState] = useContext(PreviewProfilesContext)
-  return (key: keyof State, value: string) => {
+  return (key: keyof State, value: string | null) => {
     setState({ ...state, [key]: value })
   }
 }

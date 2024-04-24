@@ -4,17 +4,19 @@ import { getFileURLFromGCS } from '@/lib/helpers'
 interface UserPhotoProps {
   image?: string | null
   username: string
+  imageFromGCS?: boolean
 }
 
 const UserPhoto = ({
   image,
   username,
+  imageFromGCS = true,
 }: UserPhotoProps) => {
   return (
     <div className="relative w-[92px] h-[92px]">
       <ProfilePhoto
         className="box-content border-[6px] border-solid border-server dark:border-server-dark"
-        src={getFileURLFromGCS(image)}
+        src={imageFromGCS ? getFileURLFromGCS(image) : image}
         username={username}
         width={80}
         height={80}

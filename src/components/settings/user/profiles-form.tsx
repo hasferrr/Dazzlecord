@@ -48,7 +48,7 @@ const ProfilesForm = ({
     },
   })
 
-  // TODO: send photo (files) to context, and upload photo handler
+  // TODO: upload photo handler
   const onSubmit = async (values: z.infer<typeof editProfileSchema>) => {
     if (trimString(values.name) === user.name
       && trimString(values.about) === user.about) {
@@ -58,6 +58,12 @@ const ProfilesForm = ({
       const updatedUser = await editProfile(values.name, values.about)
       if (updatedUser) {
         console.log('successfully updated')
+        setAllStatePreviewProfiles({
+          name: updatedUser.name,
+          about: updatedUser.about,
+          image: updatedUser.image,
+        })
+        form.reset()
         form.setValue('name', updatedUser.name)
         form.setValue('about', updatedUser.about ?? '')
         router.refresh()
@@ -108,19 +114,20 @@ const ProfilesForm = ({
                   <label htmlFor="userFileInput" className="cursor-pointer">
                     <input
                       {...form.register('files', {
-                        onChange: (e) => {
-                          const validatedFields = z
+                        onChange: async (e) => {
+                          const validatedFields = await z
                             .object({ files: filesValidator })
-                            .safeParse({ files: e.target.files })
+                            .spa({ files: e.target.files })
                           if (validatedFields.success) {
-                            setPreviewProfiles('image', URL.createObjectURL(e.target.files[0]))
+                            const objBlobUrl = URL.createObjectURL(validatedFields.data.files[0])
+                            setPreviewProfiles('image', objBlobUrl)
                           }
                         },
                       })}
                       disabled={isPending}
                       id="userFileInput"
                       type="file"
-                    // className="cursor-pointer opacity-0 absolute w-0 h-0"
+                      className="cursor-pointer opacity-0 absolute w-0 h-0"
                     />
                     <div className={cn(buttonVariants({ variant: 'primary' }))}>
                       Change Avatar
@@ -131,6 +138,7 @@ const ProfilesForm = ({
                     variant="underline"
                     type="button"
                     onClick={() => {
+                      setPreviewProfiles('image', null)
                       form.resetField('files')
                     }}
                   >

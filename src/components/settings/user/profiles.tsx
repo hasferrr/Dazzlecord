@@ -21,6 +21,7 @@ const Profiles = ({
     ...user,
     name: previewProfilesValue.name,
     about: previewProfilesValue.about,
+    image: previewProfilesValue.image ?? user.image,
   }
 
   return (
@@ -32,7 +33,7 @@ const Profiles = ({
         </div>
         <div className="space-y-2">
           <p className="uppercase font-bold text-xs">Preview</p>
-          <UserWrapper user={previewUser} hideButton>
+          <UserWrapper user={previewUser} hideButton imageFromGCS={!previewUser.image?.startsWith('blob')}>
             <div>
               <h2 className="font-bold uppercase">Customizing My Profile</h2>
               {/* TODO: add pencil image, style it, add Example button */}
