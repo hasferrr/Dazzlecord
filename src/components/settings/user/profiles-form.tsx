@@ -24,7 +24,7 @@ import { useSetAllStatePreviewProfiles, useSetPreviewProfiles } from '@/context/
 import { trimString } from '@/lib/helpers'
 import { cn } from '@/lib/utils'
 import { editProfileSchema } from '@/schemas/edit-profile-schema'
-import { filesValidator } from '@/schemas/server-modal-schema'
+import { filesValidator } from '@/schemas/validator/filesValidator'
 import { uploadPhoto } from '@/services/upload-photo'
 
 interface ProfilesFormProps {

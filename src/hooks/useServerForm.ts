@@ -8,20 +8,22 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import {
+  serverModalSchema,
+  serverModalSchemaAllowNoFile,
+} from '@/schemas/server-modal-schema'
+import {
   checkLength,
   checkSize,
   checkTypes,
   failedLength,
   failedSize,
   failedTypes,
-  serverModalSchema,
-  serverModalSchemaAllow0Length,
-} from '@/schemas/server-modal-schema'
+} from '@/schemas/validator/filesValidator'
 import { uploadPhoto } from '@/services/upload-photo'
 
 export const useServerForm = (
   defaultValues?: { name?: string, files?: FileList },
-  customSchema?: typeof serverModalSchema | typeof serverModalSchemaAllow0Length,
+  customSchema?: typeof serverModalSchema | typeof serverModalSchemaAllowNoFile,
 ) => {
   const [file, setFile] = useState<File | null>(null)
   const [fileErrorMsg, setFileErrorMsg] = useState<string | undefined>(undefined)

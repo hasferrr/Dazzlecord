@@ -24,7 +24,7 @@ import { useServerForm } from '@/hooks/useServerForm'
 import { getFileURLFromGCS, trimString } from '@/lib/helpers'
 import {
   serverModalSchema,
-  serverModalSchemaAllow0Length,
+  serverModalSchemaAllowNoFile,
 } from '@/schemas/server-modal-schema'
 import SVGUploadIcon from '@/svg/SVG-upload-icon'
 
@@ -45,7 +45,7 @@ const Overview = ({ server }: {
     handleResetImage,
   } = useServerForm(
     { name: server.name, files: undefined },
-    serverModalSchemaAllow0Length,
+    serverModalSchemaAllowNoFile,
   )
 
   const onSubmit = (values: z.infer<typeof serverModalSchema>) => {

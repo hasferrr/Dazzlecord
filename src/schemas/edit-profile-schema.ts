@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { filesValidatorAllow0Length } from './server-modal-schema'
+import { filesValidatorAllowNoFile } from './validator/filesValidator'
 
 const objectSchema = {
   name: z.string()
@@ -17,7 +17,8 @@ const objectSchema = {
 }
 
 export const editProfileNoFileSchema = z.object(objectSchema)
+
 export const editProfileSchema = z.object({
   ...objectSchema,
-  files: filesValidatorAllow0Length,
+  files: filesValidatorAllowNoFile,
 })
