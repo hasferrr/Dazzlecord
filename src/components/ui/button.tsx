@@ -27,10 +27,15 @@ const buttonVariants = cva(
         lg: "h-11 rounded-md px-8",
         icon: "h-10 w-10",
       },
+      disabledStyle: {
+        default: "",
+        disabled: "cursor-not-allowed opacity-50",
+      },
     },
     defaultVariants: {
       variant: "default",
       size: "default",
+      disabledStyle: "default",
     },
   }
 )

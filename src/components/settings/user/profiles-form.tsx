@@ -25,6 +25,7 @@ import { trimString } from '@/lib/helpers'
 import { cn } from '@/lib/utils'
 import { editProfileSchema } from '@/schemas/edit-profile-schema'
 import { filesValidator } from '@/schemas/server-modal-schema'
+import { uploadPhoto } from '@/services/upload-photo'
 
 interface ProfilesFormProps {
   user: User
@@ -48,28 +49,42 @@ const ProfilesForm = ({
     },
   })
 
-  // TODO: upload photo handler
   const onSubmit = async (values: z.infer<typeof editProfileSchema>) => {
+    const file = form.getValues('files')
+      ? form.getValues('files')[0]
+      : null
+
     if (trimString(values.name) === user.name
-      && trimString(values.about) === user.about) {
+      && trimString(values.about) === user.about
+      && !file) {
       return
     }
+
     startTransition(async () => {
-      const updatedUser = await editProfile(values.name, values.about)
-      if (updatedUser) {
-        console.log('successfully updated')
-        setAllStatePreviewProfiles({
-          name: updatedUser.name,
-          about: updatedUser.about,
-          image: updatedUser.image,
-        })
-        form.reset()
-        form.setValue('name', updatedUser.name)
-        form.setValue('about', updatedUser.about ?? '')
-        router.refresh()
+      const updatedUser = await editProfile({
+        name: values.name,
+        about: values.about,
+      }, !!file)
+
+      if (!updatedUser) {
+        console.log('failed to update profile')
         return
       }
-      console.log('failed to update profile')
+
+      if (file && updatedUser.image && updatedUser.image !== user.image) {
+        await uploadPhoto(file, updatedUser.image)
+      }
+
+      console.log('successfully updated')
+      setAllStatePreviewProfiles({
+        name: updatedUser.name,
+        about: updatedUser.about,
+        image: updatedUser.image,
+      })
+      form.reset()
+      form.setValue('name', updatedUser.name)
+      form.setValue('about', updatedUser.about ?? '')
+      router.refresh()
     })
   }
 
@@ -129,7 +144,11 @@ const ProfilesForm = ({
                       type="file"
                       className="cursor-pointer opacity-0 absolute w-0 h-0"
                     />
-                    <div className={cn(buttonVariants({ variant: 'primary' }))}>
+                    <div className={cn(
+                      isPending
+                        ? buttonVariants({ variant: 'primary', disabledStyle: 'disabled' })
+                        : buttonVariants({ variant: 'primary' }),
+                    )}>
                       Change Avatar
                     </div>
                   </label>
