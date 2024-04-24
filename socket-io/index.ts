@@ -11,7 +11,7 @@ import { roomHandler } from './handlers/room-handler'
 const app = express()
 const server = createServer(app)
 
-export const io = new Server(server, {
+const io = new Server(server, {
   cors: {
     origin: process.env['CLIENT_URL'],
   },
@@ -24,7 +24,7 @@ app.use(cors({
 }))
 
 app.get('/', (_req, res) => res.json({ status: 'ok' }))
-app.use('/message', messageRouter)
+app.use('/message', messageRouter(io))
 
 io.on('connection', (socket) => {
   connectHandler(io, socket)
