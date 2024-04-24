@@ -8,7 +8,7 @@ import {
   useOpenManageMember,
   useOpenServerSettingsPage,
   useServerSettingsValue,
-} from '@/context/settings/server-settings'
+} from '@/context/settings/server-settings-context'
 
 import ButtonSelection from '../button-selection'
 import LabelSelection from '../label-selection'

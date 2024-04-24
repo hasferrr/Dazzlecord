@@ -20,7 +20,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { useServerForm } from '@/hooks/useServerForm'
+import { useServerForm } from '@/hooks/use-server-form'
 import { getFileURLFromGCS, trimString } from '@/lib/helpers'
 import {
   serverModalSchema,

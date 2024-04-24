@@ -24,7 +24,7 @@ import {
   useInviteOpen,
   useLeaveServerOpen,
 } from '@/context/modal-context'
-import { useOpenManageMember, useOpenServerSettingsPage } from '@/context/settings/server-settings'
+import { useOpenManageMember, useOpenServerSettingsPage } from '@/context/settings/server-settings-context'
 
 const ServerHeader = ({
   server,

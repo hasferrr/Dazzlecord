@@ -15,7 +15,7 @@ import {
   useCloseServerSettingsPage,
   useServerSettingsPageValue,
   useServerSettingsValue,
-} from '@/context/settings/server-settings'
+} from '@/context/settings/server-settings-context'
 import { cn } from '@/lib/utils'
 import type { MemberWithUser } from '@/types'
 

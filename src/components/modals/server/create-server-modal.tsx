@@ -31,7 +31,7 @@ import {
   useCreateServerClose,
   useCreateServerValue,
 } from '@/context/modal-context'
-import { useServerForm } from '@/hooks/useServerForm'
+import { useServerForm } from '@/hooks/use-server-form'
 import {
   serverModalSchema,
 } from '@/schemas/server-modal-schema'
