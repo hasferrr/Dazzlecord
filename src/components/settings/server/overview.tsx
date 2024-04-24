@@ -93,7 +93,6 @@ const Overview = ({ server }: {
                                 ? <ProfilePhoto
                                   src={file
                                     ? URL.createObjectURL(file)
-                                    //@ts-ignore
                                     : getFileURLFromGCS(server.image)}
                                   width={96}
                                   height={96}

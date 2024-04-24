@@ -4,6 +4,7 @@ import { useParams, useRouter } from 'next/navigation'
 
 import { ActionTooltip } from '@/components/action-tooltip'
 import { ProfilePhoto } from '@/components/profile-photo'
+import { getFileURLFromGCS } from '@/lib/helpers'
 import { cn } from '@/lib/utils'
 
 interface NavigationItemProps {
@@ -40,7 +41,7 @@ const NavigationItem = ({ id, name, image }: NavigationItemProps) => {
           )}>
             <ProfilePhoto
               username={name}
-              image={image}
+              src={getFileURLFromGCS(image)}
               width={48}
               height={48}
             />

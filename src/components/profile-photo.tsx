@@ -4,8 +4,7 @@ import { cn } from '@/lib/utils'
 
 interface ProfilePhotoProps {
   username: string
-  image?: string | null
-  src?: string
+  src?: string | null
   width: number
   height: number
   className?: string
@@ -13,7 +12,6 @@ interface ProfilePhotoProps {
 
 export const ProfilePhoto = ({
   username,
-  image,
   src,
   width,
   height,
@@ -21,11 +19,11 @@ export const ProfilePhoto = ({
 }: ProfilePhotoProps) => {
   const initials = username.slice(0, 2).toUpperCase()
 
-  if (src || image) {
+  if (src) {
     return (
       <Image
         className={cn('object-cover rounded-full overflow-hidden', className)}
-        src={src ?? `https://storage.googleapis.com/server-profile/${image}`}
+        src={src}
         alt=""
         height={height}
         width={width}

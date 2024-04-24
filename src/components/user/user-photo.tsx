@@ -1,4 +1,5 @@
 import { ProfilePhoto } from '@/components/profile-photo'
+import { getFileURLFromGCS } from '@/lib/helpers'
 
 interface UserPhotoProps {
   image?: string | null
@@ -13,7 +14,7 @@ const UserPhoto = ({
     <div className="relative w-[92px] h-[92px]">
       <ProfilePhoto
         className="box-content border-[6px] border-solid border-server dark:border-server-dark"
-        image={image}
+        src={getFileURLFromGCS(image)}
         username={username}
         width={80}
         height={80}

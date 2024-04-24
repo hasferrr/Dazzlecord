@@ -3,7 +3,7 @@
 import type { MemberRole } from '@prisma/client'
 
 import { ProfilePhoto } from '@/components/profile-photo'
-import { formatDate } from '@/lib/helpers'
+import { formatDate, getFileURLFromGCS } from '@/lib/helpers'
 import { cn } from '@/lib/utils'
 import type { MessageWithUser } from '@/types'
 
@@ -24,7 +24,7 @@ const ChatItem = ({
       <div className="row-span-2">
         <ProfilePhoto
           username={message.user.username}
-          image={message.user.image}
+          src={getFileURLFromGCS(message.user.image)}
           width={40}
           height={40}
         />

@@ -1,4 +1,5 @@
 import { ProfilePhoto } from '@/components/profile-photo'
+import { getFileURLFromGCS } from '@/lib/helpers'
 import { cn } from '@/lib/utils'
 
 export const MemberItem = ({ name, image, about, className }: {
@@ -18,7 +19,7 @@ export const MemberItem = ({ name, image, about, className }: {
       <div className="row-span-2 my-auto">
         <ProfilePhoto
           username={name}
-          image={image}
+          src={getFileURLFromGCS(image)}
           width={32}
           height={32}
         />
