@@ -1,3 +1,4 @@
+/* eslint-disable implicit-arrow-linebreak, arrow-body-style */
 import { z } from 'zod'
 
 const ACCEPTED_IMAGE_TYPES = [
@@ -16,11 +17,19 @@ const sizeInMB = (sizeInBytes: number, decimalsNum = 2) => {
   return +result.toFixed(decimalsNum)
 }
 
-export const checkLength = (files: FileList) => Array.from(files ?? []).length !== 0
+export const checkLength = (files: FileList) => {
+  return Array.from(files ?? []).length !== 0
+}
 
-export const checkSize = (files: FileList) => Array.from(files ?? []).every((file) => sizeInMB(file.size) <= MAX_IMAGE_SIZE_IN_MB)
+export const checkSize = (files: FileList) => {
+  return Array.from(files ?? []).every((file) =>
+    sizeInMB(file.size) <= MAX_IMAGE_SIZE_IN_MB)
+}
 
-export const checkTypes = (files: FileList) => Array.from(files ?? []).every((file) => ACCEPTED_IMAGE_TYPES.includes(file.type))
+export const checkTypes = (files: FileList) => {
+  return Array.from(files ?? []).every((file) =>
+    ACCEPTED_IMAGE_TYPES.includes(file.type))
+}
 
 export const failedLength = 'Image is required'
 export const failedSize = `The maximum image size is ${MAX_IMAGE_SIZE_IN_MB}MB`
