@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 const SVGUploadIcon = ({ width = 80, height = 80 }: {
   width?: number
   height?: number

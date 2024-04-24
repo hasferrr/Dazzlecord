@@ -62,7 +62,11 @@ const Members = ({
   const handleKick = async () => {
     if (memberToBeKicked) {
       const kickedUser = await kickMember(memberToBeKicked, currentMember.id)
-      kickedUser ? console.log('kicked') : console.log('failed to kick member')
+      if (kickedUser) {
+        console.log('kicked')
+      } else {
+        console.log('failed to kick member')
+      }
     }
     setMemberToBeKicked(null)
     router.refresh()
@@ -71,7 +75,7 @@ const Members = ({
   const handleChangeRole = async (member: Member, newRole: MemberRole) => {
     if (newRole === member.role) {
       console.log('failed to update: want to update the same role?')
-      return null
+      return
     }
     const updatedRole = await changeRole(member, newRole, currentMember.id)
     if (!updatedRole) {
@@ -113,29 +117,29 @@ const Members = ({
                 <DropdownMenuLabel>Change Role</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {currentRole === OWNER
-                && (
-                <DropdownMenuItem onClick={() => handleChangeRole(member, OWNER)}>
-                  {OWNER}
-                </DropdownMenuItem>
-                )}
+                  && (
+                    <DropdownMenuItem onClick={() => handleChangeRole(member, OWNER)}>
+                      {OWNER}
+                    </DropdownMenuItem>
+                  )}
                 {currentRole !== GUEST
-                && (
-                <DropdownMenuItem onClick={() => handleChangeRole(member, ADMIN)}>
-                  {ADMIN}
-                </DropdownMenuItem>
-                )}
+                  && (
+                    <DropdownMenuItem onClick={() => handleChangeRole(member, ADMIN)}>
+                      {ADMIN}
+                    </DropdownMenuItem>
+                  )}
                 {currentRole !== GUEST
-                && (
-                <DropdownMenuItem onClick={() => handleChangeRole(member, MODERATOR)}>
-                  {MODERATOR}
-                </DropdownMenuItem>
-                )}
+                  && (
+                    <DropdownMenuItem onClick={() => handleChangeRole(member, MODERATOR)}>
+                      {MODERATOR}
+                    </DropdownMenuItem>
+                  )}
                 {currentRole !== GUEST
-                && (
-                <DropdownMenuItem onClick={() => handleChangeRole(member, GUEST)}>
-                  {GUEST}
-                </DropdownMenuItem>
-                )}
+                  && (
+                    <DropdownMenuItem onClick={() => handleChangeRole(member, GUEST)}>
+                      {GUEST}
+                    </DropdownMenuItem>
+                  )}
               </DropdownMenuContent>
             </DropdownMenu>
           )}
@@ -154,16 +158,16 @@ const Members = ({
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 {(currentRole === OWNER
-                || currentRole === ADMIN && member.role !== OWNER
-                || currentRole === MODERATOR && member.role === GUEST)
-                && (
-                <DropdownMenuItem
-                  className="text-red-500"
-                  onClick={() => setMemberToBeKicked(member)}
-                >
-                  Kick
-                </DropdownMenuItem>
-                )}
+                  || (currentRole === ADMIN && member.role !== OWNER)
+                  || (currentRole === MODERATOR && member.role === GUEST))
+                  && (
+                    <DropdownMenuItem
+                      className="text-red-500"
+                      onClick={() => setMemberToBeKicked(member)}
+                    >
+                      Kick
+                    </DropdownMenuItem>
+                  )}
               </DropdownMenuContent>
             </DropdownMenu>
           )}
@@ -171,7 +175,7 @@ const Members = ({
     </TableRow>
   )
 
-  members.map((member) => {
+  members.forEach((member) => {
     if (member.role === OWNER) {
       owners.push(makeTableRow(member))
     } else if (member.role === ADMIN) {

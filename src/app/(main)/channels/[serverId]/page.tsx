@@ -21,7 +21,8 @@ const ServerIdPage = async ({ params }: {
   }
 
   if (server?.channels.length) {
-    const initialChannel = server.channels.find((ch) => ch.type === ChannelType.TEXT) ?? server.channels[0]
+    const initialChannel = server.channels.find((ch) => ch.type === ChannelType.TEXT)
+      ?? server.channels[0]
     return redirect(`/channels/${params.serverId}/${initialChannel.id}`)
   }
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import NextAuth, { type DefaultSession } from 'next-auth'
 import { JWT } from 'next-auth/jwt'
 
@@ -5,7 +6,6 @@ import { JWT } from 'next-auth/jwt'
  * TypeScript NextAuth.js
  * https://next-auth.js.org/getting-started/typescript
  */
-
 declare module 'next-auth' {
   interface Session {
     user: DefaultSession['user'] & {

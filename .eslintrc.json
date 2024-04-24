@@ -3,6 +3,9 @@
     "airbnb",
     "airbnb-typescript",
     "next/core-web-vitals",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
+    "plugin:react-hooks/recommended",
     "plugin:import/typescript"
   ],
   "parserOptions": {
@@ -57,7 +60,7 @@
         }
       }
     ],
-    "semi": "off",
+    // Overrides
     "@typescript-eslint/semi": [
       "error",
       "never"
@@ -67,6 +70,21 @@
       {
         "namedComponents": "arrow-function"
       }
-    ]
+    ],
+    "jsx-a11y/label-has-associated-control": [
+      "error",
+      {
+        "assert": "either"
+      }
+    ],
+    // Airbnb off
+    "no-console": "off",
+    "@typescript-eslint/no-shadow": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/require-default-props": "off",
+    "react/button-has-type": "off",
+    "no-param-reassign": "off",
+    "import/prefer-default-export": "off",
+    "jsx-a11y/control-has-associated-label": "off"
   }
 }

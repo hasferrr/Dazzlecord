@@ -26,19 +26,24 @@ export const ServerSettingsContextProvider = ({ children }: { children?: React.R
 }
 
 export const useServerSettingsValue = () => useContext(ServerSettingsContext)[0]
-export const useServerSettingsPageValue = () => useContext(ServerSettingsContext)[0].serverSettingsPage
+
+export const useServerSettingsPageValue = () => {
+  const [state] = useContext(ServerSettingsContext)
+  return state.serverSettingsPage
+}
+
 export const useCloseServerSettingsPage = () => {
-  const [_, setState] = useContext(ServerSettingsContext)
+  const [, setState] = useContext(ServerSettingsContext)
   return () => setState(initialValue)
 }
 
 export const useOpenServerSettingsPage = () => {
-  const [_, setState] = useContext(ServerSettingsContext)
+  const [, setState] = useContext(ServerSettingsContext)
   return () => setState({ ...initialValue, serverSettingsPage: true, overview: true })
 }
 
 export const useOpenManageMember = () => {
-  const [_, setState] = useContext(ServerSettingsContext)
+  const [, setState] = useContext(ServerSettingsContext)
   return () => setState({ ...initialValue, serverSettingsPage: true, members: true })
 }
 

@@ -51,15 +51,15 @@ const ChatMessages = ({ channelId, channelName, currentMember }: {
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
   })
 
-  type infiniteData = typeof data
+  type InfiniteData = typeof data
 
   useEffect(() => {
     if (!socket) {
-      return
+      return undefined
     }
     const handleIncomingMessage = (message: MessageWithUser) => {
       console.log('message added', message)
-      queryClient.setQueryData([`message:channel:${channelId}`], (data: infiniteData) => (!data
+      queryClient.setQueryData([`message:channel:${channelId}`], (data: InfiniteData) => (!data
         ? undefined
         : ({
           pages: [
@@ -104,25 +104,23 @@ const ChatMessages = ({ channelId, channelName, currentMember }: {
       {!hasNextPage && <ChatWelcome name={channelName} />}
       {!isFetchingNextPage
         && (
-        <button
-          ref={ref}
-          onClick={() => fetchNextPage()}
-          disabled={!hasNextPage}
-        >
-          {hasNextPage
-            ? 'Load More'
-            : 'Nothing more to load'}
-        </button>
+          <button
+            ref={ref}
+            onClick={() => fetchNextPage()}
+            disabled={!hasNextPage}
+          >
+            {hasNextPage
+              ? 'Load More'
+              : 'Nothing more to load'}
+          </button>
         )}
       <div className="flex flex-col-reverse">
         {data.pages.map((page) => (
           <Fragment key={page.nextCursor}>
-            {page.data.map((message, i) => (
+            {page.data.map((message) => (
               <ChatItem
-                key={i}
+                key={message.id}
                 message={message}
-                currentUserId={currentMember.userId}
-                currentUserRole={currentMember.role}
               />
             ))}
           </Fragment>

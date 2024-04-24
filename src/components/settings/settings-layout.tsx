@@ -72,9 +72,9 @@ const SettingsLayout = ({
                   <ScrollArea className="pl-4">
                     <div className="py-[60px] w-[13rem] flex flex-col gap-y-1">
                       <LabelSelection
-                title={label}
-                className="pl-2"
-              />
+                        title={label}
+                        className="pl-2"
+                      />
                       {selectionComponents}
                     </div>
                   </ScrollArea>

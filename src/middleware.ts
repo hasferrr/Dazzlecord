@@ -25,14 +25,15 @@ export default auth((req) => {
   if (authRoutes.includes(pathname)) {
     // User has logged in
     if (isLoggedIn) {
-      return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, req.url))
+      Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, req.url))
+      return
     }
     return
   }
 
   // User not logged in, but visits to the protected route
   if (!isLoggedIn && !publicRoutes.includes(pathname)) {
-    return Response.redirect(new URL('/login', req.url))
+    Response.redirect(new URL('/login', req.url))
   }
 })
 

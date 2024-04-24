@@ -1,3 +1,4 @@
+/* eslint-disable vars-on-top, no-var */
 import { PrismaClient } from '@prisma/client'
 
 import { NODE_ENV } from '@/utils/config'

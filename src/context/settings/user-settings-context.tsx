@@ -30,12 +30,12 @@ export const useUserSettingsValue = () => useContext(UserSettingsContext)[0]
 export const useUserSettingsPageValue = () => useContext(UserSettingsContext)[0].settingsPage
 
 export const useCloseUserSettingsPage = () => {
-  const [_, setState] = useContext(UserSettingsContext)
+  const [, setState] = useContext(UserSettingsContext)
   return () => setState(initialValue)
 }
 
 export const useOpenUserSettingsPage = () => {
-  const [_, setState] = useContext(UserSettingsContext)
+  const [, setState] = useContext(UserSettingsContext)
   return () => setState({ ...initialValue, settingsPage: true, profiles: true })
 }
 

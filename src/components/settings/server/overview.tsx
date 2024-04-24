@@ -92,8 +92,8 @@ const Overview = ({ server }: {
                               ? (
                                 <ProfilePhoto
                                   src={file
-                                      ? URL.createObjectURL(file)
-                                      : getFileURLFromGCS(server.image)}
+                                    ? URL.createObjectURL(file)
+                                    : getFileURLFromGCS(server.image)}
                                   width={96}
                                   height={96}
                                   username={form.getValues('name') ?? ''}

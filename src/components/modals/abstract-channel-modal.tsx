@@ -81,11 +81,15 @@ const AbstractChannelModal = ({
       }
       console.log(res.success, res.data)
       onModalClose()
+
       // If editing a channel, then reset to new values
       // Otherwise (creating a channel), then reset to blank
-      currentChannel
-        ? formReset(values.name, values.type)
-        : formReset()
+      if (currentChannel) {
+        formReset(values.name, values.type)
+      } else {
+        formReset()
+      }
+
       router.refresh()
     })
   }

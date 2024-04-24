@@ -25,7 +25,10 @@ export const getServerIncludesAllChannel = async (serverId: string) => db.server
   },
 })
 
-export const getServerWithAnyChannel = async (serverId: string, userId: string) => db.server.findUnique({
+export const getServerWithAnyChannel = async (
+  serverId: string,
+  userId: string,
+) => db.server.findUnique({
   where: {
     id: serverId,
     members: {
