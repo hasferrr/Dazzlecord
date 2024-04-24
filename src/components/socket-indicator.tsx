@@ -28,7 +28,6 @@ const SocketIndicator = () => {
     <Badge
       variant="outline"
       className="bg-emerald-600 text-white border-none"
-      onClick={() => socket?.emit('message', 'HELLO SOCKET')}
     >
       Connected
     </Badge>

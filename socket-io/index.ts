@@ -6,7 +6,6 @@ import { Server } from 'socket.io'
 
 import messageRouter from './controllers/messageRouter'
 import { connectHandler } from './handlers/connect-handler'
-import { messageHandler } from './handlers/message-handler'
 import { roomHandler } from './handlers/room-handler'
 
 const app = express()
@@ -29,7 +28,6 @@ app.use('/message', messageRouter)
 
 io.on('connection', (socket) => {
   connectHandler(io, socket)
-  messageHandler(io, socket)
   roomHandler(io, socket)
 })
 
