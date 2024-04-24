@@ -20,7 +20,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { useSetPreviewProfiles } from '@/context/settings/user/preview-profiles-context'
+import { useSetAllStatePreviewProfiles, useSetPreviewProfiles } from '@/context/settings/user/preview-profiles-context'
 import { trimString } from '@/lib/helpers'
 import { cn } from '@/lib/utils'
 import { editProfileSchema } from '@/schemas/edit-profile-schema'
@@ -34,6 +34,7 @@ const ProfilesForm = ({
   user,
 }: ProfilesFormProps) => {
   const setPreviewProfiles = useSetPreviewProfiles()
+  const setAllStatePreviewProfiles = useSetAllStatePreviewProfiles()
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
 
@@ -84,10 +85,7 @@ const ProfilesForm = ({
                   placeholder="What is your name?"
                   {...field}
                   onChange={(e) => {
-                    setPreviewProfiles({
-                      name: e.target.value,
-                      about: form.getValues('about') ?? '',
-                    })
+                    setPreviewProfiles('name', e.target.value)
                     field.onChange(e)
                   }}
                 />
@@ -114,7 +112,9 @@ const ProfilesForm = ({
                           const validatedFields = z
                             .object({ files: filesValidator })
                             .safeParse({ files: e.target.files })
-                          console.log(validatedFields)
+                          if (validatedFields.success) {
+                            setPreviewProfiles('image', URL.createObjectURL(e.target.files[0]))
+                          }
                         },
                       })}
                       disabled={isPending}
@@ -158,10 +158,7 @@ const ProfilesForm = ({
                   placeholder="Type your bio here."
                   {...field}
                   onChange={(e) => {
-                    setPreviewProfiles({
-                      name: form.getValues('name'),
-                      about: e.target.value,
-                    })
+                    setPreviewProfiles('about', e.target.value)
                     field.onChange(e)
                   }}
                 />
@@ -170,15 +167,17 @@ const ProfilesForm = ({
             </FormItem>
           )}
         />
+
         <div className="flex justify-end">
           <Button
             disabled={isPending}
             variant="underline"
             type="button"
             onClick={() => {
-              setPreviewProfiles({
+              setAllStatePreviewProfiles({
                 name: user.name,
-                about: user.about ?? '',
+                about: user.about,
+                image: user.image,
               })
               form.reset()
               form.setValue('name', user.name)

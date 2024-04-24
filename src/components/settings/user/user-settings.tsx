@@ -39,7 +39,11 @@ const UserSettings = ({
         />
       }
     >
-      <PreviewProfilesContextProvider name={user.name} about={user.about ?? ''}>
+      <PreviewProfilesContextProvider
+        name={user.name}
+        about={user.about}
+        image={user.image}
+      >
         <Profiles user={user} />
       </PreviewProfilesContextProvider>
     </SettingsLayout>
