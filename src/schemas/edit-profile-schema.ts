@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { filesValidatorAllowNoFile } from './validator/filesValidator'
+import { filesValidatorAllowNoFile } from './validator/files-validator'
 
 const objectSchema = {
   name: z.string()

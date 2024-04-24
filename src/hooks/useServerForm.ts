@@ -18,7 +18,7 @@ import {
   failedLength,
   failedSize,
   failedTypes,
-} from '@/schemas/validator/filesValidator'
+} from '@/schemas/validator/files-validator'
 import { uploadPhoto } from '@/services/upload-photo'
 
 export const useServerForm = (
