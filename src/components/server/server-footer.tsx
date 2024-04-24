@@ -20,7 +20,8 @@ const ServerFooter = async () => {
 
   return (
     <div className="grid grid-cols-[1fr_auto] gap-2 h-[53px] w-full py-2 px-3 items-center
-      bg-server-footer dark:bg-server-footer-dark">
+      bg-server-footer dark:bg-server-footer-dark"
+    >
       <UserPopover user={user} side="top" className="ml-12">
         <MemberItem
           name={user.name}

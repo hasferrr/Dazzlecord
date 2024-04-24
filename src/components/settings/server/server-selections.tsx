@@ -35,24 +35,27 @@ const ServerSelections = ({
             title={serverName}
             className="pl-2"
           />
-          {currentMember.role !== MemberRole.MODERATOR &&
+          {currentMember.role !== MemberRole.MODERATOR
+            && (
             <ButtonSelection
               title="Overview"
               onClick={() => openServerSettings()}
               activeCondition={serverSettingsValue.overview}
             />
-          }
+            )}
           <ButtonSelection
             title="Members"
             onClick={() => openManageMember()}
             activeCondition={serverSettingsValue.members}
           />
-          {currentMember.role === MemberRole.OWNER &&
+          {currentMember.role === MemberRole.OWNER
+            && (
             <ButtonSelection
               title="Delete Server"
               onClick={deleteServerOpen}
               activeCondition={false}
-            />}
+            />
+            )}
         </div>
       </ScrollArea>
     </div>

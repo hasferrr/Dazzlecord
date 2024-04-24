@@ -22,7 +22,7 @@ export const deleteServer = async (
         id: server.id,
         members: {
           every: {
-            userId: userId,
+            userId,
             role: MemberRole.OWNER,
           },
         },

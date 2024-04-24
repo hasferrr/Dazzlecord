@@ -52,7 +52,8 @@ const ChatHeader = async ({
   return (
     <div className="flex items-center gap-2
     text-md font-semibold px-3 h-12 w-full
-    border-neutral-200 dark:border-neutral-800 border-b-[1.5px]">
+    border-neutral-200 dark:border-neutral-800 border-b-[1.5px]"
+    >
       <MobileScreen>
         <MobileToggleV2>
           <NavigationSidebar />
@@ -66,14 +67,16 @@ const ChatHeader = async ({
         {name}
       </p>
       <div className="grow" />
-      {serverId && <>
+      {serverId && (
+      <>
         <SocketIndicator />
         <MobileScreen width={992}>
           <MobileToggleV2 side="right" buttonVariant="users">
             <MemberSidebar serverId={serverId} />
           </MobileToggleV2>
         </MobileScreen>
-      </>}
+      </>
+      )}
     </div>
   )
 }

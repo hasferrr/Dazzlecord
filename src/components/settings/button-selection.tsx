@@ -45,7 +45,8 @@ const ButtonSelection = ({
         'text-left',
         activeCondition && 'text-on-channel',
         classNameForTitle,
-      )}>
+      )}
+      >
         {title}
       </p>
       {children}

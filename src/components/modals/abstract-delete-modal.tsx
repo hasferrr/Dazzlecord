@@ -75,7 +75,7 @@ const AbstractDeleteModal = ({
         </DialogFooter>
 
       </DialogContent>
-    </Dialog >
+    </Dialog>
   )
 }
 

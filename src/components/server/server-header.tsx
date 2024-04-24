@@ -40,7 +40,7 @@ const ServerHeader = ({
   const openServerSettingsPage = useOpenServerSettingsPage()
   const openManageMember = useOpenManageMember()
 
-  const role = currentMember.role
+  const { role } = currentMember
   const isOwner = role === MemberRole.OWNER
   const isModerator = role === MemberRole.MODERATOR
   const isGuest = role === MemberRole.GUEST
@@ -60,7 +60,8 @@ const ServerHeader = ({
           text-md font-semibold border-b-[1.5px] transition
           bg-[--var(--light-server)] dark:bg-[--var(--dark-server)]
           hover:[--var(--light-server-hover)] dark:hover:bg-[--var(--dark-server-hover)]
-          ">
+          "
+          >
             <p className="line-clamp-1">{server.name}</p>
             <ChevronDown className="h-5 w-5 ml-auto" />
           </button>
@@ -88,12 +89,10 @@ const ServerHeader = ({
             </DropdownMenuItem>
           )}
           {!isModerator && !isGuest && (
-            <>
-              <DropdownMenuItem className={style} onClick={openCreateChannel}>
-                Create Channel
-                <PlusCircle className={iconStyle} />
-              </DropdownMenuItem>
-            </>
+            <DropdownMenuItem className={style} onClick={openCreateChannel}>
+              Create Channel
+              <PlusCircle className={iconStyle} />
+            </DropdownMenuItem>
           )}
           {!isGuest && <DropdownMenuSeparator />}
           {isOwner && (

@@ -50,7 +50,8 @@ const ServerSidebar = async ({ server }: {
     <div className="flex flex-col gap-2
     h-full w-60 text-primary
     bg-[var(--light-server)]
-    dark:bg-[var(--dark-server)]">
+    dark:bg-[var(--dark-server)]"
+    >
       <ServerHeader
         server={server}
         currentMember={currentMember}

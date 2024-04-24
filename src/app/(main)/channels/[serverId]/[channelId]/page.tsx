@@ -49,7 +49,8 @@ const ChannelIdPage = async ({
   return (
     <div className="bg-white dark:bg-[var(--dark-page)] h-full w-full
     max-h-screen min-h-screen
-    grid grid-cols-[1fr_auto] grid-rows-[3rem_1fr_auto]">
+    grid grid-cols-[1fr_auto] grid-rows-[3rem_1fr_auto]"
+    >
       <div className="col-span-2 h-12">
         <ChatHeader
           name={channel.name}

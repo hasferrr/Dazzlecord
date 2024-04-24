@@ -70,7 +70,7 @@ export const useServerForm = (
     needToCheckLength: boolean = true,
   ) => {
     const inputElement = event.target
-    const files = inputElement.files
+    const { files } = inputElement
     if (!files) {
       setFile(null)
       setFileErrorMsg(undefined)

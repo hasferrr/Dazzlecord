@@ -5,7 +5,9 @@ import {
   ChannelType,
   MemberRole,
 } from '@prisma/client'
-import { Edit, Hash, Mic, Trash, Video } from 'lucide-react'
+import {
+  Edit, Hash, Mic, Trash, Video,
+} from 'lucide-react'
 import { useParams, useRouter } from 'next/navigation'
 
 import ActionTooltip from '@/components/action-tooltip'
@@ -50,7 +52,7 @@ const ServerChannel = ({
           'group rounded-md transition',
           'hover:bg-zinc-700/10',
           'dark:hover:bg-zinc-700/50',
-          params?.['channelId'] === channel.id && 'bg-zinc-700/20 dark:bg-zinc-700'
+          params?.['channelId'] === channel.id && 'bg-zinc-700/20 dark:bg-zinc-700',
         )}
       >
         <Icon className="w-5 h-5 text-channel-btn-no-hover" />
@@ -59,8 +61,9 @@ const ServerChannel = ({
           'text-channel-btn-group',
           'text-left',
           'w-[156px] group-hover:w-[116px]',
-          params?.['channelId'] === channel.id && 'text-on-channel'
-        )}>
+          params?.['channelId'] === channel.id && 'text-on-channel',
+        )}
+        >
           {channel.name}
         </p>
         {role !== MemberRole.GUEST && role !== MemberRole.MODERATOR && (

@@ -21,21 +21,19 @@ const ActionTooltip = ({
   side,
   align,
   delay,
-}: ActionTooltipProps) => {
-  return (
-    <TooltipProvider>
-      <Tooltip delayDuration={delay ?? 25}>
-        <TooltipTrigger asChild>
-          {children}
-        </TooltipTrigger>
-        <TooltipContent side={side} align={align}>
-          <p className="font-semibold text-sm">
-            {label}
-          </p>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
-  )
-}
+}: ActionTooltipProps) => (
+  <TooltipProvider>
+    <Tooltip delayDuration={delay ?? 25}>
+      <TooltipTrigger asChild>
+        {children}
+      </TooltipTrigger>
+      <TooltipContent side={side} align={align}>
+        <p className="font-semibold text-sm">
+          {label}
+        </p>
+      </TooltipContent>
+    </Tooltip>
+  </TooltipProvider>
+)
 
 export default ActionTooltip

@@ -14,7 +14,7 @@ export const joinServer = async (inviteCode: string) => {
 
   const existingServer = await db.server.findFirst({
     where: {
-      inviteCode: inviteCode,
+      inviteCode,
       members: {
         some: {
           userId,

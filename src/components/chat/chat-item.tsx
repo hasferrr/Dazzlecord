@@ -20,7 +20,8 @@ const ChatItem = ({
 
   return (
     <div className="relative group hover:bg-black/5 p-4 transition w-full
-    grid grid-cols-[40px_1fr] grid-flow-row gap-x-4">
+    grid grid-cols-[40px_1fr] grid-flow-row gap-x-4"
+    >
       <div className="row-span-2">
         <ProfilePhoto
           username={message.user.username}

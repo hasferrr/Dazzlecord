@@ -11,20 +11,18 @@ const ChatWrapper = ({
   channelName: string
   channelId: string
   currentMember: Member
-}) => {
-  return (
-    <div className="flex flex-col-reverse overflow-y-auto">
-      <div className="flex-1 flex flex-col justify-end">
-        <ProvidesTheQueryClient>
-          <ChatMessages
-            channelId={channelId}
-            channelName={channelName}
-            currentMember={currentMember}
-          />
-        </ProvidesTheQueryClient>
-      </div>
+}) => (
+  <div className="flex flex-col-reverse overflow-y-auto">
+    <div className="flex-1 flex flex-col justify-end">
+      <ProvidesTheQueryClient>
+        <ChatMessages
+          channelId={channelId}
+          channelName={channelName}
+          currentMember={currentMember}
+        />
+      </ProvidesTheQueryClient>
     </div>
-  )
-}
+  </div>
+)
 
 export default ChatWrapper

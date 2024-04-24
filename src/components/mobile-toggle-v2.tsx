@@ -17,22 +17,19 @@ const MobileToggleV2 = ({
   children,
   side = 'left',
   buttonVariant = 'menu',
-}: MobileToggleProps) => {
-  return (
-    <Sheet>
-      <SheetTrigger asChild>
-        <Button variant="ghost" size="icon">
-          {buttonVariant === 'menu'
-            ? <Menu />
-            : <Users />
-          }
-        </Button>
-      </SheetTrigger>
-      <SheetContent side={side} xbutton={false} className="flex p-0 gap-0 w-fit" >
-        {children}
-      </SheetContent>
-    </Sheet>
-  )
-}
+}: MobileToggleProps) => (
+  <Sheet>
+    <SheetTrigger asChild>
+      <Button variant="ghost" size="icon">
+        {buttonVariant === 'menu'
+          ? <Menu />
+          : <Users />}
+      </Button>
+    </SheetTrigger>
+    <SheetContent side={side} xbutton={false} className="flex p-0 gap-0 w-fit">
+      {children}
+    </SheetContent>
+  </Sheet>
+)
 
 export default MobileToggleV2

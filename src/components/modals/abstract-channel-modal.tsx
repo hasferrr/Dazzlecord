@@ -190,7 +190,7 @@ const AbstractChannelModal = ({
         </Form>
 
       </DialogContent>
-    </Dialog >
+    </Dialog>
   )
 }
 

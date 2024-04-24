@@ -59,20 +59,18 @@ const ChatMessages = ({ channelId, channelName, currentMember }: {
     }
     const handleIncomingMessage = (message: MessageWithUser) => {
       console.log('message added', message)
-      queryClient.setQueryData([`message:channel:${channelId}`], (data: infiniteData) =>
-        !data
-          ? undefined
-          : ({
-            pages: [
-              {
-                data: [message, ...data.pages[0].data],
-                nextCursor: data.pages[0].nextCursor,
-              },
-              ...data.pages.slice(1),
-            ],
-            pageParams: data.pageParams,
-          })
-      )
+      queryClient.setQueryData([`message:channel:${channelId}`], (data: infiniteData) => (!data
+        ? undefined
+        : ({
+          pages: [
+            {
+              data: [message, ...data.pages[0].data],
+              nextCursor: data.pages[0].nextCursor,
+            },
+            ...data.pages.slice(1),
+          ],
+          pageParams: data.pageParams,
+        })))
     }
 
     socket.on('message:channel', handleIncomingMessage)
@@ -93,13 +91,19 @@ const ChatMessages = ({ channelId, channelName, currentMember }: {
   }
 
   if (status === 'error') {
-    return <div>Error: {error.message}</div>
+    return (
+      <div>
+        Error:
+        {error.message}
+      </div>
+    )
   }
 
   return (
     <div className="overflow-hidden">
       {!hasNextPage && <ChatWelcome name={channelName} />}
-      {!isFetchingNextPage &&
+      {!isFetchingNextPage
+        && (
         <button
           ref={ref}
           onClick={() => fetchNextPage()}
@@ -108,7 +112,8 @@ const ChatMessages = ({ channelId, channelName, currentMember }: {
           {hasNextPage
             ? 'Load More'
             : 'Nothing more to load'}
-        </button>}
+        </button>
+        )}
       <div className="flex flex-col-reverse">
         {data.pages.map((page) => (
           <Fragment key={page.nextCursor}>

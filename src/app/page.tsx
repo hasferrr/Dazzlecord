@@ -9,6 +9,7 @@ const Home = async () => {
 
   const openDiscord = async () => {
     'use server'
+
     redirect(session ? '/app' : '/login')
   }
 
@@ -66,7 +67,8 @@ const Home = async () => {
         </form>
       </div>
       <div className="flex flex-col gap-10 md:items-center sm:mx-5 md:mx-20 justify-center
-      text-white h-[calc(100%-120px)] transition-all">
+      text-white h-[calc(100%-120px)] transition-all"
+      >
         <p className="z-20 md:text-5xl text-4xl font-extrabold md:text-center text-left">
           IMAGINE A PLACE...
         </p>

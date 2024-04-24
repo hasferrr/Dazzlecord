@@ -70,7 +70,6 @@ export const updateServer = async (
       await deleteImage(existingServer.image)
     }
     return updatedServer
-
   } catch (error) {
     console.log('error update a server')
     console.log(error)

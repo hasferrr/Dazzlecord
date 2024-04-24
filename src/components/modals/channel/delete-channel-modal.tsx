@@ -18,9 +18,16 @@ const DeleteChannelModal = ({ channel }: {
   return (
     <AbstractDeleteModal
       title="Delete Channel"
-      deleteDescription={
-        <>Are you sure you want to delete <strong>#{channel.name}</strong>? This action cannot be undone.</>
-      }
+      deleteDescription={(
+        <>
+          Are you sure you want to delete
+          <strong>
+            #
+            {channel.name}
+          </strong>
+          ? This action cannot be undone.
+        </>
+      )}
       isDeleteModalOpen={isDeleteModalOpen[channel.id]}
       onDeleteModalClose={onDeleteModalClose}
       onSubmitAction={() => deleteChannel(channel)}

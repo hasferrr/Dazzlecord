@@ -1,6 +1,8 @@
 'use client'
 
-import { createContext, type Dispatch, useContext, useReducer } from 'react'
+import {
+  createContext, type Dispatch, useContext, useReducer,
+} from 'react'
 
 const initialValue = {
   invite: false,
@@ -16,10 +18,10 @@ type ModalReducer = [Modal, Dispatch<ModalDispatch>]
 
 const modalReducer = (state: Modal, action: ModalDispatch): Modal => {
   switch (action.type) {
-  case 'SET':
-    return action.payload
-  default:
-    return state
+    case 'SET':
+      return action.payload
+    default:
+      return state
   }
 }
 

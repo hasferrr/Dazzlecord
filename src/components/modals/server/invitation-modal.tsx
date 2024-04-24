@@ -41,7 +41,8 @@ const InvitationModal = ({ origin, inviteCode }: {
   return (
     <Dialog open={inviteValue} onOpenChange={handleOpenDialog}>
       <DialogContent className="py-6 px-0 m-0 dark:bg-[var(--dark-page)] text-black dark:text-white w-[29rem]
-      focus-visible:ring-0 focus-visible:ring-offset-0">
+      focus-visible:ring-0 focus-visible:ring-offset-0"
+      >
 
         <DialogHeader className="px-6">
           <DialogTitle className="text-center text-xl font-bold">
@@ -61,17 +62,17 @@ const InvitationModal = ({ origin, inviteCode }: {
             />
             <Button
               onClick={onCopy}
-              size="icon">
+              size="icon"
+            >
               {copied
                 ? <Check className="w-4 h-4" />
-                : <Copy className="w-4 h-4" />
-              }
+                : <Copy className="w-4 h-4" />}
             </Button>
           </div>
         </div>
 
       </DialogContent>
-    </Dialog >
+    </Dialog>
   )
 }
 

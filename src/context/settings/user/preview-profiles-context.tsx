@@ -1,6 +1,8 @@
 'use client'
 
-import { createContext, type Dispatch, type SetStateAction, useContext, useState } from 'react'
+import {
+  createContext, type Dispatch, type SetStateAction, useContext, useState,
+} from 'react'
 
 interface State {
   name: string
@@ -13,7 +15,9 @@ const dummy = { name: '', about: null, image: null }
 
 const PreviewProfilesContext = createContext<[State, SetState]>([dummy, () => dummy])
 
-export const PreviewProfilesContextProvider = ({ name, about, image, children }: {
+export const PreviewProfilesContextProvider = ({
+  name, about, image, children,
+}: {
   name: State['name']
   about: State['about']
   image: State['image']

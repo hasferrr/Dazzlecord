@@ -92,43 +92,44 @@ const CreateServerModal = () => {
               <FormField
                 control={form.control}
                 name="files"
-                render={() => {
-                  return (
-                    <FormItem className="flex flex-col justify-center items-center">
-                      <FormControl>
-                        <div className="relative h-20 w-20">
-                          <label htmlFor="fileInput" className="cursor-pointer">
-                            <Input
-                              disabled={isPending}
-                              id="fileInput"
-                              type="file"
-                              {...filesRef}
-                              className="cursor-pointer opacity-0 absolute w-0 h-0 top-[10000px]"
-                              onChange={handleImageChange}
-                            />
-                            {file
-                              ? <ProfilePhoto
+                render={() => (
+                  <FormItem className="flex flex-col justify-center items-center">
+                    <FormControl>
+                      <div className="relative h-20 w-20">
+                        <label htmlFor="fileInput" className="cursor-pointer">
+                          <Input
+                            disabled={isPending}
+                            id="fileInput"
+                            type="file"
+                            {...filesRef}
+                            className="cursor-pointer opacity-0 absolute w-0 h-0 top-[10000px]"
+                            onChange={handleImageChange}
+                          />
+                          {file
+                            ? (
+                              <ProfilePhoto
                                 src={URL.createObjectURL(file)}
                                 width={80}
                                 height={80}
                                 username={form.getValues('name') ?? ''}
                               />
-                              : <SVGUploadIcon />
-                            }
-                          </label>
-                          {file
-                            ? <button onClick={handleResetImage} type="button" disabled={isPending}>
+                            )
+                            : <SVGUploadIcon />}
+                        </label>
+                        {file
+                          ? (
+                            <button onClick={handleResetImage} type="button" disabled={isPending}>
                               <X className="absolute z-50 top-0 right-0 rounded-full
-                              bg-rose-500 text-white p-1" />
+                              bg-rose-500 text-white p-1"
+                              />
                             </button>
-                            : <></>
-                          }
-                        </div>
-                      </FormControl>
-                      <FormMessage>{fileErrorMsg}</FormMessage>
-                    </FormItem>
-                  )
-                }}
+                          )
+                          : <></>}
+                      </div>
+                    </FormControl>
+                    <FormMessage>{fileErrorMsg}</FormMessage>
+                  </FormItem>
+                )}
               />
             </div>
 
@@ -155,7 +156,8 @@ const CreateServerModal = () => {
                         <a href="//discord.com/guidelines" rel="noreferrer noopener" target="_blank">
                           Community Guidelines
                         </a>
-                      </strong>.
+                      </strong>
+                      .
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -172,7 +174,7 @@ const CreateServerModal = () => {
         </Form>
 
       </DialogContent>
-    </Dialog >
+    </Dialog>
   )
 }
 

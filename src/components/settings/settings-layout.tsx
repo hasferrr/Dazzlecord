@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+
 'use client'
 
 import { useEffect, useState } from 'react'
@@ -55,13 +56,15 @@ const SettingsLayout = ({
 
   return (
     <>
-      {isSettingsPageOpen &&
+      {isSettingsPageOpen
+        && (
         <div className={cn(
           opacity,
           'bg-page dark:bg-page-dark',
           'flex fixed top-0 left-0 right-0 bottom-0 z-40',
           'transition-all animate-overlayShow',
-        )}>
+        )}
+        >
           <MobileScreen>
             <div className="pl-3 pt-[55px]">
               <MobileToggleV2 side="left">
@@ -69,9 +72,9 @@ const SettingsLayout = ({
                   <ScrollArea className="pl-4">
                     <div className="py-[60px] w-[13rem] flex flex-col gap-y-1">
                       <LabelSelection
-                        title={label}
-                        className="pl-2"
-                      />
+                title={label}
+                className="pl-2"
+              />
                       {selectionComponents}
                     </div>
                   </ScrollArea>
@@ -102,7 +105,7 @@ const SettingsLayout = ({
             </button>
           </div>
         </div>
-      }
+        )}
     </>
   )
 }

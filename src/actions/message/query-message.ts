@@ -8,7 +8,7 @@ import { db } from '@/lib/db'
  */
 export const queryMessages = async (
   pageParam: string | null,
-  channelId: string
+  channelId: string,
 ) => {
   const take = 10
   let messages

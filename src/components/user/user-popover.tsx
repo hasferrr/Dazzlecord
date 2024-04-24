@@ -21,20 +21,18 @@ const UserPopover = ({
   user,
   side,
   className,
-}: UserPopoverProps) => {
-  return (
-    <Popover>
-      <PopoverTrigger asChild>
-        {children}
-      </PopoverTrigger>
-      <PopoverContent
-        side={side}
-        className={cn('border-0 w-[340px] rounded-lg p-0 m-0 bg-server dark:bg-server-dark', className)}
-      >
-        <UserWrapper user={user} />
-      </PopoverContent>
-    </Popover>
-  )
-}
+}: UserPopoverProps) => (
+  <Popover>
+    <PopoverTrigger asChild>
+      {children}
+    </PopoverTrigger>
+    <PopoverContent
+      side={side}
+      className={cn('border-0 w-[340px] rounded-lg p-0 m-0 bg-server dark:bg-server-dark', className)}
+    >
+      <UserWrapper user={user} />
+    </PopoverContent>
+  </Popover>
+)
 
 export default UserPopover

@@ -31,13 +31,13 @@ const UserSettings = ({
       label="USER SETTINGS"
       isSettingsPageOpen={userSettingsPageValue}
       closeSettingsPage={closeUserSettingsPage}
-      selectionComponents={
+      selectionComponents={(
         <ButtonSelection
           title="Profiles"
           onClick={openUserSettingsPage}
           activeCondition={userSettingsValue.profiles}
         />
-      }
+      )}
     >
       <PreviewProfilesContextProvider
         name={user.name}

@@ -49,6 +49,6 @@ export const getAllChannelMessage = async (channelId: string) => {
     }
   } catch (error) {
     console.error(error)
-    return { error: error }
+    return { error }
   }
 }

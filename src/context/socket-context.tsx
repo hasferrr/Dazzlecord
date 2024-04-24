@@ -28,12 +28,12 @@ const socketContextReducer = (
   action: SocketContextDispatch,
 ): SocketContextType => {
   switch (action.type) {
-  case 'SET_SOCKET':
-    return { ...state, socket: action.payload }
-  case 'SET_IS_CONNECTED':
-    return { ...state, isConnected: action.payload }
-  default:
-    return state
+    case 'SET_SOCKET':
+      return { ...state, socket: action.payload }
+    case 'SET_IS_CONNECTED':
+      return { ...state, isConnected: action.payload }
+    default:
+      return state
   }
 }
 
@@ -47,17 +47,15 @@ const SocketContext = createContext<SocketContextReducer>([initialValue, () => i
 export const SocketContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(socketContextReducer, initialValue)
 
-  const setSocket = (val: SocketContextType['socket']) =>
-    dispatch({
-      type: 'SET_SOCKET',
-      payload: val,
-    })
+  const setSocket = (val: SocketContextType['socket']) => dispatch({
+    type: 'SET_SOCKET',
+    payload: val,
+  })
 
-  const setIsConnected = (val: SocketContextType['isConnected']) =>
-    dispatch({
-      type: 'SET_IS_CONNECTED',
-      payload: val,
-    })
+  const setIsConnected = (val: SocketContextType['isConnected']) => dispatch({
+    type: 'SET_IS_CONNECTED',
+    payload: val,
+  })
 
   useEffect(() => {
     socket.on('connect', () => {

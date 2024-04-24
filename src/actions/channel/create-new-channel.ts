@@ -7,7 +7,6 @@ import { auth } from '@/auth'
 import { db } from '@/lib/db'
 import { isValidChannelName } from '@/lib/helpers'
 
-
 export const createNewChannel = async (
   channelName: string,
   channelType: ChannelType,

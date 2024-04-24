@@ -27,6 +27,7 @@ const Me = async () => {
       {JSON.stringify(session)}
       <form action={async () => {
         'use server'
+
         try {
           await signOut({
             redirectTo: '/',
@@ -35,7 +36,8 @@ const Me = async () => {
           console.log(error)
           throw error
         }
-      }}>
+      }}
+      >
         <button type="submit">Sign out</button>
       </form>
       <ModeToggle />

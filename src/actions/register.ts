@@ -18,7 +18,9 @@ export const register = async (values: z.infer<typeof registerSchema>) => {
     return { error: 'invalid fields' }
   }
 
-  const { name, email, username, password } = validatedFields.data
+  const {
+    name, email, username, password,
+  } = validatedFields.data
 
   const userByUsername = await getUserByUsername(username)
   const userByEmail = await getUserByEmail(email)

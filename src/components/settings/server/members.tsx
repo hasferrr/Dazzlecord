@@ -99,59 +99,74 @@ const Members = ({
       <TableCell>{yearDifferenceYearFromNow(member.createdAt)}</TableCell>
       <TableCell>
         {currentMember.userId === member.userId || currentRole === MODERATOR
-          ? <div className="hover:cursor-not-allowed">
-            {member.role}
-          </div>
-          : <DropdownMenu>
-            <DropdownMenuTrigger className="hover:underline">
+          ? (
+            <div className="hover:cursor-not-allowed">
               {member.role}
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuLabel>Change Role</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              {currentRole === OWNER &&
+            </div>
+          )
+          : (
+            <DropdownMenu>
+              <DropdownMenuTrigger className="hover:underline">
+                {member.role}
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>Change Role</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {currentRole === OWNER
+                && (
                 <DropdownMenuItem onClick={() => handleChangeRole(member, OWNER)}>
                   {OWNER}
-                </DropdownMenuItem>}
-              {currentRole !== GUEST &&
+                </DropdownMenuItem>
+                )}
+                {currentRole !== GUEST
+                && (
                 <DropdownMenuItem onClick={() => handleChangeRole(member, ADMIN)}>
                   {ADMIN}
-                </DropdownMenuItem>}
-              {currentRole !== GUEST &&
+                </DropdownMenuItem>
+                )}
+                {currentRole !== GUEST
+                && (
                 <DropdownMenuItem onClick={() => handleChangeRole(member, MODERATOR)}>
                   {MODERATOR}
-                </DropdownMenuItem>}
-              {currentRole !== GUEST &&
+                </DropdownMenuItem>
+                )}
+                {currentRole !== GUEST
+                && (
                 <DropdownMenuItem onClick={() => handleChangeRole(member, GUEST)}>
                   {GUEST}
-                </DropdownMenuItem>}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        }
+                </DropdownMenuItem>
+                )}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
       </TableCell>
       <TableCell>
         {currentMember.userId === member.userId
-          ? <div className="hover:cursor-not-allowed">
-            Select
-          </div>
-          : <DropdownMenu>
-            <DropdownMenuTrigger className="hover:underline">
+          ? (
+            <div className="hover:cursor-not-allowed">
               Select
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              {(currentRole === OWNER
+            </div>
+          )
+          : (
+            <DropdownMenu>
+              <DropdownMenuTrigger className="hover:underline">
+                Select
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                {(currentRole === OWNER
                 || currentRole === ADMIN && member.role !== OWNER
                 || currentRole === MODERATOR && member.role === GUEST)
-                && <DropdownMenuItem
+                && (
+                <DropdownMenuItem
                   className="text-red-500"
                   onClick={() => setMemberToBeKicked(member)}
                 >
                   Kick
                 </DropdownMenuItem>
-              }
-            </DropdownMenuContent>
-          </DropdownMenu>
-        }
+                )}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
       </TableCell>
     </TableRow>
   )
@@ -187,7 +202,11 @@ const Members = ({
           {guests}
           <TableRow>
             <TableCell colSpan={4} className="rounded-b-2xl">
-              Showing {owners.length + admins.length + moderators.length + guests.length} Members
+              Showing
+              {' '}
+              {owners.length + admins.length + moderators.length + guests.length}
+              {' '}
+              Members
             </TableCell>
           </TableRow>
         </TableBody>
@@ -195,9 +214,17 @@ const Members = ({
       <AlertDialog open={!!memberToBeKicked}>
         <AlertDialogContent className="dark:bg-server-dark">
           <AlertDialogHeader>
-            <AlertDialogTitle>Kick {memberToBeKicked?.user.username} from Server</AlertDialogTitle>
+            <AlertDialogTitle>
+              Kick
+              {memberToBeKicked?.user.username}
+              {' '}
+              from Server
+            </AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to kick @{memberToBeKicked?.user.username} from the server?
+              Are you sure you want to kick @
+              {memberToBeKicked?.user.username}
+              {' '}
+              from the server?
               They will be able to rejoin again with a new invite.
             </AlertDialogDescription>
           </AlertDialogHeader>

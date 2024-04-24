@@ -39,12 +39,14 @@ const Profiles = ({
               {/* TODO: add pencil image, style it, add Example button */}
               <div>Image</div>
               <p>User Profile</p>
-              <TimeElapsed /> elapsed
+              <TimeElapsed />
+              {' '}
+              elapsed
             </div>
           </UserWrapper>
         </div>
       </div>
-    </div >
+    </div>
   )
 }
 

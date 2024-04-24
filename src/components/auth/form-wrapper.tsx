@@ -35,19 +35,20 @@ const FormWrapper = ({ title, children }: {
             <h1 className="text-2xl font-bold text-center">
               {title.startsWith('l') ? 'Welcome back!' : 'Create an account'}
             </h1>
-            {title.startsWith('l') &&
+            {title.startsWith('l')
+              && (
               <p className="text-sm text-center text-zinc-600 dark:text-zinc-400 mt-2">
-                We{'\''}re so excited to see you again!
+                We
+                {'\''}
+                re so excited to see you again!
               </p>
-            }
+              )}
           </div>
           {children}
           <Button
             variant="ghost"
             className="mx-auto mt-3"
-            onClick={() =>
-              title === 'login' ? navigate('/register') : navigate('/login')
-            }
+            onClick={() => (title === 'login' ? navigate('/register') : navigate('/login'))}
           >
             {title === 'login'
               ? 'Don\'t have an account? Register here.'

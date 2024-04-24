@@ -7,7 +7,7 @@ const TimeElapsed = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setElapsedTime(prevTime => prevTime + 1)
+      setElapsedTime((prevTime) => prevTime + 1)
     }, 1000)
 
     return () => clearInterval(interval)

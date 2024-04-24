@@ -1,9 +1,7 @@
 import RegisterForm from '@/components/auth/register-form'
 
-const Register = () => {
-  return (
-    <RegisterForm />
-  )
-}
+const Register = () => (
+  <RegisterForm />
+)
 
 export default Register

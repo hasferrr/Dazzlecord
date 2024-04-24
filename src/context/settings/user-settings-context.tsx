@@ -1,6 +1,8 @@
 'use client'
 
-import { createContext, type Dispatch, type SetStateAction, useContext, useState } from 'react'
+import {
+  createContext, type Dispatch, type SetStateAction, useContext, useState,
+} from 'react'
 
 const initialValue = {
   settingsPage: false,

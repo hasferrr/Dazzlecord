@@ -74,60 +74,62 @@ const Overview = ({ server }: {
               <FormField
                 control={form.control}
                 name="files"
-                render={() => {
-                  return (
-                    <FormItem className="flex justify-center gap-5">
-                      <div>
-                        <FormControl>
-                          <div className="relative h-[120px] w-[120px] flex justify-center items-center">
-                            <label htmlFor="fileInput" className="cursor-pointer">
-                              <input
-                                disabled={isPending}
-                                id="fileInput"
-                                type="file"
-                                {...filesRef}
-                                className="cursor-pointer opacity-0 absolute w-0 h-0"
-                                onChange={(e) => handleImageChange(e, false)}
-                              />
-                              {file ?? server.image
-                                ? <ProfilePhoto
+                render={() => (
+                  <FormItem className="flex justify-center gap-5">
+                    <div>
+                      <FormControl>
+                        <div className="relative h-[120px] w-[120px] flex justify-center items-center">
+                          <label htmlFor="fileInput" className="cursor-pointer">
+                            <input
+                              disabled={isPending}
+                              id="fileInput"
+                              type="file"
+                              {...filesRef}
+                              className="cursor-pointer opacity-0 absolute w-0 h-0"
+                              onChange={(e) => handleImageChange(e, false)}
+                            />
+                            {file ?? server.image
+                              ? (
+                                <ProfilePhoto
                                   src={file
-                                    ? URL.createObjectURL(file)
-                                    : getFileURLFromGCS(server.image)}
+                                      ? URL.createObjectURL(file)
+                                      : getFileURLFromGCS(server.image)}
                                   width={96}
                                   height={96}
                                   username={form.getValues('name') ?? ''}
                                 />
-                                : <SVGUploadIcon width={96} height={96} />
-                              }
-                            </label>
-                            {file
-                              ? <button onClick={handleResetImage} type="button" disabled={isPending}>
+                              )
+                              : <SVGUploadIcon width={96} height={96} />}
+                          </label>
+                          {file
+                            ? (
+                              <button onClick={handleResetImage} type="button" disabled={isPending}>
                                 <X className="absolute z-50 top-3 right-3 rounded-full
-                              bg-rose-500 text-white p-1" />
+                              bg-rose-500 text-white p-1"
+                                />
                               </button>
-                              : <></>
-                            }
-                          </div>
-                        </FormControl>
-                        <FormMessage className="pt-1 text-center">
-                          {fileErrorMsg ?? <span className="text-foreground">Required</span>}
-                        </FormMessage>
-                      </div>
-                      <div className="flex flex-col gap-2">
-                        <FormDescription className="text-[13px] w-[200px]">
-                          We recommend an image of at least 512x512 for the server.
-                        </FormDescription>
-                        <label htmlFor="fileInput">
-                          <div className="border-secondary-foreground/40 bg-transparent hover:bg-secondary-foreground/10
-                          py-2 px-3 border-[1px] rounded-sm w-fit text-[13px] cursor-pointer">
-                            Upload Image
-                          </div>
-                        </label>
-                      </div>
-                    </FormItem>
-                  )
-                }}
+                            )
+                            : <></>}
+                        </div>
+                      </FormControl>
+                      <FormMessage className="pt-1 text-center">
+                        {fileErrorMsg ?? <span className="text-foreground">Required</span>}
+                      </FormMessage>
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <FormDescription className="text-[13px] w-[200px]">
+                        We recommend an image of at least 512x512 for the server.
+                      </FormDescription>
+                      <label htmlFor="fileInput">
+                        <div className="border-secondary-foreground/40 bg-transparent hover:bg-secondary-foreground/10
+                          py-2 px-3 border-[1px] rounded-sm w-fit text-[13px] cursor-pointer"
+                        >
+                          Upload Image
+                        </div>
+                      </label>
+                    </div>
+                  </FormItem>
+                )}
               />
             </div>
 

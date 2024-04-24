@@ -3,17 +3,15 @@ import NavigationSidebar from '@/components/navigation/navigation-sidebar'
 
 const MainLayout = async ({ children }: {
   children: React.ReactNode
-}) => {
-  return (
-    <main className="h-full flex">
-      <div className="flex-col h-full inset-y-0">
-        <BigScreen>
-          <NavigationSidebar />
-        </BigScreen>
-      </div>
-      {children}
-    </main>
-  )
-}
+}) => (
+  <main className="h-full flex">
+    <div className="flex-col h-full inset-y-0">
+      <BigScreen>
+        <NavigationSidebar />
+      </BigScreen>
+    </div>
+    {children}
+  </main>
+)
 
 export default MainLayout

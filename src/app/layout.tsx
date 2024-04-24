@@ -27,7 +27,8 @@ export default function RootLayout({ children }: Readonly<{
         font.className,
         'bg-page',
         'dark:bg-page-dark',
-      )}>
+      )}
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

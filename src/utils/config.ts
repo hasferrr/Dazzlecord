@@ -4,15 +4,11 @@ const throwError = () => {
   throw new Error('please specify all required environment variables in the `.env` file')
 }
 
-const passOrError = (arg: string | undefined) => {
-  return arg || throwError()
-}
+const passOrError = (arg: string | undefined) => arg || throwError()
 
-const parseUrl = (url: string) => {
-  return url.endsWith('/') ? url.slice(0, -1) : url
-}
+const parseUrl = (url: string) => (url.endsWith('/') ? url.slice(0, -1) : url)
 
-export const NODE_ENV = passOrError(process.env['NODE_ENV'])
+export const NODE_ENV = passOrError(process.env.NODE_ENV)
 export const DATABASE_URL = passOrError(process.env['DATABASE_URL'])
 export const AUTH_SECRET = passOrError(process.env['AUTH_SECRET'])
 export const GCS_PROJECT_ID = passOrError(process.env['GCS_PROJECT_ID'])

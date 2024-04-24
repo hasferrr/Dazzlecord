@@ -18,9 +18,13 @@ const DeleteServerModal = ({ server }: {
   return (
     <AbstractDeleteModal
       title={`Delete '${server.name}'`}
-      deleteDescription={
-        <>Are you sure you want to delete <strong>{server.name}</strong>? This action cannot be undone.</>
-      }
+      deleteDescription={(
+        <>
+          Are you sure you want to delete
+          <strong>{server.name}</strong>
+          ? This action cannot be undone.
+        </>
+      )}
       isDeleteModalOpen={isDeleteModalOpen}
       onDeleteModalClose={onDeleteModalClose}
       onSubmitAction={() => deleteServer(server)}

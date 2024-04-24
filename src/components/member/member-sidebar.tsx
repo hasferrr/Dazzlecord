@@ -45,40 +45,45 @@ const MemberSidebar = async ({ serverId }: {
   return (
     <div className="flex flex-col gap-2
       h-full w-60 text-primary py-2
-      bg-[var(--light-server)] dark:bg-[var(--dark-server)]">
+      bg-[var(--light-server)] dark:bg-[var(--dark-server)]"
+    >
       <ScrollArea className="w-full px-4 flex flex-col gap-y-4">
-        {owners.length > 0 &&
+        {owners.length > 0
+          && (
           <div className="mb-2">
             <MemberSection title="owners" />
             <div className="flex flex-col">
               {owners}
             </div>
           </div>
-        }
-        {admins.length > 0 &&
+          )}
+        {admins.length > 0
+          && (
           <div className="mb-2">
             <MemberSection title="admins" />
             <div className="flex flex-col">
               {admins}
             </div>
           </div>
-        }
-        {moderators.length > 0 &&
+          )}
+        {moderators.length > 0
+          && (
           <div className="mb-2">
             <MemberSection title="moderators" />
             <div className="flex flex-col">
               {moderators}
             </div>
           </div>
-        }
-        {guests.length > 0 &&
+          )}
+        {guests.length > 0
+          && (
           <div className="mb-2">
             <MemberSection title="members" />
             <div className="flex flex-col">
               {guests}
             </div>
           </div>
-        }
+          )}
       </ScrollArea>
     </div>
   )

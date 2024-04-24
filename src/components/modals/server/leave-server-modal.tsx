@@ -51,9 +51,17 @@ const LeaveServerModal = ({ server }: { server: Server }) => {
       <DialogContent className="p-0 m-0 dark:bg-[var(--dark-page)] text-black dark:text-white w-[29rem]">
 
         <DialogHeader className="px-6 pt-6">
-          <DialogTitle className="text-lg font-bold">Leave {`'${server.name}'`}</DialogTitle>
+          <DialogTitle className="text-lg font-bold">
+            Leave
+            {`'${server.name}'`}
+          </DialogTitle>
           <DialogDescription className="text-sm mt-8 text-primary">
-            Are you sure you want to leave <strong>{server.name}</strong>? You won{'\''}t be able to
+            Are you sure you want to leave
+            {' '}
+            <strong>{server.name}</strong>
+            ? You won
+            {'\''}
+            t be able to
             rejoin this server unless you are re-invited.
           </DialogDescription>
         </DialogHeader>
@@ -65,7 +73,7 @@ const LeaveServerModal = ({ server }: { server: Server }) => {
         </DialogFooter>
 
       </DialogContent>
-    </Dialog >
+    </Dialog>
   )
 }
 

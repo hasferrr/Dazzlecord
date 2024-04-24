@@ -1,6 +1,8 @@
 'use client'
 
-import { createContext, type Dispatch, useContext, useReducer } from 'react'
+import {
+  createContext, type Dispatch, useContext, useReducer,
+} from 'react'
 
 type DeleteChannelModal = {
   [key: string]: boolean
@@ -19,13 +21,13 @@ const modalReducer = (
   action: DeleteChannelModalDispatch,
 ): DeleteChannelModal => {
   switch (action.type) {
-  case 'APPEND':
-    return {
-      ...state,
-      [action.payload.channelId]: action.payload.value,
-    }
-  default:
-    return state
+    case 'APPEND':
+      return {
+        ...state,
+        [action.payload.channelId]: action.payload.value,
+      }
+    default:
+      return state
   }
 }
 

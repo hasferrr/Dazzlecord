@@ -21,7 +21,8 @@ const NavigationAction = () => {
           bg-[var(--light-page)]
           dark:bg-[var(--dark-page)]
           group-hover:rounded-[16px]
-          group-hover:bg-emerald-500">
+          group-hover:bg-emerald-500"
+          >
             <Plus
               className="group-hover:text-white transition text-emerald-500"
               size={25}

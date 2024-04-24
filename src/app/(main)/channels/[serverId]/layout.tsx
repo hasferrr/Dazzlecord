@@ -79,15 +79,17 @@ const ServerIdLayout = async ({ children, params }: {
         <CreateServerModal />
         <InvitationModal origin={ORIGIN_URL} inviteCode={server.inviteCode} />
         <LeaveServerModal server={server} />
-        {currentMember.role === MemberRole.OWNER &&
-          <DeleteServerModal server={server} />}
+        {currentMember.role === MemberRole.OWNER
+          && <DeleteServerModal server={server} />}
         <CreateChannelModal serverId={server.id} />
-        {currentMember.role !== MemberRole.GUEST &&
+        {currentMember.role !== MemberRole.GUEST
+          && (
           <ServerSettings
             server={server}
             currentMember={currentMember}
             serverMembers={members}
-          />}
+          />
+          )}
       </>
     )
   } catch (error) {

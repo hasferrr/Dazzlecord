@@ -20,11 +20,12 @@ const NavigationSidebar = async () => {
     <div className="flex flex-col items-center gap-2
     h-full w-[4.5rem] text-primary py-3
     bg-[var(--light-navigation)]
-    dark:bg-[var(--dark-navigation)]">
+    dark:bg-[var(--dark-navigation)]"
+    >
       <NavigationHome />
       <Separator className="h-[2px] w-8 rounded-md mx-auto bg-zinc-300 dark:bg-[var(--dark-page)]" />
       <ScrollArea className="w-full">
-        {servers.map((server) =>
+        {servers.map((server) => (
           <div key={server.id} className="flex justify-center mb-2">
             <NavigationItem
               id={server.id}
@@ -32,7 +33,7 @@ const NavigationSidebar = async () => {
               image={server.image}
             />
           </div>
-        )}
+        ))}
         <div className="flex justify-center">
           <NavigationAction />
         </div>

@@ -62,7 +62,7 @@ const RegisterForm = () => {
   return (
     <FormWrapper title="register">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5" >
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
           <FormField
             control={form.control}
             name="name"
@@ -139,7 +139,7 @@ const RegisterForm = () => {
           />
           <div className="flex flex-wrap gap-3">
             <Button type="submit" disabled={isPending}>Submit</Button>
-            <div className="grow"></div>
+            <div className="grow" />
             <Button
               type="button"
               variant="outline"

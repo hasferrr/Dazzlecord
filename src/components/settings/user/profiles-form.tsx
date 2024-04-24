@@ -148,7 +148,8 @@ const ProfilesForm = ({
                       isPending
                         ? buttonVariants({ variant: 'primary', disabledStyle: 'disabled' })
                         : buttonVariants({ variant: 'primary' }),
-                    )}>
+                    )}
+                    >
                       Change Avatar
                     </div>
                   </label>
