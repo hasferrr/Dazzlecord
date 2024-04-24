@@ -1,7 +1,11 @@
 'use client'
 
 import {
-  createContext, type Dispatch, useContext, useReducer,
+  createContext,
+  type Dispatch,
+  useContext,
+  useMemo,
+  useReducer,
 } from 'react'
 
 type DeleteChannelModal = {
@@ -14,7 +18,10 @@ type DeleteChannelModalDispatch = {
     value: DeleteChannelModal['key'],
   },
 }
-type DeleteChannelModalReducer = [DeleteChannelModal, Dispatch<DeleteChannelModalDispatch>]
+type DeleteChannelModalReducer = {
+  value: DeleteChannelModal,
+  dispatch: Dispatch<DeleteChannelModalDispatch>,
+}
 
 const modalReducer = (
   state: DeleteChannelModal,
@@ -33,19 +40,22 @@ const modalReducer = (
 
 const initialValue = {}
 
-const DeleteChannelModalContext = createContext<DeleteChannelModalReducer>([initialValue, () => initialValue])
+const DeleteChannelModalContext = createContext<DeleteChannelModalReducer>(
+  { value: initialValue, dispatch: () => initialValue },
+)
 
 export const DeleteChannelModalContextProvider = ({ children }: { children?: React.ReactNode }) => {
-  const [modal, modalDispatch] = useReducer(modalReducer, initialValue)
+  const [value, dispatch] = useReducer(modalReducer, initialValue)
+  const contextValue = useMemo(() => ({ value, dispatch }), [value, dispatch])
   return (
-    <DeleteChannelModalContext.Provider value={[modal, modalDispatch]}>
+    <DeleteChannelModalContext.Provider value={contextValue}>
       {children}
     </DeleteChannelModalContext.Provider>
   )
 }
 
 const useAbstractDispatch = (channelId: string, value: boolean) => {
-  const [, dispatch] = useContext(DeleteChannelModalContext)
+  const { dispatch } = useContext(DeleteChannelModalContext)
   return () => {
     dispatch({
       type: 'APPEND',
@@ -57,7 +67,7 @@ const useAbstractDispatch = (channelId: string, value: boolean) => {
   }
 }
 
-export const useDeleteChannelValue = () => useContext(DeleteChannelModalContext)[0]
+export const useDeleteChannelValue = () => useContext(DeleteChannelModalContext).value
 export const useDeleteChannelOpen = (channelId: string) => useAbstractDispatch(channelId, true)
 export const useDeleteChannelClose = (channelId: string) => useAbstractDispatch(channelId, false)
 

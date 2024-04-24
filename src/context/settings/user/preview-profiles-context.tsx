@@ -1,7 +1,12 @@
 'use client'
 
 import {
-  createContext, type Dispatch, type SetStateAction, useContext, useState,
+  createContext,
+  type Dispatch,
+  type SetStateAction,
+  useContext,
+  useMemo,
+  useState,
 } from 'react'
 
 interface State {
@@ -11,9 +16,11 @@ interface State {
 }
 type SetState = Dispatch<SetStateAction<State>>
 
-const dummy = { name: '', about: null, image: null }
+const initialValue = { name: '', about: null, image: null }
 
-const PreviewProfilesContext = createContext<[State, SetState]>([dummy, () => dummy])
+const PreviewProfilesContext = createContext<{ state: State, setState: SetState }>(
+  { state: initialValue, setState: () => initialValue },
+)
 
 export const PreviewProfilesContextProvider = ({
   name, about, image, children,
@@ -25,17 +32,18 @@ export const PreviewProfilesContextProvider = ({
 }) => {
   const [state, setState] = useState({ name, about, image })
 
+  const contextValue = useMemo(() => ({ state, setState }), [state, setState])
   return (
-    <PreviewProfilesContext.Provider value={[state, setState]}>
+    <PreviewProfilesContext.Provider value={contextValue}>
       {children}
     </PreviewProfilesContext.Provider>
   )
 }
 
-export const usePreviewProfilesValue = () => useContext(PreviewProfilesContext)[0]
-export const useSetAllStatePreviewProfiles = () => useContext(PreviewProfilesContext)[1]
+export const usePreviewProfilesValue = () => useContext(PreviewProfilesContext).state
+export const useSetAllStatePreviewProfiles = () => useContext(PreviewProfilesContext).setState
 export const useSetPreviewProfiles = () => {
-  const [state, setState] = useContext(PreviewProfilesContext)
+  const { state, setState } = useContext(PreviewProfilesContext)
   return (key: keyof State, value: string | null) => {
     setState({ ...state, [key]: value })
   }

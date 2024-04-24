@@ -1,7 +1,12 @@
 'use client'
 
 import {
-  createContext, type Dispatch, type SetStateAction, useContext, useState,
+  createContext,
+  type Dispatch,
+  type SetStateAction,
+  useContext,
+  useMemo,
+  useState,
 } from 'react'
 
 const initialValue = {
@@ -12,30 +17,31 @@ const initialValue = {
 type State = typeof initialValue
 type SetState = Dispatch<SetStateAction<State>>
 
-const UserSettingsContext = createContext<[State, SetState]>([initialValue, () => initialValue])
+const UserSettingsContext = createContext<{ state: State, setState: SetState }>(
+  { state: initialValue, setState: () => initialValue },
+)
 
-export const UserSettingsContextProvider = ({ children }: {
-  children?: React.ReactNode
-}) => {
-  const [serverSelections, setUserSettings] = useState(initialValue)
+export const UserSettingsContextProvider = ({ children }: { children?: React.ReactNode }) => {
+  const [state, setState] = useState(initialValue)
 
+  const contextValue = useMemo(() => ({ state, setState }), [state, setState])
   return (
-    <UserSettingsContext.Provider value={[serverSelections, setUserSettings]}>
+    <UserSettingsContext.Provider value={contextValue}>
       {children}
     </UserSettingsContext.Provider>
   )
 }
 
-export const useUserSettingsValue = () => useContext(UserSettingsContext)[0]
-export const useUserSettingsPageValue = () => useContext(UserSettingsContext)[0].settingsPage
+export const useUserSettingsValue = () => useContext(UserSettingsContext).state
+export const useUserSettingsPageValue = () => useContext(UserSettingsContext).state.settingsPage
 
 export const useCloseUserSettingsPage = () => {
-  const [, setState] = useContext(UserSettingsContext)
+  const { setState } = useContext(UserSettingsContext)
   return () => setState(initialValue)
 }
 
 export const useOpenUserSettingsPage = () => {
-  const [, setState] = useContext(UserSettingsContext)
+  const { setState } = useContext(UserSettingsContext)
   return () => setState({ ...initialValue, settingsPage: true, profiles: true })
 }
 

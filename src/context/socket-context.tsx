@@ -5,6 +5,7 @@ import {
   type Dispatch,
   useContext,
   useEffect,
+  useMemo,
   useReducer,
 } from 'react'
 
@@ -21,7 +22,10 @@ type SocketContextDispatch =
   | { type: 'SET_SOCKET', payload: SocketContextType['socket'] }
   | { type: 'SET_IS_CONNECTED', payload: SocketContextType['isConnected'] }
 
-type SocketContextReducer = [SocketContextType, Dispatch<SocketContextDispatch>]
+type SocketContextReducer = {
+  state: SocketContextType,
+  dispatch: Dispatch<SocketContextDispatch>,
+}
 
 const socketContextReducer = (
   state: SocketContextType,
@@ -42,7 +46,9 @@ const initialValue = {
   isConnected: false,
 }
 
-const SocketContext = createContext<SocketContextReducer>([initialValue, () => initialValue])
+const SocketContext = createContext<SocketContextReducer>(
+  { state: initialValue, dispatch: () => initialValue },
+)
 
 export const SocketContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(socketContextReducer, initialValue)
@@ -69,20 +75,21 @@ export const SocketContextProvider = ({ children }: { children: React.ReactNode 
     setSocket(socket)
   }, [])
 
+  const contextValue = useMemo(() => ({ state, dispatch }), [state, dispatch])
   return (
-    <SocketContext.Provider value={[state, dispatch]}>
+    <SocketContext.Provider value={contextValue}>
       {children}
     </SocketContext.Provider>
   )
 }
 
 export const useSocket = () => {
-  const [{ socket }] = useContext(SocketContext)
+  const { state: { socket } } = useContext(SocketContext)
   return socket
 }
 
 export const useIsConnected = () => {
-  const [{ isConnected }] = useContext(SocketContext)
+  const { state: { isConnected } } = useContext(SocketContext)
   return isConnected
 }
 

@@ -1,7 +1,11 @@
 'use client'
 
 import {
-  createContext, type Dispatch, useContext, useReducer,
+  createContext,
+  type Dispatch,
+  useContext,
+  useMemo,
+  useReducer,
 } from 'react'
 
 type EditChannelModal = {
@@ -14,7 +18,10 @@ type EditChannelModalDispatch = {
     value: EditChannelModal['key'],
   },
 }
-type EditChannelModalReducer = [EditChannelModal, Dispatch<EditChannelModalDispatch>]
+type EditChannelModalReducer = {
+  value: EditChannelModal,
+  dispatch: Dispatch<EditChannelModalDispatch>,
+}
 
 const modalReducer = (
   state: EditChannelModal,
@@ -33,19 +40,22 @@ const modalReducer = (
 
 const initialValue = {}
 
-const EditChannelModalContext = createContext<EditChannelModalReducer>([initialValue, () => initialValue])
+const EditChannelModalContext = createContext<EditChannelModalReducer>(
+  { value: initialValue, dispatch: () => initialValue },
+)
 
 export const EditChannelModalContextProvider = ({ children }: { children?: React.ReactNode }) => {
-  const [modal, modalDispatch] = useReducer(modalReducer, initialValue)
+  const [value, dispatch] = useReducer(modalReducer, initialValue)
+  const contextValue = useMemo(() => ({ value, dispatch }), [value, dispatch])
   return (
-    <EditChannelModalContext.Provider value={[modal, modalDispatch]}>
+    <EditChannelModalContext.Provider value={contextValue}>
       {children}
     </EditChannelModalContext.Provider>
   )
 }
 
 const useAbstractDispatch = (channelId: string, value: boolean) => {
-  const [, dispatch] = useContext(EditChannelModalContext)
+  const { dispatch } = useContext(EditChannelModalContext)
   return () => {
     dispatch({
       type: 'APPEND',
@@ -57,7 +67,7 @@ const useAbstractDispatch = (channelId: string, value: boolean) => {
   }
 }
 
-export const useEditChannelValue = () => useContext(EditChannelModalContext)[0]
+export const useEditChannelValue = () => useContext(EditChannelModalContext).value
 export const useEditChannelOpen = (channelId: string) => useAbstractDispatch(channelId, true)
 export const useEditChannelClose = (channelId: string) => useAbstractDispatch(channelId, false)
 

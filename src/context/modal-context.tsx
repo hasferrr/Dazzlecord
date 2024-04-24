@@ -1,7 +1,11 @@
 'use client'
 
 import {
-  createContext, type Dispatch, useContext, useReducer,
+  createContext,
+  type Dispatch,
+  useContext,
+  useMemo,
+  useReducer,
 } from 'react'
 
 const initialValue = {
@@ -14,7 +18,10 @@ const initialValue = {
 
 type Modal = typeof initialValue
 type ModalDispatch = { type: 'SET', payload: Modal }
-type ModalReducer = [Modal, Dispatch<ModalDispatch>]
+type ModalReducer = {
+  value: Modal,
+  dispatch: Dispatch<ModalDispatch>,
+}
 
 const modalReducer = (state: Modal, action: ModalDispatch): Modal => {
   switch (action.type) {
@@ -25,24 +32,27 @@ const modalReducer = (state: Modal, action: ModalDispatch): Modal => {
   }
 }
 
-const ModalContext = createContext<ModalReducer>([initialValue, () => initialValue])
+const ModalContext = createContext<ModalReducer>(
+  { value: initialValue, dispatch: () => initialValue },
+)
 
 export const ModalContextProvider = ({ children }: { children?: React.ReactNode }) => {
-  const [modal, modalDispatch] = useReducer(modalReducer, initialValue)
+  const [value, dispatch] = useReducer(modalReducer, initialValue)
+  const contextValue = useMemo(() => ({ value, dispatch }), [value, dispatch])
   return (
-    <ModalContext.Provider value={[modal, modalDispatch]}>
+    <ModalContext.Provider value={contextValue}>
       {children}
     </ModalContext.Provider>
   )
 }
 
 const useAbstractGetState = (type: keyof Modal) => {
-  const [value] = useContext(ModalContext)
+  const { value } = useContext(ModalContext)
   return value[type]
 }
 
 const useAbstractDispatch = (type: keyof Modal, value: boolean) => {
-  const [state, dispatch] = useContext(ModalContext)
+  const { value: state, dispatch } = useContext(ModalContext)
   return () => {
     dispatch({
       type: 'SET',
