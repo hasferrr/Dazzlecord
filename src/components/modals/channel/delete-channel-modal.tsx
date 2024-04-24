@@ -3,7 +3,7 @@
 import type { Channel } from '@prisma/client'
 
 import { deleteChannel } from '@/actions/channel/delete-channel'
-import AbstractDeleteModal from '@/components/modals/abstract-modal/abstract-delete-modal'
+import AbstractDeleteModal from '@/components/modals/abstract-delete-modal'
 import {
   useDeleteChannelClose,
   useDeleteChannelValue,

@@ -1,7 +1,7 @@
 'use client'
 
 import { createNewChannel } from '@/actions/channel/create-new-channel'
-import AbstractChannelModal from '@/components/modals/abstract-modal/abstract-channel-modal'
+import AbstractChannelModal from '@/components/modals/abstract-channel-modal'
 import {
   useCreateChannelClose,
   useCreateChannelValue,

@@ -3,7 +3,7 @@
 import type { Server } from '@prisma/client'
 
 import { deleteServer } from '@/actions/server/delete-server'
-import AbstractDeleteModal from '@/components/modals/abstract-modal/abstract-delete-modal'
+import AbstractDeleteModal from '@/components/modals/abstract-delete-modal'
 import {
   useDeleteServerClose,
   useDeleteServerValue,
