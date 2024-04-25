@@ -109,7 +109,7 @@ const Overview = ({ server }: {
                                 />
                               </button>
                             )
-                            : <div />}
+                            : null}
                         </div>
                       </FormControl>
                       <FormMessage className="pt-1 text-center">

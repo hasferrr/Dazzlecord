@@ -102,7 +102,7 @@ const ServerSettings = ({
         </div>
       </div>
     )
-    : <div />
+    : null
 }
 
 export default ServerSettings

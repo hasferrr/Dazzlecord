@@ -124,7 +124,7 @@ const CreateServerModal = () => {
                               />
                             </button>
                           )
-                          : <div />}
+                          : null}
                       </div>
                     </FormControl>
                     <FormMessage>{fileErrorMsg}</FormMessage>

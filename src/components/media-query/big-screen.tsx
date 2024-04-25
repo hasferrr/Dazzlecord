@@ -27,7 +27,7 @@ const BigScreen = ({ children, width = 768 }: {
 
   return isBigScreen
     ? children
-    : <div />
+    : null
 }
 
 export default BigScreen

@@ -104,7 +104,7 @@ const SettingsLayout = ({
         </div>
       </div>
     )
-    : <div />
+    : null
 }
 
 export default SettingsLayout

@@ -27,7 +27,7 @@ const MobileScreen = ({ children, width = 768 }: {
 
   return isMobileScreen
     ? children
-    : <div />
+    : null
 }
 
 export default MobileScreen
