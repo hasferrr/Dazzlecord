@@ -96,7 +96,7 @@ const LoginForm = () => {
             )}
           />
           <div className="flex flex-wrap gap-3">
-            <Button type="submit" disabled={isPending}>Submit</Button>
+            <Button type="submit" variant="primary" disabled={isPending}>Submit</Button>
             <div className="grow" />
             <Button
               type="button"
