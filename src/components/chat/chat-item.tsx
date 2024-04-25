@@ -1,10 +1,14 @@
 'use client'
 
+import { useState } from 'react'
+
 import ProfilePhoto from '@/components/profile-photo'
 import UserPopover from '@/components/user/user-popover'
 import { formatDate, getFileURLFromGCS } from '@/lib/helpers'
 import { cn } from '@/lib/utils'
 import type { MessageWithUser } from '@/types'
+
+import ChatItemButton from './item/chat-item-button'
 
 interface ChatItemProps {
   message: MessageWithUser
@@ -13,6 +17,8 @@ interface ChatItemProps {
 const ChatItem = ({
   message,
 }: ChatItemProps) => {
+  const [, setIsEditing] = useState(false)
+
   const smolText = cn('text-xs mx-1 text-zinc-500 dark:text-zinc-400')
 
   return (
@@ -56,6 +62,9 @@ const ChatItem = ({
           </span>
         )}
       </p>
+      <ChatItemButton
+        setIsEditing={setIsEditing}
+      />
     </div>
   )
 }

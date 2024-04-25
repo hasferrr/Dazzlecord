@@ -13,6 +13,7 @@ interface ActionTooltipProps {
   side?: 'top' | 'right' | 'bottom' | 'left';
   align?: 'start' | 'center' | 'end';
   delay?: number
+  className?: string
 }
 
 const ActionTooltip = ({
@@ -21,13 +22,14 @@ const ActionTooltip = ({
   side,
   align,
   delay,
+  className,
 }: ActionTooltipProps) => (
   <TooltipProvider>
     <Tooltip delayDuration={delay ?? 25}>
       <TooltipTrigger asChild>
         {children}
       </TooltipTrigger>
-      <TooltipContent side={side} align={align}>
+      <TooltipContent side={side} align={align} className={className}>
         <p className="font-semibold text-sm">
           {label}
         </p>
