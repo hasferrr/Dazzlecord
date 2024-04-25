@@ -18,11 +18,10 @@ const AuthContext = createContext<{ state: State, setState: SetState }>(
   { state: initialValue, setState: () => initialValue },
 )
 
-export const AuthContextProvider = ({ username, children }: {
-  username: string
+export const AuthContextProvider = ({ children }: {
   children?: React.ReactNode
 }) => {
-  const [state, setState] = useState({ username })
+  const [state, setState] = useState({ username: initialValue.username })
 
   const contextValue = useMemo(() => ({ state, setState }), [state, setState])
   return (
