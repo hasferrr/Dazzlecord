@@ -45,6 +45,8 @@ const getDateInformation = (date0: Date | string) => {
   const day = dayNames[date.getDay()]
   const dayOfMonth = date.getDate()
   const year = date.getFullYear()
+  const monthWith0Prefix = String(date.getMonth() + 1).padStart(2, '0')
+  const dayWith0Prefix = String(date.getDate()).padStart(2, '0')
 
   const hour = String(date.getHours()).padStart(2, '0')
   const minutes = String(date.getMinutes()).padStart(2, '0')
@@ -55,6 +57,8 @@ const getDateInformation = (date0: Date | string) => {
     month,
     day,
     dayOfMonth,
+    monthWith0Prefix,
+    dayWith0Prefix,
     year,
     hour,
     minutes,
@@ -64,23 +68,43 @@ const getDateInformation = (date0: Date | string) => {
 }
 
 /**
- * Takes a Date, returns formatted string "04/01/2024 10:30 AM"
+ * Takes a Date
+ * If the date is today, returns "Today at 11:09 AM" like
+ * If the date is yesterday, returns "Yesterday at 11:09 AM" like
+ * Otherwise returns "04/01/2024 10:30 AM" like
  */
 export const formatDate = (date0: Date | string): string => {
   const date = typeof date0 === 'string'
     ? new Date(date0)
     : date0
 
-  const month = String(date.getMonth() + 1).padStart(2, '0')
-  const day = String(date.getDate()).padStart(2, '0')
-  const year = date.getFullYear()
+  const {
+    monthWith0Prefix,
+    dayWith0Prefix,
+    year,
+    minutes,
+    ampm,
+    adjustedHour,
+  } = getDateInformation(date)
 
-  // const hour = String(date.getHours()).padStart(2, '0')
-  const minutes = String(date.getMinutes()).padStart(2, '0')
-  const ampm = date.getHours() >= 12 ? 'PM' : 'AM'
-  const adjustedHour = date.getHours() % 12 || 12
+  const currentDate = new Date()
+  const currentDay = currentDate.getDate()
+  const currentMonth = currentDate.getMonth()
+  const currentYear = currentDate.getFullYear()
 
-  return `${month}/${day}/${year} ${adjustedHour}:${minutes} ${ampm}`
+  if (
+    currentYear === year
+    && currentMonth === date.getMonth()
+  ) {
+    if (currentDay === date.getDate()) {
+      return `Today at ${adjustedHour}:${minutes} ${ampm}`
+    }
+    if (currentDay - 1 === date.getDate()) {
+      return `Yesterday at ${adjustedHour}:${minutes} ${ampm}`
+    }
+  }
+
+  return `${monthWith0Prefix}/${dayWith0Prefix}/${year} ${adjustedHour}:${minutes} ${ampm}`
 }
 
 /**
