@@ -3,6 +3,7 @@ import { Open_Sans } from 'next/font/google'
 
 import './globals.css'
 import ThemeProvider from '@/components/theme-provider'
+import { AuthContextProvider } from '@/context/auth/auth-context'
 import { DeleteChannelModalContextProvider } from '@/context/delete-channel-context'
 import { EditChannelModalContextProvider } from '@/context/edit-channel-context'
 import { ModalContextProvider } from '@/context/modal-context'
@@ -34,19 +35,21 @@ const RootLayout = ({ children }: Readonly<{
         enableSystem
         disableTransitionOnChange
       >
-        <ModalContextProvider>
-          <EditChannelModalContextProvider>
-            <DeleteChannelModalContextProvider>
-              <SocketContextProvider>
-                <ServerSettingsContextProvider>
-                  <UserSettingsContextProvider>
-                    {children}
-                  </UserSettingsContextProvider>
-                </ServerSettingsContextProvider>
-              </SocketContextProvider>
-            </DeleteChannelModalContextProvider>
-          </EditChannelModalContextProvider>
-        </ModalContextProvider>
+        <AuthContextProvider>
+          <ModalContextProvider>
+            <EditChannelModalContextProvider>
+              <DeleteChannelModalContextProvider>
+                <SocketContextProvider>
+                  <ServerSettingsContextProvider>
+                    <UserSettingsContextProvider>
+                      {children}
+                    </UserSettingsContextProvider>
+                  </ServerSettingsContextProvider>
+                </SocketContextProvider>
+              </DeleteChannelModalContextProvider>
+            </EditChannelModalContextProvider>
+          </ModalContextProvider>
+        </AuthContextProvider>
       </ThemeProvider>
     </body>
   </html>

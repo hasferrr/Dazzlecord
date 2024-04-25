@@ -20,6 +20,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { useAuthValue, useSetAuth } from '@/context/auth/auth-context'
 import { cn } from '@/lib/utils'
 import { loginSchema } from '@/schemas/login-schema'
 
@@ -29,13 +30,16 @@ const LoginForm = () => {
   const [error, setError] = useState<string | undefined>(undefined)
   const [isPending, startTransition] = useTransition()
 
+  const authValue = useAuthValue()
+  const setAuth = useSetAuth()
+
   const router = useRouter()
   const navigate = (path: string) => router.push(path)
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      username: '',
+      username: authValue.username,
       password: '',
     },
   })
@@ -70,6 +74,13 @@ const LoginForm = () => {
                     className="input-primary dark:border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                     placeholder="john_doe"
                     {...field}
+                    onChange={(e) => {
+                      setAuth({
+                        ...authValue,
+                        username: e.target.value,
+                      })
+                      field.onChange(e)
+                    }}
                   />
                 </FormControl>
                 <FormMessage>{error}</FormMessage>

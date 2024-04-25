@@ -20,6 +20,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { useAuthValue, useSetAuth } from '@/context/auth/auth-context'
 import { cn } from '@/lib/utils'
 import { registerSchema } from '@/schemas/register-schema'
 
@@ -30,6 +31,9 @@ const RegisterForm = () => {
   const [emailError, setEmailError] = useState<string | undefined>(undefined)
   const [isPending, startTransition] = useTransition()
 
+  const authValue = useAuthValue()
+  const setAuth = useSetAuth()
+
   const router = useRouter()
   const navigate = (path: string) => router.push(path)
 
@@ -38,7 +42,7 @@ const RegisterForm = () => {
     defaultValues: {
       name: '',
       email: '',
-      username: '',
+      username: authValue.username,
       password: '',
     },
   })
@@ -112,6 +116,13 @@ const RegisterForm = () => {
                     className="input-primary dark:border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                     placeholder="john_doe"
                     {...field}
+                    onChange={(e) => {
+                      setAuth({
+                        ...authValue,
+                        username: e.target.value,
+                      })
+                      field.onChange(e)
+                    }}
                   />
                 </FormControl>
                 <FormMessage>{usernameError}</FormMessage>
