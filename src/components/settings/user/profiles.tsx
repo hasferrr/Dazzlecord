@@ -33,7 +33,7 @@ const Profiles = ({
         </div>
         <div className="space-y-2">
           <p className="uppercase font-bold text-xs">Preview</p>
-          <UserWrapper user={previewUser} hideButton imageFromGCS={!previewUser.image?.startsWith('blob')}>
+          <UserWrapper user={previewUser} imageFromGCS={!previewUser.image?.startsWith('blob')}>
             <div>
               <h2 className="font-bold uppercase">Customizing My Profile</h2>
               {/* TODO: add pencil image, style it, add Example button */}

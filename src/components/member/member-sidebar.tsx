@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation'
 import { getAllMembersByServerIdSorted } from '@/actions/prisma/member'
 import MemberItem from '@/components/member-item'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import UserPopover from '@/components/user/user-popover'
 
 import MemberSection from './member-section'
 
@@ -21,13 +22,18 @@ const MemberSidebar = async ({ serverId }: {
   const guests: JSX.Element[] = []
 
   const memberList = (m: (Member & { user: User })) => (
-    <MemberItem
-      key={m.id}
-      name={m.user.name}
-      image={m.user.image}
-      about={m.user.about}
-      className="w-full p-2"
-    />
+    <UserPopover
+      user={m.user}
+      side="left"
+    >
+      <MemberItem
+        key={m.id}
+        name={m.user.name}
+        image={m.user.image}
+        about={m.user.about}
+        className="w-full p-2"
+      />
+    </UserPopover>
   )
 
   members.forEach((member) => {
@@ -50,39 +56,39 @@ const MemberSidebar = async ({ serverId }: {
       <ScrollArea className="w-full px-4 flex flex-col gap-y-4">
         {owners.length > 0
           && (
-          <div className="mb-2">
-            <MemberSection title="owners" />
-            <div className="flex flex-col">
-              {owners}
+            <div className="mb-2">
+              <MemberSection title="owners" />
+              <div className="flex flex-col">
+                {owners}
+              </div>
             </div>
-          </div>
           )}
         {admins.length > 0
           && (
-          <div className="mb-2">
-            <MemberSection title="admins" />
-            <div className="flex flex-col">
-              {admins}
+            <div className="mb-2">
+              <MemberSection title="admins" />
+              <div className="flex flex-col">
+                {admins}
+              </div>
             </div>
-          </div>
           )}
         {moderators.length > 0
           && (
-          <div className="mb-2">
-            <MemberSection title="moderators" />
-            <div className="flex flex-col">
-              {moderators}
+            <div className="mb-2">
+              <MemberSection title="moderators" />
+              <div className="flex flex-col">
+                {moderators}
+              </div>
             </div>
-          </div>
           )}
         {guests.length > 0
           && (
-          <div className="mb-2">
-            <MemberSection title="members" />
-            <div className="flex flex-col">
-              {guests}
+            <div className="mb-2">
+              <MemberSection title="members" />
+              <div className="flex flex-col">
+                {guests}
+              </div>
             </div>
-          </div>
           )}
       </ScrollArea>
     </div>

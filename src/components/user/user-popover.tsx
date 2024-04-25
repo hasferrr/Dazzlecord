@@ -14,6 +14,7 @@ interface UserPopoverProps {
   user: User
   side?: 'right' | 'top' | 'bottom' | 'left'
   className?: string
+  showButton?: boolean
 }
 
 const UserPopover = ({
@@ -21,6 +22,7 @@ const UserPopover = ({
   user,
   side,
   className,
+  showButton = false,
 }: UserPopoverProps) => (
   <Popover>
     <PopoverTrigger asChild>
@@ -30,7 +32,7 @@ const UserPopover = ({
       side={side}
       className={cn('border-0 w-[340px] rounded-lg p-0 m-0 bg-server dark:bg-server-dark', className)}
     >
-      <UserWrapper user={user} />
+      <UserWrapper user={user} showButton={showButton} />
     </PopoverContent>
   </Popover>
 )
