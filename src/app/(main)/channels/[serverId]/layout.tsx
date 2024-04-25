@@ -17,8 +17,6 @@ import UserSettings from '@/components/settings/user/user-settings'
 import { db } from '@/lib/db'
 import { ORIGIN_URL } from '@/utils/config'
 
-import Me from './Me'
-
 const ServerIdLayout = async ({ children, params }: {
   children: React.ReactNode
   params: {
@@ -38,11 +36,11 @@ const ServerIdLayout = async ({ children, params }: {
 
   if (params.serverId === '%40me' || params.serverId === '@me') {
     return (
-      <div>
-        <Me />
+      <>
+        {children}
         <UserSettings user={user} />
         <CreateServerModal />
-      </div>
+      </>
     )
   }
 
