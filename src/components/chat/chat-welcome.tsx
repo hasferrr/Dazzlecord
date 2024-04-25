@@ -3,7 +3,7 @@ import { Hash } from 'lucide-react'
 const ChatWelcome = ({ name }: {
   name: string
 }) => (
-  <div className="space-y-2 mb-4 px-5 pt-4">
+  <div className="space-y-2 px-5 pt-4">
     <div className="h-[75px] w-[75px] rounded-full bg-zinc-500 dark:bg-zinc-700
       flex items-center justify-center"
     >

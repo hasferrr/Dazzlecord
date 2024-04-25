@@ -13,6 +13,7 @@ import { useSocket } from '@/context/socket-context'
 import type { MessageWithUser } from '@/types'
 
 import ChatItem from './chat-item'
+import SkeletonMessage from './skeleton-message'
 
 const ChatMessages = ({ channelId, channelName, currentMember }: {
   channelId: string
@@ -87,7 +88,7 @@ const ChatMessages = ({ channelId, channelName, currentMember }: {
   }, [fetchNextPage, inView])
 
   if (status === 'pending') {
-    return <div>Loading...</div>
+    return <SkeletonMessage />
   }
 
   if (status === 'error') {
@@ -102,18 +103,17 @@ const ChatMessages = ({ channelId, channelName, currentMember }: {
   return (
     <div className="overflow-hidden">
       {!hasNextPage && <ChatWelcome name={channelName} />}
-      {!isFetchingNextPage
-        && (
-          <button
-            ref={ref}
-            onClick={() => fetchNextPage()}
-            disabled={!hasNextPage}
-          >
-            {hasNextPage
-              ? 'Load More'
-              : 'Nothing more to load'}
-          </button>
-        )}
+      {isFetchingNextPage && <SkeletonMessage />}
+      {!isFetchingNextPage && (
+        <button
+          ref={ref}
+          onClick={() => fetchNextPage()}
+          disabled={!hasNextPage}
+          className="cursor-default"
+        >
+          {hasNextPage && <SkeletonMessage />}
+        </button>
+      )}
       <div className="flex flex-col-reverse">
         {data.pages.map((page) => (
           <Fragment key={page.nextCursor}>
