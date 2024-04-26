@@ -16,10 +16,7 @@ import {
   FormItem,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-
-const formSchema = z.object({
-  content: z.string().min(1),
-})
+import { messageSchema } from '@/schemas/message-schema'
 
 interface ChatItemEditFormProps {
   content: string
@@ -32,8 +29,8 @@ const ChatItemEditForm = ({
 }: ChatItemEditFormProps) => {
   const [isPending, setTransition] = useTransition()
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof messageSchema>>({
+    resolver: zodResolver(messageSchema),
     defaultValues: {
       content,
     },
@@ -55,7 +52,7 @@ const ChatItemEditForm = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof messageSchema>) => {
     setTransition(() => {
       console.log(values)
     })

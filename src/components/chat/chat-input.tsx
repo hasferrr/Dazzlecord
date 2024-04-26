@@ -15,10 +15,7 @@ import {
   FormItem,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-
-const formSchema = z.object({
-  content: z.string().min(1),
-})
+import { messageSchema } from '@/schemas/message-schema'
 
 const ChatInput = ({
   channelName,
@@ -29,8 +26,8 @@ const ChatInput = ({
   channelId: string
   serverId: string
 }) => {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof messageSchema>>({
+    resolver: zodResolver(messageSchema),
     defaultValues: {
       content: '',
     },
@@ -56,7 +53,7 @@ const ChatInput = ({
 
   const isLoading = form.formState.isSubmitting
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof messageSchema>) => {
     values.content = values.content.trim()
     if (values.content !== '') {
       try {
