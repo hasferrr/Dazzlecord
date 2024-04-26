@@ -68,7 +68,7 @@ const SettingsLayout = ({
             <MobileToggleV2 side="left">
               <div className="bg-server dark:bg-server-dark flex flex-grow flex-shrink-0 justify-end">
                 <ScrollArea className="pl-4">
-                  <div className="py-[60px] w-[13rem] flex flex-col gap-y-1">
+                  <div className="w-[13rem] flex flex-col gap-y-1">
                     <LabelSelection
                       title={label}
                       className="pl-2"
@@ -83,7 +83,8 @@ const SettingsLayout = ({
         <BigScreen>
           <div className="bg-server dark:bg-server-dark flex flex-grow flex-shrink-0 justify-end">
             <ScrollArea className="pl-4">
-              <div className="py-[60px] w-[13rem] flex flex-col gap-y-1">
+              <div className="pt-[60px]" />
+              <div className="w-[13rem] flex flex-col gap-y-1">
                 <LabelSelection
                   title={label}
                   className="pl-2"
@@ -93,12 +94,13 @@ const SettingsLayout = ({
             </ScrollArea>
           </div>
         </BigScreen>
-        <ScrollArea className="md:w-[52rem] py-[60px] md:px-[40px] px-1">
+        <ScrollArea className="md:w-[52rem] md:px-[40px] px-1">
+          <div className="pt-[60px]" />
           {children}
           <ScrollBar orientation="horizontal" />
         </ScrollArea>
-        <div className="w-[72px] md:pr-[40px] pr-[12px] py-[60px] flex items-start justify-end flex-grow">
-          <button onClick={handleClose}>
+        <div className="w-[72px] md:pr-[40px] pr-[12px] flex items-start justify-end flex-grow">
+          <button onClick={handleClose} className="pt-[60px]">
             <CircleX className="h-8 w-8" />
           </button>
         </div>
