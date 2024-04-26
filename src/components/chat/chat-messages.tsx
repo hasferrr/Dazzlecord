@@ -147,6 +147,7 @@ const ChatMessages = ({
               <ChatItem
                 key={message.id}
                 message={message}
+                currentMember={currentMember}
               />
             ))}
           </Fragment>

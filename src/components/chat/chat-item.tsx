@@ -1,5 +1,7 @@
 'use client'
 
+import { type Member, MemberRole } from '@prisma/client'
+
 import { useIsEditingValue, useSetIsEditing } from '@/context/chat/is-editing-context'
 import { cn } from '@/lib/utils'
 import type { MessageWithUser } from '@/types'
@@ -12,13 +14,20 @@ import ChatItemProfilePhoto from './item/chat-item-profile-photo'
 
 interface ChatItemProps {
   message: MessageWithUser
+  currentMember: Member
 }
 
 const ChatItem = ({
   message,
+  currentMember,
 }: ChatItemProps) => {
   const isEditing = useIsEditingValue()
   const setIsEditing = useSetIsEditing()
+
+  const messageOwner = message.memberId === currentMember.id
+  const canDeleteMessage = !message.deleted
+    && (messageOwner || (currentMember.role !== MemberRole.GUEST))
+  const canEditMessage = !message.deleted && message.memberId === currentMember.id
 
   const smolText = cn('text-xs mx-1 text-zinc-500 dark:text-zinc-400')
 
@@ -39,6 +48,8 @@ const ChatItem = ({
       <ChatItemButton
         messageId={message.id}
         setIsEditing={setIsEditing}
+        canDeleteMessage={canDeleteMessage}
+        canEditMessage={canEditMessage}
       />
     </div>
   )

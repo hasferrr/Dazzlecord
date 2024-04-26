@@ -7,16 +7,17 @@ import ActionTooltip from '@/components/action-tooltip'
 interface ChatItemButtonProps {
   messageId: string
   setIsEditing: Dispatch<SetStateAction<string | false>>
+  canDeleteMessage: boolean
+  canEditMessage: boolean
 }
 
 const ChatItemButton = ({
   messageId,
   setIsEditing,
-}: ChatItemButtonProps) => {
-  const canDeleteMessage = 1
-  const canEditMessage = 1
-
-  return canDeleteMessage && (
+  canDeleteMessage,
+  canEditMessage,
+}: ChatItemButtonProps) => canDeleteMessage
+  && (
     <div className="absolute hidden group-hover:flex gap-x-1 -top-2 right-5
     bg-server dark:bg-server-dark border-navigation dark:border-navigation-dark
       border rounded-sm hover:shadow-md"
@@ -39,6 +40,5 @@ const ChatItemButton = ({
       </ActionTooltip>
     </div>
   )
-}
 
 export default ChatItemButton
