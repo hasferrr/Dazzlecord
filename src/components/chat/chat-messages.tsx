@@ -59,7 +59,6 @@ const ChatMessages = ({ channelId, channelName, currentMember }: {
       return undefined
     }
     const handleIncomingMessage = (message: MessageWithUser) => {
-      console.log('message added', message)
       queryClient.setQueryData([`message:channel:${channelId}`], (data: InfiniteData) => (!data
         ? undefined
         : ({
@@ -74,10 +73,31 @@ const ChatMessages = ({ channelId, channelName, currentMember }: {
         })))
     }
 
-    socket.on('message:channel', handleIncomingMessage)
+    const handleEditedMessage = (updatedMessage: MessageWithUser) => {
+      queryClient.setQueryData([`message:channel:${channelId}`], (data: InfiniteData) => {
+        if (!data) return undefined
+        // Flag to track if updatedMessage has been found and updated
+        const updated = false
+        const transformedPages = data.pages.map((page) => (!updated
+          ? ({
+            data: page.data.map((msg) => (msg.id === updatedMessage.id ? updatedMessage : msg)),
+            nextCursor: page.nextCursor,
+          })
+          : page
+        ))
+        return {
+          pages: transformedPages,
+          pageParams: data.pageParams,
+        }
+      })
+    }
+
+    socket.on('SEND:message:channel', handleIncomingMessage)
+    socket.on('EDIT:message:channel', handleEditedMessage)
 
     return () => {
-      socket.off('message:channel', handleIncomingMessage)
+      socket.off('SEND:message:channel', handleIncomingMessage)
+      socket.off('EDIT:message:channel', handleEditedMessage)
     }
   }, [channelId, queryClient, socket])
 

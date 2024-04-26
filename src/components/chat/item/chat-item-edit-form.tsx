@@ -8,6 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { editMessage } from '@/actions/message/edit-message'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -17,14 +18,15 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { messageSchema } from '@/schemas/message-schema'
+import type { MessageWithUser } from '@/types'
 
 interface ChatItemEditFormProps {
-  content: string
+  message: MessageWithUser
   setIsEditing: Dispatch<SetStateAction<string | false>>
 }
 
 const ChatItemEditForm = ({
-  content,
+  message,
   setIsEditing,
 }: ChatItemEditFormProps) => {
   const [isPending, setTransition] = useTransition()
@@ -32,7 +34,7 @@ const ChatItemEditForm = ({
   const form = useForm<z.infer<typeof messageSchema>>({
     resolver: zodResolver(messageSchema),
     defaultValues: {
-      content,
+      content: message.content,
     },
   })
 
@@ -53,8 +55,19 @@ const ChatItemEditForm = ({
   }, [])
 
   const onSubmit = async (values: z.infer<typeof messageSchema>) => {
-    setTransition(() => {
-      console.log(values)
+    setTransition(async () => {
+      const updatedMessage = await editMessage(
+        values,
+        message.channelId,
+        message.serverId,
+        message.memberId,
+        message.id,
+      )
+      if (!updatedMessage) {
+        console.log('failed to update the msg')
+        return
+      }
+      setIsEditing(false)
     })
   }
 

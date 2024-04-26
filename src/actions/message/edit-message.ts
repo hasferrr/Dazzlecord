@@ -10,12 +10,15 @@ import { db } from '@/lib/db'
 import { messageSchema } from '@/schemas/message-schema'
 import { NEXT_PUBLIC_SOCKET_IO_URL } from '@/utils/config'
 
-export const sendMessage = async (
+import { findMember } from '../prisma/member'
+
+export const editMessage = async (
   values: z.infer<typeof messageSchema>,
-  fileName: string | null,
+  // fileName: string | null,
   channelId: string,
   serverId: string,
   memberId: string,
+  messageId: string,
 ): Promise<Message | null> => {
   const validatedFields = messageSchema.safeParse(values)
   if (!validatedFields.success) {
@@ -31,42 +34,30 @@ export const sendMessage = async (
   const userId = session.user.id
 
   try {
-    const currentServer = await db.server.findFirst({
-      where: {
-        id: serverId as string,
-        members: {
-          some: {
-            userId,
-            serverId,
-          },
-        },
-        channels: {
-          some: {
-            id: channelId,
-          },
-        },
-      },
-    })
-    if (!currentServer) {
+    const currentMember = await findMember(serverId, userId)
+    if (!currentMember || currentMember.id !== memberId) {
       return null
     }
 
-    const message = await db.message.create({
-      data: {
-        content,
-        fileName,
+    const updatedMessage = await db.message.update({
+      where: {
+        id: messageId,
         userId,
         channelId,
         serverId,
         memberId,
       },
+      data: {
+        content,
+        isUpdated: true,
+      },
       include: { user: true },
     })
 
     const URL = `${NEXT_PUBLIC_SOCKET_IO_URL}/message`
-    const res = await axios.post(URL, { message, channelId, type: 'SEND' })
+    const res = await axios.post(URL, { message: updatedMessage, channelId, type: 'EDIT' })
     if (res.status === 200) {
-      return message
+      return updatedMessage
     }
     return null
   } catch (error) {

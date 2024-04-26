@@ -33,8 +33,8 @@ const ChatItem = ({
       />
       <p className="text-[15px] leading-[1.375rem] whitespace-break-spaces" style={{ wordBreak: 'break-word' }}>
         {isEditing !== message.id
-          ? <ChatItemContent message={message} className={smolText} />
-          : <ChatItemEditForm content={message.content} setIsEditing={setIsEditing} />}
+          ? <ChatItemContent message={message} editedStyle={cn(smolText, 'text-[11px]')} />
+          : <ChatItemEditForm message={message} setIsEditing={setIsEditing} />}
       </p>
       <ChatItemButton
         messageId={message.id}
