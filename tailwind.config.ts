@@ -64,6 +64,15 @@ const config = {
           DEFAULT: '#ffffff',
           dark: '#313338',
         },
+        // Color group for chat input
+        'chat-input': {
+          DEFAULT: '#ebedef',
+          dark: '#383a40',
+        },
+        'chat-hover': {
+          DEFAULT: '#f7f7f7',
+          dark: 'rgb(0,0,0,0.05)',
+        },
         // Other
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',

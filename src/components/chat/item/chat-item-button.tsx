@@ -5,10 +5,12 @@ import { Pen, Trash } from 'lucide-react'
 import ActionTooltip from '@/components/action-tooltip'
 
 interface ChatItemButtonProps {
-  setIsEditing: Dispatch<SetStateAction<boolean>>
+  messageId: string
+  setIsEditing: Dispatch<SetStateAction<string | false>>
 }
 
 const ChatItemButton = ({
+  messageId,
   setIsEditing,
 }: ChatItemButtonProps) => {
   const canDeleteMessage = 1
@@ -22,7 +24,7 @@ const ChatItemButton = ({
       {canEditMessage && (
         <ActionTooltip label="Edit" className="mb-1">
           <Pen
-            onClick={() => setIsEditing(true)}
+            onClick={() => setIsEditing(messageId)}
             className="hover:bg-page dark:hover:bg-page-dark text-page-dark dark:text-page
             rounded-sm p-2 w-8 h-8 ml-auto transition cursor-pointer"
           />
