@@ -17,15 +17,19 @@ import {
 import { Input } from '@/components/ui/input'
 import { messageSchema } from '@/schemas/message-schema'
 
+interface ChatInputProps {
+  channelName: string
+  channelId: string
+  serverId: string
+  memberId: string
+}
+
 const ChatInput = ({
   channelName,
   channelId,
   serverId,
-}: {
-  channelName: string
-  channelId: string
-  serverId: string
-}) => {
+  memberId,
+}: ChatInputProps) => {
   const form = useForm<z.infer<typeof messageSchema>>({
     resolver: zodResolver(messageSchema),
     defaultValues: {
@@ -51,25 +55,18 @@ const ChatInput = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const isLoading = form.formState.isSubmitting
-
   const onSubmit = async (values: z.infer<typeof messageSchema>) => {
-    values.content = values.content.trim()
-    if (values.content !== '') {
-      try {
-        const res = await sendMessage(values.content, null, channelId, serverId)
-        if (res.success) {
-          form.reset()
-        } else {
-          console.log(res.error)
-        }
-      } catch (error) {
-        console.log(error)
-      }
+    if (values.content === '') {
+      return
     }
+    form.reset()
     setTimeout(() => {
       form.setFocus('content')
     }, 10)
+    const message = await sendMessage(values, null, channelId, serverId, memberId)
+    if (!message) {
+      console.log('failed to send msg')
+    }
   }
 
   return (
@@ -92,7 +89,6 @@ const ChatInput = ({
                     <Plus className="text-white dark:text-[var(--dark-page)]" />
                   </button>
                   <Input
-                    disabled={isLoading}
                     className="px-14 py-6 bg-[var(--light-chat-input)] dark:bg-[var(--dark-chat-input)]
                     text-[#4b4b50] dark:text-[#B5BAC1] border-none border-0
                     focus-visible:ring-0 focus-visible:ring-offset-0"

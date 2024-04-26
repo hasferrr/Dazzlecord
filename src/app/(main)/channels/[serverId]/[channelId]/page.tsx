@@ -73,6 +73,7 @@ const ChannelIdPage = async ({
           channelName={channel.name}
           channelId={params.channelId}
           serverId={params.serverId}
+          memberId={member.id}
         />
       </div>
       <DeleteChannelModal channel={channel} />

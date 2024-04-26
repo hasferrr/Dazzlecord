@@ -39,6 +39,7 @@ model Member {
   role      MemberRole @default(GUEST)
   userId    String     @db.ObjectId
   serverId  String     @db.ObjectId
+  Message   Message[]
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
 
@@ -69,12 +70,14 @@ model Message {
   userId    String   @db.ObjectId
   channelId String   @db.ObjectId
   serverId  String   @db.ObjectId
+  memberId  String   @db.ObjectId
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   channel Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
   server  Server  @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  member  Member  @relation(fields: [memberId], references: [id], onDelete: Cascade)
 }
 
 enum MemberRole {
