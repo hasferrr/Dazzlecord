@@ -1,5 +1,7 @@
 'use client'
 
+import { useEffect } from 'react'
+
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Plus, Smile } from 'lucide-react'
 import { useForm } from 'react-hook-form'
@@ -33,6 +35,24 @@ const ChatInput = ({
       content: '',
     },
   })
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.code === 'Escape') {
+        setTimeout(() => {
+          form.setFocus('content')
+        }, 10)
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    setTimeout(() => {
+      form.setFocus('content')
+    }, 10)
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const isLoading = form.formState.isSubmitting
 

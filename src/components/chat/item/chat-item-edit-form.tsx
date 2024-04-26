@@ -32,6 +32,13 @@ const ChatItemEditForm = ({
 }: ChatItemEditFormProps) => {
   const [isPending, setTransition] = useTransition()
 
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      content,
+    },
+  })
+
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.code === 'Escape') {
@@ -39,18 +46,14 @@ const ChatItemEditForm = ({
       }
     }
     window.addEventListener('keydown', handleKeyDown)
+    setTimeout(() => {
+      form.setFocus('content')
+    }, 10)
     return () => {
       window.removeEventListener('keydown', handleKeyDown)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      content,
-    },
-  })
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setTransition(() => {
