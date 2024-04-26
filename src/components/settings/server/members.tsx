@@ -34,6 +34,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import UserPopover from '@/components/user/user-popover'
 import { yearDifferenceYearFromNow } from '@/lib/helpers'
 import type { MemberWithUser } from '@/types'
 
@@ -94,11 +95,18 @@ const Members = ({
   const makeTableRow = (member: MemberWithUser) => (
     <TableRow>
       <TableCell>
-        <MemberItem
-          name={member.user.name}
-          about={member.user.about}
-          image={member.user.image}
-        />
+        <UserPopover
+          user={member.user}
+          side="right"
+        >
+          <div>
+            <MemberItem
+              name={member.user.name}
+              about={member.user.about}
+              image={member.user.image}
+            />
+          </div>
+        </UserPopover>
       </TableCell>
       <TableCell>{yearDifferenceYearFromNow(member.createdAt)}</TableCell>
       <TableCell>
@@ -220,6 +228,7 @@ const Members = ({
           <AlertDialogHeader>
             <AlertDialogTitle>
               Kick
+              {' '}
               {memberToBeKicked?.user.username}
               {' '}
               from Server

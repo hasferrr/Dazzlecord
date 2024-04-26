@@ -1,10 +1,11 @@
-import { type Member, MemberRole, type User } from '@prisma/client'
+import { MemberRole } from '@prisma/client'
 import { redirect } from 'next/navigation'
 
 import { getAllMembersByServerIdSorted } from '@/actions/prisma/member'
 import MemberItem from '@/components/member-item'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import UserPopover from '@/components/user/user-popover'
+import type { MemberWithUser } from '@/types'
 
 import MemberSection from './member-section'
 
@@ -21,8 +22,9 @@ const MemberSidebar = async ({ serverId }: {
   const moderators: JSX.Element[] = []
   const guests: JSX.Element[] = []
 
-  const memberList = (m: (Member & { user: User })) => (
+  const memberList = (m: MemberWithUser) => (
     <UserPopover
+      key={m.id}
       user={m.user}
       side="left"
     >
