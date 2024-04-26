@@ -1,5 +1,7 @@
 'use client'
 
+import { useState } from 'react'
+
 import { type Member, MemberRole } from '@prisma/client'
 
 import { useIsEditingValue, useSetIsEditing } from '@/context/chat/is-editing-context'
@@ -8,6 +10,7 @@ import type { MessageWithUser } from '@/types'
 
 import ChatItemButton from './item/chat-item-button'
 import ChatItemContent from './item/chat-item-content'
+import ChatItemDeleteDialog from './item/chat-item-delete-dialog'
 import ChatItemEditForm from './item/chat-item-edit-form'
 import ChatItemNameTimestamp from './item/chat-item-name-timestamp'
 import ChatItemProfilePhoto from './item/chat-item-profile-photo'
@@ -21,6 +24,8 @@ const ChatItem = ({
   message,
   currentMember,
 }: ChatItemProps) => {
+  const [isDeleting, setIsDeleting] = useState(false)
+
   const isEditing = useIsEditingValue()
   const setIsEditing = useSetIsEditing()
 
@@ -48,8 +53,22 @@ const ChatItem = ({
       <ChatItemButton
         messageId={message.id}
         setIsEditing={setIsEditing}
+        setIsDeleting={setIsDeleting}
         canDeleteMessage={canDeleteMessage}
         canEditMessage={canEditMessage}
+        deleteAction={() => {
+          console.log('DELETING') // TODO
+          setIsDeleting(false)
+        }}
+      />
+      <ChatItemDeleteDialog
+        message={message}
+        open={isDeleting}
+        close={() => setIsDeleting(false)}
+        deleteAction={() => {
+          console.log('DELETING') // TODO
+          setIsDeleting(false)
+        }}
       />
     </div>
   )
