@@ -15,11 +15,17 @@ import type { MessageWithUser } from '@/types'
 import ChatItem from './chat-item'
 import SkeletonMessage from './skeleton-message'
 
-const ChatMessages = ({ channelId, channelName, currentMember }: {
+interface ChatMessagesProps {
   channelId: string
   channelName: string
   currentMember: Member
-}) => {
+}
+
+const ChatMessages = ({
+  channelId,
+  channelName,
+  currentMember,
+}: ChatMessagesProps) => {
   const queryClient = useQueryClient()
   const socket = useSocket()
   const { ref, inView } = useInView()
