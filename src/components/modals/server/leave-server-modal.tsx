@@ -67,6 +67,14 @@ const LeaveServerModal = ({ server }: { server: Server }) => {
         </DialogHeader>
 
         <DialogFooter className="p-4 bg-gray-100 dark:bg-[var(--dark-server)] rounded-b-lg">
+          <Button
+            variant="underline"
+            type="button"
+            onClick={handleOpenDialog}
+            disabled={isPending}
+          >
+            Cancel
+          </Button>
           <Button variant="destructive" onClick={handleLeave} disabled={isPending}>
             Leave Server
           </Button>

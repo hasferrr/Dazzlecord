@@ -21,7 +21,7 @@ interface AbstractDeleteModalProps {
   onDeleteModalClose: () => void
   onSubmitAction: () => Promise<{ success?: string, error?: string }>
   redirectPath: string
-  titleSubmitButton? :string
+  titleSubmitButton?: string
 }
 
 const AbstractDeleteModal = ({
@@ -69,6 +69,14 @@ const AbstractDeleteModal = ({
         </DialogHeader>
 
         <DialogFooter className="p-4 bg-gray-100 dark:bg-[var(--dark-server)] rounded-b-lg">
+          <Button
+            variant="underline"
+            type="button"
+            onClick={handleOpenDialog}
+            disabled={isPending}
+          >
+            Cancel
+          </Button>
           <Button variant="destructive" onClick={handleDelete} disabled={isPending}>
             {titleSubmitButton || title}
           </Button>

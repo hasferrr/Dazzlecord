@@ -21,6 +21,7 @@ const DeleteServerModal = ({ server }: {
       deleteDescription={(
         <>
           Are you sure you want to delete
+          {' '}
           <strong>{server.name}</strong>
           ? This action cannot be undone.
         </>

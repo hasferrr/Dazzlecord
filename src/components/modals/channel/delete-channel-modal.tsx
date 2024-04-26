@@ -21,6 +21,7 @@ const DeleteChannelModal = ({ channel }: {
       deleteDescription={(
         <>
           Are you sure you want to delete
+          {' '}
           <strong>
             #
             {channel.name}
