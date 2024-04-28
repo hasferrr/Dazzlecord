@@ -98,12 +98,30 @@ const ChatMessages = ({
       })
     }
 
+    const handleDeletedMessage = (deletedMessage: MessageWithUser) => {
+      queryClient.setQueryData([`message:channel:${channelId}`], (data: InfiniteData): InfiniteData => {
+        if (!data) return undefined
+
+        const transformedPages = data.pages.map((page) => ({
+          data: page.data.filter((msg) => msg.id !== deletedMessage.id),
+          nextCursor: page.nextCursor,
+        }))
+
+        return {
+          pages: transformedPages,
+          pageParams: data.pageParams,
+        }
+      })
+    }
+
     socket.on('SEND:message:channel', handleIncomingMessage)
     socket.on('EDIT:message:channel', handleEditedMessage)
+    socket.on('DELETE:message:channel', handleDeletedMessage)
 
     return () => {
       socket.off('SEND:message:channel', handleIncomingMessage)
       socket.off('EDIT:message:channel', handleEditedMessage)
+      socket.off('DELETE:message:channel', handleDeletedMessage)
     }
   }, [channelId, queryClient, socket])
 
