@@ -65,7 +65,6 @@ model Message {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   content   String
   fileName  String?
-  deleted   Boolean  @default(false)
   isUpdated Boolean  @default(false)
   userId    String   @db.ObjectId
   channelId String   @db.ObjectId

@@ -31,9 +31,8 @@ const ChatItem = ({
   const setIsEditing = useSetIsEditing()
 
   const messageOwner = message.memberId === currentMember.id
-  const canDeleteMessage = !message.deleted
-    && (messageOwner || (currentMember.role !== MemberRole.GUEST))
-  const canEditMessage = !message.deleted && messageOwner
+  const canDeleteMessage = (messageOwner || (currentMember.role !== MemberRole.GUEST))
+  const canEditMessage = messageOwner
 
   const smolText = cn('text-xs mx-1 text-zinc-500 dark:text-zinc-400')
 
