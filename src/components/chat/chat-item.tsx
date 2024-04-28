@@ -4,6 +4,7 @@ import { useState } from 'react'
 
 import { type Member, MemberRole } from '@prisma/client'
 
+import { deleteMessage } from '@/actions/message/delete-message'
 import { useIsEditingValue, useSetIsEditing } from '@/context/chat/is-editing-context'
 import { cn } from '@/lib/utils'
 import type { MessageWithUser } from '@/types'
@@ -32,7 +33,7 @@ const ChatItem = ({
   const messageOwner = message.memberId === currentMember.id
   const canDeleteMessage = !message.deleted
     && (messageOwner || (currentMember.role !== MemberRole.GUEST))
-  const canEditMessage = !message.deleted && message.memberId === currentMember.id
+  const canEditMessage = !message.deleted && messageOwner
 
   const smolText = cn('text-xs mx-1 text-zinc-500 dark:text-zinc-400')
 
@@ -57,7 +58,7 @@ const ChatItem = ({
         canDeleteMessage={canDeleteMessage}
         canEditMessage={canEditMessage}
         deleteAction={() => {
-          console.log('DELETING') // TODO
+          deleteMessage(message.id)
           setIsDeleting(false)
         }}
       />
@@ -66,7 +67,7 @@ const ChatItem = ({
         open={isDeleting}
         close={() => setIsDeleting(false)}
         deleteAction={() => {
-          console.log('DELETING') // TODO
+          deleteMessage(message.id)
           setIsDeleting(false)
         }}
       />

@@ -5,12 +5,11 @@ import axios from 'axios'
 import { redirect } from 'next/navigation'
 import type { z } from 'zod'
 
+import { findMember } from '@/actions/prisma/member'
 import { auth } from '@/auth'
 import { db } from '@/lib/db'
 import { messageSchema } from '@/schemas/message-schema'
 import { NEXT_PUBLIC_SOCKET_IO_URL } from '@/utils/config'
-
-import { findMember } from '../prisma/member'
 
 export const editMessage = async (
   values: z.infer<typeof messageSchema>,
