@@ -3,14 +3,14 @@
 import { Fragment, useEffect } from 'react'
 
 import type { Member } from '@prisma/client'
-import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query'
+import { useInfiniteQuery } from '@tanstack/react-query'
 import { useInView } from 'react-intersection-observer'
 
 import { queryMessages } from '@/actions/message/query-message'
 import { generateToken } from '@/actions/socket-io/generate-token'
 import ChatWelcome from '@/components/chat/chat-welcome'
 import { useSocket } from '@/context/socket-context'
-import type { MessageWithUser } from '@/types'
+import { useChatSocket } from '@/hooks/use-chat-socket'
 
 import ChatItem from './chat-item'
 import SkeletonMessage from './skeleton-message'
@@ -26,7 +26,6 @@ const ChatMessages = ({
   channelName,
   currentMember,
 }: ChatMessagesProps) => {
-  const queryClient = useQueryClient()
   const socket = useSocket()
   const { ref, inView } = useInView()
 
@@ -58,72 +57,7 @@ const ChatMessages = ({
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
   })
 
-  type InfiniteData = typeof data
-
-  useEffect(() => {
-    if (!socket) {
-      return undefined
-    }
-    const handleIncomingMessage = (message: MessageWithUser) => {
-      queryClient.setQueryData([`message:channel:${channelId}`], (data: InfiniteData) => (!data
-        ? undefined
-        : ({
-          pages: [
-            {
-              data: [message, ...data.pages[0].data],
-              nextCursor: data.pages[0].nextCursor,
-            },
-            ...data.pages.slice(1),
-          ],
-          pageParams: data.pageParams,
-        })))
-    }
-
-    const handleEditedMessage = (updatedMessage: MessageWithUser) => {
-      queryClient.setQueryData([`message:channel:${channelId}`], (data: InfiniteData) => {
-        if (!data) return undefined
-        // Flag to track if updatedMessage has been found and updated
-        const updated = false
-        const transformedPages = data.pages.map((page) => (!updated
-          ? ({
-            data: page.data.map((msg) => (msg.id === updatedMessage.id ? updatedMessage : msg)),
-            nextCursor: page.nextCursor,
-          })
-          : page
-        ))
-        return {
-          pages: transformedPages,
-          pageParams: data.pageParams,
-        }
-      })
-    }
-
-    const handleDeletedMessage = (deletedMessage: MessageWithUser) => {
-      queryClient.setQueryData([`message:channel:${channelId}`], (data: InfiniteData): InfiniteData => {
-        if (!data) return undefined
-
-        const transformedPages = data.pages.map((page) => ({
-          data: page.data.filter((msg) => msg.id !== deletedMessage.id),
-          nextCursor: page.nextCursor,
-        }))
-
-        return {
-          pages: transformedPages,
-          pageParams: data.pageParams,
-        }
-      })
-    }
-
-    socket.on('SEND:message:channel', handleIncomingMessage)
-    socket.on('EDIT:message:channel', handleEditedMessage)
-    socket.on('DELETE:message:channel', handleDeletedMessage)
-
-    return () => {
-      socket.off('SEND:message:channel', handleIncomingMessage)
-      socket.off('EDIT:message:channel', handleEditedMessage)
-      socket.off('DELETE:message:channel', handleDeletedMessage)
-    }
-  }, [channelId, queryClient, socket])
+  useChatSocket({ id: channelId, type: 'channel' })
 
   useEffect(() => {
     if (inView) {
