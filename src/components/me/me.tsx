@@ -1,10 +1,8 @@
 import { redirect } from 'next/navigation'
 
 import { getUserById } from '@/actions/prisma/user'
-import { auth, signOut } from '@/auth'
+import { auth } from '@/auth'
 import ChatHeader from '@/components/chat/chat-header'
-import ModeToggle from '@/components/mode-toggle'
-import UserPopover from '@/components/user/user-popover'
 
 const Me = async () => {
   const session = await auth()
@@ -19,31 +17,27 @@ const Me = async () => {
   }
 
   return (
-    <div>
-      <ChatHeader
-        name="App"
-        channelType="TEXT"
-      />
-      {JSON.stringify(session)}
-      <form action={async () => {
-        'use server'
-
-        try {
-          await signOut({
-            redirectTo: '/',
-          })
-        } catch (error) {
-          console.log(error)
-          throw error
-        }
-      }}
-      >
-        <button type="submit">Sign out</button>
-      </form>
-      <ModeToggle />
-      <UserPopover user={user} side="right">
-        <button type="button">USER</button>
-      </UserPopover>
+    <div className="bg-page dark:bg-page-dark h-full w-full
+    max-h-screen min-h-screen
+    grid grid-cols-[1fr_auto] grid-rows-[3rem_1fr_auto]"
+    >
+      <div className="col-span-2 h-12">
+        <ChatHeader
+          name="Friends"
+          channelType="TEXT"
+        />
+      </div>
+      <div>
+        TODO: List of recent direct chats
+      </div>
+      <div className="row-span-2">
+        {/* <BigScreen width={992}>
+          Sidebar
+        </BigScreen> */}
+      </div>
+      <div className="px-5">
+        {/* <div>Bottom</div> */}
+      </div>
     </div>
   )
 }

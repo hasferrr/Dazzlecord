@@ -5,6 +5,7 @@ import { getAllMembersByServerIdSorted } from '@/actions/prisma/member'
 import { getServerIncludesAllChannel } from '@/actions/prisma/server'
 import { getUserById } from '@/actions/prisma/user'
 import { auth } from '@/auth'
+import MeSidebar from '@/components/me/sidebar/me-sidebar'
 import BigScreen from '@/components/media-query/big-screen'
 import CreateChannelModal from '@/components/modals/channel/create-channel-modal'
 import CreateServerModal from '@/components/modals/server/create-server-modal'
@@ -37,6 +38,11 @@ const ServerIdLayout = async ({ children, params }: {
   if (params.serverId === '%40me' || params.serverId === '@me') {
     return (
       <>
+        <div className="flex-col h-full inset-y-0">
+          <BigScreen>
+            <MeSidebar />
+          </BigScreen>
+        </div>
         {children}
         <UserSettings user={user} />
         <CreateServerModal />
@@ -82,11 +88,11 @@ const ServerIdLayout = async ({ children, params }: {
         <CreateChannelModal serverId={server.id} />
         {currentMember.role !== MemberRole.GUEST
           && (
-          <ServerSettings
-            server={server}
-            currentMember={currentMember}
-            serverMembers={members}
-          />
+            <ServerSettings
+              server={server}
+              currentMember={currentMember}
+              serverMembers={members}
+            />
           )}
       </>
     )

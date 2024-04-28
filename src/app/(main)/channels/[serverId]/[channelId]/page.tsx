@@ -45,9 +45,9 @@ const ChannelIdPage = async ({
   if (!channel || !member) {
     redirect('/')
   }
-  console.log(channel.name)
+
   return (
-    <div className="bg-white dark:bg-[var(--dark-page)] h-full w-full
+    <div className="bg-page dark:bg-page-dark h-full w-full
     max-h-screen min-h-screen
     grid grid-cols-[1fr_auto] grid-rows-[3rem_1fr_auto]"
     >
