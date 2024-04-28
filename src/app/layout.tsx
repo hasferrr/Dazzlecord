@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Open_Sans } from 'next/font/google'
 
 import './globals.css'
+import LogOutModal from '@/components/modals/log-out-modal'
 import ThemeProvider from '@/components/theme-provider'
 import { AuthContextProvider } from '@/context/auth/auth-context'
 import { IsEditingContextProvider } from '@/context/chat/is-editing-context'
@@ -45,6 +46,7 @@ const RootLayout = ({ children }: Readonly<{
                     <UserSettingsContextProvider>
                       <IsEditingContextProvider>
                         {children}
+                        <LogOutModal />
                       </IsEditingContextProvider>
                     </UserSettingsContextProvider>
                   </ServerSettingsContextProvider>

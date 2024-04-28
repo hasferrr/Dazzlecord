@@ -4,6 +4,7 @@ import type { User } from '@prisma/client'
 
 import ButtonSelection from '@/components/settings/button-selection'
 import SettingsLayout from '@/components/settings/settings-layout'
+import { useLogOutOpen } from '@/context/modal-context'
 import { PreviewProfilesContextProvider } from '@/context/settings/user/preview-profiles-context'
 import {
   useCloseUserSettingsPage,
@@ -25,6 +26,7 @@ const UserSettings = ({
   const userSettingsPageValue = useUserSettingsPageValue()
   const closeUserSettingsPage = useCloseUserSettingsPage()
   const openUserSettingsPage = useOpenUserSettingsPage()
+  const logOutOpen = useLogOutOpen()
 
   return (
     <SettingsLayout
@@ -32,11 +34,18 @@ const UserSettings = ({
       isSettingsPageOpen={userSettingsPageValue}
       closeSettingsPage={closeUserSettingsPage}
       selectionComponents={(
-        <ButtonSelection
-          title="Profiles"
-          onClick={openUserSettingsPage}
-          activeCondition={userSettingsValue.profiles}
-        />
+        <>
+          <ButtonSelection
+            title="Profiles"
+            onClick={openUserSettingsPage}
+            activeCondition={userSettingsValue.profiles}
+          />
+          <ButtonSelection
+            title="Log Out"
+            onClick={logOutOpen}
+            activeCondition={false}
+          />
+        </>
       )}
     >
       <PreviewProfilesContextProvider

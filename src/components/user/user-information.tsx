@@ -1,6 +1,7 @@
 import type { User } from '@prisma/client'
 import { LogOut } from 'lucide-react'
 
+import LogOutButtonWrapper from '@/components/log-out-button-wrapper'
 import { Separator } from '@/components/ui/separator'
 import { formatDateMinimal } from '@/lib/helpers'
 import { cn } from '@/lib/utils'
@@ -39,13 +40,12 @@ const UserInformation = ({
         <div>Online</div>
       </button>
       <Separator />
-      <button
-        type="submit"
+      <LogOutButtonWrapper
         className="flex items-center gap-2 hover:bg-red-500 hover:text-white w-full p-[6px] rounded-sm transition-all"
       >
         <LogOut size={18} />
-        <div>Sign Out</div>
-      </button>
+        <div>Log Out</div>
+      </LogOutButtonWrapper>
     </div>
     {children}
   </div>
