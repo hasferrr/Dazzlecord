@@ -8,11 +8,13 @@ import { useLogOutOpen } from '@/context/modal-context'
 import { PreviewProfilesContextProvider } from '@/context/settings/user/preview-profiles-context'
 import {
   useCloseUserSettingsPage,
+  useOpenAppearanceSettingsPage,
   useOpenUserSettingsPage,
   useUserSettingsPageValue,
   useUserSettingsValue,
 } from '@/context/settings/user-settings-context'
 
+import Appearance from './appearance'
 import Profiles from './profiles'
 
 interface UserSettingsProps {
@@ -26,6 +28,7 @@ const UserSettings = ({
   const userSettingsPageValue = useUserSettingsPageValue()
   const closeUserSettingsPage = useCloseUserSettingsPage()
   const openUserSettingsPage = useOpenUserSettingsPage()
+  const openAppearanceSettingsPage = useOpenAppearanceSettingsPage()
   const logOutOpen = useLogOutOpen()
 
   return (
@@ -41,6 +44,11 @@ const UserSettings = ({
             activeCondition={userSettingsValue.profiles}
           />
           <ButtonSelection
+            title="Appearance"
+            onClick={openAppearanceSettingsPage}
+            activeCondition={userSettingsValue.appearance}
+          />
+          <ButtonSelection
             title="Log Out"
             onClick={logOutOpen}
             activeCondition={false}
@@ -48,13 +56,18 @@ const UserSettings = ({
         </>
       )}
     >
-      <PreviewProfilesContextProvider
-        name={user.name}
-        about={user.about}
-        image={user.image}
-      >
-        <Profiles user={user} />
-      </PreviewProfilesContextProvider>
+      {userSettingsValue.profiles
+        && (
+          <PreviewProfilesContextProvider
+            name={user.name}
+            about={user.about}
+            image={user.image}
+          >
+            <Profiles user={user} />
+          </PreviewProfilesContextProvider>
+        )}
+      {userSettingsValue.appearance
+        && <Appearance />}
     </SettingsLayout>
   )
 }

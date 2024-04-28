@@ -12,6 +12,7 @@ import {
 const initialValue = {
   settingsPage: false,
   profiles: false,
+  appearance: false,
 }
 
 type State = typeof initialValue
@@ -43,6 +44,11 @@ export const useCloseUserSettingsPage = () => {
 export const useOpenUserSettingsPage = () => {
   const { setState } = useContext(UserSettingsContext)
   return () => setState({ ...initialValue, settingsPage: true, profiles: true })
+}
+
+export const useOpenAppearanceSettingsPage = () => {
+  const { setState } = useContext(UserSettingsContext)
+  return () => setState({ ...initialValue, settingsPage: true, appearance: true })
 }
 
 export default UserSettingsContext
