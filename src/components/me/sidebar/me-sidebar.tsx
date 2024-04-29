@@ -9,7 +9,7 @@ const MeSidebar = () => (
     <MeHeader />
     <ScrollArea className="w-full px-4 flex flex-col gap-y-2">
       <div>
-        <Section title="Direct Message" />
+        <Section title="Direct Messages" />
         <div className="flex flex-col gap-[2px]">
           TODO: List of recent direct chats
         </div>

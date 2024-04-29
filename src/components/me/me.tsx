@@ -3,8 +3,11 @@ import { redirect } from 'next/navigation'
 import { getUserById } from '@/actions/prisma/user'
 import { auth } from '@/auth'
 import ChatHeader from '@/components/chat/chat-header'
+import MeNotificationSidebar from '@/components/me/sidebar/me-notification-sidebar'
+import MeSidebar from '@/components/me/sidebar/me-sidebar'
 
 import MePage from './me-page'
+import BigScreen from '../media-query/big-screen'
 
 const Me = async () => {
   const session = await auth()
@@ -27,15 +30,15 @@ const Me = async () => {
         <ChatHeader
           title="Friends"
           iconType="TEXT"
-          right={null}
-          left={null}
+          right={<MeNotificationSidebar />}
+          left={<MeSidebar />}
         />
       </div>
       <MePage />
       <div className="row-span-2">
-        {/* <BigScreen width={992}>
-          Sidebar
-        </BigScreen> */}
+        <BigScreen width={992}>
+          <MeNotificationSidebar />
+        </BigScreen>
       </div>
       <div className="px-5">
         {/* <div>Bottom</div> */}
