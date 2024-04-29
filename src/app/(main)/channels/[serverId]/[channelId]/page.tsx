@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation'
 
+import { getServerWithAnyChannel } from '@/actions/prisma/server'
 import { auth } from '@/auth'
 import ChatHeader from '@/components/chat/chat-header'
 import ChatInput from '@/components/chat/chat-input'
@@ -8,6 +9,7 @@ import BigScreen from '@/components/media-query/big-screen'
 import MemberSidebar from '@/components/member/member-sidebar'
 import DeleteChannelModal from '@/components/modals/channel/delete-channel-modal'
 import EditChannelModal from '@/components/modals/channel/edit-channel-modal'
+import ServerSidebar from '@/components/server/server-sidebar'
 import { db } from '@/lib/db'
 
 interface ChannelIdPageProps {
@@ -26,14 +28,15 @@ const ChannelIdPage = async ({
   }
   const userId = session.user.id
 
-  const channel = await db.channel.findUnique({
-    where: {
-      id: params.channelId,
-    },
-    include: {
-      server: true,
-    },
-  })
+  const server = await getServerWithAnyChannel(params.serverId, userId)
+  if (!server) {
+    redirect('/')
+  }
+
+  const channel = server.channels.find((ch) => ch.id === params.channelId)
+  if (!channel) {
+    redirect('/')
+  }
 
   const member = await db.member.findFirst({
     where: {
@@ -41,8 +44,7 @@ const ChannelIdPage = async ({
       userId,
     },
   })
-
-  if (!channel || !member) {
+  if (!member) {
     redirect('/')
   }
 
@@ -53,9 +55,10 @@ const ChannelIdPage = async ({
     >
       <div className="col-span-2 h-12">
         <ChatHeader
-          name={channel.name}
-          serverId={channel.serverId}
-          channelType={channel.type}
+          title={channel.name}
+          iconType={channel.type}
+          left={<ServerSidebar server={server} />}
+          right={<MemberSidebar serverId={params.serverId} />}
         />
       </div>
       <ChatWrapper

@@ -25,8 +25,10 @@ const Me = async () => {
     >
       <div className="col-span-2 h-12">
         <ChatHeader
-          name="Friends"
-          channelType="TEXT"
+          title="Friends"
+          iconType="TEXT"
+          right={null}
+          left={null}
         />
       </div>
       <MePage />
