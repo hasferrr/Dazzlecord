@@ -129,5 +129,4 @@ enum ChannelType {
 enum FriendStatus {
   PENDING
   ACCEPTED
-  DECLINED
 }

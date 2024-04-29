@@ -38,12 +38,9 @@ export const declineFriends = async (formData: FormData) => {
       return null
     }
 
-    await db.friend.update({
+    await db.friend.delete({
       where: {
         id: user.friendAccept[0].id,
-      },
-      data: {
-        status: FriendStatus.DECLINED,
       },
     })
   } catch (error) {
