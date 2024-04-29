@@ -32,7 +32,7 @@ model Friendship {
   id        String       @id @default(auto()) @map("_id") @db.ObjectId
   userA     String       @db.ObjectId
   userB     String       @db.ObjectId
-  status    FriendStatus
+  status    FriendStatus @default(PENDING)
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt
 

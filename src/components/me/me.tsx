@@ -4,6 +4,8 @@ import { getUserById } from '@/actions/prisma/user'
 import { auth } from '@/auth'
 import ChatHeader from '@/components/chat/chat-header'
 
+import MePage from './me-page'
+
 const Me = async () => {
   const session = await auth()
   if (!session) {
@@ -27,9 +29,7 @@ const Me = async () => {
           channelType="TEXT"
         />
       </div>
-      <div>
-        TODO: list of friends
-      </div>
+      <MePage />
       <div className="row-span-2">
         {/* <BigScreen width={992}>
           Sidebar

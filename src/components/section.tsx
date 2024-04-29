@@ -1,11 +1,17 @@
 'use client'
 
-const MeSidebarSection = () => (
+interface SectionProps {
+  title: string
+}
+
+const Section = ({
+  title,
+}: SectionProps) => (
   <div className="flex items-center justify-between py-2">
     <p className="text-xs uppercase font-bold text-channel-section">
-      Direct Message
+      {title}
     </p>
   </div>
 )
 
-export default MeSidebarSection
+export default Section
