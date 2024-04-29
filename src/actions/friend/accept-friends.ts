@@ -1,6 +1,7 @@
 'use server'
 
 import { FriendStatus } from '@prisma/client'
+import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
 import { auth } from '@/auth'
@@ -37,7 +38,7 @@ export const acceptFriends = async (formData: FormData) => {
       return null
     }
 
-    const friend = await db.friend.update({
+    await db.friend.update({
       where: {
         id: user.friendAccept[0].id,
       },
@@ -45,9 +46,10 @@ export const acceptFriends = async (formData: FormData) => {
         status: FriendStatus.ACCEPTED,
       },
     })
-    return friend
   } catch (error) {
     console.log(error)
-    return null
   }
+
+  revalidatePath('/@me')
+  return null
 }

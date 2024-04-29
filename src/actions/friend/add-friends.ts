@@ -1,5 +1,6 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
 import { addFriendDB } from '@/actions/prisma/friends'
@@ -19,6 +20,7 @@ export const addFriend = async (username: string) => {
       return null
     }
     const pending = await addFriendDB(userId, friend.id)
+    revalidatePath('/@me')
     return pending
   } catch (error) {
     console.log(error)
