@@ -21,25 +21,25 @@ model User {
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 
-  friendshipsA Friendship[] @relation("UserAProfile")
-  friendshipsB Friendship[] @relation("UserBProfile")
+  friendRequest Friend[] @relation("UserRequest")
+  friendAccept  Friend[] @relation("UserAccept")
 
   sender   DirectMessage[] @relation("Sender")
   receiver DirectMessage[] @relation("Receiver")
 }
 
-model Friendship {
-  id        String       @id @default(auto()) @map("_id") @db.ObjectId
-  userA     String       @db.ObjectId
-  userB     String       @db.ObjectId
-  status    FriendStatus @default(PENDING)
-  createdAt DateTime     @default(now())
-  updatedAt DateTime     @updatedAt
+model Friend {
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
+  userRequestId String       @db.ObjectId
+  userAcceptId  String       @db.ObjectId
+  status        FriendStatus @default(PENDING)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
 
-  userAProfile User @relation("UserAProfile", fields: [userA], references: [id], onDelete: Cascade)
-  userBProfile User @relation("UserBProfile", fields: [userB], references: [id], onDelete: Cascade)
+  userRequest User @relation("UserRequest", fields: [userRequestId], references: [id], onDelete: Cascade)
+  userAccept  User @relation("UserAccept", fields: [userAcceptId], references: [id], onDelete: Cascade)
 
-  @@unique([userA, userB])
+  @@unique([userRequestId, userAcceptId])
 }
 
 model DirectMessage {

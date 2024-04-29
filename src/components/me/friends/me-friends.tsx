@@ -6,11 +6,11 @@ import { useSession } from 'next-auth/react'
 
 import { getFriends } from '@/actions/friend/get-friends'
 import Section from '@/components/section'
-import type { FriendshipWithBothUsers } from '@/types'
+import type { FriendWithBothUsers } from '@/types'
 
 interface Friends {
-  acceptedFriends: FriendshipWithBothUsers[]
-  pendingFriends: FriendshipWithBothUsers[]
+  acceptedFriends: FriendWithBothUsers[]
+  pendingFriends: FriendWithBothUsers[]
 }
 
 const MeFriends = () => {
@@ -29,9 +29,9 @@ const MeFriends = () => {
         <Section title={`Friends - ${friends ? friends.acceptedFriends.length : 0}`} />
         {friends?.acceptedFriends.map((friend) => (
           <div key={friend.id}>
-            {friend.userAProfile.id !== session?.user.id
-              ? friend.userAProfile.username
-              : friend.userBProfile.username}
+            {friend.userRequest.id !== session?.user.id
+              ? friend.userRequest.username
+              : friend.userAccept.username}
           </div>
         ))}
       </div>
@@ -39,9 +39,9 @@ const MeFriends = () => {
         <Section title={`Pending - ${friends ? friends.pendingFriends.length : 0}`} />
         {friends?.pendingFriends.map((friend) => (
           <div key={friend.id}>
-            {friend.userAProfile.id !== session?.user.id
-              ? friend.userAProfile.username
-              : friend.userBProfile.username}
+            {friend.userRequest.id !== session?.user.id
+              ? friend.userRequest.username
+              : friend.userAccept.username}
           </div>
         ))}
       </div>

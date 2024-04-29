@@ -3,11 +3,11 @@
 import { db } from '@/lib/db'
 
 // Function to add a new friend
-export const addFriendDB = async (userIdA: string, userIdB: string) => {
-  const newFriendship = await db.friendship.create({
+export const addFriendDB = async (userRequestId: string, userAcceptId: string) => {
+  const newFriendship = await db.friend.create({
     data: {
-      userA: userIdA,
-      userB: userIdB,
+      userRequestId,
+      userAcceptId,
       status: 'PENDING',
     },
   })
@@ -16,31 +16,31 @@ export const addFriendDB = async (userIdA: string, userIdB: string) => {
 
 // Function to get a user's friends
 export const getFriendsDB = async (userId: string) => {
-  const acceptedFriends = db.friendship.findMany({
+  const acceptedFriends = db.friend.findMany({
     where: {
       status: 'ACCEPTED',
       OR: [
-        { userA: userId },
-        { userB: userId },
+        { userRequestId: userId },
+        { userAcceptId: userId },
       ],
     },
     include: {
-      userAProfile: true,
-      userBProfile: true,
+      userRequest: true,
+      userAccept: true,
     },
   })
 
-  const pendingFriends = db.friendship.findMany({
+  const pendingFriends = db.friend.findMany({
     where: {
       status: 'PENDING',
       OR: [
-        { userA: userId },
-        { userB: userId },
+        { userRequestId: userId },
+        { userAcceptId: userId },
       ],
     },
     include: {
-      userAProfile: true,
-      userBProfile: true,
+      userRequest: true,
+      userAccept: true,
     },
   })
 
@@ -51,11 +51,11 @@ export const getFriendsDB = async (userId: string) => {
 }
 
 // Function to accept a friend request
-export const acceptFriendRequestDB = async (userIdA: string, userIdB: string) => {
-  const acceptedFriendship = await db.friendship.updateMany({
+export const acceptFriendRequestDB = async (userRequestId: string, userAcceptId: string) => {
+  const acceptedFriendship = await db.friend.updateMany({
     where: {
-      userA: userIdA,
-      userB: userIdB,
+      userRequestId,
+      userAcceptId,
       status: 'PENDING',
     },
     data: {
@@ -66,11 +66,11 @@ export const acceptFriendRequestDB = async (userIdA: string, userIdB: string) =>
 }
 
 // Function to decline a friend request
-export const declineFriendRequestDB = async (userIdA: string, userIdB: string) => {
-  const declinedFriendship = await db.friendship.deleteMany({
+export const declineFriendRequestDB = async (userRequestId: string, userAcceptId: string) => {
+  const declinedFriendship = await db.friend.deleteMany({
     where: {
-      userA: userIdA,
-      userB: userIdB,
+      userRequestId,
+      userAcceptId,
       status: 'PENDING',
     },
   })
@@ -78,12 +78,12 @@ export const declineFriendRequestDB = async (userIdA: string, userIdB: string) =
 }
 
 // Function to remove a friend
-export const removeFriendDB = async (userIdA: string, userIdB: string) => {
-  const deletedFriendship = await db.friendship.deleteMany({
+export const removeFriendDB = async (userRequestId: string, userAcceptId: string) => {
+  const deletedFriendship = await db.friend.deleteMany({
     where: {
       OR: [
-        { userA: userIdA, userB: userIdB },
-        { userA: userIdB, userB: userIdA },
+        { userRequestId, userAcceptId },
+        { userRequestId: userAcceptId, userAcceptId: userRequestId },
       ],
     },
   })
