@@ -17,9 +17,43 @@ model User {
   about        String?
   members      Member[]
   channels     Channel[]
-  message      Message[]
+  messages     Message[]
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
+
+  friendshipsA Friendship[] @relation("UserAProfile")
+  friendshipsB Friendship[] @relation("UserBProfile")
+
+  sender   DirectMessage[] @relation("Sender")
+  receiver DirectMessage[] @relation("Receiver")
+}
+
+model Friendship {
+  id        String       @id @default(auto()) @map("_id") @db.ObjectId
+  userA     String       @db.ObjectId
+  userB     String       @db.ObjectId
+  status    FriendStatus
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  userAProfile User @relation("UserAProfile", fields: [userA], references: [id], onDelete: Cascade)
+  userBProfile User @relation("UserBProfile", fields: [userB], references: [id], onDelete: Cascade)
+
+  @@unique([userA, userB])
+}
+
+model DirectMessage {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  content    String
+  fileName   String?
+  isUpdated  Boolean  @default(false)
+  senderId   String   @db.ObjectId
+  receiverId String   @db.ObjectId
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  sender   User @relation("Sender", fields: [senderId], references: [id], onDelete: Cascade)
+  receiver User @relation("Receiver", fields: [receiverId], references: [id], onDelete: Cascade)
 }
 
 model Server {
@@ -90,4 +124,10 @@ enum ChannelType {
   TEXT
   VOICE
   VIDEO
+}
+
+enum FriendStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
 }
