@@ -11,7 +11,7 @@ const MeSidebar = () => (
       <div>
         <MeSidebarSection />
         <div className="flex flex-col gap-[2px]">
-          TODO: list of friends
+          TODO: List of recent direct chats
         </div>
       </div>
     </ScrollArea>

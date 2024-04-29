@@ -28,7 +28,7 @@ const Me = async () => {
         />
       </div>
       <div>
-        TODO: List of recent direct chats
+        TODO: list of friends
       </div>
       <div className="row-span-2">
         {/* <BigScreen width={992}>
