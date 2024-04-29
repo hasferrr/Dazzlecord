@@ -4,8 +4,8 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
 import { addFriendDB } from '@/actions/prisma/friends'
-import { getUserByUsername } from '@/actions/prisma/user'
 import { auth } from '@/auth'
+import { db } from '@/lib/db'
 
 export const addFriend = async (username: string) => {
   const session = await auth()
@@ -15,11 +15,43 @@ export const addFriend = async (username: string) => {
   const userId = session.user.id
 
   try {
-    const friend = await getUserByUsername(username)
-    if (!friend) {
+    const nonFriendUsers = await db.user.findUnique({
+      where: {
+        username,
+        NOT: {
+          OR: [
+            {
+              friendAccept: {
+                some: {
+                  OR: [
+                    { userRequestId: userId },
+                    { userAcceptId: userId },
+                  ],
+                },
+              },
+            },
+            {
+              friendRequest: {
+                some: {
+                  OR: [
+                    { userRequestId: userId },
+                    { userAcceptId: userId },
+                  ],
+                },
+              },
+            },
+          ],
+        },
+      },
+    })
+
+    if (!nonFriendUsers) {
       return null
     }
-    const pending = await addFriendDB(userId, friend.id)
+    if (nonFriendUsers.id === userId) {
+      return null
+    }
+    const pending = await addFriendDB(userId, nonFriendUsers.id)
     revalidatePath('/@me')
     return pending
   } catch (error) {
