@@ -66,24 +66,27 @@ const useAbstractDispatch = (type: keyof Modal, value: boolean) => {
 }
 
 export const useInviteValue = () => useAbstractGetState('invite')
-export const useCreateServerValue = () => useAbstractGetState('createServer')
-export const useDeleteServerValue = () => useAbstractGetState('deleteServer')
-export const useLeaveServerValue = () => useAbstractGetState('leaveServer')
-export const useCreateChannelValue = () => useAbstractGetState('createChannel')
-export const useLogOutValue = () => useAbstractGetState('logOut')
-
 export const useInviteOpen = () => useAbstractDispatch('invite', true)
-export const useCreateServerOpen = () => useAbstractDispatch('createServer', true)
-export const useDeleteServerOpen = () => useAbstractDispatch('deleteServer', true)
-export const useLeaveServerOpen = () => useAbstractDispatch('leaveServer', true)
-export const useCreateChannelOpen = () => useAbstractDispatch('createChannel', true)
-export const useLogOutOpen = () => useAbstractDispatch('logOut', true)
-
 export const useInviteClose = () => useAbstractDispatch('invite', false)
+
+export const useCreateServerValue = () => useAbstractGetState('createServer')
+export const useCreateServerOpen = () => useAbstractDispatch('createServer', true)
 export const useCreateServerClose = () => useAbstractDispatch('createServer', false)
+
+export const useDeleteServerValue = () => useAbstractGetState('deleteServer')
+export const useDeleteServerOpen = () => useAbstractDispatch('deleteServer', true)
 export const useDeleteServerClose = () => useAbstractDispatch('deleteServer', false)
+
+export const useLeaveServerValue = () => useAbstractGetState('leaveServer')
+export const useLeaveServerOpen = () => useAbstractDispatch('leaveServer', true)
 export const useLeaveServerClose = () => useAbstractDispatch('leaveServer', false)
+
+export const useCreateChannelValue = () => useAbstractGetState('createChannel')
+export const useCreateChannelOpen = () => useAbstractDispatch('createChannel', true)
 export const useCreateChannelClose = () => useAbstractDispatch('createChannel', false)
+
+export const useLogOutValue = () => useAbstractGetState('logOut')
+export const useLogOutOpen = () => useAbstractDispatch('logOut', true)
 export const useLogOutClose = () => useAbstractDispatch('logOut', false)
 
 export default ModalContext
