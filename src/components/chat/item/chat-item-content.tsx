@@ -2,17 +2,15 @@ import type { MessageWithUser } from '@/types'
 
 interface ChatItemContentProps {
   message: MessageWithUser
-  editedStyle?: string
 }
 
 const ChatItemContent = ({
   message,
-  editedStyle,
 }: ChatItemContentProps) => (
   <>
     {message.content}
     {message.isUpdated && (
-      <span className={editedStyle}>
+      <span className="text-[11px] mx-1 text-zinc-500 dark:text-zinc-400">
         (edited)
       </span>
     )}

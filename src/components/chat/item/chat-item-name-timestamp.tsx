@@ -1,16 +1,13 @@
 import UserPopover from '@/components/user/user-popover'
 import { formatDate } from '@/lib/helpers'
-import { cn } from '@/lib/utils'
 import type { MessageWithUser } from '@/types'
 
 interface ChatItemNameTimestampProps {
   message: MessageWithUser
-  className?: string
 }
 
 const ChatItemNameTimestamp = ({
   message,
-  className,
 }: ChatItemNameTimestampProps) => (
   <div className="flex items-center">
     <UserPopover
@@ -22,7 +19,7 @@ const ChatItemNameTimestamp = ({
       </div>
     </UserPopover>
     <div>{' '}</div>
-    <div className={cn(className, 'pt-1')}>
+    <div className="text-xs mx-1 text-zinc-500 dark:text-zinc-400 pt-1">
       {formatDate(message.createdAt)}
     </div>
   </div>

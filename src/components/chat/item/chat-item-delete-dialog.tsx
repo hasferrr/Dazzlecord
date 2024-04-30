@@ -56,12 +56,13 @@ const ChatItemDeleteDialog = ({
             grid grid-cols-[40px_1fr] grid-flow-row gap-x-4 rounded-md border-[2px] dark:border-server-dark border-server shadow-sm"
             >
               <ChatItemProfilePhoto message={message} />
-              <ChatItemNameTimestamp
-                message={message}
-                className="text-xs mx-1 text-zinc-500 dark:text-zinc-400"
-              />
-              <p className="text-[15px] leading-[1.375rem] whitespace-break-spaces" style={{ wordBreak: 'break-word' }}>
-                <ChatItemContent message={message} editedStyle="text-[11px] mx-1 text-zinc-500 dark:text-zinc-400" />
+              <ChatItemNameTimestamp message={message} />
+              <p
+                className="text-[15px] leading-[1.375rem] whitespace-break-spaces
+                overflow-y-auto max-h-[200px]"
+                style={{ wordBreak: 'break-word' }}
+              >
+                <ChatItemContent message={message} />
               </p>
             </div>
             <p className="font-bold text-green-500">PROTIP:</p>

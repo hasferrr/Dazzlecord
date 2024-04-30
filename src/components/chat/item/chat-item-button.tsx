@@ -57,7 +57,7 @@ const ChatItemButton = ({
           <Pen
             onClick={() => setIsEditing(messageId)}
             className="hover:bg-page dark:hover:bg-page-dark text-page-dark dark:text-page
-            rounded-sm p-2 w-8 h-8 ml-auto transition cursor-pointer"
+            rounded-sm p-2 w-8 h-8 ml-auto transition cursor-pointer select-none"
           />
         </ActionTooltip>
       )}
@@ -68,7 +68,7 @@ const ChatItemButton = ({
             isDirectDelete
               ? 'bg-red-500 text-white dark:bg-red-600'
               : 'hover:bg-page dark:hover:bg-page-dark text-page-dark dark:text-page',
-            'rounded-sm p-2 w-8 h-8 ml-auto transition cursor-pointer',
+            'rounded-sm p-2 w-8 h-8 ml-auto transition cursor-pointer select-none',
           )}
         />
       </ActionTooltip>
