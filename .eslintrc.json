@@ -79,6 +79,7 @@
     ],
     // Airbnb off
     "no-console": "off",
+    "no-nested-ternary": "off",
     "@typescript-eslint/no-shadow": "off",
     "react/jsx-props-no-spreading": "off",
     "react/require-default-props": "off",

@@ -15,7 +15,7 @@ const UserPhoto = ({
   <div className="relative w-[92px] h-[92px]">
     <ProfilePhoto
       className="box-content border-[6px] border-solid border-server dark:border-server-dark"
-      src={imageFromGCS ? getFileURLFromGCS(image) : image}
+      src={imageFromGCS ? (image ? getFileURLFromGCS(image) : image) : image}
       username={username}
       width={80}
       height={80}

@@ -45,7 +45,7 @@ const NavigationItem = ({ id, name, image }: NavigationItemProps) => {
           >
             <ProfilePhoto
               username={name}
-              src={getFileURLFromGCS(image)}
+              src={image ? getFileURLFromGCS(image) : image}
               width={48}
               height={48}
             />

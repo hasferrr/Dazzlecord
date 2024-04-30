@@ -18,7 +18,7 @@ const ChatItemProfilePhoto = ({
       <div>
         <ProfilePhoto
           username={message.user.username}
-          src={getFileURLFromGCS(message.user.image)}
+          src={message.user.image ? getFileURLFromGCS(message.user.image) : message.user.image}
           width={40}
           height={40}
         />

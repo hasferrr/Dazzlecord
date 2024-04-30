@@ -155,4 +155,4 @@ export const formatDateMinimal = (date0: Date | string): string => {
   return `${month} ${dayOfMonth}, ${year}`
 }
 
-export const getFileURLFromGCS = (fileName: unknown) => `https://storage.googleapis.com/server-profile/${fileName}`
+export const getFileURLFromGCS = (fileName: string) => `https://storage.googleapis.com/server-profile/${fileName}`

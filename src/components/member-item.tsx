@@ -23,7 +23,7 @@ const MemberItem = ({
     <div className="row-span-2 my-auto">
       <ProfilePhoto
         username={name}
-        src={getFileURLFromGCS(image)}
+        src={image ? getFileURLFromGCS(image) : null}
         width={32}
         height={32}
       />
