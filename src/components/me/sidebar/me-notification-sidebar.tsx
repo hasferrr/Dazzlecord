@@ -28,7 +28,7 @@ const MeNotificationSidebar = async () => {
     h-full w-60 text-primary p-4
     bg-server dark:bg-server-dark"
     >
-      <ScrollArea>
+      <ScrollArea className="h-full">
         <div className="w-full flex flex-col gap-y-4">
           {pendingFriendRequest.length
             ? <Section title="Friend Request" />
@@ -51,14 +51,14 @@ const MeNotificationSidebar = async () => {
                     name={friend.userRequest.name}
                     image={friend.userRequest.image}
                     about={friend.userRequest.about}
-                    className="w-full"
+                    className="w-full p-2"
                   />
                 </UserPopover>
                 <ActionTooltip side="top" label="Accept friends">
                   <form action={acceptFriends}>
                     <input name="userRequestId" type="hidden" value={friend.userRequestId} required />
                     <button type="submit">
-                      <CircleCheck size={27} />
+                      <CircleCheck size={28} />
                     </button>
                   </form>
                 </ActionTooltip>
@@ -66,7 +66,7 @@ const MeNotificationSidebar = async () => {
                   <form action={declineFriends}>
                     <input name="userRequestId" type="hidden" value={friend.userRequestId} required />
                     <button type="submit">
-                      <CircleX size={27} />
+                      <CircleX size={28} />
                     </button>
                   </form>
                 </ActionTooltip>
