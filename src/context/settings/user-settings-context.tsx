@@ -1,12 +1,8 @@
 'use client'
 
-import {
-  createContext,
-  type Dispatch,
-  type SetStateAction,
-  useContext,
-  useMemo,
-  useState,
+import React, {
+  createContext, type Dispatch, useContext, useMemo,
+  useReducer,
 } from 'react'
 
 const initialValue = {
@@ -16,16 +12,35 @@ const initialValue = {
 }
 
 type State = typeof initialValue
-type SetState = Dispatch<SetStateAction<State>>
+type Action =
+  | { type: 'SET', payload: State }
+  | { type: 'RESET' }
+  | { type: 'OPEN_PROFILES_PAGE' }
+  | { type: 'OPEN_APPEARANCE_PAGE' }
+type Reducer = { value: State, dispatch: Dispatch<Action> }
 
-const UserSettingsContext = createContext<{ state: State, setState: SetState }>(
-  { state: initialValue, setState: () => initialValue },
-)
+const reducer = (state: State, action: Action): State => {
+  switch (action.type) {
+    case 'SET':
+      return { ...state, ...action.payload }
+    case 'RESET':
+      return initialValue
+    case 'OPEN_PROFILES_PAGE':
+      return { ...initialValue, settingsPage: true, profiles: true }
+    case 'OPEN_APPEARANCE_PAGE':
+      return { ...initialValue, settingsPage: true, appearance: true }
+    default:
+      return state
+  }
+}
+
+const UserSettingsContext = createContext<Reducer>({
+  value: initialValue, dispatch: () => undefined,
+})
 
 export const UserSettingsContextProvider = ({ children }: { children?: React.ReactNode }) => {
-  const [state, setState] = useState(initialValue)
-
-  const contextValue = useMemo(() => ({ state, setState }), [state, setState])
+  const [value, dispatch] = useReducer(reducer, initialValue)
+  const contextValue = useMemo(() => ({ value, dispatch }), [value, dispatch])
   return (
     <UserSettingsContext.Provider value={contextValue}>
       {children}
@@ -33,22 +48,26 @@ export const UserSettingsContextProvider = ({ children }: { children?: React.Rea
   )
 }
 
-export const useUserSettingsValue = () => useContext(UserSettingsContext).state
-export const useUserSettingsPageValue = () => useContext(UserSettingsContext).state.settingsPage
+export const useUserSettingsValue = () => useContext(UserSettingsContext).value
 
-export const useCloseUserSettingsPage = () => {
-  const { setState } = useContext(UserSettingsContext)
-  return () => setState(initialValue)
+export const useOpenProfilesPage = () => {
+  const { dispatch } = useContext(UserSettingsContext)
+  return () => dispatch({ type: 'OPEN_PROFILES_PAGE' })
 }
 
-export const useOpenUserSettingsPage = () => {
-  const { setState } = useContext(UserSettingsContext)
-  return () => setState({ ...initialValue, settingsPage: true, profiles: true })
+export const useUserSettingsPageValue = () => useContext(UserSettingsContext)
+  .value.settingsPage
+
+export const useOpenUserSettingsPage = useOpenProfilesPage
+
+export const useCloseUserSettingsPage = () => {
+  const { dispatch } = useContext(UserSettingsContext)
+  return () => dispatch({ type: 'RESET' })
 }
 
 export const useOpenAppearanceSettingsPage = () => {
-  const { setState } = useContext(UserSettingsContext)
-  return () => setState({ ...initialValue, settingsPage: true, appearance: true })
+  const { dispatch } = useContext(UserSettingsContext)
+  return () => dispatch({ type: 'OPEN_APPEARANCE_PAGE' })
 }
 
 export default UserSettingsContext

@@ -3,10 +3,9 @@
 import {
   createContext,
   type Dispatch,
-  type SetStateAction,
   useContext,
   useMemo,
-  useState,
+  useReducer,
 } from 'react'
 
 const initialValue = {
@@ -16,16 +15,35 @@ const initialValue = {
 }
 
 type State = typeof initialValue
-type SetState = Dispatch<SetStateAction<State>>
+type Action =
+  | { type: 'SET', payload: State }
+  | { type: 'RESET' }
+  | { type: 'OPEN_OVERVIEW_PAGE' }
+  | { type: 'OPEN_MEMBER_PAGE' }
+type Reducer = { value: State, dispatch: Dispatch<Action> }
 
-const ServerSettingsContext = createContext<{ state: State, setState: SetState }>(
-  { state: initialValue, setState: () => initialValue },
-)
+const reducer = (state: State, action: Action): State => {
+  switch (action.type) {
+    case 'SET':
+      return { ...state, ...action.payload }
+    case 'RESET':
+      return initialValue
+    case 'OPEN_OVERVIEW_PAGE':
+      return { ...initialValue, serverSettingsPage: true, overview: true }
+    case 'OPEN_MEMBER_PAGE':
+      return { ...initialValue, serverSettingsPage: true, overview: true }
+    default:
+      return state
+  }
+}
+
+const ServerSettingsContext = createContext<Reducer>({
+  value: initialValue, dispatch: () => initialValue,
+})
 
 export const ServerSettingsContextProvider = ({ children }: { children?: React.ReactNode }) => {
-  const [state, setState] = useState(initialValue)
-
-  const contextValue = useMemo(() => ({ state, setState }), [state, setState])
+  const [value, dispatch] = useReducer(reducer, initialValue)
+  const contextValue = useMemo(() => ({ value, dispatch }), [value, dispatch])
   return (
     <ServerSettingsContext.Provider value={contextValue}>
       {children}
@@ -33,26 +51,26 @@ export const ServerSettingsContextProvider = ({ children }: { children?: React.R
   )
 }
 
-export const useServerSettingsValue = () => useContext(ServerSettingsContext).state
+export const useServerSettingsValue = () => useContext(ServerSettingsContext).value
 
-export const useServerSettingsPageValue = () => {
-  const { state } = useContext(ServerSettingsContext)
-  return state.serverSettingsPage
+export const useOpenOverview = () => {
+  const { dispatch } = useContext(ServerSettingsContext)
+  return () => dispatch({ type: 'OPEN_OVERVIEW_PAGE' })
 }
+
+export const useServerSettingsPageValue = () => useContext(ServerSettingsContext)
+  .value.serverSettingsPage
+
+export const useOpenServerSettingsPage = useOpenOverview
 
 export const useCloseServerSettingsPage = () => {
-  const { setState } = useContext(ServerSettingsContext)
-  return () => setState(initialValue)
-}
-
-export const useOpenServerSettingsPage = () => {
-  const { setState } = useContext(ServerSettingsContext)
-  return () => setState({ ...initialValue, serverSettingsPage: true, overview: true })
+  const { dispatch } = useContext(ServerSettingsContext)
+  return () => dispatch({ type: 'RESET' })
 }
 
 export const useOpenManageMember = () => {
-  const { setState } = useContext(ServerSettingsContext)
-  return () => setState({ ...initialValue, serverSettingsPage: true, members: true })
+  const { dispatch } = useContext(ServerSettingsContext)
+  return () => dispatch({ type: 'OPEN_MEMBER_PAGE' })
 }
 
 export default ServerSettingsContext
