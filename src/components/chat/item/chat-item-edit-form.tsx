@@ -1,7 +1,7 @@
 'use client'
 
 import {
-  type Dispatch, type SetStateAction, useEffect, useTransition,
+  type Dispatch, type SetStateAction, useEffect, useRef, useTransition,
 } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -16,7 +16,7 @@ import {
   FormField,
   FormItem,
 } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 import { messageSchema } from '@/schemas/message-schema'
 import type { MessageWithUser } from '@/types'
 
@@ -30,6 +30,7 @@ const ChatItemEditForm = ({
   setIsEditing,
 }: ChatItemEditFormProps) => {
   const [isPending, setTransition] = useTransition()
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   const form = useForm<z.infer<typeof messageSchema>>({
     resolver: zodResolver(messageSchema),
@@ -52,6 +53,12 @@ const ChatItemEditForm = ({
       window.removeEventListener('keydown', handleKeyDown)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`
+    }
   }, [])
 
   const onSubmit = async (values: z.infer<typeof messageSchema>) => {
@@ -82,16 +89,35 @@ const ChatItemEditForm = ({
           <FormField
             control={form.control}
             name="content"
-            render={({ field }) => (
+            render={() => (
               <FormItem className="flex-1">
                 <FormControl>
                   <div className="relative w-full">
-                    <Input
+                    <Textarea
+                      {...form.register('content', {
+                        onChange: (e) => {
+                          e.target.style.height = 'auto'
+                          e.target.style.height = `${e.target.scrollHeight}px`
+                        },
+                      })}
+                      ref={(e) => {
+                        form.register('content').ref(e)
+                        // @ts-ignore
+                        textareaRef.current = e
+                      }}
                       disabled={isPending}
                       className="p-2 border-0 border-none bg-chat-input dark:bg-chat-input-dark
-                      focus-visible:ring-0 focus-visible:ring-offset-0 text-text-dark dark:text-text"
+                      focus-visible:ring-0 focus-visible:ring-offset-0
+                      min-h-[35px] max-h-[320px] overflow-y-auto resize-none"
                       placeholder="Edited message"
-                      {...field}
+                      id="chat-item-edit-form"
+                      rows={1}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' && !e.shiftKey) {
+                          e.preventDefault()
+                          form.handleSubmit(onSubmit)()
+                        }
+                      }}
                     />
                   </div>
                 </FormControl>

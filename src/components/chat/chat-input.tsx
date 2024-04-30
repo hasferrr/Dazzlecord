@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Plus, Smile } from 'lucide-react'
@@ -14,7 +14,7 @@ import {
   FormField,
   FormItem,
 } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 import { messageSchema } from '@/schemas/message-schema'
 
 interface ChatInputProps {
@@ -30,6 +30,8 @@ const ChatInput = ({
   serverId,
   memberId,
 }: ChatInputProps) => {
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
+
   const form = useForm<z.infer<typeof messageSchema>>({
     resolver: zodResolver(messageSchema),
     defaultValues: {
@@ -60,6 +62,9 @@ const ChatInput = ({
       return
     }
     form.reset()
+    if (textareaRef.current) {
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`
+    }
     setTimeout(() => {
       form.setFocus('content')
     }, 10)
@@ -75,7 +80,7 @@ const ChatInput = ({
         <FormField
           control={form.control}
           name="content"
-          render={({ field }) => (
+          render={() => (
             <FormItem>
               <FormControl>
                 <div className="relative pb-6">
@@ -88,12 +93,30 @@ const ChatInput = ({
                   >
                     <Plus className="text-white dark:text-[var(--dark-page)]" />
                   </button>
-                  <Input
-                    className="px-14 py-6 bg-[var(--light-chat-input)] dark:bg-[var(--dark-chat-input)]
-                    text-[#4b4b50] dark:text-[#B5BAC1] border-none border-0
-                    focus-visible:ring-0 focus-visible:ring-offset-0"
+                  <Textarea
+                    {...form.register('content', {
+                      onChange: (e) => {
+                        e.target.style.height = 'auto'
+                        e.target.style.height = `${e.target.scrollHeight}px`
+                      },
+                    })}
+                    ref={(e) => {
+                      form.register('content').ref(e)
+                      // @ts-ignore
+                      textareaRef.current = e
+                    }}
+                    className="px-14 py-[14px] bg-chat-input dark:bg-chat-input-dark
+                    border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0
+                    min-h-[50px] max-h-[320px] overflow-y-auto resize-none"
                     placeholder={`Message #${channelName}`}
-                    {...field}
+                    rows={1}
+                    id="chat-input"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault()
+                        form.handleSubmit(onSubmit)()
+                      }
+                    }}
                   />
                   <button className="absolute top-3 right-4">
                     <Smile />
