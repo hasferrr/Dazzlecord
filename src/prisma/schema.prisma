@@ -42,20 +42,6 @@ model Friend {
   @@unique([userRequestId, userAcceptId])
 }
 
-model DirectMessage {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  content    String
-  fileName   String?
-  isUpdated  Boolean  @default(false)
-  senderId   String   @db.ObjectId
-  receiverId String   @db.ObjectId
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-
-  sender   User @relation("Sender", fields: [senderId], references: [id], onDelete: Cascade)
-  receiver User @relation("Receiver", fields: [receiverId], references: [id], onDelete: Cascade)
-}
-
 model Server {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
   name       String
@@ -100,17 +86,33 @@ model Message {
   content   String
   fileName  String?
   isUpdated Boolean  @default(false)
-  userId    String   @db.ObjectId
-  channelId String   @db.ObjectId
-  serverId  String   @db.ObjectId
-  memberId  String   @db.ObjectId
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  userId    String @db.ObjectId
+  channelId String @db.ObjectId
+  serverId  String @db.ObjectId
+  memberId  String @db.ObjectId
 
   user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   channel Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
   server  Server  @relation(fields: [serverId], references: [id], onDelete: Cascade)
   member  Member  @relation(fields: [memberId], references: [id], onDelete: Cascade)
+}
+
+model DirectMessage {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  content   String
+  fileName  String?
+  isUpdated Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  senderId   String @db.ObjectId
+  receiverId String @db.ObjectId
+
+  sender   User @relation("Sender", fields: [senderId], references: [id], onDelete: Cascade)
+  receiver User @relation("Receiver", fields: [receiverId], references: [id], onDelete: Cascade)
 }
 
 enum MemberRole {

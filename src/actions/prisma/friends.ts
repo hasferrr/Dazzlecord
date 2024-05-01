@@ -50,6 +50,31 @@ export const getFriendsDB = async (userId: string) => {
   }
 }
 
+export const getFriendByUsersId = async (userId: string, friendsUserId: string) => {
+  const friend = await db.friend.findFirstOrThrow({
+    where: {
+      OR: [
+        {
+          userRequestId: userId,
+          userAcceptId: friendsUserId,
+        },
+        {
+          userRequestId: friendsUserId,
+          userAcceptId: userId,
+        },
+      ],
+    },
+    include: {
+      userRequest: true,
+      userAccept: true,
+    },
+  })
+  const friendsUser = friend.userAccept.id === friendsUserId
+    ? friend.userAccept
+    : friend.userRequest
+  return { friend, friendsUser }
+}
+
 // Function to accept a friend request
 export const acceptFriendRequestDB = async (userRequestId: string, userAcceptId: string) => {
   const acceptedFriendship = await db.friend.updateMany({
@@ -82,8 +107,14 @@ export const removeFriendDB = async (userRequestId: string, userAcceptId: string
   const deletedFriendship = await db.friend.deleteMany({
     where: {
       OR: [
-        { userRequestId, userAcceptId },
-        { userRequestId: userAcceptId, userAcceptId: userRequestId },
+        {
+          userRequestId,
+          userAcceptId,
+        },
+        {
+          userRequestId: userAcceptId,
+          userAcceptId: userRequestId,
+        },
       ],
     },
   })
