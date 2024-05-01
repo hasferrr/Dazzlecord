@@ -112,6 +112,7 @@ const ChatMessages = ({
             {page.data.map((message) => (
               <ChatItem
                 key={message.id}
+                type={type}
                 message={message}
                 userId={userId}
                 currentRole={currentRole || MemberRole.GUEST}

@@ -16,12 +16,14 @@ import ChatItemNameTimestamp from './item/chat-item-name-timestamp'
 import ChatItemProfilePhoto from './item/chat-item-profile-photo'
 
 interface ChatItemProps {
+  type: 'channel' | 'direct-message'
   message: MessageWithUser | DirectMessageWithUser
   userId: string,
   currentRole: MemberRole
 }
 
 const ChatItem = ({
+  type,
   message,
   userId,
   currentRole,
@@ -44,7 +46,13 @@ const ChatItem = ({
       <p className="text-[15px] leading-[1.375rem] whitespace-break-spaces" style={{ wordBreak: 'break-word' }}>
         {isEditing !== message.id
           ? <ChatItemContent message={message} />
-          : <ChatItemEditForm message={message} setIsEditing={setIsEditing} />}
+          : (
+            <ChatItemEditForm
+              type={type as 'channel'}
+              message={message as MessageWithUser}
+              setIsEditing={setIsEditing}
+            />
+          )}
       </p>
       <ChatItemButton
         messageId={message.id}

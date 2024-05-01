@@ -20,12 +20,18 @@ import { Textarea } from '@/components/ui/textarea'
 import { messageSchema } from '@/schemas/message-schema'
 import type { DirectMessageWithUser, MessageWithUser } from '@/types'
 
-interface ChatItemEditFormProps {
-  message: MessageWithUser | DirectMessageWithUser
+type ChatItemEditFormProps = {
+  type: 'channel'
+  message: MessageWithUser
+  setIsEditing: Dispatch<SetStateAction<string | false>>
+} | {
+  type: 'direct-message'
+  message: DirectMessageWithUser
   setIsEditing: Dispatch<SetStateAction<string | false>>
 }
 
 const ChatItemEditForm = ({
+  type,
   message,
   setIsEditing,
 }: ChatItemEditFormProps) => {
@@ -66,21 +72,25 @@ const ChatItemEditForm = ({
       setIsEditing(false)
       return
     }
-    setTransition(async () => {
+
+    if (type === 'channel') {
+      setTransition(async () => {
+        const updatedMessage = await editMessage(
+          values,
+          message.channelId,
+          message.serverId,
+          message.memberId,
+          message.id,
+        )
+        if (!updatedMessage) {
+          console.log('failed to update the msg')
+          return
+        }
+        setIsEditing(false)
+      })
+    } else {
       // TODO: EDIT MESSAGE FOR DIRECT MESSAGE
-      const updatedMessage = await editMessage(
-        values,
-        message.channelId,
-        message.serverId,
-        message.memberId,
-        message.id,
-      )
-      if (!updatedMessage) {
-        console.log('failed to update the msg')
-        return
-      }
-      setIsEditing(false)
-    })
+    }
   }
 
   return (
