@@ -47,6 +47,6 @@ export const declineFriends = async (formData: FormData) => {
     console.log(error)
   }
 
-  revalidatePath('/@me')
+  revalidatePath('/channels/me')
   return null
 }

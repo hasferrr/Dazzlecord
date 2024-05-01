@@ -3,13 +3,12 @@ import { redirect } from 'next/navigation'
 import { getUserById } from '@/actions/prisma/user'
 import { auth } from '@/auth'
 import ChatHeader from '@/components/chat/chat-header'
+import MeWrapper from '@/components/me/me-wrapper'
 import MeNotificationSidebar from '@/components/me/sidebar/me-notification-sidebar'
 import MeSidebar from '@/components/me/sidebar/me-sidebar'
+import BigScreen from '@/components/media-query/big-screen'
 
-import MePage from './me-page'
-import BigScreen from '../media-query/big-screen'
-
-const Me = async () => {
+const MePage = async () => {
   const session = await auth()
   if (!session) {
     return redirect('/')
@@ -34,7 +33,7 @@ const Me = async () => {
           left={<MeSidebar />}
         />
       </div>
-      <MePage />
+      <MeWrapper />
       <div className="row-span-2">
         <BigScreen width={992}>
           <MeNotificationSidebar />
@@ -47,4 +46,4 @@ const Me = async () => {
   )
 }
 
-export default Me
+export default MePage

@@ -52,7 +52,7 @@ export const addFriend = async (username: string) => {
       return null
     }
     const pending = await addFriendDB(userId, nonFriendUsers.id)
-    revalidatePath('/@me')
+    revalidatePath('/channels/me')
     return pending
   } catch (error) {
     console.log(error)

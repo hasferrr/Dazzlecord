@@ -3,7 +3,6 @@ import { redirect } from 'next/navigation'
 
 import { getServerWithAnyChannel } from '@/actions/prisma/server'
 import { auth } from '@/auth'
-import Me from '@/components/me/me'
 
 interface ServerIdPageProps {
   params: {
@@ -14,10 +13,6 @@ interface ServerIdPageProps {
 const ServerIdPage = async ({
   params,
 }: ServerIdPageProps) => {
-  if (params.serverId === '%40me' || params.serverId === '@me') {
-    return <Me />
-  }
-
   const session = await auth()
   if (!session) {
     return redirect('/')

@@ -50,6 +50,6 @@ export const acceptFriends = async (formData: FormData) => {
     console.log(error)
   }
 
-  revalidatePath('/@me')
+  revalidatePath('/channels/me')
   return null
 }
