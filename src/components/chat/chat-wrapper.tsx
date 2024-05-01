@@ -1,26 +1,29 @@
-import type { Member } from '@prisma/client'
+import type { MemberRole } from '@prisma/client'
 
 import ChatMessages from '@/components/chat/chat-messages'
 import ProvidesTheQueryClient from '@/components/react-query/provides-the-query-client'
 
 interface ChatWrapperProps {
-  channelName: string
+  userId: string
   channelId: string
-  currentMember: Member
+  currentRole?: MemberRole
+  chatWelcomeName?: string
 }
 
 const ChatWrapper = ({
-  channelName,
+  userId,
   channelId,
-  currentMember,
+  currentRole,
+  chatWelcomeName,
 }: ChatWrapperProps) => (
   <div className="flex flex-col-reverse overflow-y-auto">
     <div className="flex-1 flex flex-col justify-end">
       <ProvidesTheQueryClient>
         <ChatMessages
+          userId={userId}
           channelId={channelId}
-          channelName={channelName}
-          currentMember={currentMember}
+          currentRole={currentRole}
+          chatWelcomeName={chatWelcomeName}
         />
       </ProvidesTheQueryClient>
     </div>

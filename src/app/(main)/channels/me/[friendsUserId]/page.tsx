@@ -38,9 +38,8 @@ const FriendUserId = async ({
         />
       </div>
       <ChatWrapper
-        channelName={channel.name} // TODO: change it to optional
-        channelId={params.friendsUserId} // TODO: ChatMessages props, socket io, room handler
-        currentMember={member} // TODO: refactor
+        userId={userId}
+        channelId={params.friendsUserId} // TODO: Socket io, room handler
       />
       <div className="row-span-2">
         <BigScreen width={992}>

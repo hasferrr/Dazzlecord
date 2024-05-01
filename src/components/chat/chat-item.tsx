@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-import { type Member, MemberRole } from '@prisma/client'
+import { MemberRole } from '@prisma/client'
 
 import { deleteMessage } from '@/actions/message/delete-message'
 import { useIsEditingValue, useSetIsEditing } from '@/context/chat/is-editing-context'
@@ -17,20 +17,22 @@ import ChatItemProfilePhoto from './item/chat-item-profile-photo'
 
 interface ChatItemProps {
   message: MessageWithUser
-  currentMember: Member
+  userId: string,
+  currentRole: MemberRole
 }
 
 const ChatItem = ({
   message,
-  currentMember,
+  userId,
+  currentRole,
 }: ChatItemProps) => {
   const [isDeleting, setIsDeleting] = useState(false)
 
   const isEditing = useIsEditingValue()
   const setIsEditing = useSetIsEditing()
 
-  const messageOwner = message.memberId === currentMember.id
-  const canDeleteMessage = (messageOwner || (currentMember.role !== MemberRole.GUEST))
+  const messageOwner = message.userId === userId
+  const canDeleteMessage = (messageOwner || (currentRole !== MemberRole.GUEST))
   const canEditMessage = messageOwner
 
   return (

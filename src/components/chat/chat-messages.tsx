@@ -2,7 +2,7 @@
 
 import { Fragment, useEffect } from 'react'
 
-import type { Member } from '@prisma/client'
+import { MemberRole } from '@prisma/client'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useInView } from 'react-intersection-observer'
 
@@ -16,15 +16,17 @@ import ChatItem from './chat-item'
 import SkeletonMessage from './skeleton-message'
 
 interface ChatMessagesProps {
+  userId: string
   channelId: string
-  channelName: string
-  currentMember: Member
+  currentRole?: MemberRole
+  chatWelcomeName?: string
 }
 
 const ChatMessages = ({
+  userId,
   channelId,
-  channelName,
-  currentMember,
+  currentRole,
+  chatWelcomeName,
 }: ChatMessagesProps) => {
   const socket = useSocket()
   const { ref, inView } = useInView()
@@ -34,11 +36,11 @@ const ChatMessages = ({
       return
     }
     const join = async () => {
-      const { token } = await generateToken(channelId, currentMember.userId)
-      socket.emit('joinChannelRoom', { channelId, userId: currentMember.userId }, token)
+      const { token } = await generateToken(channelId, userId)
+      socket.emit('joinChannelRoom', { channelId, userId }, token)
     }
     join()
-  }, [channelId, currentMember.userId, socket])
+  }, [channelId, userId, socket])
 
   const {
     status,
@@ -80,7 +82,7 @@ const ChatMessages = ({
 
   return (
     <div className="overflow-hidden">
-      {!hasNextPage && <ChatWelcome name={channelName} />}
+      {chatWelcomeName && !hasNextPage && <ChatWelcome name={chatWelcomeName} />}
       {isFetchingNextPage && <SkeletonMessage />}
       {!isFetchingNextPage && (
         <button
@@ -99,7 +101,8 @@ const ChatMessages = ({
               <ChatItem
                 key={message.id}
                 message={message}
-                currentMember={currentMember}
+                userId={userId}
+                currentRole={currentRole || MemberRole.GUEST}
               />
             ))}
           </Fragment>

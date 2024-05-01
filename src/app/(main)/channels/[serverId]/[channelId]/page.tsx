@@ -62,9 +62,10 @@ const ChannelIdPage = async ({
         />
       </div>
       <ChatWrapper
-        channelName={channel.name}
+        userId={userId}
         channelId={params.channelId}
-        currentMember={member}
+        chatWelcomeName={channel.name}
+        currentRole={member.role}
       />
       <div className="row-span-2">
         <BigScreen width={992}>
