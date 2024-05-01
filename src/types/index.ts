@@ -1,5 +1,5 @@
 import type {
-  Channel, Friend, Member, Message, Server, User,
+  Channel, DirectMessage, Friend, Member, Message, Server, User,
 } from '@prisma/client'
 
 // TODO: Omits ALL passwordHash from the codebase :)
@@ -18,3 +18,5 @@ export type MessageWithUser = Message & { user: User }
 export type ServerWithChannel = Server & { channels: Channel[] }
 export type MemberWithUser = Member & { user: User }
 export type FriendWithBothUsers = Friend & { userRequest: User } & { userAccept: User }
+
+export type DirectMessageWithUser = DirectMessage & { user: User }

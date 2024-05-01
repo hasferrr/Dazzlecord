@@ -3,7 +3,6 @@ import { redirect } from 'next/navigation'
 import { getFriendByUsersId } from '@/actions/prisma/friends'
 import { auth } from '@/auth'
 import ChatHeader from '@/components/chat/chat-header'
-import ChatInput from '@/components/chat/chat-input'
 import ChatWrapper from '@/components/chat/chat-wrapper'
 import BigScreen from '@/components/media-query/big-screen'
 
@@ -22,7 +21,7 @@ const FriendUserId = async ({
   }
   const userId = session.user.id
 
-  const { friend, friendsUser } = await getFriendByUsersId(userId, params.friendsUserId)
+  const { friendsUser } = await getFriendByUsersId(userId, params.friendsUserId)
 
   return (
     <div className="bg-page dark:bg-page-dark h-full w-full
@@ -38,8 +37,9 @@ const FriendUserId = async ({
         />
       </div>
       <ChatWrapper
+        type="direct-message"
         userId={userId}
-        channelId={params.friendsUserId} // TODO: Socket io, room handler
+        channelId={params.friendsUserId} // TODO: check chat-item-edit-form.tsx
       />
       <div className="row-span-2">
         <BigScreen width={992}>
@@ -48,13 +48,13 @@ const FriendUserId = async ({
         </BigScreen>
       </div>
       <div className="px-5">
-        <ChatInput
+        {/* <ChatInput
           channelName={channel.name} // TODO: change UI to @name instead of #channel-name
           // TODO: add sendDirectMessage(), not sendMessage(..., channelId, serverId, memberId)
           channelId={params.friendsUserId}
           serverId={params.serverId}
           memberId={member.id}
-        />
+        /> */}
       </div>
     </div>
   )

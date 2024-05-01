@@ -64,7 +64,13 @@ export const sendMessage = async (
     })
 
     const URL = `${NEXT_PUBLIC_SOCKET_IO_URL}/message`
-    const res = await axios.post(URL, { message, channelId, type: 'SEND' })
+    const res = await axios.post(URL, {
+      message,
+      userId,
+      channelId,
+      action: 'SEND',
+      type: 'channel',
+    })
     if (res.status === 200) {
       return message
     }

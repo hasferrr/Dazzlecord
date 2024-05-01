@@ -4,6 +4,7 @@ import ChatMessages from '@/components/chat/chat-messages'
 import ProvidesTheQueryClient from '@/components/react-query/provides-the-query-client'
 
 interface ChatWrapperProps {
+  type: 'channel' | 'direct-message'
   userId: string
   channelId: string
   currentRole?: MemberRole
@@ -11,6 +12,7 @@ interface ChatWrapperProps {
 }
 
 const ChatWrapper = ({
+  type,
   userId,
   channelId,
   currentRole,
@@ -20,6 +22,7 @@ const ChatWrapper = ({
     <div className="flex-1 flex flex-col justify-end">
       <ProvidesTheQueryClient>
         <ChatMessages
+          type={type}
           userId={userId}
           channelId={channelId}
           currentRole={currentRole}

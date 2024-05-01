@@ -6,13 +6,33 @@ const messageRouter = (io: Server) => {
 
   // TODO: implements authentication
   router.post('/', (req, res) => {
-    const { message, channelId, type } = req.body
+    const {
+      message,
+      userId,
+      channelId,
+      action,
+      type,
+    } = req.body
+
     if (!message || !channelId) {
       res.status(400).json({ error: 'missing request body' })
       return
     }
-    console.log('[NEXT] channel message', message)
-    io.to(channelId).emit(`${type}:message:channel`, message)
+
+    console.log('message', message)
+
+    /**
+     * Broadcast message to specific rooom io.to(ROOM)
+     * See room-handler.ts
+     * Broadcast to the ${action}:message:${type}, ex "SEND:message:direct-message"
+     */
+    if (type === 'channel') {
+      io.to(channelId).emit(`${action}:message:${type}`, message)
+    }
+    if (type === 'direct-message') {
+      io.to(`${userId}${channelId}`).emit(`${action}:message:${type}`, message)
+    }
+
     res.end()
   })
 

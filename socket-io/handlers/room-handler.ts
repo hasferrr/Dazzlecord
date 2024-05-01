@@ -11,8 +11,9 @@ const leaveAllRooms = (socket: Socket) => {
 }
 
 export const roomHandler = async (_io: Server, socket: Socket) => {
-  socket.on('joinChannelRoom', (
-    { channelId, userId }: { channelId: string, userId: string },
+  const handleRoomJoin = (
+    roomType: 'channel' | 'direct-message',
+    { channelId, userId }: { channelId: string; userId: string },
     token: string,
   ) => {
     if (!token) {
@@ -22,12 +23,15 @@ export const roomHandler = async (_io: Server, socket: Socket) => {
 
     let decodedToken
     try {
-      decodedToken = jwt.verify(
-        token,
-        process.env['AUTH_SECRET'] as string,
-      ) as { [key: string]: string }
+      decodedToken = jwt.verify(token, process.env['AUTH_SECRET'] as string) as {
+        channelId: string;
+        userId: string;
+      }
 
-      if (decodedToken['channelId'] !== channelId || decodedToken['userId'] !== userId) {
+      if (
+        decodedToken.channelId !== channelId
+        || decodedToken.userId !== userId
+      ) {
         console.log('invalid token', { channelId, userId })
         return
       }
@@ -38,6 +42,18 @@ export const roomHandler = async (_io: Server, socket: Socket) => {
     }
 
     leaveAllRooms(socket)
-    socket.join(decodedToken['channelId'])
+    if (roomType === 'channel') {
+      socket.join(decodedToken.channelId)
+    } else if (roomType === 'direct-message') {
+      socket.join(`${decodedToken.userId}:${decodedToken.channelId}`)
+    }
+  }
+
+  socket.on('join:channel:room', ({ channelId, userId }: { channelId: string; userId: string }, token: string) => {
+    handleRoomJoin('channel', { channelId, userId }, token)
+  })
+
+  socket.on('join:direct-message:room', ({ channelId, userId }: { channelId: string; userId: string }, token: string) => {
+    handleRoomJoin('direct-message', { channelId, userId }, token)
   })
 }

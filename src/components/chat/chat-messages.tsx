@@ -6,6 +6,7 @@ import { MemberRole } from '@prisma/client'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useInView } from 'react-intersection-observer'
 
+import { queryDirectMessages } from '@/actions/direct-message/query-direct-message'
 import { queryMessages } from '@/actions/message/query-message'
 import { generateToken } from '@/actions/socket-io/generate-token'
 import ChatWelcome from '@/components/chat/chat-welcome'
@@ -16,6 +17,7 @@ import ChatItem from './chat-item'
 import SkeletonMessage from './skeleton-message'
 
 interface ChatMessagesProps {
+  type: 'channel' | 'direct-message'
   userId: string
   channelId: string
   currentRole?: MemberRole
@@ -23,6 +25,7 @@ interface ChatMessagesProps {
 }
 
 const ChatMessages = ({
+  type,
   userId,
   channelId,
   currentRole,
@@ -31,16 +34,20 @@ const ChatMessages = ({
   const socket = useSocket()
   const { ref, inView } = useInView()
 
+  const queryKey = type === 'channel'
+    ? channelId
+    : `${userId}:${channelId}`
+
   useEffect(() => {
     if (!socket) {
       return
     }
     const join = async () => {
       const { token } = await generateToken(channelId, userId)
-      socket.emit('joinChannelRoom', { channelId, userId }, token)
+      socket.emit(`join:${type}:room`, { channelId, userId }, token)
     }
     join()
-  }, [channelId, userId, socket])
+  }, [channelId, userId, socket, type])
 
   const {
     status,
@@ -50,16 +57,21 @@ const ChatMessages = ({
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery({
-    queryKey: [`message:channel:${channelId}`],
+    queryKey: [queryKey],
     queryFn: async ({ pageParam }) => {
-      const res = await queryMessages(pageParam, channelId)
+      const res = type === 'channel'
+        ? await queryMessages(pageParam, channelId)
+        : await queryDirectMessages(pageParam, channelId)
       return res
     },
     initialPageParam: '',
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
   })
 
-  useChatSocket({ id: channelId, type: 'channel' })
+  useChatSocket({
+    queryKey,
+    type,
+  })
 
   useEffect(() => {
     if (inView) {

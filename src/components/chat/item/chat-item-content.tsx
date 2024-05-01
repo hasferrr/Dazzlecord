@@ -1,7 +1,7 @@
-import type { MessageWithUser } from '@/types'
+import type { DirectMessageWithUser, MessageWithUser } from '@/types'
 
 interface ChatItemContentProps {
-  message: MessageWithUser
+  message: MessageWithUser | DirectMessageWithUser
 }
 
 const ChatItemContent = ({

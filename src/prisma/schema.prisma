@@ -24,8 +24,8 @@ model User {
   friendRequest Friend[] @relation("UserRequest")
   friendAccept  Friend[] @relation("UserAccept")
 
-  sender   DirectMessage[] @relation("Sender")
-  receiver DirectMessage[] @relation("Receiver")
+  directMessages         DirectMessage[] @relation("Sender/Owner")
+  receiverDirectMessages DirectMessage[] @relation("Receiver")
 }
 
 model Friend {
@@ -108,10 +108,10 @@ model DirectMessage {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  senderId   String @db.ObjectId
+  userId     String @db.ObjectId
   receiverId String @db.ObjectId
 
-  sender   User @relation("Sender", fields: [senderId], references: [id], onDelete: Cascade)
+  user     User @relation("Sender/Owner", fields: [userId], references: [id], onDelete: Cascade)
   receiver User @relation("Receiver", fields: [receiverId], references: [id], onDelete: Cascade)
 }
 

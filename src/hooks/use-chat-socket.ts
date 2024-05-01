@@ -13,12 +13,12 @@ type InfiniteMessageData = InfiniteData<{
 }, unknown> | undefined
 
 interface ChatSocketProps {
-  id: string
-  type: 'channel' | 'direct'
+  queryKey: string
+  type: 'channel' | 'direct-message'
 }
 
 export const useChatSocket = ({
-  id, type,
+  queryKey, type,
 }: ChatSocketProps) => {
   const queryClient = useQueryClient()
   const socket = useSocket()
@@ -29,7 +29,7 @@ export const useChatSocket = ({
     }
 
     const handleIncomingMessage = (message: MessageWithUser) => {
-      queryClient.setQueryData([`message:${type}:${id}`], (data: InfiniteMessageData): InfiniteMessageData => (
+      queryClient.setQueryData([queryKey], (data: InfiniteMessageData): InfiniteMessageData => (
         !data
           ? undefined
           : ({
@@ -46,7 +46,7 @@ export const useChatSocket = ({
     }
 
     const handleEditedMessage = (updatedMessage: MessageWithUser) => {
-      queryClient.setQueryData([`message:${type}:${id}`], (data: InfiniteMessageData): InfiniteMessageData => {
+      queryClient.setQueryData([queryKey], (data: InfiniteMessageData): InfiniteMessageData => {
         if (!data) return undefined
         // Flag to track if updatedMessage has been found and updated
         const updated = false
@@ -65,7 +65,7 @@ export const useChatSocket = ({
     }
 
     const handleDeletedMessage = (deletedMessage: MessageWithUser) => {
-      queryClient.setQueryData([`message:${type}:${id}`], (data: InfiniteMessageData): InfiniteMessageData => (
+      queryClient.setQueryData([queryKey], (data: InfiniteMessageData): InfiniteMessageData => (
         !data
           ? undefined
           : ({
@@ -87,5 +87,5 @@ export const useChatSocket = ({
       socket.off(`EDIT:message:${type}`, handleEditedMessage)
       socket.off(`DELETE:message:${type}`, handleDeletedMessage)
     }
-  }, [id, queryClient, socket, type])
+  }, [queryClient, queryKey, socket, type])
 }

@@ -11,7 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import type { MessageWithUser } from '@/types'
+import type { DirectMessageWithUser, MessageWithUser } from '@/types'
 
 import ChatItemContent from './chat-item-content'
 import ChatItemNameTimestamp from './chat-item-name-timestamp'
@@ -21,7 +21,7 @@ interface ChatItemDeleteDialogProps {
   open: boolean
   close: () => void
   deleteAction: () => void
-  message: MessageWithUser
+  message: MessageWithUser | DirectMessageWithUser
 }
 
 const ChatItemDeleteDialog = ({

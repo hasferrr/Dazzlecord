@@ -18,10 +18,10 @@ import {
 } from '@/components/ui/form'
 import { Textarea } from '@/components/ui/textarea'
 import { messageSchema } from '@/schemas/message-schema'
-import type { MessageWithUser } from '@/types'
+import type { DirectMessageWithUser, MessageWithUser } from '@/types'
 
 interface ChatItemEditFormProps {
-  message: MessageWithUser
+  message: MessageWithUser | DirectMessageWithUser
   setIsEditing: Dispatch<SetStateAction<string | false>>
 }
 
@@ -67,6 +67,7 @@ const ChatItemEditForm = ({
       return
     }
     setTransition(async () => {
+      // TODO: EDIT MESSAGE FOR DIRECT MESSAGE
       const updatedMessage = await editMessage(
         values,
         message.channelId,

@@ -6,7 +6,7 @@ import { MemberRole } from '@prisma/client'
 
 import { deleteMessage } from '@/actions/message/delete-message'
 import { useIsEditingValue, useSetIsEditing } from '@/context/chat/is-editing-context'
-import type { MessageWithUser } from '@/types'
+import type { DirectMessageWithUser, MessageWithUser } from '@/types'
 
 import ChatItemButton from './item/chat-item-button'
 import ChatItemContent from './item/chat-item-content'
@@ -16,7 +16,7 @@ import ChatItemNameTimestamp from './item/chat-item-name-timestamp'
 import ChatItemProfilePhoto from './item/chat-item-profile-photo'
 
 interface ChatItemProps {
-  message: MessageWithUser
+  message: MessageWithUser | DirectMessageWithUser
   userId: string,
   currentRole: MemberRole
 }

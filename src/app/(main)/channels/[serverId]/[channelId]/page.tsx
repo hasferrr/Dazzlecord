@@ -62,6 +62,7 @@ const ChannelIdPage = async ({
         />
       </div>
       <ChatWrapper
+        type="channel"
         userId={userId}
         channelId={params.channelId}
         chatWelcomeName={channel.name}
