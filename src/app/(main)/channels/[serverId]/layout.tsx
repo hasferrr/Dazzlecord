@@ -18,12 +18,17 @@ import UserSettings from '@/components/settings/user/user-settings'
 import { db } from '@/lib/db'
 import { ORIGIN_URL } from '@/utils/config'
 
-const ServerIdLayout = async ({ children, params }: {
+interface ServerIdLayoutProps {
   children: React.ReactNode
   params: {
     serverId: string
   }
-}) => {
+}
+
+const ServerIdLayout = async ({
+  children,
+  params,
+}: ServerIdLayoutProps) => {
   const session = await auth()
   if (!session) {
     return redirect('/')
