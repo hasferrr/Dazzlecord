@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation'
 
 import { sendDirectMessage } from '@/actions/direct-message/send-direct-message'
-import { getFriendByUsersId } from '@/actions/prisma/friends'
+import { getUserById } from '@/actions/prisma/user'
 import { auth } from '@/auth'
 import ChatHeader from '@/components/chat/chat-header'
 import ChatInput from '@/components/chat/chat-input'
@@ -23,11 +23,12 @@ const FriendUserId = async ({
   }
   const userId = session.user.id
 
-  let friendsUser
-  try {
-    const res = await getFriendByUsersId(userId, params.friendsUserId)
-    friendsUser = res.friendsUser
-  } catch (error) {
+  if (params.friendsUserId === userId) {
+    return redirect('/app')
+  }
+
+  const friendsUser = await getUserById(params.friendsUserId)
+  if (!friendsUser) {
     return redirect('/app')
   }
 
