@@ -8,6 +8,7 @@ import type { z } from 'zod'
 import { auth } from '@/auth'
 import { db } from '@/lib/db'
 import { messageSchema } from '@/schemas/message-schema'
+import type { MessageRouterPostRequestBody } from '@/types'
 import { NEXT_PUBLIC_SOCKET_IO_URL } from '@/utils/config'
 
 export const sendMessage = async (
@@ -63,14 +64,16 @@ export const sendMessage = async (
       include: { user: true },
     })
 
-    const URL = `${NEXT_PUBLIC_SOCKET_IO_URL}/message`
-    const res = await axios.post(URL, {
+    const body: MessageRouterPostRequestBody = {
       message,
       userId,
       channelId,
       action: 'SEND',
       type: 'channel',
-    })
+    }
+
+    const URL = `${NEXT_PUBLIC_SOCKET_IO_URL}/message`
+    const res = await axios.post(URL, body)
     if (res.status === 200) {
       return message
     }

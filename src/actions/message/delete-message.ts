@@ -8,6 +8,7 @@ import { deleteImage } from '@/actions/cloud-storage/delete-image'
 import { findMember } from '@/actions/prisma/member'
 import { auth } from '@/auth'
 import { db } from '@/lib/db'
+import type { MessageRouterPostRequestBody } from '@/types'
 import { NEXT_PUBLIC_SOCKET_IO_URL } from '@/utils/config'
 
 // const valueMap = {
@@ -68,12 +69,16 @@ export const deleteMessage = async (messageId: string): Promise<Message | null> 
       deleteImage(currentMessage.fileName)
     }
 
-    const URL = `${NEXT_PUBLIC_SOCKET_IO_URL}/message`
-    const res = await axios.post(URL, {
-      message: deletedMessage,
+    const body: MessageRouterPostRequestBody = {
+      userId,
       channelId: deletedMessage.channelId,
-      type: 'DELETE',
-    })
+      message: deletedMessage,
+      action: 'DELETE',
+      type: 'channel',
+    }
+
+    const URL = `${NEXT_PUBLIC_SOCKET_IO_URL}/message`
+    const res = await axios.post(URL, body)
     if (res.status === 200) {
       return deletedMessage
     }

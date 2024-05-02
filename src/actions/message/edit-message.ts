@@ -9,6 +9,7 @@ import { findMember } from '@/actions/prisma/member'
 import { auth } from '@/auth'
 import { db } from '@/lib/db'
 import { messageSchema } from '@/schemas/message-schema'
+import type { MessageRouterPostRequestBody } from '@/types'
 import { NEXT_PUBLIC_SOCKET_IO_URL } from '@/utils/config'
 
 export const editMessage = async (
@@ -53,8 +54,16 @@ export const editMessage = async (
       include: { user: true },
     })
 
+    const body: MessageRouterPostRequestBody = {
+      userId,
+      channelId,
+      message: updatedMessage,
+      action: 'EDIT',
+      type: 'channel',
+    }
+
     const URL = `${NEXT_PUBLIC_SOCKET_IO_URL}/message`
-    const res = await axios.post(URL, { message: updatedMessage, channelId, type: 'EDIT' })
+    const res = await axios.post(URL, body)
     if (res.status === 200) {
       return updatedMessage
     }
