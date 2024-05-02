@@ -1,8 +1,10 @@
 import { redirect } from 'next/navigation'
 
+import { sendDirectMessage } from '@/actions/direct-message/send-direct-message'
 import { getFriendByUsersId } from '@/actions/prisma/friends'
 import { auth } from '@/auth'
 import ChatHeader from '@/components/chat/chat-header'
+import ChatInput from '@/components/chat/chat-input'
 import ChatWrapper from '@/components/chat/chat-wrapper'
 import BigScreen from '@/components/media-query/big-screen'
 
@@ -48,13 +50,19 @@ const FriendUserId = async ({
         </BigScreen>
       </div>
       <div className="px-5">
-        {/* <ChatInput
-          channelName={channel.name} // TODO: change UI to @name instead of #channel-name
-          // TODO: add sendDirectMessage(), not sendMessage(..., channelId, serverId, memberId)
-          channelId={params.friendsUserId}
-          serverId={params.serverId}
-          memberId={member.id}
-        /> */}
+        <ChatInput
+          type="direct-message"
+          channelName={friendsUser.username}
+          sendFn={async (values, files) => {
+            'use server'
+
+            return sendDirectMessage(
+              values,
+              files,
+              friendsUser.id,
+            )
+          }}
+        />
       </div>
     </div>
   )
