@@ -26,8 +26,16 @@ export const queryDirectMessages = async (
     // Since this is the first query, there is no cursor to pass in.
     messages = await db.directMessage.findMany({
       where: {
-        userId,
-        receiverId,
+        OR: [
+          {
+            userId,
+            receiverId,
+          },
+          {
+            userId: receiverId,
+            receiverId: userId,
+          },
+        ],
       },
       take,
       include: { user: true },
@@ -37,8 +45,16 @@ export const queryDirectMessages = async (
     // Query for the second > time
     messages = await db.directMessage.findMany({
       where: {
-        userId,
-        receiverId,
+        OR: [
+          {
+            userId,
+            receiverId,
+          },
+          {
+            userId: receiverId,
+            receiverId: userId,
+          },
+        ],
       },
       take,
       skip: 1,
