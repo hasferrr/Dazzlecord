@@ -2,6 +2,8 @@
 import jwt from 'jsonwebtoken'
 import type { Server, Socket } from 'socket.io'
 
+import { makeRoomId } from '../helpers/make-room-id'
+
 const leaveAllRooms = (socket: Socket) => {
   socket.rooms.forEach((room) => {
     if (room !== socket.id) {
@@ -42,11 +44,7 @@ export const roomHandler = async (_io: Server, socket: Socket) => {
     }
 
     leaveAllRooms(socket)
-    if (roomType === 'channel') {
-      socket.join(decodedToken.channelId)
-    } else if (roomType === 'direct-message') {
-      socket.join(`${decodedToken.userId}:${decodedToken.channelId}`)
-    }
+    socket.join(makeRoomId(userId, channelId, roomType))
   }
 
   socket.on('join:channel:room', ({ channelId, userId }: { channelId: string; userId: string }, token: string) => {

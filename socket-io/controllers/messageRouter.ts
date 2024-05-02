@@ -1,6 +1,8 @@
 import { Router } from 'express'
 import { Server } from 'socket.io'
 
+import { makeRoomId } from '../helpers/make-room-id'
+
 const messageRouter = (io: Server) => {
   const router = Router()
 
@@ -26,12 +28,7 @@ const messageRouter = (io: Server) => {
      * See room-handler.ts
      * Broadcast to the ${action}:message:${type}, ex "SEND:message:direct-message"
      */
-    if (type === 'channel') {
-      io.to(channelId).emit(`${action}:message:${type}`, message)
-    }
-    if (type === 'direct-message') {
-      io.to(`${userId}${channelId}`).emit(`${action}:message:${type}`, message)
-    }
+    io.to(makeRoomId(userId, channelId, type)).emit(`${action}:message:${type}`, message)
 
     res.end()
   })
