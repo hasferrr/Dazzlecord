@@ -1,18 +1,24 @@
-import { redirect } from 'next/navigation'
+'use client'
 
-import { getFriends } from '@/actions/friend/get-friends'
-import { auth } from '@/auth'
+import { useRouter } from 'next/navigation'
+
 import MemberItem from '@/components/member-item'
 import Section from '@/components/section'
+import type { FriendWithBothUsers } from '@/types'
 
-const MeFriends = async () => {
-  const session = await auth()
-  if (!session) {
-    return redirect('/')
-  }
-  const userId = session.user.id
+interface MeFriendsProps {
+  userId: string
+  friends: {
+    acceptedFriends: FriendWithBothUsers[]
+    pendingFriends: FriendWithBothUsers[]
+  } | null
+}
 
-  const friends = await getFriends()
+const MeFriends = ({
+  userId,
+  friends,
+}: MeFriendsProps) => {
+  const router = useRouter()
 
   return (
     <div className="space-y-4">
@@ -23,13 +29,18 @@ const MeFriends = async () => {
             ? friend.userRequest
             : friend.userAccept
           return (
-            <MemberItem
+            <button
               key={friend.id}
-              name={user.name}
-              image={user.image}
-              about={user.about}
-              className="w-full p-2"
-            />
+              onClick={() => router.push(`/channels/me/${user.id}`)}
+              className="w-full"
+            >
+              <MemberItem
+                name={user.name}
+                image={user.image}
+                about={user.about}
+                className="w-full p-2"
+              />
+            </button>
           )
         })}
       </div>
@@ -40,13 +51,18 @@ const MeFriends = async () => {
             ? friend.userRequest
             : friend.userAccept
           return (
-            <MemberItem
+            <button
               key={friend.id}
-              name={user.name}
-              image={user.image}
-              about={user.about}
-              className="w-full p-2"
-            />
+              onClick={() => router.push(`/channels/me/${user.id}`)}
+              className="w-full"
+            >
+              <MemberItem
+                name={user.name}
+                image={user.image}
+                about={user.about}
+                className="w-full p-2"
+              />
+            </button>
           )
         })}
       </div>

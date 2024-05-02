@@ -12,11 +12,11 @@ interface MemberItemProps {
 const MemberItem = ({
   name, image, about, className,
 }: MemberItemProps) => (
-  <button className={cn(
+  <div className={cn(
     'grid grid-cols-[auto_1fr] grid-rows-1 gap-x-3 items-center',
     'group rounded-md transition text-left',
     'hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50',
-    'outline-none',
+    'outline-none select-none cursor-pointer',
     className,
   )}
   >
@@ -37,7 +37,7 @@ const MemberItem = ({
           </p>
         )}
     </div>
-  </button>
+  </div>
 )
 
 export default MemberItem
