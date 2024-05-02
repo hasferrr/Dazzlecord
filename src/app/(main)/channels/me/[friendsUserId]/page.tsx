@@ -23,7 +23,13 @@ const FriendUserId = async ({
   }
   const userId = session.user.id
 
-  const { friendsUser } = await getFriendByUsersId(userId, params.friendsUserId)
+  let friendsUser
+  try {
+    const res = await getFriendByUsersId(userId, params.friendsUserId)
+    friendsUser = res.friendsUser
+  } catch (error) {
+    return redirect('/app')
+  }
 
   return (
     <div className="bg-page dark:bg-page-dark h-full w-full
