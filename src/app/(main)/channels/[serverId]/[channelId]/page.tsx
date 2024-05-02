@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation'
 
+import { sendMessage } from '@/actions/message/send-message'
 import { getServerWithAnyChannel } from '@/actions/prisma/server'
 import { auth } from '@/auth'
 import ChatHeader from '@/components/chat/chat-header'
@@ -75,10 +76,19 @@ const ChannelIdPage = async ({
       </div>
       <div className="px-5">
         <ChatInput
+          type="channel"
           channelName={channel.name}
-          channelId={params.channelId}
-          serverId={params.serverId}
-          memberId={member.id}
+          sendFn={async (values, file) => {
+            'use server'
+
+            return sendMessage(
+              values,
+              file,
+              params.channelId,
+              params.serverId,
+              member.id,
+            )
+          }}
         />
       </div>
       <DeleteChannelModal channel={channel} />

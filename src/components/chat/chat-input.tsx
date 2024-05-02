@@ -3,11 +3,11 @@
 import { useEffect, useRef } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import type { DirectMessage, Message } from '@prisma/client'
 import { Plus, Smile } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { sendMessage } from '@/actions/message/send-message'
 import {
   Form,
   FormControl,
@@ -18,17 +18,18 @@ import { Textarea } from '@/components/ui/textarea'
 import { messageSchema } from '@/schemas/message-schema'
 
 interface ChatInputProps {
+  type: 'channel' | 'direct-message'
   channelName: string
-  channelId: string
-  serverId: string
-  memberId: string
+  sendFn: (
+    values: z.infer<typeof messageSchema>,
+    files: string | null
+  ) => Promise<Message | DirectMessage | null>
 }
 
 const ChatInput = ({
+  type,
   channelName,
-  channelId,
-  serverId,
-  memberId,
+  sendFn,
 }: ChatInputProps) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
@@ -68,7 +69,7 @@ const ChatInput = ({
     setTimeout(() => {
       form.setFocus('content')
     }, 10)
-    const message = await sendMessage(values, null, channelId, serverId, memberId)
+    const message = await sendFn(values, null)
     if (!message) {
       console.log('failed to send msg')
     }
@@ -108,7 +109,7 @@ const ChatInput = ({
                     className="px-14 py-[14px] bg-chat-input dark:bg-chat-input-dark
                     border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0
                     min-h-[50px] max-h-[320px] overflow-y-auto resize-none"
-                    placeholder={`Message #${channelName}`}
+                    placeholder={`Message ${type === 'channel' ? '#' : '@'}${channelName}`}
                     rows={1}
                     id="chat-input"
                     onKeyDown={(e) => {
