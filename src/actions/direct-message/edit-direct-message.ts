@@ -4,21 +4,18 @@ import axios from 'axios'
 import { redirect } from 'next/navigation'
 import type { z } from 'zod'
 
-import { findMember } from '@/actions/prisma/member'
 import { auth } from '@/auth'
 import { db } from '@/lib/db'
 import { messageSchema } from '@/schemas/message-schema'
-import type { MessageRouterPostRequestBody, MessageWithUser } from '@/types'
+import type { DirectMessageWithUser, MessageRouterPostRequestBody } from '@/types'
 import { NEXT_PUBLIC_SOCKET_IO_URL } from '@/utils/config'
 
-export const editMessage = async (
+export const editDirectMessage = async (
   values: z.infer<typeof messageSchema>,
   // fileName: string | null,
-  channelId: string,
-  serverId: string,
-  memberId: string,
+  receiverId: string,
   messageId: string,
-): Promise<MessageWithUser | null> => {
+): Promise<DirectMessageWithUser | null> => {
   const validatedFields = messageSchema.safeParse(values)
   if (!validatedFields.success) {
     return null
@@ -33,18 +30,11 @@ export const editMessage = async (
   const userId = session.user.id
 
   try {
-    const currentMember = await findMember(serverId, userId)
-    if (!currentMember || currentMember.id !== memberId) {
-      return null
-    }
-
-    const updatedMessage = await db.message.update({
+    const updatedMessage = await db.directMessage.update({
       where: {
         id: messageId,
         userId,
-        channelId,
-        serverId,
-        memberId,
+        receiverId,
       },
       data: {
         content,
@@ -55,10 +45,10 @@ export const editMessage = async (
 
     const body: MessageRouterPostRequestBody = {
       userId,
-      channelId,
+      channelId: receiverId,
       message: updatedMessage,
       action: 'EDIT',
-      type: 'channel',
+      type: 'direct-message',
     }
 
     const URL = `${NEXT_PUBLIC_SOCKET_IO_URL}/message`

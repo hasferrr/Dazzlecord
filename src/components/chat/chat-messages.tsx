@@ -12,6 +12,7 @@ import { generateToken } from '@/actions/socket-io/generate-token'
 import ChatWelcome from '@/components/chat/chat-welcome'
 import { useSocket } from '@/context/socket-context'
 import { useChatSocket } from '@/hooks/use-chat-socket'
+import type { MessageWithUser } from '@/types'
 
 import ChatItem from './chat-item'
 import SkeletonMessage from './skeleton-message'
@@ -112,8 +113,10 @@ const ChatMessages = ({
             {page.data.map((message) => (
               <ChatItem
                 key={message.id}
-                type={type}
-                message={message}
+                // prevent type error, conditional type doesn't work
+                // typescript doesn't handle conditional type properly
+                type={type as 'channel'}
+                message={message as MessageWithUser}
                 userId={userId}
                 currentRole={currentRole || MemberRole.GUEST}
               />

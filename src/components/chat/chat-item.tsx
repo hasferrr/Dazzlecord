@@ -4,7 +4,9 @@ import { useState } from 'react'
 
 import { MemberRole } from '@prisma/client'
 
+import { editDirectMessage } from '@/actions/direct-message/edit-direct-message'
 import { deleteMessage } from '@/actions/message/delete-message'
+import { editMessage } from '@/actions/message/edit-message'
 import { useIsEditingValue, useSetIsEditing } from '@/context/chat/is-editing-context'
 import type { DirectMessageWithUser, MessageWithUser } from '@/types'
 
@@ -15,12 +17,22 @@ import ChatItemEditForm from './item/chat-item-edit-form'
 import ChatItemNameTimestamp from './item/chat-item-name-timestamp'
 import ChatItemProfilePhoto from './item/chat-item-profile-photo'
 
-interface ChatItemProps {
-  type: 'channel' | 'direct-message'
-  message: MessageWithUser | DirectMessageWithUser
+interface ChatItemBasic {
   userId: string,
   currentRole: MemberRole
 }
+
+interface ChatItemMessage extends ChatItemBasic {
+  type: 'channel'
+  message: MessageWithUser
+}
+
+interface ChatItemDirectMessage extends ChatItemBasic {
+  type: 'direct-message'
+  message: DirectMessageWithUser
+}
+
+type ChatItemProps = ChatItemMessage | ChatItemDirectMessage
 
 const ChatItem = ({
   type,
@@ -48,9 +60,24 @@ const ChatItem = ({
           ? <ChatItemContent message={message} />
           : (
             <ChatItemEditForm
-              type={type as 'channel'}
-              message={message as MessageWithUser}
+              message={message}
               setIsEditing={setIsEditing}
+              editAction={(values) => {
+                if (type === 'channel') {
+                  return editMessage(
+                    values,
+                    message.channelId,
+                    message.serverId,
+                    message.memberId,
+                    message.id,
+                  )
+                }
+                return editDirectMessage(
+                  values,
+                  message.receiverId,
+                  message.id,
+                )
+              }}
             />
           )}
       </p>

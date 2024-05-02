@@ -8,7 +8,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { editMessage } from '@/actions/message/edit-message'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -21,19 +20,17 @@ import { messageSchema } from '@/schemas/message-schema'
 import type { DirectMessageWithUser, MessageWithUser } from '@/types'
 
 type ChatItemEditFormProps = {
-  type: 'channel'
-  message: MessageWithUser
+  message: MessageWithUser | DirectMessageWithUser
   setIsEditing: Dispatch<SetStateAction<string | false>>
-} | {
-  type: 'direct-message'
-  message: DirectMessageWithUser
-  setIsEditing: Dispatch<SetStateAction<string | false>>
+  editAction: (
+    values: z.infer<typeof messageSchema>
+  ) => Promise<MessageWithUser | DirectMessageWithUser | null>
 }
 
 const ChatItemEditForm = ({
-  type,
   message,
   setIsEditing,
+  editAction,
 }: ChatItemEditFormProps) => {
   const [isPending, setTransition] = useTransition()
   const textareaRef = useRef<HTMLTextAreaElement>(null)
@@ -73,24 +70,14 @@ const ChatItemEditForm = ({
       return
     }
 
-    if (type === 'channel') {
-      setTransition(async () => {
-        const updatedMessage = await editMessage(
-          values,
-          message.channelId,
-          message.serverId,
-          message.memberId,
-          message.id,
-        )
-        if (!updatedMessage) {
-          console.log('failed to update the msg')
-          return
-        }
-        setIsEditing(false)
-      })
-    } else {
-      // TODO: EDIT MESSAGE FOR DIRECT MESSAGE
-    }
+    setTransition(async () => {
+      const updatedMessage = await editAction(values)
+      if (!updatedMessage) {
+        console.log('failed to update the msg')
+        return
+      }
+      setIsEditing(false)
+    })
   }
 
   return (
