@@ -49,7 +49,7 @@ const FriendUserId = async ({
       <ChatWrapper
         type="direct-message"
         userId={userId}
-        channelId={params.friendsUserId} // TODO: check chat-item-edit-form.tsx
+        channelId={params.friendsUserId}
       />
       <div className="row-span-2">
         <BigScreen width={992}>

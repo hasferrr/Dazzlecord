@@ -49,8 +49,7 @@ export const deleteMessage = async (messageId: string): Promise<Message | null> 
       if (currentMember.role === MemberRole.GUEST) {
         return null
       }
-      // TODO
-      // Dissalow deletion if current member's role < to message owner's role
+      // TODO: Dissalow deletion if current member's role < to message owner's role
       // if (valueMap[currentMember.role] < valueMap[currentMessage.member.role]) {
       //   return null
       // }
