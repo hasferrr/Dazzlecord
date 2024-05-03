@@ -4,6 +4,7 @@ import { useState } from 'react'
 
 import { MemberRole } from '@prisma/client'
 
+import { deleteDirectMessage } from '@/actions/direct-message/delete-direct-message'
 import { editDirectMessage } from '@/actions/direct-message/edit-direct-message'
 import { deleteMessage } from '@/actions/message/delete-message'
 import { editMessage } from '@/actions/message/edit-message'
@@ -88,7 +89,11 @@ const ChatItem = ({
         canDeleteMessage={canDeleteMessage}
         canEditMessage={canEditMessage}
         deleteAction={() => {
-          deleteMessage(message.id)
+          if (type === 'channel') {
+            deleteMessage(message.id)
+          } else {
+            deleteDirectMessage(message.id)
+          }
           setIsDeleting(false)
         }}
       />
@@ -97,7 +102,11 @@ const ChatItem = ({
         open={isDeleting}
         close={() => setIsDeleting(false)}
         deleteAction={() => {
-          deleteMessage(message.id)
+          if (type === 'channel') {
+            deleteMessage(message.id)
+          } else {
+            deleteDirectMessage(message.id)
+          }
           setIsDeleting(false)
         }}
       />
