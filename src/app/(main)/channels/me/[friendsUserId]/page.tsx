@@ -6,6 +6,7 @@ import { auth } from '@/auth'
 import ChatHeader from '@/components/chat/chat-header'
 import ChatInput from '@/components/chat/chat-input'
 import ChatWrapper from '@/components/chat/chat-wrapper'
+import MeSidebar from '@/components/me/sidebar/me-sidebar'
 import BigScreen from '@/components/media-query/big-screen'
 
 interface FriendUserIdProps {
@@ -41,8 +42,8 @@ const FriendUserId = async ({
         <ChatHeader
           title={friendsUser.name}
           iconType="TEXT"
-          left={null}
           right={null}
+          left={<MeSidebar />}
         />
       </div>
       <ChatWrapper
