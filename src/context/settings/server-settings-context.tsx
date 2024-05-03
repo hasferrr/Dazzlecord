@@ -31,7 +31,7 @@ const reducer = (state: State, action: Action): State => {
     case 'OPEN_OVERVIEW_PAGE':
       return { ...initialValue, serverSettingsPage: true, overview: true }
     case 'OPEN_MEMBER_PAGE':
-      return { ...initialValue, serverSettingsPage: true, overview: true }
+      return { ...initialValue, serverSettingsPage: true, members: true }
     default:
       return state
   }
