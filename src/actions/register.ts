@@ -6,8 +6,8 @@ import { z } from 'zod'
 
 import { getUserByEmail, getUserByUsername } from '@/actions/prisma/user'
 import { signIn } from '@/auth'
+import { trimString } from '@/helpers/helpers'
 import { db } from '@/lib/db'
-import { trimString } from '@/lib/helpers'
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes'
 import { registerSchema } from '@/schemas/register-schema'
 

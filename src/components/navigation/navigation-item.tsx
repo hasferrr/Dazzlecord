@@ -4,7 +4,7 @@ import { useParams, useRouter } from 'next/navigation'
 
 import ActionTooltip from '@/components/action-tooltip'
 import ProfilePhoto from '@/components/profile-photo'
-import { getFileURLFromGCS } from '@/lib/helpers'
+import { getFileURLFromGCS } from '@/helpers/helpers'
 import { cn } from '@/lib/utils'
 
 interface NavigationItemProps {

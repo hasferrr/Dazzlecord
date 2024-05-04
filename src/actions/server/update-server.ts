@@ -6,8 +6,8 @@ import { v4 as uuidv4 } from 'uuid'
 
 import { deleteImage } from '@/actions/cloud-storage/delete-image'
 import { auth } from '@/auth'
+import { trimString } from '@/helpers/helpers'
 import { db } from '@/lib/db'
-import { trimString } from '@/lib/helpers'
 
 export const updateServer = async (
   serverId: string,

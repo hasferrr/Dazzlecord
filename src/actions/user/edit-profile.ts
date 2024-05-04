@@ -6,8 +6,8 @@ import { v4 as uuidv4 } from 'uuid'
 import type { z } from 'zod'
 
 import { auth } from '@/auth'
+import { trimString } from '@/helpers/helpers'
 import { db } from '@/lib/db'
-import { trimString } from '@/lib/helpers'
 import { editProfileNoFileSchema } from '@/schemas/edit-profile-schema'
 
 import { deleteImage } from '../cloud-storage/delete-image'

@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
 
 import ProfilePhoto from '@/components/profile-photo'
-import { getFileURLFromGCS } from '@/lib/helpers'
+import { getFileURLFromGCS } from '@/helpers/helpers'
 
 interface UserPhotoProps {
   image?: string | null

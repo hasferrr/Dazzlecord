@@ -4,8 +4,8 @@ import { type Channel, ChannelType, MemberRole } from '@prisma/client'
 import { redirect } from 'next/navigation'
 
 import { auth } from '@/auth'
+import { isValidChannelName } from '@/helpers/helpers'
 import { db } from '@/lib/db'
-import { isValidChannelName } from '@/lib/helpers'
 
 export const editChannel = async (
   channelName: string,

@@ -20,8 +20,8 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { getFileURLFromGCS, trimString } from '@/helpers/helpers'
 import { useServerForm } from '@/hooks/use-server-form'
-import { getFileURLFromGCS, trimString } from '@/lib/helpers'
 import {
   serverModalSchema,
   serverModalSchemaAllowNoFile,

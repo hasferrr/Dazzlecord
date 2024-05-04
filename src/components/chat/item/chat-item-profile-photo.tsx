@@ -1,6 +1,6 @@
 import ProfilePhoto from '@/components/profile-photo'
 import UserPopover from '@/components/user/user-popover'
-import { getFileURLFromGCS } from '@/lib/helpers'
+import { getFileURLFromGCS } from '@/helpers/helpers'
 import type { DirectMessageWithUser, MessageWithUser } from '@/types'
 
 interface ChatItemProfilePhotoProps {

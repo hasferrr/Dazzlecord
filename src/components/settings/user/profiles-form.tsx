@@ -21,7 +21,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { useSetAllStatePreviewProfiles, useSetPreviewProfiles } from '@/context/settings/user/preview-profiles-context'
-import { trimString } from '@/lib/helpers'
+import { trimString } from '@/helpers/helpers'
 import { cn } from '@/lib/utils'
 import { editProfileSchema } from '@/schemas/edit-profile-schema'
 import { filesValidator } from '@/schemas/validator/files-validator'

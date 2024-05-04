@@ -35,7 +35,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import UserPopover from '@/components/user/user-popover'
-import { yearDifferenceYearFromNow } from '@/lib/helpers'
+import { yearDifferenceYearFromNow } from '@/helpers/date-helpers'
 import type { MemberWithUser } from '@/types'
 
 interface MembersProps {

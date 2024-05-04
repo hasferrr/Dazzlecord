@@ -27,7 +27,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { RadioGroup } from '@/components/ui/radio-group'
-import { modifyString } from '@/lib/helpers'
+import { modifyString } from '@/helpers/helpers'
 import { channelModalSchema } from '@/schemas/channel-modal-schema'
 
 import ChannelModalRadio from './channel-modal-radio'

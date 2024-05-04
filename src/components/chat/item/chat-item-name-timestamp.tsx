@@ -1,5 +1,5 @@
 import UserPopover from '@/components/user/user-popover'
-import { formatDate } from '@/lib/helpers'
+import { formatDate } from '@/helpers/date-helpers'
 import type { DirectMessageWithUser, MessageWithUser } from '@/types'
 
 interface ChatItemNameTimestampProps {

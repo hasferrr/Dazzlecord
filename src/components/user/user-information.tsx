@@ -5,7 +5,7 @@ import { LogOut } from 'lucide-react'
 
 import LogOutButtonWrapper from '@/components/log-out-button-wrapper'
 import { Separator } from '@/components/ui/separator'
-import { formatDateMinimal } from '@/lib/helpers'
+import { formatDateMinimal } from '@/helpers/date-helpers'
 import { cn } from '@/lib/utils'
 
 interface UserInformationProps {

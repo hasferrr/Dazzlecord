@@ -5,8 +5,8 @@ import { redirect } from 'next/navigation'
 import { v4 as uuidv4 } from 'uuid'
 
 import { auth } from '@/auth'
+import { trimString } from '@/helpers/helpers'
 import { db } from '@/lib/db'
-import { trimString } from '@/lib/helpers'
 
 export const createNewServer = async (serverName: string) => {
   const session = await auth()

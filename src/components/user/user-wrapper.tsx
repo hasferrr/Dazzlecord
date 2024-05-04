@@ -5,7 +5,7 @@ import { useEffect, useLayoutEffect, useRef } from 'react'
 import type { User } from '@prisma/client'
 
 import { usePreviewProfilesValue } from '@/context/settings/user/preview-profiles-context'
-import { getMostDominantColorHexFromImgElement } from '@/lib/helpers'
+import { getMostDominantColorHexFromImgElement } from '@/helpers/color-helpers'
 import { cn } from '@/lib/utils'
 
 import UserInformation from './user-information'

@@ -1,5 +1,5 @@
 import ProfilePhoto from '@/components/profile-photo'
-import { getFileURLFromGCS } from '@/lib/helpers'
+import { getFileURLFromGCS } from '@/helpers/helpers'
 import { cn } from '@/lib/utils'
 
 interface MemberItemProps {
