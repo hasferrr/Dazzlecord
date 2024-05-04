@@ -1,3 +1,5 @@
+'use client'
+
 import type { User } from '@prisma/client'
 import { LogOut } from 'lucide-react'
 

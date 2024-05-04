@@ -1,5 +1,11 @@
+'use client'
+
+import { useEffect, useLayoutEffect, useRef } from 'react'
+
 import type { User } from '@prisma/client'
 
+import { usePreviewProfilesValue } from '@/context/settings/user/preview-profiles-context'
+import { getMostDominantColorHexFromImgElement } from '@/lib/helpers'
 import { cn } from '@/lib/utils'
 
 import UserInformation from './user-information'
@@ -19,16 +25,48 @@ const UserWrapper = ({
   className,
   showButton = false,
   imageFromGCS = true,
-}: UserWrapperProps) => (
-  <div className={cn('relative w-[340px] rounded-lg p-0 m-0 bg-server dark:bg-server-dark', className)}>
-    <div className="absolute rounded-t-lg bg-[rgb(188,156,154)] h-[3.75rem] w-full" />
-    <div className="p-4 m-0 space-y-3 rounded-lg shadow-md">
-      <UserPhoto image={user.image} username={user.username} imageFromGCS={imageFromGCS} />
-      <UserInformation user={user} showButton={showButton}>
-        {children}
-      </UserInformation>
+}: UserWrapperProps) => {
+  const imgRef = useRef<HTMLImageElement>(null)
+  const divRef = useRef<HTMLDivElement>(null)
+  const preview = usePreviewProfilesValue()
+
+  const changeBackgroundDiv = () => {
+    if (imgRef.current && divRef.current) {
+      const hex = getMostDominantColorHexFromImgElement(imgRef.current)
+      divRef.current.style.backgroundColor = hex ?? 'transparent'
+    }
+  }
+
+  useEffect(() => {
+    if (divRef.current) {
+      divRef.current.style.backgroundColor = 'transparent'
+    }
+  }, [divRef])
+
+  useLayoutEffect(() => {
+    changeBackgroundDiv()
+  }, [imgRef, preview.image])
+
+  return (
+    <div className={cn('relative w-[340px] rounded-lg p-0 m-0 bg-server dark:bg-server-dark', className)}>
+      <div
+        ref={divRef}
+        className="absolute rounded-t-lg h-[3.75rem] w-full"
+      />
+      <div className="p-4 m-0 space-y-3 rounded-lg shadow-md">
+        <UserPhoto
+          ref={imgRef}
+          image={user.image}
+          username={user.username}
+          imageFromGCS={imageFromGCS}
+          handleImageLoad={changeBackgroundDiv}
+        />
+        <UserInformation user={user} showButton={showButton}>
+          {children}
+        </UserInformation>
+      </div>
     </div>
-  </div>
-)
+  )
+}
 
 export default UserWrapper
