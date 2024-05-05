@@ -1,3 +1,4 @@
+import { ChannelType } from '@prisma/client'
 import { redirect } from 'next/navigation'
 
 import { sendMessage } from '@/actions/message/send-message'
@@ -56,7 +57,12 @@ const ChannelIdPage = async ({
     >
       <div className="col-span-2 h-12">
         <ChatHeader
-          title={channel.name}
+          title={channel.name + (
+            // TODO: implements Voice and Video channels functionality
+            channel.type !== ChannelType.TEXT
+              ? ' (voice and video channels are currently under development!! 🚧)'
+              : ''
+          )}
           iconType={channel.type}
           left={<ServerSidebar server={server} />}
           right={<MemberSidebar serverId={params.serverId} />}
