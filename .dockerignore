@@ -1,0 +1,4 @@
+.next/
+.git/
+node_modules/
+socket-io/

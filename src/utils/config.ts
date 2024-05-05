@@ -1,18 +1,23 @@
 /* eslint-disable no-process-env */
 
-const throwError = () => {
-  throw new Error('please specify all required environment variables in the `.env` file')
+const throwError = (envName: string): never => {
+  throw new Error(`please specify all required environment variables! (missing: ${envName})`)
 }
 
-const passOrError = (arg: string | undefined) => arg || throwError()
+const getProcessEnv = (envName: string): string => {
+  const env = process.env[envName]
+  return env || throwError(envName)
+}
 
 const parseUrl = (url: string) => (url.endsWith('/') ? url.slice(0, -1) : url)
 
-export const NODE_ENV = passOrError(process.env.NODE_ENV)
-export const DATABASE_URL = passOrError(process.env['DATABASE_URL'])
-export const AUTH_SECRET = passOrError(process.env['AUTH_SECRET'])
-export const GCS_PROJECT_ID = passOrError(process.env['GCS_PROJECT_ID'])
-export const GCS_SERVICE_ACCOUNT_KEY_FILE = passOrError(process.env['GCS_SERVICE_ACCOUNT_KEY_FILE'])
-export const GCS_BUCKET_NAME = passOrError(process.env['GCS_BUCKET_NAME'])
-export const ORIGIN_URL = parseUrl(passOrError(process.env['ORIGIN_URL']))
-export const NEXT_PUBLIC_SOCKET_IO_URL = parseUrl(passOrError(process.env['NEXT_PUBLIC_SOCKET_IO_URL']))
+export const NODE_ENV = getProcessEnv('NODE_ENV')
+export const DATABASE_URL = getProcessEnv('DATABASE_URL')
+export const AUTH_SECRET = getProcessEnv('AUTH_SECRET')
+export const GCS_PROJECT_ID = getProcessEnv('GCS_PROJECT_ID')
+export const GCS_SERVICE_ACCOUNT_KEY_FILE = getProcessEnv('GCS_SERVICE_ACCOUNT_KEY_FILE')
+export const GCS_BUCKET_NAME = getProcessEnv('GCS_BUCKET_NAME')
+export const ORIGIN_URL = parseUrl(getProcessEnv('ORIGIN_URL'))
+export const NEXT_PUBLIC_SOCKET_IO_URL = parseUrl(getProcessEnv('NEXT_PUBLIC_SOCKET_IO_URL'))
+
+console.log(NODE_ENV)
