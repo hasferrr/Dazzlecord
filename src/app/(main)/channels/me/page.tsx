@@ -28,7 +28,7 @@ const MePage = async () => {
       <div className="col-span-2 h-12">
         <ChatHeader
           title="Friends"
-          iconType="TEXT"
+          iconType="PERSON"
           right={<MeNotificationSidebar />}
           left={<MeSidebar />}
         />

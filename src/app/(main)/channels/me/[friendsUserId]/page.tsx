@@ -8,6 +8,7 @@ import ChatInput from '@/components/chat/chat-input'
 import ChatWrapper from '@/components/chat/chat-wrapper'
 import MeSidebar from '@/components/me/sidebar/me-sidebar'
 import BigScreen from '@/components/media-query/big-screen'
+import UserPhoto from '@/components/user/user-photo'
 
 interface FriendUserIdProps {
   params: {
@@ -41,7 +42,14 @@ const FriendUserId = async ({
       <div className="col-span-2 h-12">
         <ChatHeader
           title={friendsUser.name}
-          iconType="TEXT"
+          iconType={(
+            <UserPhoto
+              username={friendsUser.username}
+              image={friendsUser.image}
+              size={32}
+              status={false}
+            />
+          )}
           right={null}
           left={<MeSidebar />}
         />

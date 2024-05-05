@@ -11,6 +11,7 @@ interface ProfilePhotoProps {
   height: number
   className?: string
   handleImageLoad?: () => void
+  style?: React.CSSProperties
 }
 
 const ProfilePhoto = forwardRef<HTMLImageElement, ProfilePhotoProps>(({
@@ -20,6 +21,7 @@ const ProfilePhoto = forwardRef<HTMLImageElement, ProfilePhotoProps>(({
   height,
   className,
   handleImageLoad,
+  style,
 }, ref) => {
   const initials = username.slice(0, 2).toUpperCase()
 
@@ -32,7 +34,7 @@ const ProfilePhoto = forwardRef<HTMLImageElement, ProfilePhotoProps>(({
         alt=""
         height={height}
         width={width}
-        style={{ height: `${height}px`, width: `${width}px` }}
+        style={{ height: `${height}px`, width: `${width}px`, ...style }}
         onLoad={handleImageLoad}
       />
     )
@@ -45,7 +47,7 @@ const ProfilePhoto = forwardRef<HTMLImageElement, ProfilePhotoProps>(({
         'bg-alt-profile-photo dark:bg-alt-profile-photo-dark',
         className,
       )}
-      style={{ height: `${height}px`, width: `${width}px` }}
+      style={{ height: `${height}px`, width: `${width}px`, ...style }}
     >
       <span
         className="select-none"
