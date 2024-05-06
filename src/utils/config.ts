@@ -19,5 +19,3 @@ export const GCS_SERVICE_ACCOUNT_KEY_FILE = getProcessEnv('GCS_SERVICE_ACCOUNT_K
 export const GCS_BUCKET_NAME = getProcessEnv('GCS_BUCKET_NAME')
 export const ORIGIN_URL = parseUrl(getProcessEnv('ORIGIN_URL'))
 export const NEXT_PUBLIC_SOCKET_IO_URL = parseUrl(getProcessEnv('NEXT_PUBLIC_SOCKET_IO_URL'))
-
-console.log(NODE_ENV)
