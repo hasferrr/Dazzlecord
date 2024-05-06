@@ -5,7 +5,7 @@ steps:
       [
         "build",
         "-t",
-        "asia-southeast1-docker.pkg.dev/deezcord-417022/nextjs-node/nextjs-node",
+        "asia-southeast1-docker.pkg.dev/deezcord-417022/nextjs-node-repo/deezcord",
         ".",
       ]
   # Push the container image to Artifact Registry
@@ -13,7 +13,7 @@ steps:
     args:
       [
         "push",
-        "asia-southeast1-docker.pkg.dev/deezcord-417022/nextjs-node/nextjs-node",
+        "asia-southeast1-docker.pkg.dev/deezcord-417022/nextjs-node-repo/deezcord",
       ]
   # Deploy container image to Cloud Run
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
@@ -22,9 +22,9 @@ steps:
       [
         "run",
         "deploy",
-        "nextjs-node",
+        "deezcord",
         "--image",
-        "asia-southeast1-docker.pkg.dev/deezcord-417022/nextjs-node/nextjs-node",
+        "asia-southeast1-docker.pkg.dev/deezcord-417022/nextjs-node-repo/deezcord",
         "--region",
         "asia-southeast1",
         "--allow-unauthenticated",
@@ -34,4 +34,4 @@ steps:
         "3",
       ]
 images:
-  ["asia-southeast1-docker.pkg.dev/deezcord-417022/nextjs-node/nextjs-node"]
+  ["asia-southeast1-docker.pkg.dev/deezcord-417022/nextjs-node-repo/deezcord"]

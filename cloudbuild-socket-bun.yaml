@@ -5,7 +5,7 @@ steps:
       [
         "build",
         "-t",
-        "asia-southeast1-docker.pkg.dev/deezcord-417022/socket-bun/socket-bun",
+        "asia-southeast1-docker.pkg.dev/deezcord-417022/socket-bun-repo/socket-bun",
         "./socket-io",
       ]
   # Push the container image to Artifact Registry (2)
@@ -13,7 +13,7 @@ steps:
     args:
       [
         "push",
-        "asia-southeast1-docker.pkg.dev/deezcord-417022/socket-bun/socket-bun",
+        "asia-southeast1-docker.pkg.dev/deezcord-417022/socket-bun-repo/socket-bun",
       ]
   # Deploy container image to Cloud Run (2)
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
@@ -24,7 +24,7 @@ steps:
         "deploy",
         "socket-bun",
         "--image",
-        "asia-southeast1-docker.pkg.dev/deezcord-417022/socket-bun/socket-bun",
+        "asia-southeast1-docker.pkg.dev/deezcord-417022/socket-bun-repo/socket-bun",
         "--region",
         "asia-southeast1",
         "--allow-unauthenticated",
@@ -33,4 +33,4 @@ steps:
         "--max-instances",
         "3",
       ]
-images: ["asia-southeast1-docker.pkg.dev/deezcord-417022/socket-bun/socket-bun"]
+images: ["asia-southeast1-docker.pkg.dev/deezcord-417022/socket-bun-repo/socket-bun"]
