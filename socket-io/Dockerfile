@@ -35,6 +35,7 @@ COPY --from=prerelease /usr/src/app/package.json .
 COPY --from=prerelease /usr/src/app/index.ts .
 COPY --from=prerelease /usr/src/app .
 
+ENV NODE_ENV=production
 ENV PORT 3001
 
 # run the app
