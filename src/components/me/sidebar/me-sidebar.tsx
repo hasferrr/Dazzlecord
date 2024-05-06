@@ -28,8 +28,18 @@ const MeSidebar = async () => {
       ],
     },
     include: {
-      user1: true,
-      user2: true,
+      user1: {
+        omit: {
+          passwordHash: true,
+          email: true,
+        },
+      },
+      user2: {
+        omit: {
+          passwordHash: true,
+          email: true,
+        },
+      },
     },
     orderBy: {
       updatedAt: 'asc',

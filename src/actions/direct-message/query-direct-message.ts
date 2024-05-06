@@ -18,7 +18,14 @@ export const queryDirectMessages = async (
     messages = await db.directMessage.findMany({
       where: { conversationId },
       take,
-      include: { user: true },
+      include: {
+        user: {
+          omit: {
+            passwordHash: true,
+            email: true,
+          },
+        },
+      },
       orderBy: { createdAt: 'desc' },
     })
   } else {
@@ -28,7 +35,14 @@ export const queryDirectMessages = async (
       take,
       skip: 1,
       cursor: { id: pageParam },
-      include: { user: true },
+      include: {
+        user: {
+          omit: {
+            passwordHash: true,
+            email: true,
+          },
+        },
+      },
       orderBy: { createdAt: 'desc' },
     })
   }

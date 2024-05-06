@@ -3,7 +3,6 @@
 import { useTransition } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import type { User } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -26,9 +25,10 @@ import { cn } from '@/lib/utils'
 import { editProfileSchema } from '@/schemas/edit-profile-schema'
 import { filesValidator } from '@/schemas/validator/files-validator'
 import { uploadPhoto } from '@/services/upload-photo'
+import type { UserNoEmailNoPwd } from '@/types'
 
 interface ProfilesFormProps {
-  user: User
+  user: UserNoEmailNoPwd
 }
 
 const ProfilesForm = ({

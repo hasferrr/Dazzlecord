@@ -37,7 +37,14 @@ export const sendDirectMessage = async (
         fileName,
         conversationId,
       },
-      include: { user: true },
+      include: {
+        user: {
+          omit: {
+            passwordHash: true,
+            email: true,
+          },
+        },
+      },
     })
 
     const body: MessageRouterPostRequestBody = {

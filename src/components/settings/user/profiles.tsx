@@ -1,15 +1,14 @@
 'use client'
 
-import type { User } from '@prisma/client'
-
 import UserWrapper from '@/components/user/user-wrapper'
 import { usePreviewProfilesValue } from '@/context/settings/user/preview-profiles-context'
+import type { UserNoEmailNoPwd } from '@/types'
 
 import ProfilesForm from './profiles-form'
 import TimeElapsed from './time-elapsed'
 
 interface ProfilesProps {
-  user: User
+  user: UserNoEmailNoPwd
 }
 
 const Profiles = ({

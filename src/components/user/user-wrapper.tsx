@@ -2,18 +2,17 @@
 
 import { useEffect, useLayoutEffect, useRef } from 'react'
 
-import type { User } from '@prisma/client'
-
 import { usePreviewProfilesValue } from '@/context/settings/user/preview-profiles-context'
 import { getMostDominantColorHexFromImgElement } from '@/helpers/color-helpers'
 import { cn } from '@/lib/utils'
+import type { UserNoEmailNoPwd } from '@/types'
 
 import UserInformation from './user-information'
 import UserPhoto from './user-photo'
 
 interface UserWrapperProps {
   children?: React.ReactNode
-  user: User
+  user: UserNoEmailNoPwd
   className?: string
   showButton?: boolean
   imageFromGCS?: boolean

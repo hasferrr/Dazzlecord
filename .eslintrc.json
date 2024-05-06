@@ -60,6 +60,20 @@
         }
       }
     ],
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          {
+            "name": "@prisma/client",
+            "importNames": [
+              "User"
+            ],
+            "message": "Please import UserNoEmailNoPwd instead."
+          }
+        ]
+      }
+    ],
     // Overrides
     "no-process-env": "error",
     "@typescript-eslint/semi": [

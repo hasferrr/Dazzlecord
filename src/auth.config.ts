@@ -2,7 +2,8 @@ import bcryptjs from 'bcryptjs'
 import type { NextAuthConfig } from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 
-import { getUserByUsername } from './actions/prisma/user'
+import { db } from '@/lib/db'
+
 import { loginSchema } from './schemas/login-schema'
 
 export default {
@@ -17,7 +18,7 @@ export default {
 
         const { username, password } = validatedFields.data
 
-        const user = await getUserByUsername(username)
+        const user = await db.user.findUnique({ where: { username } })
         if (!user || !user.passwordHash) {
           return null
         }

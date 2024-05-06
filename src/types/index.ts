@@ -1,25 +1,21 @@
+/* eslint-disable no-restricted-imports */
 import type {
   Channel, DirectMessage, Friend, Member, Message, Server, User,
 } from '@prisma/client'
 
-// TODO: Omits ALL passwordHash from the codebase :)
-//
-// Add this to .eslintrj.json
-// "no-restricted-imports": ["error", {
-//   "paths": [{
-//     "name": "@prisma/client",
-//     "importNames": ["User"],
-//     "message": "Please import UserNoPassword instead."
-//   }]
-// }]
-export type UserNoPassword = Omit<User, 'passwordHash'>
+type UserNoPwd = Omit<User, 'passwordHash'>
+export type UserNoEmailNoPwd = Omit<UserNoPwd, 'email'>
 
-export type MessageWithUser = Message & { user: User }
+export type MessageWithUser = Message & { user: UserNoEmailNoPwd }
 export type ServerWithChannel = Server & { channels: Channel[] }
-export type MemberWithUser = Member & { user: User }
+export type MemberWithUser = Member & { user: UserNoEmailNoPwd }
 
-export type FriendWithBothUsers = Friend & { userRequest: User } & { userAccept: User }
-export type DirectMessageWithUser = DirectMessage & { user: User }
+export type FriendWithBothUsers = Friend & {
+  userRequest: UserNoEmailNoPwd
+} & {
+  userAccept: UserNoEmailNoPwd
+}
+export type DirectMessageWithUser = DirectMessage & { user: UserNoEmailNoPwd }
 
 export type MessageRouterPostRequestBody = {
   userId: string,

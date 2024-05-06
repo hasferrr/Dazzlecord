@@ -20,7 +20,12 @@ export const getAllChannelMessage = async (channelId: string) => {
       include: {
         messages: {
           include: {
-            user: true,
+            user: {
+              omit: {
+                passwordHash: true,
+                email: true,
+              },
+            },
           },
         },
       },

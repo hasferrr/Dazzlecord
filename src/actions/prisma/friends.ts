@@ -25,8 +25,18 @@ export const getFriendsDB = async (userId: string) => {
       ],
     },
     include: {
-      userRequest: true,
-      userAccept: true,
+      userRequest: {
+        omit: {
+          passwordHash: true,
+          email: true,
+        },
+      },
+      userAccept: {
+        omit: {
+          passwordHash: true,
+          email: true,
+        },
+      },
     },
   })
 
@@ -39,8 +49,18 @@ export const getFriendsDB = async (userId: string) => {
       ],
     },
     include: {
-      userRequest: true,
-      userAccept: true,
+      userRequest: {
+        omit: {
+          passwordHash: true,
+          email: true,
+        },
+      },
+      userAccept: {
+        omit: {
+          passwordHash: true,
+          email: true,
+        },
+      },
     },
   })
 
@@ -65,8 +85,18 @@ export const getFriendByUsersId = async (userId: string, friendsUserId: string) 
       ],
     },
     include: {
-      userRequest: true,
-      userAccept: true,
+      userRequest: {
+        omit: {
+          passwordHash: true,
+          email: true,
+        },
+      },
+      userAccept: {
+        omit: {
+          passwordHash: true,
+          email: true,
+        },
+      },
     },
   })
   const friendsUser = friend.userAccept.id === friendsUserId

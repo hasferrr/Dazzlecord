@@ -1,6 +1,5 @@
 'use server'
 
-import { type User } from '@prisma/client'
 import { redirect } from 'next/navigation'
 import { v4 as uuidv4 } from 'uuid'
 import type { z } from 'zod'
@@ -9,6 +8,7 @@ import { auth } from '@/auth'
 import { trimString } from '@/helpers/helpers'
 import { db } from '@/lib/db'
 import { editProfileNoFileSchema } from '@/schemas/edit-profile-schema'
+import type { UserNoEmailNoPwd } from '@/types'
 
 import { deleteImage } from '../cloud-storage/delete-image'
 import { getUserById } from '../prisma/user'
@@ -16,7 +16,7 @@ import { getUserById } from '../prisma/user'
 export const editProfile = async (
   values: z.infer<typeof editProfileNoFileSchema>,
   isNewImage: boolean,
-): Promise<User | null> => {
+): Promise<UserNoEmailNoPwd | null> => {
   const validatedFields = editProfileNoFileSchema.safeParse(values)
   if (!validatedFields.success) {
     return null
@@ -46,6 +46,10 @@ export const editProfile = async (
         name: trimString(name),
         about: about || null,
         image: isNewImage ? `img-user-${uuidv4()}` : undefined,
+      },
+      omit: {
+        passwordHash: true,
+        email: true,
       },
     })
 

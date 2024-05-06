@@ -61,7 +61,14 @@ export const sendMessage = async (
         serverId,
         memberId,
       },
-      include: { user: true },
+      include: {
+        user: {
+          omit: {
+            passwordHash: true,
+            email: true,
+          },
+        },
+      },
     })
 
     const body: MessageRouterPostRequestBody = {

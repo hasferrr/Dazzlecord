@@ -1,12 +1,12 @@
 'use client'
 
-import type { User } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 
 import MemberItem from '@/components/member-item'
+import type { UserNoEmailNoPwd } from '@/types'
 
 interface UserDirectMessageProps {
-  user: User
+  user: UserNoEmailNoPwd
 }
 
 const UserDirectMessage = ({

@@ -1,7 +1,5 @@
 'use client'
 
-import type { User } from '@prisma/client'
-
 import ButtonSelection from '@/components/settings/button-selection'
 import SettingsLayout from '@/components/settings/settings-layout'
 import { useLogOutOpen } from '@/context/modal-context'
@@ -13,12 +11,13 @@ import {
   useUserSettingsPageValue,
   useUserSettingsValue,
 } from '@/context/settings/user-settings-context'
+import type { UserNoEmailNoPwd } from '@/types'
 
 import Appearance from './appearance'
 import Profiles from './profiles'
 
 interface UserSettingsProps {
-  user: User
+  user: UserNoEmailNoPwd
 }
 
 const UserSettings = ({

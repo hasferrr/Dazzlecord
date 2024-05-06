@@ -38,7 +38,14 @@ export const editDirectMessage = async (
         content,
         isUpdated: true,
       },
-      include: { user: true },
+      include: {
+        user: {
+          omit: {
+            passwordHash: true,
+            email: true,
+          },
+        },
+      },
     })
 
     const body: MessageRouterPostRequestBody = {

@@ -33,7 +33,14 @@ export const deleteDirectMessage = async (messageId: string): Promise<DirectMess
         id: messageId,
         userId,
       },
-      include: { user: true },
+      include: {
+        user: {
+          omit: {
+            passwordHash: true,
+            email: true,
+          },
+        },
+      },
     })
 
     // Delete file from GCS

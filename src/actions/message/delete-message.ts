@@ -60,7 +60,14 @@ export const deleteMessage = async (messageId: string): Promise<Message | null> 
       where: {
         id: messageId,
       },
-      include: { user: true },
+      include: {
+        user: {
+          omit: {
+            passwordHash: true,
+            email: true,
+          },
+        },
+      },
     })
 
     // Delete file from GCS

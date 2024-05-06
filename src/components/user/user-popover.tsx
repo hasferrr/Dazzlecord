@@ -1,17 +1,16 @@
-import type { User } from '@prisma/client'
-
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
 import { cn } from '@/lib/utils'
+import type { UserNoEmailNoPwd } from '@/types'
 
 import UserWrapper from './user-wrapper'
 
 interface UserPopoverProps {
   children: React.ReactNode
-  user: User
+  user: UserNoEmailNoPwd
   side?: 'right' | 'top' | 'bottom' | 'left'
   className?: string
   showButton?: boolean
