@@ -52,6 +52,7 @@ model Server {
   members    Member[]
   channels   Channel[]
   messages   Message[]
+  default    Boolean?
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
 }
@@ -92,8 +93,8 @@ model Conversation {
   userId1 String @db.ObjectId
   userId2 String @db.ObjectId
 
-  user1   User   @relation("user1", fields: [userId1], references: [id], onDelete: Cascade)
-  user2   User   @relation("user2", fields: [userId2], references: [id], onDelete: Cascade)
+  user1 User @relation("user1", fields: [userId1], references: [id], onDelete: Cascade)
+  user2 User @relation("user2", fields: [userId2], references: [id], onDelete: Cascade)
 }
 
 model Message {

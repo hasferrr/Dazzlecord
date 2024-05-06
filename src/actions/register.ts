@@ -40,7 +40,7 @@ export const register = async (values: z.infer<typeof registerSchema>) => {
   }
 
   const passwordHash = await bcryptjs.hash(password, 10)
-  await db.user.create({
+  const newUser = await db.user.create({
     data: {
       username,
       email,
@@ -48,6 +48,26 @@ export const register = async (values: z.infer<typeof registerSchema>) => {
       name: trimString(name),
     },
   })
+
+  // Add new user to default server
+  const defaultServers = await db.server.findMany({
+    where: {
+      default: true,
+    },
+  })
+  const updatedServer = defaultServers.map((server) => db.server.update({
+    where: {
+      id: server.id,
+    },
+    data: {
+      members: {
+        create: {
+          userId: newUser.id,
+        },
+      },
+    },
+  }))
+  await Promise.all(updatedServer)
 
   try {
     await signIn('credentials', {
