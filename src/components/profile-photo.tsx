@@ -32,10 +32,11 @@ const ProfilePhoto = forwardRef<HTMLImageElement, ProfilePhotoProps>(({
         className={cn('object-cover rounded-full overflow-hidden', className)}
         src={src}
         alt=""
-        height={height}
-        width={width}
+        height={512}
+        width={512}
         style={{ height: `${height}px`, width: `${width}px`, ...style }}
         onLoad={handleImageLoad}
+        quality={100}
       />
     )
   }
