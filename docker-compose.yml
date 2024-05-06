@@ -9,6 +9,8 @@ services:
       - "3000:3000"
     networks:
       - app-network
+    environment:
+      - NEXT_PUBLIC_SOCKET_IO_URL=http://socket-io:3001
 
   socket-io:
     build:
