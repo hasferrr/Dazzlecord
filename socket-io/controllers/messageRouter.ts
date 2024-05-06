@@ -16,19 +16,17 @@ const messageRouter = (io: Server) => {
       type,
     } = req.body
 
-    if (!message || !channelId) {
+    if (!message || !channelId || !userId) {
       res.status(400).json({ error: 'missing request body' })
       return
     }
-
-    console.log('message', message)
 
     /**
      * Broadcast message to specific rooom io.to(ROOM)
      * See room-handler.ts
      * Broadcast to the ${action}:message:${type}, ex "SEND:message:direct-message"
      */
-    io.to(makeRoomId(userId, channelId, type)).emit(`${action}:message:${type}`, message)
+    io.to(makeRoomId(channelId, type)).emit(`${action}:message:${type}`, message)
 
     res.end()
   })

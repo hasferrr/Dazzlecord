@@ -16,48 +16,31 @@ const MeSidebar = async () => {
   }
   const userId = session.user.id
 
-  const user = await db.user.findUnique({
+  const conversations = await db.conversation.findMany({
     where: {
-      id: userId,
+      OR: [
+        {
+          userId1: userId,
+        },
+        {
+          userId2: userId,
+        },
+      ],
     },
     include: {
-      directMessages: {
-        where: {
-          OR: [
-            { userId },
-            { receiverId: userId },
-          ],
-        },
-        include: {
-          user: true,
-          receiver: true,
-        },
-      },
-      receiverDirectMessages: {
-        where: {
-          OR: [
-            { userId },
-            { receiverId: userId },
-          ],
-        },
-        include: {
-          user: true,
-          receiver: true,
-        },
-      },
+      user1: true,
+      user2: true,
+    },
+    orderBy: {
+      updatedAt: 'asc',
     },
   })
-  const recentDMUsers = user?.directMessages?.map((dm) => (
-    dm.user.id === userId
-      ? dm.receiver
-      : dm.user
-  )).concat(
-    user?.receiverDirectMessages?.map((dm) => (
-      dm.user.id === userId
-        ? dm.receiver
-        : dm.user
-    )),
-  )
+
+  const recentDMUsers = conversations.map((conversation) => (
+    conversation.user1.id === userId
+      ? conversation.user2
+      : conversation.user1
+  ))
 
   return (
     <div className="flex flex-col gap-2 h-full w-60 text-primary bg-server dark:bg-server-dark">

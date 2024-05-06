@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 
 import { sendDirectMessage } from '@/actions/direct-message/send-direct-message'
+import { createConversation, getConversationByUsersId } from '@/actions/prisma/conversation'
 import { getUserById } from '@/actions/prisma/user'
 import { auth } from '@/auth'
 import ChatHeader from '@/components/chat/chat-header'
@@ -34,6 +35,11 @@ const FriendUserId = async ({
     return redirect('/app')
   }
 
+  let conversation = await getConversationByUsersId(userId, friendsUser.id)
+  if (!conversation) {
+    conversation = await createConversation(userId, friendsUser.id)
+  }
+
   return (
     <div className="bg-page dark:bg-page-dark h-full w-full
     max-h-screen min-h-screen
@@ -57,7 +63,7 @@ const FriendUserId = async ({
       <ChatWrapper
         type="direct-message"
         userId={userId}
-        channelId={params.friendsUserId}
+        channelId={conversation.id}
       />
       <div className="row-span-2">
         <BigScreen width={992}>
@@ -75,7 +81,7 @@ const FriendUserId = async ({
             return sendDirectMessage(
               values,
               files,
-              friendsUser.id,
+              conversation.id,
             )
           }}
         />

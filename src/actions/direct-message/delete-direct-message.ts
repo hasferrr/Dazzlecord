@@ -43,7 +43,7 @@ export const deleteDirectMessage = async (messageId: string): Promise<DirectMess
 
     const body: MessageRouterPostRequestBody = {
       userId,
-      channelId: deletedMessage.receiverId,
+      channelId: deletedMessage.conversationId,
       message: deletedMessage,
       action: 'DELETE',
       type: 'direct-message',

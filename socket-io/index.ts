@@ -9,7 +9,7 @@ import { connectHandler } from './handlers/connect-handler'
 import { roomHandler } from './handlers/room-handler'
 
 console.log(process.env.NODE_ENV)
-console.log('Allowed client: ', process.env.CLIENT_URL)
+console.log('  Allowed client: ', process.env['CLIENT_URL'])
 console.log('')
 
 const app = express()

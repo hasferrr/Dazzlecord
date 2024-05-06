@@ -13,7 +13,6 @@ import { NEXT_PUBLIC_SOCKET_IO_URL } from '@/utils/config'
 export const editDirectMessage = async (
   values: z.infer<typeof messageSchema>,
   // fileName: string | null,
-  receiverId: string,
   messageId: string,
 ): Promise<DirectMessageWithUser | null> => {
   const validatedFields = messageSchema.safeParse(values)
@@ -34,7 +33,6 @@ export const editDirectMessage = async (
       where: {
         id: messageId,
         userId,
-        receiverId,
       },
       data: {
         content,
@@ -45,7 +43,7 @@ export const editDirectMessage = async (
 
     const body: MessageRouterPostRequestBody = {
       userId,
-      channelId: receiverId,
+      channelId: updatedMessage.conversationId,
       message: updatedMessage,
       action: 'EDIT',
       type: 'direct-message',

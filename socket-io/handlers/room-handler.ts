@@ -44,7 +44,7 @@ export const roomHandler = async (_io: Server, socket: Socket) => {
     }
 
     leaveAllRooms(socket)
-    socket.join(makeRoomId(userId, channelId, roomType))
+    socket.join(makeRoomId(channelId, roomType))
   }
 
   socket.on('join:channel:room', ({ channelId, userId }: { channelId: string; userId: string }, token: string) => {

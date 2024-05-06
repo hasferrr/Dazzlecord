@@ -75,7 +75,6 @@ const ChatItem = ({
                 }
                 return editDirectMessage(
                   values,
-                  message.receiverId,
                   message.id,
                 )
               }}

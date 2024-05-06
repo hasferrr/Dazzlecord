@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
 }
 
@@ -25,8 +25,9 @@ model User {
   friendRequest Friend[] @relation("UserRequest")
   friendAccept  Friend[] @relation("UserAccept")
 
-  directMessages         DirectMessage[] @relation("Sender/Owner")
-  receiverDirectMessages DirectMessage[] @relation("Receiver")
+  directMessages DirectMessage[]
+  conversations1 Conversation[]  @relation("user1")
+  conversations2 Conversation[]  @relation("user2")
 }
 
 model Friend {
@@ -82,6 +83,19 @@ model Channel {
   server Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
 }
 
+model Conversation {
+  id             String          @id @default(auto()) @map("_id") @db.ObjectId
+  directMessages DirectMessage[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  userId1 String @db.ObjectId
+  userId2 String @db.ObjectId
+
+  user1   User   @relation("user1", fields: [userId1], references: [id], onDelete: Cascade)
+  user2   User   @relation("user2", fields: [userId2], references: [id], onDelete: Cascade)
+}
+
 model Message {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   content   String
@@ -109,11 +123,11 @@ model DirectMessage {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  userId     String @db.ObjectId
-  receiverId String @db.ObjectId
+  userId         String @db.ObjectId
+  conversationId String @db.ObjectId
 
-  user     User @relation("Sender/Owner", fields: [userId], references: [id], onDelete: Cascade)
-  receiver User @relation("Receiver", fields: [receiverId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
 }
 
 enum MemberRole {

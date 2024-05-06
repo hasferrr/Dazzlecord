@@ -14,7 +14,7 @@ import { NEXT_PUBLIC_SOCKET_IO_URL } from '@/utils/config'
 export const sendDirectMessage = async (
   values: z.infer<typeof messageSchema>,
   fileName: string | null,
-  receiverId: string,
+  conversationId: string,
 ): Promise<DirectMessage | null> => {
   const validatedFields = messageSchema.safeParse(values)
   if (!validatedFields.success) {
@@ -35,7 +35,7 @@ export const sendDirectMessage = async (
         userId,
         content,
         fileName,
-        receiverId,
+        conversationId,
       },
       include: { user: true },
     })
@@ -43,7 +43,7 @@ export const sendDirectMessage = async (
     const body: MessageRouterPostRequestBody = {
       message,
       userId,
-      channelId: receiverId,
+      channelId: conversationId,
       action: 'SEND',
       type: 'direct-message',
     }

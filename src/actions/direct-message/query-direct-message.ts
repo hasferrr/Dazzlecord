@@ -1,8 +1,5 @@
 'use server'
 
-import { redirect } from 'next/navigation'
-
-import { auth } from '@/auth'
 import { db } from '@/lib/db'
 
 /**
@@ -11,32 +8,15 @@ import { db } from '@/lib/db'
  */
 export const queryDirectMessages = async (
   pageParam: string | null,
-  receiverId: string,
+  conversationId: string,
 ) => {
-  const session = await auth()
-  if (!session) {
-    return redirect('/')
-  }
-  const userId = session.user.id
-
   const take = 10
   let messages
 
   if (!pageParam) {
     // Since this is the first query, there is no cursor to pass in.
     messages = await db.directMessage.findMany({
-      where: {
-        OR: [
-          {
-            userId,
-            receiverId,
-          },
-          {
-            userId: receiverId,
-            receiverId: userId,
-          },
-        ],
-      },
+      where: { conversationId },
       take,
       include: { user: true },
       orderBy: { createdAt: 'desc' },
@@ -44,18 +24,7 @@ export const queryDirectMessages = async (
   } else {
     // Query for the second > time
     messages = await db.directMessage.findMany({
-      where: {
-        OR: [
-          {
-            userId,
-            receiverId,
-          },
-          {
-            userId: receiverId,
-            receiverId: userId,
-          },
-        ],
-      },
+      where: { conversationId },
       take,
       skip: 1,
       cursor: { id: pageParam },
