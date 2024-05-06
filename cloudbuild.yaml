@@ -1,0 +1,37 @@
+steps:
+  # Build the container image
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "build",
+        "-t",
+        "asia-southeast1-docker.pkg.dev/deezcord-417022/nextjs-node/nextjs-node",
+        ".",
+      ]
+  # Push the container image to Artifact Registry
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "push",
+        "asia-southeast1-docker.pkg.dev/deezcord-417022/nextjs-node/nextjs-node",
+      ]
+  # Deploy container image to Cloud Run
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    entrypoint: gcloud
+    args:
+      [
+        "run",
+        "deploy",
+        "nextjs-node",
+        "--image",
+        "asia-southeast1-docker.pkg.dev/deezcord-417022/nextjs-node/nextjs-node",
+        "--region",
+        "asia-southeast1",
+        "--allow-unauthenticated",
+        "--min-instances",
+        "0",
+        "--max-instances",
+        "3",
+      ]
+images:
+  ["asia-southeast1-docker.pkg.dev/deezcord-417022/nextjs-node/nextjs-node"]
