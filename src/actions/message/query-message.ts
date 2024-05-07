@@ -25,6 +25,7 @@ export const queryMessages = async (
             email: true,
           },
         },
+        member: true,
       },
       orderBy: { createdAt: 'desc' },
     })
@@ -42,6 +43,7 @@ export const queryMessages = async (
             email: true,
           },
         },
+        member: true,
       },
       orderBy: { createdAt: 'desc' },
     })

@@ -7,6 +7,7 @@ type UserNoPwd = Omit<User, 'passwordHash'>
 export type UserNoEmailNoPwd = Omit<UserNoPwd, 'email'>
 
 export type MessageWithUser = Message & { user: UserNoEmailNoPwd }
+export type MessageWithUserAndMember = Message & { user: UserNoEmailNoPwd } & { member: Member }
 export type ServerWithChannel = Server & { channels: Channel[] }
 export type MemberWithUser = Member & { user: UserNoEmailNoPwd }
 

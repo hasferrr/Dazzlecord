@@ -12,7 +12,7 @@ import { generateToken } from '@/actions/socket-io/generate-token'
 import ChatWelcome from '@/components/chat/chat-welcome'
 import { useSocket } from '@/context/socket-context'
 import { useChatSocket } from '@/hooks/use-chat-socket'
-import type { MessageWithUser } from '@/types'
+import type { DirectMessageWithUser, MessageWithUser, MessageWithUserAndMember } from '@/types'
 
 import ChatItem from './chat-item'
 import SkeletonMessage from './skeleton-message'
@@ -119,6 +119,14 @@ const ChatMessages = ({
                 message={message as MessageWithUser}
                 userId={userId}
                 currentRole={currentRole || MemberRole.GUEST}
+                messageUserRole={(() => {
+                  const hasMember = (
+                    obj: MessageWithUserAndMember | DirectMessageWithUser,
+                  ): obj is MessageWithUserAndMember => 'member' in obj
+                  return hasMember(message)
+                    ? message.member.role
+                    : MemberRole.GUEST
+                })()}
               />
             ))}
           </Fragment>
