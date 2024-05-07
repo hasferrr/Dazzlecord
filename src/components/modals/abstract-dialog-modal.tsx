@@ -65,7 +65,7 @@ const AbstractDialogModal = ({
 
   return (
     <Dialog open={isDeleteModalOpen} onOpenChange={handleOpenDialog}>
-      <DialogContent className="p-0 m-0 dark:bg-[var(--dark-page)] text-black dark:text-white w-[29rem]">
+      <DialogContent className="p-0 m-0 dark:bg-page-dark bg-page text-black dark:text-white w-[29rem]">
 
         <DialogHeader className="px-6 pt-6">
           <DialogTitle className="text-lg font-bold">
@@ -76,7 +76,7 @@ const AbstractDialogModal = ({
           </DialogDescription>
         </DialogHeader>
 
-        <DialogFooter className="p-4 bg-gray-100 dark:bg-[var(--dark-server)] rounded-b-lg">
+        <DialogFooter className="p-4 dark:bg-server-dark bg-server rounded-b-lg">
           <Button
             variant="underline"
             type="button"
