@@ -8,16 +8,7 @@ import { useRouter } from 'next/navigation'
 import { changeRole } from '@/actions/member/change-role'
 import { kickMember } from '@/actions/member/kick-member'
 import MemberItem from '@/components/member-item'
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog'
+import AbstractDialogModal from '@/components/modals/abstract-dialog-modal'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -223,40 +214,23 @@ const Members = ({
           </TableRow>
         </TableBody>
       </Table>
-      <AlertDialog open={!!memberToBeKicked}>
-        <AlertDialogContent className="dark:bg-server-dark">
-          <AlertDialogHeader>
-            <AlertDialogTitle>
-              Kick
-              {' '}
-              {memberToBeKicked?.user.username}
-              {' '}
-              from Server
-            </AlertDialogTitle>
-            <AlertDialogDescription>
-              Are you sure you want to kick @
-              {memberToBeKicked?.user.username}
-              {' '}
-              from the server?
-              They will be able to rejoin again with a new invite.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel
-              className="bg-transparent border-0 hover:bg-transparent hover:underline"
-              onClick={() => setMemberToBeKicked(null)}
-            >
-              Cancel
-            </AlertDialogCancel>
-            <AlertDialogAction
-              className="bg-red-500 hover:bg-red-600 text-white"
-              onClick={handleKick}
-            >
-              Kick
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      <AbstractDialogModal
+        title={`Kick ${memberToBeKicked?.user.username} from Server`}
+        deleteDescription={(
+          <div>
+            Are you sure you want to kick @
+            {memberToBeKicked?.user.username}
+            {' '}
+            from the server?
+            They will be able to rejoin again with a new invite.
+          </div>
+        )}
+        isDeleteModalOpen={!!memberToBeKicked}
+        onDeleteModalClose={() => setMemberToBeKicked(null)}
+        onSubmitAction={() => { handleKick() }}
+        titleSubmitButton="Kick"
+        variant="destructive"
+      />
     </div>
   )
 }
