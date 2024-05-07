@@ -3,6 +3,7 @@
 import type { Message } from '@prisma/client'
 import axios from 'axios'
 import { redirect } from 'next/navigation'
+import { v4 as uuidv4 } from 'uuid'
 import type { z } from 'zod'
 
 import { auth } from '@/auth'
@@ -13,7 +14,7 @@ import { NEXT_PUBLIC_SOCKET_IO_URL } from '@/utils/config'
 
 export const sendMessage = async (
   values: z.infer<typeof messageSchema>,
-  fileName: string | null,
+  _fileName0: string | null,
   channelId: string,
   serverId: string,
   memberId: string,
@@ -23,7 +24,9 @@ export const sendMessage = async (
     return null
   }
 
-  const { content } = validatedFields.data
+  const {
+    content, fileType, fileName, fileSize,
+  } = validatedFields.data
 
   const session = await auth()
   if (!session) {
@@ -54,9 +57,11 @@ export const sendMessage = async (
 
     const message = await db.message.create({
       data: {
-        content,
-        fileName,
         userId,
+        content,
+        fileName: fileName ? `file-msg-${uuidv4()}_${fileName}` : null,
+        fileType,
+        fileSize,
         channelId,
         serverId,
         memberId,

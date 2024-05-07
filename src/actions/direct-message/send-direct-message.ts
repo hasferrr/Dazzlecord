@@ -3,6 +3,7 @@
 import type { DirectMessage } from '@prisma/client'
 import axios from 'axios'
 import { redirect } from 'next/navigation'
+import { v4 as uuidv4 } from 'uuid'
 import type { z } from 'zod'
 
 import { auth } from '@/auth'
@@ -13,7 +14,7 @@ import { NEXT_PUBLIC_SOCKET_IO_URL } from '@/utils/config'
 
 export const sendDirectMessage = async (
   values: z.infer<typeof messageSchema>,
-  fileName: string | null,
+  _fileName0: string | null,
   conversationId: string,
 ): Promise<DirectMessage | null> => {
   const validatedFields = messageSchema.safeParse(values)
@@ -21,7 +22,9 @@ export const sendDirectMessage = async (
     return null
   }
 
-  const { content } = validatedFields.data
+  const {
+    content, fileType, fileName, fileSize,
+  } = validatedFields.data
 
   const session = await auth()
   if (!session) {
@@ -34,7 +37,9 @@ export const sendDirectMessage = async (
       data: {
         userId,
         content,
-        fileName,
+        fileName: fileName ? `file-dm-${uuidv4()}_${fileName}` : null,
+        fileType,
+        fileSize,
         conversationId,
       },
       include: {

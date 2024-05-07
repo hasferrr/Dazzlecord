@@ -15,6 +15,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { cn } from '@/lib/utils'
 import { messageSchemaWithFile } from '@/schemas/message-schema'
 import { checkTypes, filesSizeValidator } from '@/schemas/validator/files-validator'
+import { uploadPhoto } from '@/services/upload-photo'
 
 interface ChatInputProps {
   type: 'channel' | 'direct-message'
@@ -38,6 +39,9 @@ const ChatInput = ({
     resolver: zodResolver(messageSchemaWithFile),
     defaultValues: {
       content: '',
+      fileType: undefined,
+      fileName: undefined,
+      fileSize: undefined,
       files: undefined,
     },
   })
@@ -61,9 +65,12 @@ const ChatInput = ({
   }, [])
 
   const onSubmit = async (values: z.infer<typeof messageSchemaWithFile>) => {
-    if (values.content === '') {
-      return
-    }
+    console.log(values)
+
+    const files = form.getValues('files')
+    const file = files ? files[0] : null
+    const fileName = file ? file.name : null
+
     setPreviewFiles(null)
     form.reset()
     if (textareaRef.current) {
@@ -73,9 +80,15 @@ const ChatInput = ({
     setTimeout(() => {
       form.setFocus('content')
     }, 10)
-    const message = await sendFn(values, null)
+
+    const message = await sendFn(values, fileName)
     if (!message) {
       console.log('failed to send msg')
+      return
+    }
+    if (file && message.fileName) {
+      await uploadPhoto(file, message.fileName)
+      console.log('uploaded')
     }
   }
 
@@ -85,21 +98,31 @@ const ChatInput = ({
       .spa({ files: e.target.files })
 
     if (!validatedFields.success) {
-      setPreviewFiles(null)
       console.log(validatedFields)
+
       setError(validatedFields.error.errors[0].message)
       setTimeout(() => {
         setError(null)
       }, 3000)
+
+      const content = form.getValues('content')
+      form.reset()
+      form.setValue('content', content)
+      setPreviewFiles(null)
       return
     }
 
+    form.setValue('fileType', validatedFields.data.files[0].type)
+    form.setValue('fileName', validatedFields.data.files[0].name)
+    form.setValue('fileSize', validatedFields.data.files[0].size)
     setPreviewFiles(validatedFields.data.files)
   }
 
   const handleResetFile = () => {
+    const content = form.getValues('content')
+    form.reset()
+    form.setValue('content', content)
     setPreviewFiles(null)
-    form.resetField('files')
   }
 
   return (
@@ -176,7 +199,11 @@ const ChatInput = ({
             }
           }}
         />
-        <button type="submit" className="absolute top-3 right-4">
+        <button
+          type="submit"
+          className="absolute top-3 right-4"
+          onClick={() => form.setFocus('content')}
+        >
           <SendHorizontal />
         </button>
       </div>

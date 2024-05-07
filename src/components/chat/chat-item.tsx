@@ -16,6 +16,7 @@ import ChatItemButton from './item/chat-item-button'
 import ChatItemContent from './item/chat-item-content'
 import ChatItemDeleteDialog from './item/chat-item-delete-dialog'
 import ChatItemEditForm from './item/chat-item-edit-form'
+import ChatItemFile from './item/chat-item-file'
 import ChatItemNameTimestamp from './item/chat-item-name-timestamp'
 import ChatItemProfilePhoto from './item/chat-item-profile-photo'
 
@@ -60,31 +61,39 @@ const ChatItem = ({
     >
       <ChatItemProfilePhoto message={message} />
       <ChatItemNameTimestamp message={message} />
-      <p className="text-[15px] leading-[1.375rem] whitespace-break-spaces" style={{ wordBreak: 'break-word' }}>
+      <div className="text-[15px] leading-[1.375rem] whitespace-break-spaces" style={{ wordBreak: 'break-word' }}>
         {isEditing !== message.id
-          ? <ChatItemContent message={message} />
+          ? (
+            <>
+              <ChatItemContent message={message} />
+              <ChatItemFile message={message} />
+            </>
+          )
           : (
-            <ChatItemEditForm
-              message={message}
-              setIsEditing={setIsEditing}
-              editAction={(values) => {
-                if (type === 'channel') {
-                  return editMessage(
+            <>
+              <ChatItemEditForm
+                message={message}
+                setIsEditing={setIsEditing}
+                editAction={(values) => {
+                  if (type === 'channel') {
+                    return editMessage(
+                      values,
+                      message.channelId,
+                      message.serverId,
+                      message.memberId,
+                      message.id,
+                    )
+                  }
+                  return editDirectMessage(
                     values,
-                    message.channelId,
-                    message.serverId,
-                    message.memberId,
                     message.id,
                   )
-                }
-                return editDirectMessage(
-                  values,
-                  message.id,
-                )
-              }}
-            />
+                }}
+              />
+              <ChatItemFile message={message} />
+            </>
           )}
-      </p>
+      </div>
       <ChatItemButton
         messageId={message.id}
         setIsEditing={setIsEditing}

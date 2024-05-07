@@ -1,7 +1,7 @@
 /* eslint-disable implicit-arrow-linebreak, arrow-body-style */
 import { z } from 'zod'
 
-const ACCEPTED_IMAGE_TYPES = [
+export const ACCEPTED_IMAGE_TYPES = [
   'image/apng',
   'image/png',
   'image/x-png',
@@ -12,7 +12,7 @@ const ACCEPTED_IMAGE_TYPES = [
 ]
 const MAX_IMAGE_SIZE_IN_MB = 2
 
-const sizeInMB = (sizeInBytes: number, decimalsNum = 2) => {
+export const sizeInMB = (sizeInBytes: number, decimalsNum = 2) => {
   const result = sizeInBytes / (1024 * 1024)
   return +result.toFixed(decimalsNum)
 }

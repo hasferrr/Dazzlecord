@@ -1,6 +1,6 @@
 generator client {
-  provider      = "prisma-client-js"
-  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+  provider        = "prisma-client-js"
+  binaryTargets   = ["native", "linux-musl-openssl-3.0.x"]
   previewFeatures = ["omitApi"]
 }
 
@@ -102,6 +102,8 @@ model Message {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   content   String
   fileName  String?
+  fileType  String?
+  fileSize  Int?
   isUpdated Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -121,6 +123,8 @@ model DirectMessage {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   content   String
   fileName  String?
+  fileType  String?
+  fileSize  Int?
   isUpdated Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

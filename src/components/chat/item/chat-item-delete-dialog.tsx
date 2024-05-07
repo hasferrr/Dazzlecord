@@ -14,6 +14,7 @@ import {
 import type { DirectMessageWithUser, MessageWithUser } from '@/types'
 
 import ChatItemContent from './chat-item-content'
+import ChatItemFile from './chat-item-file'
 import ChatItemNameTimestamp from './chat-item-name-timestamp'
 import ChatItemProfilePhoto from './chat-item-profile-photo'
 
@@ -63,6 +64,7 @@ const ChatItemDeleteDialog = ({
                 style={{ wordBreak: 'break-word' }}
               >
                 <ChatItemContent message={message} />
+                <ChatItemFile message={message} />
               </p>
             </div>
             <p className="font-bold text-green-500">PROTIP:</p>
