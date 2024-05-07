@@ -84,12 +84,11 @@ const ChannelIdPage = async ({
         <ChatInput
           type="channel"
           channelName={channel.name}
-          sendFn={async (values, file) => {
+          sendFn={async (values) => {
             'use server'
 
             return sendMessage(
               values,
-              file,
               params.channelId,
               params.serverId,
               member.id,

@@ -12,6 +12,7 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { Textarea } from '@/components/ui/textarea'
+import { uuidv4 } from '@/helpers/helpers'
 import { cn } from '@/lib/utils'
 import { messageSchemaWithFile } from '@/schemas/message-schema'
 import { checkTypes, filesSizeValidator } from '@/schemas/validator/files-validator'
@@ -22,7 +23,6 @@ interface ChatInputProps {
   channelName: string
   sendFn: (
     values: z.infer<typeof messageSchemaWithFile>,
-    files: string | null
   ) => Promise<Message | DirectMessage | null>
 }
 
@@ -69,7 +69,7 @@ const ChatInput = ({
 
     const files = form.getValues('files')
     const file = files ? files[0] : null
-    const fileName = file ? file.name : null
+    const { fileName } = values
 
     setPreviewFiles(null)
     form.reset()
@@ -81,15 +81,22 @@ const ChatInput = ({
       form.setFocus('content')
     }, 10)
 
-    const message = await sendFn(values, fileName)
-    if (!message) {
-      console.log('failed to send msg')
-      return
-    }
-    if (file && message.fileName) {
-      await uploadPhoto(file, message.fileName)
+    // TODO: upload files in server side
+    if (file && fileName) {
+      await uploadPhoto(file, fileName)
       console.log('uploaded')
     }
+    const message = await sendFn(values)
+    if (!message) {
+      console.log('failed to send msg')
+    }
+  }
+
+  const handleResetFile = () => {
+    const content = form.getValues('content')
+    form.reset()
+    form.setValue('content', content)
+    setPreviewFiles(null)
   }
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -105,24 +112,17 @@ const ChatInput = ({
         setError(null)
       }, 3000)
 
-      const content = form.getValues('content')
-      form.reset()
-      form.setValue('content', content)
-      setPreviewFiles(null)
+      handleResetFile()
       return
     }
 
-    form.setValue('fileType', validatedFields.data.files[0].type)
-    form.setValue('fileName', validatedFields.data.files[0].name)
-    form.setValue('fileSize', validatedFields.data.files[0].size)
-    setPreviewFiles(validatedFields.data.files)
-  }
+    let fileName = validatedFields.data.files[0].name
+    fileName = `file-msg-${uuidv4()}_${fileName}`
 
-  const handleResetFile = () => {
-    const content = form.getValues('content')
-    form.reset()
-    form.setValue('content', content)
-    setPreviewFiles(null)
+    form.setValue('fileType', validatedFields.data.files[0].type)
+    form.setValue('fileSize', validatedFields.data.files[0].size)
+    form.setValue('fileName', fileName)
+    setPreviewFiles(validatedFields.data.files)
   }
 
   return (

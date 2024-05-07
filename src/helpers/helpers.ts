@@ -1,3 +1,7 @@
+import { v4 as uuidv4 } from 'uuid'
+
+export { uuidv4 }
+
 export const trimString = (str: string) => str.replace(/\s+/g, ' ').trim()
 
 export const isValidChannelName = (input: string): boolean => {

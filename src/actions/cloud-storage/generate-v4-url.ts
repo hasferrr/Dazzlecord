@@ -26,11 +26,11 @@ export const generateV4SignedPolicy = async (fileName: string) => {
   /**
    * NOTE: Not yet implemented: image uploads restriction
    * That requires sending the image to the server first in order to check the file.
-   * Which possibly leads to server overload(?), that why i dont.
+   * Which possibly leads to server overload, that why i dont.
    * This v4 url only can retrieve the form-data, not the content-type image.
    */
   const options = {
-    expires: Date.now() + 1 * 60 * 1000, // 1 minute,
+    expires: Date.now() + 0.5 * 60 * 1000, // 0.5 minute,
     fields: { 'x-goog-meta-test': 'data' },
     conditions: [
       ['content-length-range', 0, 2 * 1024 * 1024], // 2 MB maximum file size

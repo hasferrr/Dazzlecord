@@ -75,12 +75,11 @@ const FriendUserId = async ({
         <ChatInput
           type="direct-message"
           channelName={friendsUser.username}
-          sendFn={async (values, files) => {
+          sendFn={async (values) => {
             'use server'
 
             return sendDirectMessage(
               values,
-              files,
               conversation.id,
             )
           }}
