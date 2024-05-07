@@ -1,22 +1,26 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import type { DirectMessage, Message } from '@prisma/client'
-import { Plus, SendHorizontal } from 'lucide-react'
+import {
+  File, Plus, SendHorizontal, X,
+} from 'lucide-react'
+import Image from 'next/image'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { Textarea } from '@/components/ui/textarea'
 import { cn } from '@/lib/utils'
-import { messageSchema } from '@/schemas/message-schema'
+import { messageSchemaWithFile } from '@/schemas/message-schema'
+import { checkTypes, filesSizeValidator } from '@/schemas/validator/files-validator'
 
 interface ChatInputProps {
   type: 'channel' | 'direct-message'
   channelName: string
   sendFn: (
-    values: z.infer<typeof messageSchema>,
+    values: z.infer<typeof messageSchemaWithFile>,
     files: string | null
   ) => Promise<Message | DirectMessage | null>
 }
@@ -26,12 +30,15 @@ const ChatInput = ({
   channelName,
   sendFn,
 }: ChatInputProps) => {
+  const [previewFiles, setPreviewFiles] = useState<FileList | null>(null)
+  const [error, setError] = useState<string | null>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
-  const form = useForm<z.infer<typeof messageSchema>>({
-    resolver: zodResolver(messageSchema),
+  const form = useForm<z.infer<typeof messageSchemaWithFile>>({
+    resolver: zodResolver(messageSchemaWithFile),
     defaultValues: {
       content: '',
+      files: undefined,
     },
   })
 
@@ -53,10 +60,11 @@ const ChatInput = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const onSubmit = async (values: z.infer<typeof messageSchema>) => {
+  const onSubmit = async (values: z.infer<typeof messageSchemaWithFile>) => {
     if (values.content === '') {
       return
     }
+    setPreviewFiles(null)
     form.reset()
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto'
@@ -71,20 +79,75 @@ const ChatInput = ({
     }
   }
 
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const validatedFields = await z
+      .object({ files: filesSizeValidator })
+      .spa({ files: e.target.files })
+
+    if (!validatedFields.success) {
+      setPreviewFiles(null)
+      console.log(validatedFields)
+      setError(validatedFields.error.errors[0].message)
+      setTimeout(() => {
+        setError(null)
+      }, 3000)
+      return
+    }
+
+    setPreviewFiles(validatedFields.data.files)
+  }
+
+  const handleResetFile = () => {
+    setPreviewFiles(null)
+    form.resetField('files')
+  }
+
   return (
     <form onSubmit={form.handleSubmit(onSubmit)}>
-      <div className="relative pb-6">
-        <button
-          type="button"
-          onClick={() => { }}
-          className={cn(
-            'absolute top-3 bottom-3 left-4 h-[24px] w-[24px]',
-            'bg-zinc-500 dark:bg-zinc-300 hover:bg-zinc-600 dark:hover:bg-white',
-            'transition rounded-full p-1 flex items-center justify-center',
+      {(previewFiles || error) && (
+        <div className="bg-chat-input dark:bg-chat-input-dark rounded-t-md max-h-[200px] p-4 pb-2">
+          {error && <p className="text-sm">{error}</p>}
+          {previewFiles && (
+            <div className="relative bg-server dark:bg-server-dark rounded-sm p-2 pt-4 w-fit max-w-[200px] h-fit space-y-2">
+              {checkTypes(previewFiles)
+                ? (
+                  <Image
+                    className="h-[100px] w-auto object-cover rounded-sm"
+                    src={URL.createObjectURL(previewFiles[0])}
+                    alt=""
+                    height={512}
+                    width={512}
+                  />
+                )
+                : <File size={75} />}
+              <p className="text-sm truncate">{previewFiles[0].name}</p>
+              <button onClick={handleResetFile}>
+                <X size={25} className="absolute top-0 right-0 rounded-full bg-rose-500 text-white p-1 m-1" />
+              </button>
+            </div>
           )}
-        >
-          <Plus className="text-white dark:text-page-dark" />
-        </button>
+        </div>
+      )}
+      <div className="relative pb-6">
+        <label htmlFor="messageFileInput" className="cursor-pointer">
+          <input
+            {...form.register('files', {
+              onChange: handleFileChange,
+            })}
+            id="messageFileInput"
+            type="file"
+            className="cursor-pointer opacity-0 absolute w-0 h-0"
+          />
+          <div
+            className={cn(
+              'absolute top-3 bottom-3 left-4 h-[24px] w-[24px]',
+              'bg-zinc-500 dark:bg-zinc-300 hover:bg-zinc-600 dark:hover:bg-white',
+              'transition rounded-full p-1 flex items-center justify-center',
+            )}
+          >
+            <Plus className="text-white dark:text-page-dark" />
+          </div>
+        </label>
         <Textarea
           {...form.register('content', {
             onChange: (e) => {
@@ -101,6 +164,7 @@ const ChatInput = ({
             'px-14 py-[14px] bg-chat-input dark:bg-chat-input-dark',
             'border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0',
             'min-h-[50px] max-h-[320px] overflow-y-auto resize-none',
+            !previewFiles ? 'rounded-md' : 'rounded-b-md rounded-t-none',
           )}
           placeholder={`Message ${type === 'channel' ? '#' : '@'}${channelName}`}
           rows={1}

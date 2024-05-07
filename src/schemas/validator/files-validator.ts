@@ -35,6 +35,15 @@ export const failedLength = 'Image is required'
 export const failedSize = `The maximum image size is ${MAX_IMAGE_SIZE_IN_MB}MB`
 export const failedTypes = 'File type is not supported'
 
+// File Validator
+export const filesSizeValidatorAllowNoFile = z.custom<FileList>()
+  .refine(checkSize, failedSize)
+
+export const filesSizeValidator = z.custom<FileList>()
+  .refine(checkSize, failedSize)
+  .refine(checkLength, failedLength)
+
+// Image Validator
 export const filesValidatorAllowNoFile = z.custom<FileList>()
   .refine(checkSize, failedSize)
   .refine(checkTypes, failedTypes)
