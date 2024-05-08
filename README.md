@@ -6,42 +6,63 @@ The application enables real-time messaging and file storage, with authenticatio
 
 Live: <https://deezcord-zpxm4cwxta-as.a.run.app>
 
+## Screenshots
+
+<details>
+    <summary> Click to expand </summary>
+
+![ss1](../assets/images/ss1.png?raw=true)
+![ss2](../assets/images/ss2.png?raw=true)
+![ss3](../assets/images/ss3.png?raw=true)
+![ss4](../assets/images/ss4.png?raw=true)
+
+</details>
+
 ## Features
 
 User Authentication
 
-- Register
-- Login
+* Register
+* Login
 
 Messages
 
-- Send, edit, delete, chat and images or files
-- Preview sending and sent images
-- Realtime server's channels messaging
-- Realtime direct messaging
+* Send, edit, delete, chat and images or files
+* Preview sending and sent images
+* Realtime server's channels messaging
+* Realtime direct messaging
 
 User Management
 
-- List friends & pending friend request
-- Send, Accept, Decline friend request
-- Display user's profile
-- Change user's profile (display name, profile photo, description)
+* List friends & pending friend request
+* Send, Accept, Decline friend request
+* Display user's profile
+* Change user's profile (display name, profile photo, description)
 
 Server and Channels
 
-- Server creation, edit, deletion, and invite link
-- Channel creation, edit, and deletion
-- Change server's name and photo
-- Change channels's name
+* Server creation, edit, deletion, and invite link
+* Channel creation, edit, and deletion
+* Change server's name and photo
+* Change channels's name
 
 Member Management
 
-- List all members
-- Display members profile
-- Change member role (owner, admin, moderator, guest)
-- Kick member
+* List all members
+* Display members profile
+* Change member role (owner, admin, moderator, guest)
+* Kick member
 
 and more
+
+## How it works
+
+<details>
+    <summary> Click to expand </summary>
+
+![diagrams](../assets/images/diagrams.png?raw=true)
+
+</details>
 
 ## Getting Started
 
@@ -73,8 +94,10 @@ Follow the instructions below:
 
    4. Add role to service account:
 
-      - Storage Object Creator role and
-      - `storage.buckets.update` **custome role**
+        ![sa](../assets/images/sa.png?raw=true)
+
+      * Storage Object Creator role and
+      * `storage.buckets.update` **custome role**
 
 1. Configure MongoDB database
 
