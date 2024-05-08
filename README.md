@@ -10,6 +10,7 @@ Live: <https://deezcord-zpxm4cwxta-as.a.run.app>
 
 <details>
     <summary> Click to expand </summary>
+    <br>
 
 ![ss1](../assets/images/ss1.png?raw=true)
 ![ss2](../assets/images/ss2.png?raw=true)
@@ -59,6 +60,7 @@ and more
 
 <details>
     <summary> Click to expand </summary>
+    <br>
 
 ![diagrams](../assets/images/diagrams.png?raw=true)
 
@@ -76,12 +78,10 @@ Follow the instructions below:
 
 1. Install dependencies
 
-   I am using [Bun](https://bun.sh/)
-
    ```bash
-   bun i
+   npm i
    cd socket-io/
-   bun i
+   npm i
    ```
 
 1. Configure Google Cloud Storage
@@ -98,6 +98,7 @@ Follow the instructions below:
 
          <details>
             <summary> Click to expand </summary>
+            <br>
 
         ![sa](../assets/images/sa.png?raw=true)
 
@@ -107,6 +108,7 @@ Follow the instructions below:
 
          <details>
             <summary> Click to expand </summary>
+            <br>
 
         ![sa2](../assets/images/sa2.png?raw=true)
 
@@ -123,11 +125,12 @@ Follow the instructions below:
 
    ```bash
    # terminal 1
-   bun dev
+   npm run dev
 
    # terminal 2
    cd socket-io/
-   bun dev
+   npm run build
+   npm run start-node
    ```
 
 ## Deployment
@@ -144,29 +147,42 @@ docker compose up -d
 
 ### Deploy to Cloud Run
 
-Documentation: [Deploying to Cloud Run using Cloud Build](https://cloud.google.com/build/docs/deploying-builds/deploy-cloud-run)
+You can manually deploy it using cloud console or using script (select one)
 
-1. Install and configure [Cloud SDK](https://cloud.google.com/sdk/docs/install-sdk)
-1. Login to your Google Cloud account
-1. Enable Cloud Run Admin role to Cloud build
+1. Using Cloud Console
+   1. Push the containerized Next.js and Socket.io apps to Artifact Registry
+   1. Deploy it to Cloud Run
 
-   > you can always see how to do it here: [Deploying to Cloud Run using Cloud Build](https://cloud.google.com/build/docs/deploying-builds/deploy-cloud-run#required_iam_permissions)
+1. Using Cloud Build
 
-1. Deploy it
+   Documentation: [Deploying to Cloud Run using Cloud Build](https://cloud.google.com/build/docs/deploying-builds/deploy-cloud-run)
 
-   1. Using Cloud Console
-      1. Manually push the containerized Next.js and Socket.io apps to Artifact Registry
-      1. Deploy it to Cloud Run
+   1. Install and configure [Cloud SDK](https://cloud.google.com/sdk/docs/install-sdk)
 
-   1. Using script
+      > Alternatively, you could use Cloud Shell
 
-      1. Configure the deployment in the `cloudbuild.yaml` and `cloudbuild-socket-bun.yaml` files
-      1. Execute the script
+   1. Login to your Google Cloud account
+   1. Enable Cloud Run Admin role to Cloud build
 
-         ```bash
-         chmod +x deploy-all.sh
-         ./deploy-all.sh
-         ```
+      > You can always see how to do it here: [Deploying to Cloud Run using Cloud Build](https://cloud.google.com/build/docs/deploying-builds/deploy-cloud-run#required_iam_permissions)
+
+   1. Configure the deployment in the `cloudbuild.yaml` and `cloudbuild-socket-bun.yaml` files
+   1. Execute the script
+
+      ```bash
+      chmod +x deploy-all.sh
+      ./deploy-all.sh
+      ```
 
 1. Copy the published URLs, add those to `.env`
 1. Redeploy it
+
+   <details>
+      <summary> Click to expand </summary>
+      <br>
+
+   Alternatively, you could infer the URLs of other services by using your knowledge of the structure of Cloud Run service URLs
+
+   ![run-url](../assets/images/run-url.png?raw=true)
+
+   </details>
