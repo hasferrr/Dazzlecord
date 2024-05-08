@@ -94,10 +94,23 @@ Follow the instructions below:
 
    4. Add role to service account:
 
+      * Storage Object Creator role
+
+         <details>
+            <summary> Click to expand </summary>
+
         ![sa](../assets/images/sa.png?raw=true)
 
-      * Storage Object Creator role and
+         </details>
+
       * `storage.buckets.update` **custome role**
+
+         <details>
+            <summary> Click to expand </summary>
+
+        ![sa2](../assets/images/sa2.png?raw=true)
+
+         </details>
 
 1. Configure MongoDB database
 
