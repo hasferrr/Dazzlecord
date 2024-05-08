@@ -1,36 +1,136 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Deezcord - Discord clone in React
+
+Deezcord is an online chat application and Discord clone developed using React, Next.js, and Socket.io. It utilizes databases such as MongoDB + Prisma ORM and Google Cloud Storage, and is deployed into Docker containers on Cloud Run microservices.
+
+The application enables real-time messaging and file storage, with authentication provided by Next-Auth v5. It is designed with inspiration from Discord's interface.
+
+Live: <https://deezcord-zpxm4cwxta-as.a.run.app>
+
+## Features
+
+User Authentication
+
+- Register
+- Login
+
+Messages
+
+- Send, edit, delete, chat and images or files
+- Preview sending and sent images
+- Realtime server's channels messaging
+- Realtime direct messaging
+
+User Management
+
+- List friends & pending friend request
+- Send, Accept, Decline friend request
+- Display user's profile
+- Change user's profile (display name, profile photo, description)
+
+Server and Channels
+
+- Server creation, edit, deletion, and invite link
+- Channel creation, edit, and deletion
+- Change server's name and photo
+- Change channels's name
+
+Member Management
+
+- List all members
+- Display members profile
+- Change member role (owner, admin, moderator, guest)
+- Kick member
+
+and more
 
 ## Getting Started
 
-First, run the development server:
+Follow the instructions below:
+
+1. Clone the repository
+
+   ```bash
+   git clone https://github.com/hasferrr/discord-clone.git
+   ```
+
+1. Install dependencies
+
+   I am using [Bun](https://bun.sh/)
+
+   ```bash
+   bun i
+   cd socket-io/
+   bun i
+   ```
+
+1. Configure Google Cloud Storage
+
+   1. Create, download, and place Service Account key file in the `/service-accounts` directory
+
+   2. Create a cloud storage bucket
+
+   3. Make it public accessible (by giving Storage Object Getter role to `allUsers` principal)
+
+   4. Add role to service account:
+
+      - Storage Object Creator role and
+      - `storage.buckets.update` **custome role**
+
+1. Configure MongoDB database
+
+    1. Create MongoDB Database: <https://cloud.mongodb.com>
+    1. Get MongoDB URI: <https://www.mongodb.com/basics/mongodb-connection-string>
+
+1. Add environment variables to `.env` (similiar to `.env.example` and all required)
+
+1. Start the application
+
+   ```bash
+   # terminal 1
+   bun dev
+
+   # terminal 2
+   cd socket-io/
+   bun dev
+   ```
+
+## Deployment
+
+1. You need to Configure Google Cloud Storage and Configure MongoDB database
+1. Set Next.js to port 3000 and Socket.io to port 3001
+1. Select deploy to Docker, Cloud Run, or deploy it yourself
+
+### Using Docker
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+docker compose up -d
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Deploy to Cloud Run
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Documentation: [Deploying to Cloud Run using Cloud Build](https://cloud.google.com/build/docs/deploying-builds/deploy-cloud-run)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+1. Install and configure [Cloud SDK](https://cloud.google.com/sdk/docs/install-sdk)
+1. Login to your Google Cloud account
+1. Enable Cloud Run Admin role to Cloud build
 
-## Learn More
+   > you can always see how to do it here: [Deploying to Cloud Run using Cloud Build](https://cloud.google.com/build/docs/deploying-builds/deploy-cloud-run#required_iam_permissions)
 
-To learn more about Next.js, take a look at the following resources:
+1. Deploy it
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   1. Using Cloud Console
+      1. Manually push the containerized Next.js and Socket.io apps to Artifact Registry
+      1. Deploy it to Cloud Run
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+   1. Using script
 
-## Deploy on Vercel
+      1. Configure the deployment in the `cloudbuild.yaml` and `cloudbuild-socket-bun.yaml` files
+      1. Execute the script
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+         ```bash
+         chmod +x deploy-all.sh
+         ./deploy-all.sh
+         ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. Copy the published URLs, add those to `.env`
+1. Redeploy it
