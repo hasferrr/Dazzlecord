@@ -14,7 +14,7 @@ import { z } from 'zod'
 import { Textarea } from '@/components/ui/textarea'
 import { uuidv4 } from '@/helpers/helpers'
 import { cn } from '@/lib/utils'
-import { messageSchemaWithFile } from '@/schemas/message-schema'
+import { messageSchema, messageSchemaWithFile } from '@/schemas/message-schema'
 import { checkTypes, filesSizeValidator } from '@/schemas/validator/files-validator'
 import { uploadPhoto } from '@/services/upload-photo'
 
@@ -22,7 +22,7 @@ interface ChatInputProps {
   type: 'channel' | 'direct-message'
   channelName: string
   sendFn: (
-    values: z.infer<typeof messageSchemaWithFile>,
+    values: z.infer<typeof messageSchema>,
   ) => Promise<Message | DirectMessage | null>
 }
 
@@ -81,12 +81,16 @@ const ChatInput = ({
       form.setFocus('content')
     }, 10)
 
-    // TODO: upload files in server side
     if (file && fileName) {
       await uploadPhoto(file, fileName)
       console.log('uploaded')
     }
-    const message = await sendFn(values)
+    const message = await sendFn({
+      content: values.content,
+      fileName: values.fileName,
+      fileType: values.fileType,
+      fileSize: values.fileSize,
+    })
     if (!message) {
       console.log('failed to send msg')
     }
