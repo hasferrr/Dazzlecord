@@ -2,8 +2,10 @@ import { MemberRole } from '@prisma/client'
 import { redirect } from 'next/navigation'
 
 import { getAllMembersByServerIdSorted } from '@/actions/prisma/member'
+import { auth } from '@/auth'
 import MemberItem from '@/components/member-item'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import MemberButton from '@/components/user/button/member-button'
 import UserPopover from '@/components/user/user-popover'
 import type { MemberWithUser } from '@/types'
 
@@ -12,6 +14,12 @@ import MemberSection from './member-section'
 const MemberSidebar = async ({ serverId }: {
   serverId: string
 }) => {
+  const session = await auth()
+  if (!session) {
+    return redirect('/')
+  }
+  const userId = session.user.id
+
   const members = await getAllMembersByServerIdSorted(serverId)
   if (!members) {
     return redirect('/')
@@ -27,6 +35,7 @@ const MemberSidebar = async ({ serverId }: {
       key={m.id}
       user={m.user}
       side="left"
+      buttonNode={userId !== m.user.id ? <MemberButton userId={m.user.id} /> : null}
     >
       <MemberItem
         key={m.id}

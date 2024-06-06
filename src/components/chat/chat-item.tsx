@@ -59,7 +59,7 @@ const ChatItem = ({
     <div className="relative group hover:bg-chat-hover dark:hover:bg-chat-hover-dark p-4 transition w-full
     grid grid-cols-[40px_1fr] grid-flow-row gap-x-4"
     >
-      <ChatItemProfilePhoto message={message} />
+      <ChatItemProfilePhoto message={message} userId={userId} />
       <ChatItemNameTimestamp message={message} />
       <div className="text-[15px] leading-[1.375rem] whitespace-break-spaces" style={{ wordBreak: 'break-word' }}>
         {isEditing !== message.id
