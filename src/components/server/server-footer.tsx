@@ -4,6 +4,7 @@ import { getUserById } from '@/actions/prisma/user'
 import { auth } from '@/auth'
 import MemberItem from '@/components/member-item'
 import TriggerButton from '@/components/settings/user/trigger-button'
+import ProfileButton from '@/components/user/button/profile-button'
 import UserPopover from '@/components/user/user-popover'
 
 const ServerFooter = async () => {
@@ -22,7 +23,7 @@ const ServerFooter = async () => {
     <div className="grid grid-cols-[1fr_auto] gap-2 h-[53px] w-full py-2 px-3 items-center
       bg-server-footer dark:bg-server-footer-dark"
     >
-      <UserPopover user={user} side="top" className="ml-12" showButton>
+      <UserPopover user={user} side="top" className="ml-12" buttonNode={<ProfileButton />}>
         <MemberItem
           name={user.name}
           image={user.image}

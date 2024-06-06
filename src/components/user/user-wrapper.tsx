@@ -14,7 +14,7 @@ interface UserWrapperProps {
   children?: React.ReactNode
   user: UserNoEmailNoPwd
   className?: string
-  showButton?: boolean
+  buttonNode?: React.ReactNode
   imageFromGCS?: boolean
 }
 
@@ -22,7 +22,7 @@ const UserWrapper = ({
   children,
   user,
   className,
-  showButton = false,
+  buttonNode,
   imageFromGCS = true,
 }: UserWrapperProps) => {
   const imgRef = useRef<HTMLImageElement>(null)
@@ -60,7 +60,7 @@ const UserWrapper = ({
           imageFromGCS={imageFromGCS}
           handleImageLoad={changeBackgroundDiv}
         />
-        <UserInformation user={user} showButton={showButton}>
+        <UserInformation user={user} buttonNode={buttonNode}>
           {children}
         </UserInformation>
       </div>

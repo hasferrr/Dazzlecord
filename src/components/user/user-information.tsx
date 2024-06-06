@@ -1,23 +1,19 @@
 'use client'
 
-import { LogOut } from 'lucide-react'
-
-import LogOutButtonWrapper from '@/components/log-out-button-wrapper'
 import { Separator } from '@/components/ui/separator'
 import { formatDateMinimal } from '@/helpers/date-helpers'
-import { cn } from '@/lib/utils'
 import type { UserNoEmailNoPwd } from '@/types'
 
 interface UserInformationProps {
   children?: React.ReactNode
   user: UserNoEmailNoPwd
-  showButton: boolean
+  buttonNode?: React.ReactNode
 }
 
 const UserInformation = ({
   children,
   user,
-  showButton,
+  buttonNode,
 }: UserInformationProps) => (
   <div className="break-words text-[13px] w-[308px] p-3 bg-text dark:bg-text-dark rounded-lg space-y-3">
     <div>
@@ -35,20 +31,7 @@ const UserInformation = ({
       <h2 className="font-bold uppercase">Deezcord Member since</h2>
       <p>{formatDateMinimal(user.createdAt)}</p>
     </div>
-    <div className={cn(!showButton && 'hidden', 'space-y-2')}>
-      <Separator />
-      <button className="flex items-center gap-2 hover:bg-server-hover dark:hover:bg-server-hover-dark w-full p-[6px] rounded-sm transition-all">
-        <div className="bg-green-500 rounded-full w-3 h-3" />
-        <div>Online</div>
-      </button>
-      <Separator />
-      <LogOutButtonWrapper
-        className="flex items-center gap-2 hover:bg-red-500 hover:text-white w-full p-[6px] rounded-sm transition-all"
-      >
-        <LogOut size={18} />
-        <div>Log Out</div>
-      </LogOutButtonWrapper>
-    </div>
+    {buttonNode && <div className="space-y-2">{buttonNode}</div>}
     {children}
   </div>
 )
