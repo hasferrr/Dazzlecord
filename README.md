@@ -6,7 +6,7 @@ The application enables real-time messaging and file storage, with authenticatio
 
 Live: <https://deezcord-zpxm4cwxta-as.a.run.app>
 
-## Screenshots
+## Previews
 
 <details>
     <summary> Click to expand </summary>
@@ -16,6 +16,7 @@ Live: <https://deezcord-zpxm4cwxta-as.a.run.app>
 ![ss2](../assets/images/ss2.png?raw=true)
 ![ss3](../assets/images/ss3.png?raw=true)
 ![ss4](../assets/images/ss4.png?raw=true)
+![ss5](../assets/images/ss5.png?raw=true)
 
 </details>
 
