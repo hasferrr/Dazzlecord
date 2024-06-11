@@ -26,6 +26,9 @@ const MeSidebar = async () => {
           userId2: userId,
         },
       ],
+      directMessages: {
+        some: {},
+      },
     },
     include: {
       user1: {

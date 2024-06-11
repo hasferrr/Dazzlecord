@@ -2,6 +2,7 @@
 
 import type { DirectMessage } from '@prisma/client'
 import axios from 'axios'
+import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import type { z } from 'zod'
 
@@ -61,6 +62,7 @@ export const sendDirectMessage = async (
     const URL = `${NEXT_PUBLIC_SOCKET_IO_URL}/message`
     const res = await axios.post(URL, body)
     if (res.status === 200) {
+      revalidatePath('/channels/me')
       return message
     }
     return null
