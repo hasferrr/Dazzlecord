@@ -15,6 +15,9 @@ export const addFriend = async (username: string) => {
   const userId = session.user.id
 
   try {
+    // Find a user by username with contraints:
+    // - Not already a friend of the user with userId
+    // - Not the user themselves
     const nonFriendUsers = await db.user.findUnique({
       where: {
         username,
