@@ -1,5 +1,17 @@
 # Dazzlecord - Discord clone in React
 
+- [Dazzlecord - Discord clone in React](#dazzlecord---discord-clone-in-react)
+  - [Overview](#overview)
+  - [Previews](#previews)
+  - [Features](#features)
+  - [How it works](#how-it-works)
+  - [Getting Started](#getting-started)
+  - [Deployment](#deployment)
+    - [Deploy to Docker](#deploy-to-docker)
+    - [Deploy to Cloud Run](#deploy-to-cloud-run)
+
+## Overview
+
 Dazzlecord is an online chat application and Discord clone developed using React, Next.js, and Socket.io. It utilizes databases such as MongoDB + Prisma ORM and Google Cloud Storage, and is deployed into Docker containers on Cloud Run microservices.
 
 The application enables real-time messaging and file storage, with authentication provided by Next-Auth v5. It is designed with inspiration from Discord's interface.
@@ -24,36 +36,36 @@ Live: <https://deezcord-zpxm4cwxta-as.a.run.app>
 
 User Authentication
 
-* Register
-* Login
+- Register
+- Login
 
 Messages
 
-* Send, edit, delete, chat and images or files
-* Preview sending and sent images
-* Realtime server's channels messaging
-* Realtime direct messaging
+- Send, edit, delete, chat and images or files
+- Preview sending and sent images
+- Realtime server's channels messaging
+- Realtime direct messaging
 
 User Management
 
-* List friends & pending friend request
-* Send, Accept, Decline friend request
-* Display user's profile
-* Change user's profile (display name, profile photo, description)
+- List friends & pending friend request
+- Send, Accept, Decline friend request
+- Display user's profile
+- Change user's profile (display name, profile photo, description)
 
 Server and Channels
 
-* Server creation, edit, deletion, and invite link
-* Channel creation, edit, and deletion
-* Change server's name and photo
-* Change channels's name
+- Server creation, edit, deletion, and invite link
+- Channel creation, edit, and deletion
+- Change server's name and photo
+- Change channels's name
 
 Member Management
 
-* List all members
-* Display members profile
-* Change member role (owner, admin, moderator, guest)
-* Kick member
+- List all members
+- Display members profile
+- Change member role (owner, admin, moderator, guest)
+- Kick member
 
 and more
 
@@ -95,7 +107,7 @@ Follow the instructions below:
 
    4. Add role to service account:
 
-      * Storage Object Creator role
+      - Storage Object Creator role
 
          <details>
             <summary> Click to expand </summary>
@@ -105,7 +117,7 @@ Follow the instructions below:
 
          </details>
 
-      * `storage.buckets.update` **custome role**
+      - `storage.buckets.update` **custome role**
 
          <details>
             <summary> Click to expand </summary>
@@ -140,7 +152,7 @@ Follow the instructions below:
 1. Set Next.js to port 3000 and Socket.io to port 3001
 1. Select deploy to Docker, Cloud Run, or deploy it yourself
 
-### Using Docker
+### Deploy to Docker
 
 ```bash
 docker compose up -d
