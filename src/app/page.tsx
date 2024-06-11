@@ -44,7 +44,7 @@ const Home = async () => {
             height={34}
             width={34}
           />
-          <p className="text-xl font-extrabold">Deezcord</p>
+          <p className="text-xl font-extrabold">Dazzlecord</p>
         </button>
         <div className="hidden lg:flex gap-8 font-semibold text-white">
           <button className="hover:underline">Download</button>
@@ -62,7 +62,7 @@ const Home = async () => {
             hover:text-indigo-500 hover:shadow-xl"
             type="submit"
           >
-            {session ? 'Open Deezcord' : 'Login'}
+            {session ? 'Open Dazzlecord' : 'Login'}
           </button>
         </form>
       </div>
@@ -98,7 +98,7 @@ const Home = async () => {
             hover:bg-zinc-800 hover:shadow-xl"
             type="submit"
           >
-            Open Deezcord in your Browser
+            Open Dazzlecord in your Browser
           </button>
         </form>
       </div>

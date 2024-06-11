@@ -5,7 +5,7 @@ const MeHeader = () => (
   bg-server dark:bg-server-dark
   hover:bg-server-hover dark:hover:bg-server-hover-dark"
   >
-    Deezcord
+    Dazzlecord
   </div>
 )
 

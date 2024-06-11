@@ -28,7 +28,7 @@ const UserInformation = ({
       </p>
     </div>
     <div>
-      <h2 className="font-bold uppercase">Deezcord Member since</h2>
+      <h2 className="font-bold uppercase">Dazzlecord Member since</h2>
       <p>{formatDateMinimal(user.createdAt)}</p>
     </div>
     {buttonNode && <div className="space-y-2">{buttonNode}</div>}

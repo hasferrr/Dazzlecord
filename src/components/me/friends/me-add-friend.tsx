@@ -31,13 +31,13 @@ const MeAddFriend = () => {
           Add Friend
         </p>
         <p className="text-xs">
-          You can add friends with their Deezcord username.
+          You can add friends with their Dazzlecord username.
         </p>
       </div>
       <div className="flex gap-x-4 items-center">
         <Input
           disabled={isPending}
-          placeholder="You can add friends with their Deezcord username."
+          placeholder="You can add friends with their Dazzlecord username."
           name="username"
           value={username}
           className="w-full h-12 bg-server dark:bg-server-dark focus-visible:ring-0 focus-visible:ring-offset-0"
