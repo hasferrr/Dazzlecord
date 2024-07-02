@@ -41,3 +41,7 @@ next-env.d.ts
 
 # credentials
 service-accounts/
+
+#other
+bun.lockb
+
