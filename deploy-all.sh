@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# chmod +x deploya-all.sh
+# chmod +x deploy-all.sh
 
 gcloud auth configure-docker && \
-gcloud builds submit --config=cloudbuild-socket-bun.yaml & \
+screen -S bun -d -m bash -c "gcloud builds submit --config=cloudbuild-socket-bun.yaml; exec bash" && \
 gcloud builds submit --config=cloudbuild.yaml
