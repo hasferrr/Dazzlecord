@@ -55,7 +55,7 @@ const Home = async () => {
           <button className="hover:underline">Blog</button>
           <button className="hover:underline">Careers</button>
         </div>
-        <form action={openDiscord} className="w-[138px] flex justify-center select-none z-20">
+        <form action={openDiscord} className="flex justify-center select-none z-20">
           <button
             className="bg-white text-black px-4 py-2
             rounded-[28px] transition-all text-[14px] font-bold
