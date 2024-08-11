@@ -20,17 +20,8 @@ Live: <https://deezcord-zpxm4cwxta-as.a.run.app>
 
 ## Previews
 
-<details>
-    <summary> Click to expand </summary>
-    <br>
-
-![ss1](../assets/images/ss1.png?raw=true)
-![ss2](../assets/images/ss2.png?raw=true)
-![ss3](../assets/images/ss3.png?raw=true)
-![ss4](../assets/images/ss4.png?raw=true)
-![ss5](../assets/images/ss5.png?raw=true)
-
-</details>
+![ss1](../assets/images/ss-mult-1.png?raw=true)
+![ss2](../assets/images/ss-mult-2.png?raw=true)
 
 ## Features
 
@@ -71,11 +62,13 @@ and more
 
 ## How it works
 
+<img src="../assets/images/design.png?raw=true" width="512">
+
 <details>
     <summary> Click to expand </summary>
     <br>
 
-![diagrams](../assets/images/diagrams.png?raw=true)
+<img src="../assets/images/diagrams.png?raw=true" width="512">
 
 </details>
 
