@@ -108,7 +108,7 @@ Follow the instructions below:
 
    3. Make it public accessible (by giving Storage Object Getter role to `allUsers` principal)
 
-   4. Add role to service account:
+   4. Add this role to service account:
 
       - Storage Object Creator role
 
@@ -120,7 +120,7 @@ Follow the instructions below:
 
          </details>
 
-      - `storage.buckets.update` **custome role**
+      - `storage.buckets.update` and `storage.objects.delete` **custome role**
 
          <details>
             <summary> Click to expand </summary>
@@ -188,7 +188,7 @@ You can manually deploy it using cloud console or using script (select one)
 
    1. Install and configure [Cloud SDK](https://cloud.google.com/sdk/docs/install-sdk)
 
-      > Alternatively, you could use Cloud Shell
+      > Alternatively, you can use Cloud Shell
 
    1. Login to your Google Cloud account
    1. Enable Cloud Run Admin role to Cloud build
