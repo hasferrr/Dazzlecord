@@ -84,11 +84,21 @@ Follow the instructions below:
 
 1. Install dependencies
 
-   ```bash
-   npm i
-   cd socket-io/
-   npm i
-   ```
+   - Using Bun
+
+     ```bash
+     bun i
+     cd socket-io/
+     bun i
+     ```
+
+   - Using Node
+
+     ```bash
+     npm i
+     cd socket-io/
+     npm i
+     ```
 
 1. Configure Google Cloud Storage
 
@@ -129,15 +139,28 @@ Follow the instructions below:
 
 1. Start the application
 
-   ```bash
-   # terminal 1
-   npm run dev
+   - Using Bun
 
-   # terminal 2
-   cd socket-io/
-   npm run build
-   npm run start-node
-   ```
+     ```bash
+     # terminal 1
+     bun run dev
+  
+     # terminal 2
+     cd socket-io/
+     bun run dev
+     ```
+
+   - Using Node
+
+     ```bash
+     # terminal 1
+     npm run dev
+  
+     # terminal 2
+     cd socket-io/
+     npm run build
+     npm run start-node
+     ```
 
 ## Deployment
 
