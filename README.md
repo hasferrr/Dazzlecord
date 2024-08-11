@@ -106,7 +106,7 @@ Follow the instructions below:
             <summary> Click to expand </summary>
             <br>
 
-        ![sa](../assets/images/sa.png?raw=true)
+         <img src="../assets/images/sa.png?raw=true" width="384">
 
          </details>
 
@@ -116,7 +116,7 @@ Follow the instructions below:
             <summary> Click to expand </summary>
             <br>
 
-        ![sa2](../assets/images/sa2.png?raw=true)
+         <img src="../assets/images/sa2.png?raw=true" width="512">
 
          </details>
 
@@ -189,6 +189,6 @@ You can manually deploy it using cloud console or using script (select one)
 
    Alternatively, you could infer the URLs of other services by using your knowledge of the structure of Cloud Run service URLs
 
-   ![run-url](../assets/images/run-url.png?raw=true)
+   <img src="../assets/images/run-url.png?raw=true" width="512">
 
    </details>
