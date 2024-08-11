@@ -31,6 +31,6 @@ steps:
         "--min-instances",
         "0",
         "--max-instances",
-        "3",
+        "1",
       ]
 images: ["asia-southeast1-docker.pkg.dev/deezcord-417022/socket-bun-repo/socket-bun"]
