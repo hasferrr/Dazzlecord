@@ -104,11 +104,28 @@ Follow the instructions below:
 
    1. Create, download, and place Service Account key file in the `/service-accounts` directory
 
-   2. Create a cloud storage bucket
+   1. Create a cloud storage bucket
 
-   3. Make it public accessible (by giving Storage Object Getter role to `allUsers` principal)
+   1. Make it public accessible
 
-   4. Add this role to service account:
+   1. Add this custom role to `allUsers` principal (in your storage bucket):
+
+      - `resourcemanager.projects.get`
+      - `storage.managedFolders.get`
+      - `storage.objects.get`
+
+      <br>
+      <details>
+         <summary> Click to expand </summary>
+         <br>
+
+      <img src="../assets/images/gcs-custome-role-getter.png?raw=true" width="384">
+
+      <img src="../assets/images/gcs-all-users.png?raw=true" width="600">
+
+      </details>
+
+   1. Add this role to service account:
 
       - Storage Object Creator role
 
