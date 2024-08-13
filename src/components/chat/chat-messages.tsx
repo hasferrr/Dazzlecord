@@ -10,7 +10,7 @@ import { queryDirectMessages } from '@/actions/direct-message/query-direct-messa
 import { queryMessages } from '@/actions/message/query-message'
 import { generateToken } from '@/actions/socket-io/generate-token'
 import ChatWelcome from '@/components/chat/chat-welcome'
-import { useSocket } from '@/context/socket-context'
+import { useIsConnected, useSocket } from '@/context/socket-context'
 import { useChatSocket } from '@/hooks/use-chat-socket'
 import type { DirectMessageWithUser, MessageWithUser, MessageWithUserAndMember } from '@/types'
 
@@ -33,6 +33,7 @@ const ChatMessages = ({
   chatWelcomeName,
 }: ChatMessagesProps) => {
   const socket = useSocket()
+  const isConnected = useIsConnected()
   const { ref, inView } = useInView()
 
   const queryKey = type === 'channel'
@@ -48,7 +49,7 @@ const ChatMessages = ({
       socket.emit(`join:${type}:room`, { channelId, userId }, token)
     }
     join()
-  }, [channelId, userId, socket, type])
+  }, [channelId, userId, socket, type, isConnected])
 
   const {
     status,
