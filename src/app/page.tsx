@@ -83,14 +83,19 @@ const Home = async () => {
         >
           <button
             className="bg-white text-black py-4 px-8
-            rounded-[28px] transition-all cursor-not-allowed
+            rounded-[28px] transition-all
             hover:text-indigo-500 hover:shadow-xl"
             type="button"
           >
-            <div className="flex gap-2">
+            <a
+              className="flex gap-2"
+              href="https://github.com/hasferrr/Dazzlecord"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Download />
               <div>Download</div>
-            </div>
+            </a>
           </button>
           <button
             className="bg-[var(--dark-navigation)] py-4 px-8
