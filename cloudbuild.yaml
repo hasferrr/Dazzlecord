@@ -1,4 +1,22 @@
 steps:
+  # Generate env file (for cloud build CI/CD)
+  - name: node
+    entrypoint: npm
+    args: ["install", "create-env"]
+  - name: node
+    entrypoint: npm
+    args: ["run", "create-env"]
+    env:
+      - 'ORIGIN_URL=${_ORIGIN_URL}'
+      - 'AUTH_TRUST_HOST=${_AUTH_TRUST_HOST}'
+      - 'NEXT_PUBLIC_SOCKET_IO_URL=${_NEXT_PUBLIC_SOCKET_IO_URL}'
+      - 'DATABASE_URL=${_DATABASE_URL}'
+      - 'AUTH_SECRET=${_AUTH_SECRET}'
+      - 'GCS_PROJECT_ID=${_GCS_PROJECT_ID}'
+      - 'GCS_BUCKET_NAME=${_GCS_BUCKET_NAME}'
+      - 'GCS_SERVICE_ACCOUNT_KEY_FILE=${_GCS_SERVICE_ACCOUNT_KEY_FILE}'
+      - 'GCS_CRED_PRIVATE_KEY=${_GCS_CRED_PRIVATE_KEY}'
+      - 'GCS_CRED_CLIENT_EMAIL=${_GCS_CRED_CLIENT_EMAIL}'
   # Build the container image
   - name: "gcr.io/cloud-builders/docker"
     args:
