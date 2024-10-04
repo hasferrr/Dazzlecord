@@ -9,8 +9,7 @@
     "lint": "next lint",
     "tsc": "tsc --project tsconfig.json",
     "db": "prisma studio",
-    "db:update": "prisma db push",
-    "create-env": "printenv > .env"
+    "db:update": "prisma db push"
   },
   "prisma": {
     "schema": "src/prisma/schema.prisma"
