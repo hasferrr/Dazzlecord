@@ -69,14 +69,7 @@ const SocketIndicator = () => {
     )
   }
 
-  return (
-    <Badge
-      variant="outline"
-      className="bg-emerald-600 text-white border-none h-5 select-none"
-    >
-      Connected
-    </Badge>
-  )
+  return null
 }
 
 export default SocketIndicator
