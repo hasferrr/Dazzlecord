@@ -14,6 +14,11 @@ RUN npm ci
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
+# Check if /app/service-accounts exists, echo a message if not, and create it
+RUN if [ ! -d /app/service-accounts ]; then \
+    echo "service-accounts/ dir is missing, created empty dir..."; \
+    mkdir -p /app/service-accounts; \
+  fi
 COPY . .
 
 ENV NODE_ENV production
