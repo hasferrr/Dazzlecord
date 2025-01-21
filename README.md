@@ -21,6 +21,8 @@ The application enables real-time messaging and file storage, with authenticatio
 
 Live: <https://deezcord-zpxm4cwxta-as.a.run.app>
 
+Mirror: <https://dazzlecord.vercel.app>
+
 ## Previews
 
 ![ss1](../assets/images/ss-mult-1.png?raw=true)
