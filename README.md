@@ -9,6 +9,9 @@
   - [Deployment](#deployment)
     - [Deploy to Docker](#deploy-to-docker)
     - [Deploy to Cloud Run](#deploy-to-cloud-run)
+      - [Step 1 - Create Artifact Registry Repository](#step-1---create-artifact-registry-repository)
+      - [Step 2 - Deploy it](#step-2---deploy-it)
+      - [Step 3 - Add Permission](#step-3---add-permission)
 
 ## Overview
 
@@ -163,6 +166,22 @@ docker compose up -d
 
 ### Deploy to Cloud Run
 
+#### Step 1 - Create Artifact Registry Repository
+
+<details>
+   <summary> Click to expand </summary>
+   <br>
+
+<img src="../assets/images/artifact-registry-1.png?raw=true" width="384">
+<br/>
+<img src="../assets/images/artifact-registry-2.png?raw=true" width="256">
+<br/>
+<img src="../assets/images/artifact-registry-3.png?raw=true" width="384">
+
+</details>
+
+#### Step 2 - Deploy it
+
 You can manually deploy it using cloud console or using script (select one)
 
 1. Using Cloud Console
@@ -202,3 +221,19 @@ You can manually deploy it using cloud console or using script (select one)
    <img src="../assets/images/run-url.png?raw=true" width="512">
 
    </details>
+
+#### Step 3 - Add Permission
+
+Add `Cloud Run Invoker` Permission to `allUsers` pricipal for both deployed cloud run services
+
+<details>
+   <summary> Click to expand </summary>
+   <br>
+
+<img src="../assets/images/cloud-run-1.png?raw=true" width="512">
+<br/>
+<img src="../assets/images/cloud-run-2.png?raw=true" width="256">
+<br/>
+<img src="../assets/images/cloud-run-3.png?raw=true" width="384">
+
+</details>
