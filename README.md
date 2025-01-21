@@ -64,13 +64,7 @@ and more
 
 <img src="../assets/images/design.png?raw=true" width="512">
 
-<details>
-    <summary> Click to expand </summary>
-    <br>
-
 <img src="../assets/images/diagrams.png?raw=true" width="512">
-
-</details>
 
 ## Getting Started
 
@@ -84,21 +78,11 @@ Follow the instructions below:
 
 1. Install dependencies
 
-   - Using Bun
-
-     ```bash
-     bun i
-     cd socket-io/
-     bun i
-     ```
-
-   - Using Node
-
-     ```bash
-     npm i
-     cd socket-io/
-     npm i
-     ```
+   ```bash
+   bun i
+   cd socket-io/
+   bun i
+   ```
 
 1. Configure Google Cloud Storage
 
@@ -156,28 +140,14 @@ Follow the instructions below:
 
 1. Start the application
 
-   - Using Bun
+   ```bash
+   # terminal 1
+   bun run dev
 
-     ```bash
-     # terminal 1
-     bun run dev
-  
-     # terminal 2
-     cd socket-io/
-     bun run dev
-     ```
-
-   - Using Node
-
-     ```bash
-     # terminal 1
-     npm run dev
-  
-     # terminal 2
-     cd socket-io/
-     npm run build
-     npm run start-node
-     ```
+   # terminal 2
+   cd socket-io/
+   bun run dev
+   ```
 
 ## Deployment
 
