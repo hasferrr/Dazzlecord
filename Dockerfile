@@ -27,6 +27,7 @@ RUN bun run build
 
 # Production image, copy all the files and run next
 FROM node:22-alpine AS runner
+RUN apk add --no-cache openssl
 WORKDIR /app
 
 ENV NODE_ENV=production
