@@ -7,15 +7,15 @@ import { redirect } from 'next/navigation'
 import { auth } from '@/auth'
 import { db } from '@/lib/db'
 
-export const acceptFriends = async (formData: FormData) => {
+export const acceptFriends = async (formData: FormData): Promise<void> => {
   const userRequestId = formData.get('userRequestId')
   if (!userRequestId || typeof userRequestId !== 'string') {
-    return null
+    return
   }
 
   const session = await auth()
   if (!session) {
-    return redirect('/')
+    redirect('/')
   }
   const userId = session.user.id
 
@@ -35,7 +35,7 @@ export const acceptFriends = async (formData: FormData) => {
       },
     })
     if (!user) {
-      return null
+      return
     }
 
     await db.friend.update({
@@ -51,5 +51,4 @@ export const acceptFriends = async (formData: FormData) => {
   }
 
   revalidatePath('/channels/me')
-  return null
 }
