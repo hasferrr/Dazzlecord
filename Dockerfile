@@ -1,13 +1,11 @@
-FROM node:20-alpine AS base
+FROM imbios/bun-node:1-22-slim AS base
 
 # Install dependencies only when needed
 FROM base AS deps
-RUN apk add --no-cache libc6-compat
 WORKDIR /app
-
-COPY package.json package-lock.json* ./
+COPY package.json bun.lockb ./
 COPY src/prisma ./src/prisma
-RUN npm ci
+RUN bun install --frozen-lockfile --production
 
 
 # Rebuild the source code only when needed
@@ -24,11 +22,11 @@ COPY . .
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
 
-RUN npm run build
+RUN bun run build
 
 
 # Production image, copy all the files and run next
-FROM base AS runner
+FROM node:22-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
