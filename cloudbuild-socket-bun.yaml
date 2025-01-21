@@ -32,5 +32,7 @@ steps:
         "0",
         "--max-instances",
         "1",
+        "--memory",
+        "256Mi",
       ]
 images: ["asia-southeast1-docker.pkg.dev/deezcord-417022/socket-bun-repo/socket-bun"]
