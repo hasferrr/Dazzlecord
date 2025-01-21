@@ -5,7 +5,7 @@ FROM base AS deps
 WORKDIR /app
 COPY package.json bun.lockb ./
 COPY src/prisma ./src/prisma
-RUN bun install --frozen-lockfile --production
+RUN bun install --frozen-lockfile
 
 
 # Rebuild the source code only when needed
@@ -19,8 +19,8 @@ RUN if [ ! -d /app/service-accounts ]; then \
   fi
 COPY . .
 
-ENV NODE_ENV production
-ENV NEXT_TELEMETRY_DISABLED 1
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN bun run build
 
@@ -29,8 +29,8 @@ RUN bun run build
 FROM node:22-alpine AS runner
 WORKDIR /app
 
-ENV NODE_ENV production
-ENV NEXT_TELEMETRY_DISABLED 1
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
@@ -51,8 +51,9 @@ USER nextjs
 
 EXPOSE 3000
 
-ENV PORT 3000
+ENV PORT=3000
 
 # server.js is created by next build from the standalone output
 # https://nextjs.org/docs/pages/api-reference/next-config-js/output
-CMD HOSTNAME="0.0.0.0" node server.js
+ENV HOSTNAME="0.0.0.0"
+CMD ["node", "server.js"]

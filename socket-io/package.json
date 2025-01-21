@@ -4,7 +4,8 @@
     "build": "tsc --project tsconfig.json --outdir ./build",
     "start-node": "node build/index.js",
     "start": "bun index.ts",
-    "dev": "bun --watch index.ts"
+    "dev": "bun --watch index.ts",
+    "tsc": "tsc --project tsconfig.json"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
