@@ -33,7 +33,7 @@ steps:
         "--max-instances",
         "1",
         "--memory",
-        "256Mi",
+        "512Mi",
       ]
 images:
   ["asia-southeast1-docker.pkg.dev/deezcord-417022/nextjs-node-repo/deezcord"]
