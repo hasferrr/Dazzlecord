@@ -33,7 +33,7 @@ export const ORIGIN_URL = parseUrl(getProcessEnv('ORIGIN_URL'))
 export const NEXT_PUBLIC_SOCKET_IO_URL = parseUrl(getProcessEnv('NEXT_PUBLIC_SOCKET_IO_URL'))
 
 export const { GCS_SERVICE_ACCOUNT_KEY_FILE } = process.env
-export const { GCS_CRED_PRIVATE_KEY } = process.env
+export const GCS_CRED_PRIVATE_KEY = process.env['GCS_CRED_PRIVATE_KEY']?.split(String.raw`\n`).join('\n')
 export const { GCS_CRED_CLIENT_EMAIL } = process.env
 
 if (!GCS_SERVICE_ACCOUNT_KEY_FILE && !(GCS_CRED_PRIVATE_KEY && GCS_CRED_CLIENT_EMAIL)) {
