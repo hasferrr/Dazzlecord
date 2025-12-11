@@ -3,7 +3,7 @@ FROM imbios/bun-node:1-22-slim AS base
 # Install dependencies only when needed
 FROM base AS deps
 WORKDIR /app
-COPY package.json bun.lockb ./
+COPY package.json bun.lock ./
 COPY src/prisma ./src/prisma
 RUN bun install --frozen-lockfile
 
