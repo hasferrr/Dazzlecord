@@ -4,6 +4,14 @@ steps:
     args:
       [
         "build",
+        "--build-arg", "DATABASE_URL=${_DATABASE_URL}",
+        "--build-arg", "AUTH_SECRET=${_AUTH_SECRET}",
+        "--build-arg", "GCS_PROJECT_ID=${_GCS_PROJECT_ID}",
+        "--build-arg", "GCS_BUCKET_NAME=${_GCS_BUCKET_NAME}",
+        "--build-arg", "ORIGIN_URL=${_ORIGIN_URL}",
+        "--build-arg", "NEXT_PUBLIC_SOCKET_IO_URL=${_NEXT_PUBLIC_SOCKET_IO_URL}",
+        "--build-arg", "GCS_CRED_PRIVATE_KEY=${_GCS_CRED_PRIVATE_KEY}",
+        "--build-arg", "GCS_CRED_CLIENT_EMAIL=${_GCS_CRED_CLIENT_EMAIL}",
         "-t",
         "asia-southeast1-docker.pkg.dev/deezcord-417022/nextjs-node-repo/deezcord",
         ".",
@@ -34,6 +42,8 @@ steps:
         "1",
         "--memory",
         "512Mi",
+        "--set-env-vars",
+        "NODE_ENV=production,DATABASE_URL=${_DATABASE_URL},AUTH_SECRET=${_AUTH_SECRET},GCS_PROJECT_ID=${_GCS_PROJECT_ID},GCS_BUCKET_NAME=${_GCS_BUCKET_NAME},ORIGIN_URL=${_ORIGIN_URL},NEXT_PUBLIC_SOCKET_IO_URL=${_NEXT_PUBLIC_SOCKET_IO_URL},GCS_CRED_PRIVATE_KEY=${_GCS_CRED_PRIVATE_KEY},GCS_CRED_CLIENT_EMAIL=${_GCS_CRED_CLIENT_EMAIL}",
       ]
 images:
   ["asia-southeast1-docker.pkg.dev/deezcord-417022/nextjs-node-repo/deezcord"]
