@@ -19,15 +19,17 @@ import { ORIGIN_URL } from '@/utils/config'
 
 interface ServerIdLayoutProps {
   children: React.ReactNode
-  params: {
+  params: Promise<{
     serverId: string
-  }
+  }>
 }
 
 const ServerIdLayout = async ({
   children,
   params,
 }: ServerIdLayoutProps) => {
+  const { serverId } = await params
+
   const session = await auth()
   if (!session) {
     return redirect('/')
@@ -40,14 +42,14 @@ const ServerIdLayout = async ({
   }
 
   try {
-    const server = await getServerIncludesAllChannel(params.serverId)
+    const server = await getServerIncludesAllChannel(serverId)
     if (!server) {
       return redirect('/')
     }
 
     const currentMember = await db.member.findFirst({
       where: {
-        serverId: params.serverId,
+        serverId,
         userId,
       },
     })
@@ -55,7 +57,7 @@ const ServerIdLayout = async ({
       return redirect('/')
     }
 
-    const members = await getAllMembersByServerIdSorted(params.serverId)
+    const members = await getAllMembersByServerIdSorted(serverId)
     if (!members) {
       return redirect('/')
     }

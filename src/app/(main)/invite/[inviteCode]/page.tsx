@@ -1,15 +1,16 @@
 import { joinServer } from '@/actions/server/join-server'
 
 interface InviteCodePageProps {
-  params: {
+  params: Promise<{
     inviteCode: string
-  }
+  }>
 }
 
 const InviteCodePage = async ({
   params,
 }: InviteCodePageProps) => {
-  await joinServer(params.inviteCode)
+  const { inviteCode } = await params
+  await joinServer(inviteCode)
 }
 
 export default InviteCodePage

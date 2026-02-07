@@ -15,34 +15,36 @@ import ServerSidebar from '@/components/server/server-sidebar'
 import { db } from '@/lib/db'
 
 interface ChannelIdPageProps {
-  params: {
+  params: Promise<{
     serverId: string;
     channelId: string;
-  }
+  }>
 }
 
 const ChannelIdPage = async ({
   params,
 }: ChannelIdPageProps) => {
+  const { serverId, channelId } = await params
+
   const session = await auth()
   if (!session) {
     return redirect('/')
   }
   const userId = session.user.id
 
-  const server = await getServerWithAnyChannel(params.serverId, userId)
+  const server = await getServerWithAnyChannel(serverId, userId)
   if (!server) {
     redirect('/')
   }
 
-  const channel = server.channels.find((ch) => ch.id === params.channelId)
+  const channel = server.channels.find((ch) => ch.id === channelId)
   if (!channel) {
     redirect('/')
   }
 
   const member = await db.member.findFirst({
     where: {
-      serverId: params.serverId,
+      serverId,
       userId,
     },
   })
@@ -65,19 +67,19 @@ const ChannelIdPage = async ({
           )}
           iconType={channel.type}
           left={<ServerSidebar server={server} />}
-          right={<MemberSidebar serverId={params.serverId} />}
+          right={<MemberSidebar serverId={serverId} />}
         />
       </div>
       <ChatWrapper
         type="channel"
         userId={userId}
-        channelId={params.channelId}
+        channelId={channelId}
         chatWelcomeName={channel.name}
         currentRole={member.role}
       />
       <div className="row-span-2">
         <BigScreen width={992}>
-          <MemberSidebar serverId={params.serverId} />
+          <MemberSidebar serverId={serverId} />
         </BigScreen>
       </div>
       <div className="px-5">
@@ -89,8 +91,8 @@ const ChannelIdPage = async ({
 
             return sendMessage(
               values,
-              params.channelId,
-              params.serverId,
+              channelId,
+              serverId,
               member.id,
             )
           }}

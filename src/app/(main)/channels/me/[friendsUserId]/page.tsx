@@ -12,25 +12,27 @@ import BigScreen from '@/components/media-query/big-screen'
 import UserPhoto from '@/components/user/user-photo'
 
 interface FriendUserIdProps {
-  params: {
+  params: Promise<{
     friendsUserId: string;
-  }
+  }>
 }
 
 const FriendUserId = async ({
   params,
 }: FriendUserIdProps) => {
+  const { friendsUserId } = await params
+
   const session = await auth()
   if (!session) {
     return redirect('/')
   }
   const userId = session.user.id
 
-  if (params.friendsUserId === userId) {
+  if (friendsUserId === userId) {
     return redirect('/app')
   }
 
-  const friendsUser = await getUserById(params.friendsUserId)
+  const friendsUser = await getUserById(friendsUserId)
   if (!friendsUser) {
     return redirect('/app')
   }
